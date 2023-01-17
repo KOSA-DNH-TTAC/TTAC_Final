@@ -40,7 +40,7 @@
 <body>
 
   <!-- ======= Header ======= -->
-  <c:import url="/WEB-INF/views/components/top.jsp" />
+  <c:import url="/WEB-INF/views/common/top.jsp" />
   <!-- End Header -->
   
 
@@ -61,7 +61,7 @@
           <div class="col-lg-4 col-md-6 d-flex align-items-stretch">
             <div class="icon-box">
               <div class="icon"><i class="bx bxl-dribbble"></i></div>
-              <h4><a href="">외박 신청</a></h4>
+              <h4><a href="/application">외박 신청</a></h4>
               <p>Voluptatum deleniti atque corrupti quos dolores et quas molestias excepturi</p>
             </div>
           </div>
@@ -69,7 +69,7 @@
           <div class="col-lg-4 col-md-6 d-flex align-items-stretch mt-4 mt-md-0">
             <div class="icon-box">
               <div class="icon"><i class="bx bx-file"></i></div>
-              <h4><a href="">식권 구매</a></h4>
+              <h4><a href="/mealticket">식권 구매</a></h4>
               <p>Duis aute irure dolor in reprehenderit in voluptate velit esse cillum dolore</p>
             </div>
           </div>
@@ -77,7 +77,7 @@
           <div class="col-lg-4 col-md-6 d-flex align-items-stretch mt-4 mt-lg-0">
             <div class="icon-box">
               <div class="icon"><i class="bx bx-tachometer"></i></div>
-              <h4><a href="">커뮤니티</a></h4>
+              <h4><a href="/community">커뮤니티</a></h4>
               <p>Excepteur sint occaecat cupidatat non proident, sunt in culpa qui officia</p>
             </div>
           </div>
@@ -127,7 +127,7 @@
 	
 
   <!-- ======= Footer ======= -->
-	<c:import url="/WEB-INF/views/components/footer.jsp" />
+	<c:import url="/WEB-INF/views/common/footer.jsp" />
   <!-- End Footer -->
 
   <a href="#" class="back-to-top d-flex align-items-center justify-content-center"><i class="bi bi-arrow-up-short"></i></a>
