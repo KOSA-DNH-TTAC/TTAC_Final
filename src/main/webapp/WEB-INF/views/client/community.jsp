@@ -75,7 +75,7 @@
               </div> -->
 
               <h2 class="entry-title">
-                <a href="blog-single.html">Dolorum optio tempore voluptas dignissimos cumque fuga qui quibusdam quia</a>
+                <a href="blog-single.html">님들아 그거아심?</a>
               </h2>
 
               <div class="entry-meta">
@@ -88,8 +88,7 @@
 
               <div class="entry-content">
                 <p>
-                  Similique neque nam consequuntur ad non maxime aliquam quas. Quibusdam animi praesentium. Aliquam et laboriosam eius aut nostrum quidem aliquid dicta.
-                  Et eveniet enim. Qui velit est ea dolorem doloremque deleniti aperiam unde soluta. Est cum et quod quos aut ut et sit sunt. Voluptate porro consequatur assumenda perferendis dolore.
+               		 임준한 엉짱맨 !!! 
                 </p>
                <!--  <div class="read-more">
                   <a href="blog-single.html">Read More</a>
@@ -105,7 +104,7 @@
               </div> -->
 
               <h2 class="entry-title">
-                <a href="blog-single.html">Nisi magni odit consequatur autem nulla dolorem</a>
+                <a href="blog-single.html">게시글 제목</a>
               </h2>
 
               <div class="entry-meta">
@@ -118,8 +117,8 @@
 
               <div class="entry-content">
                 <p>
-                  Incidunt voluptate sit temporibus aperiam. Quia vitae aut sint ullam quis illum voluptatum et. Quo libero rerum voluptatem pariatur nam.
-                  Ad impedit qui officiis est in non aliquid veniam laborum. Id ipsum qui aut. Sit aliquam et quia molestias laboriosam. Tempora nam odit omnis eum corrupti qui aliquid excepturi molestiae. Facilis et sint quos sed voluptas. Maxime sed tempore enim omnis non alias odio quos distinctio.
+                  뉴진스 하입보이요~
+                  cause i i i i~~~
                 </p>
                 <!-- <div class="read-more">
                   <a href="blog-single.html">Read More</a>
@@ -135,7 +134,7 @@
               </div> -->
 
               <h2 class="entry-title">
-                <a href="blog-single.html">Possimus soluta ut id suscipit ea ut. In quo quia et soluta libero sit sint.</a>
+                <a href="blog-single.html">무민(english)</a>
               </h2>
 
               <div class="entry-meta">
@@ -148,8 +147,7 @@
 
               <div class="entry-content">
                 <p>
-                  Aut iste neque ut illum qui perspiciatis similique recusandae non. Fugit autem dolorem labore omnis et. Eum temporibus fugiat voluptate enim tenetur sunt omnis.
-                  Doloremque est saepe laborum aut. Ipsa cupiditate ex harum at recusandae nesciunt. Ut dolores velit.
+                  
                 </p>
                 <!-- <div class="read-more">
                   <a href="blog-single.html">Read More</a>
@@ -165,7 +163,7 @@
               </div> -->
 
               <h2 class="entry-title">
-                <a href="blog-single.html">Non rem rerum nam cum quo minus. Dolor distinctio deleniti explicabo eius exercitationem.</a>
+                <a href="blog-single.html">코범종</a>
               </h2>
 
               <div class="entry-meta">
@@ -178,8 +176,7 @@
 
               <div class="entry-content">
                 <p>
-                  Aspernatur rerum perferendis et sint. Voluptates cupiditate voluptas atque quae. Rem veritatis rerum enim et autem. Saepe atque cum eligendi eaque iste omnis a qui.
-                  Quia sed sunt. Ea asperiores expedita et et delectus voluptates rerum. Id saepe ut itaque quod qui voluptas nobis porro rerum. Quam quia nesciunt qui aut est non omnis. Inventore occaecati et quaerat magni itaque nam voluptas. Voluptatem ducimus sint id earum ut nesciunt sed corrupti nemo.
+    				Holy Shiit!!!
                 </p>
             <!--     <div class="read-more">
                   <a href="blog-single.html">Read More</a>
@@ -222,36 +219,36 @@
                 </ul>
               </div><!-- End sidebar categories-->
 
-              <h3 class="sidebar-title">Recent Posts</h3>
+              <h3 class="sidebar-title">TTAC</h3>
               <div class="sidebar-item recent-posts">
                 <div class="post-item clearfix">
                   <img src="resources/assets/img/blog/blog-recent-1.jpg" alt="">
-                  <h4><a href="blog-single.html">Nihil blanditiis at in nihil autem</a></h4>
-                  <time datetime="2020-01-01">Jan 1, 2020</time>
+                  <h4><a href="https://www.google.com/search?q=%EB%AC%B4%EB%AF%BC&sxsrf=AJOqlzUe5SNeOlNVnVY-hQiBA-_uDceXtA:1673927703853&source=lnms&tbm=isch&sa=X&ved=2ahUKEwiCvqvR2s38AhXRslYBHUFZAbMQ_AUoAXoECAEQAw&biw=1280&bih=681&dpr=2">충격! 엉짱맨 무민 검색해</a></h4>
+                  <time datetime="2020-01-01">Jan 12, 2023</time>
                 </div>
 
                 <div class="post-item clearfix">
                   <img src="resources/assets/img/blog/blog-recent-2.jpg" alt="">
-                  <h4><a href="blog-single.html">Quidem autem et impedit</a></h4>
-                  <time datetime="2020-01-01">Jan 1, 2020</time>
+                  <h4><a href="blog-single.html">맛있는 새우깡</a></h4>
+                  <time datetime="2020-01-01">Jan 17, 2023</time>
                 </div>
 
                 <div class="post-item clearfix">
                   <img src="resources/assets/img/blog/blog-recent-3.jpg" alt="">
-                  <h4><a href="blog-single.html">Id quia et et ut maxime similique occaecati ut</a></h4>
-                  <time datetime="2020-01-01">Jan 1, 2020</time>
+                  <h4><a href="blog-single.html">엉짱맨... 맛이 어때?</a></h4>
+                  <time datetime="2020-01-01">Jan 7, 2023</time>
                 </div>
 
                 <div class="post-item clearfix">
                   <img src="resources/assets/img/blog/blog-recent-4.jpg" alt="">
-                  <h4><a href="blog-single.html">Laborum corporis quo dara net para</a></h4>
-                  <time datetime="2020-01-01">Jan 1, 2020</time>
+                  <h4><a href="blog-single.html">충격! TTAC 불화설... 해체 임박?</a></h4>
+                  <time datetime="2020-01-01">Jan 16, 2023</time>
                 </div>
 
                 <div class="post-item clearfix">
                   <img src="resources/assets/img/blog/blog-recent-5.jpg" alt="">
-                  <h4><a href="blog-single.html">Et dolores corrupti quae illo quod dolor</a></h4>
-                  <time datetime="2020-01-01">Jan 1, 2020</time>
+                  <h4><a href="blog-single.html">엉짱맨 젤리로 암살시도! 피해자 상태는...?</a></h4>
+                  <time datetime="2020-01-01">Jan 6, 2020</time>
                 </div>
 
               </div><!-- End sidebar recent posts-->
