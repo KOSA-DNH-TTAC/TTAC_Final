@@ -59,6 +59,20 @@
 		   <version>${org.springframework-version}</version>
 		</dependency>
 		
+		<!-- Connection Pool 히카리 -->
+	      <dependency>
+	         <groupId>com.zaxxer</groupId>
+	         <artifactId>HikariCP</artifactId>
+	         <version>3.4.5</version>
+	      </dependency>
+		<!-- hikari -->
+		<dependency>
+		   <groupId>com.zaxxer</groupId>
+		   <artifactId>HikariCP</artifactId>
+		   <version>3.4.5</version>
+		</dependency>
+		
+		
 		<!-- lombok -->
 		<dependency>
 		    <groupId>org.projectlombok</groupId>
