@@ -4,5 +4,26 @@
 	xsi:schemaLocation="http://www.springframework.org/schema/beans https://www.springframework.org/schema/beans/spring-beans.xsd">
 	
 	<!-- Root Context: defines shared resources visible to all other web components -->
-		
+		<!-- hikari -->
+	<!-- <bean id="hikariConfig" class="com.zaxxer.hikari.HikariConfig"> 
+		<property name="driverClassName" value="com.mysql.cj.jdbc.Driver" />
+		<property name="jdbcUrl" value="jdbc:mysql://[aws주소]/[스키마]?useSSL=false&amp;serverTimezone=UTC" />
+		<property name="username" value="[아이디]" /> 
+		<property name="password" value="[비번]" /> 		
+	</bean>  -->
+ 
+ 	<!-- <bean id="driverManagerDataSource" class="com.zaxxer.hikari.HikariDataSource" destroy-method="close">
+		<constructor-arg ref="hikariConfig"></constructor-arg>
+ 	</bean> -->
+ 
+ 	<!-- MyBatis 설정 START  -->
+ 	<!-- <bean id="sqlSessionFactoryBean"  class="org.mybatis.spring.SqlSessionFactoryBean">
+    	<property name="dataSource" ref="driverManagerDataSource"></property>
+    	<property name="mapperLocations" value="classpath*:krzor/kosa/mapper/*xml" />
+	</bean> -->
+
+ 	<!-- <bean id="sqlSession" class="org.mybatis.spring.SqlSessionTemplate">
+  		<constructor-arg index="0" ref="sqlSessionFactoryBean"/>
+ 	</bean> -->
+ 	<!-- MyBatis 설정  END  -->
 </beans>
