@@ -1,13 +1,13 @@
 # TTAC_Final
 
-### 개발 Tool
+### 개발 IDE
 
-`Eclipse(2020-06) + STS 3.9.14.RELEASE, Visual Studio Code`
+`Eclipse`(2020-06) + `STS 3.9.14.RELEASE`  
+`Visual Studio Code`
 
-### 개발언어
+### 언어
 
-`FE: JavaScript ES6`
-
+`FE: JavaScript ES6`  
 `BE: Java 1.8`
 
 ### 웹서버
@@ -22,10 +22,16 @@
 
 `MySQL 8.0.28`
 
-### 협업툴
+### 사용 Tool
 
-`Notion`(일정), `Figma`(스토리보드)
+`Notion`(일정)  
+`Figma`(스토리보드)  
+`GitKraken`(형상관리)  
+`HeidiSql`(DB IDE)  
+`FileZilla`(배포)
 
 ### Framework
 
-`Jquery 1.11.1`, `Spring 5.3.18`, `Bootstrap demo`
+`Jquery 1.11.1`  
+`Spring 5.3.18`  
+`Bootstrap 5`
