@@ -27,6 +27,4 @@
 	<context:component-scan base-package="kr.or.kosa.service" />
 	
 	
-	
-	
 </beans:beans>
