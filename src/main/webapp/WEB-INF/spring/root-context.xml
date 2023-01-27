@@ -1,29 +1,36 @@
 <?xml version="1.0" encoding="UTF-8"?>
 <beans xmlns="http://www.springframework.org/schema/beans"
 	xmlns:xsi="http://www.w3.org/2001/XMLSchema-instance"
-	xsi:schemaLocation="http://www.springframework.org/schema/beans https://www.springframework.org/schema/beans/spring-beans.xsd">
+	xmlns:context="http://www.springframework.org/schema/context"
+	xsi:schemaLocation="http://www.springframework.org/schema/beans https://www.springframework.org/schema/beans/spring-beans.xsd
+						http://www.springframework.org/schema/context http://www.springframework.org/schema/context/spring-context-4.3.xsd">
 	
+	<!-- DB properties 파일 불러오기  /!-->
+    <context:property-placeholder location="/WEB-INF/config/*.properties" /> 
+
+    <!-- DB설정 START -->
 	<!-- Root Context: defines shared resources visible to all other web components -->
-		<!-- hikari -->
-	<!-- <bean id="hikariConfig" class="com.zaxxer.hikari.HikariConfig"> 
-		<property name="driverClassName" value="com.mysql.cj.jdbc.Driver" />
-		<property name="jdbcUrl" value="jdbc:mysql://[aws주소]/[스키마]?useSSL=false&amp;serverTimezone=UTC" />
-		<property name="username" value="[아이디]" /> 
-		<property name="password" value="[비번]" /> 		
-	</bean>  -->
+	<bean id="hikariConfig" class="com.zaxxer.hikari.HikariConfig"> 
+		<property name="driverClassName" value="${db.driver}" />
+		<property name="jdbcUrl" value="${db.url}" />
+		<property name="username" value="${db.username}" /> 
+		<property name="password" value="${db.password}" /> 		
+	</bean>
  
- 	<!-- <bean id="driverManagerDataSource" class="com.zaxxer.hikari.HikariDataSource" destroy-method="close">
+ 	<!-- hikari -->
+ 	<bean id="driverManagerDataSource" class="com.zaxxer.hikari.HikariDataSource" destroy-method="close">
 		<constructor-arg ref="hikariConfig"></constructor-arg>
- 	</bean> -->
+ 	</bean>
  
  	<!-- MyBatis 설정 START  -->
- 	<!-- <bean id="sqlSessionFactoryBean"  class="org.mybatis.spring.SqlSessionFactoryBean">
+ 	<bean id="sqlSessionFactoryBean"  class="org.mybatis.spring.SqlSessionFactoryBean">
     	<property name="dataSource" ref="driverManagerDataSource"></property>
     	<property name="mapperLocations" value="classpath*:krzor/kosa/mapper/*xml" />
-	</bean> -->
+	</bean>
 
- 	<!-- <bean id="sqlSession" class="org.mybatis.spring.SqlSessionTemplate">
+ 	<bean id="sqlSession" class="org.mybatis.spring.SqlSessionTemplate">
   		<constructor-arg index="0" ref="sqlSessionFactoryBean"/>
- 	</bean> -->
+ 	</bean>
  	<!-- MyBatis 설정  END  -->
+ 	<!-- DB설정 END -->
 </beans>
