@@ -58,27 +58,27 @@
       <div class="container">
 
         <div class="row">
-          <div class="col-lg-4 col-md-6 d-flex align-items-stretch">
+          <div class="col-lg-4 col-md-6 d-flex justify-content-center" OnClick="location.href = '/application'" style="cursor:pointer;">
             <div class="icon-box">
               <div class="icon"><i class="bx bxl-dribbble"></i></div>
-              <h4><a href="/application">외박 신청</a></h4>
+              <h4>외박 신청</a></h4>
          <!-- <p>Voluptatum deleniti atque corrupti quos dolores et quas molestias excepturi</p> -->
               <p>기숙사생을 위한 기숙사내 외박, 장기외박 온라인 간편 신청</p>
             </div>
           </div>
 
-          <div class="col-lg-4 col-md-6 d-flex align-items-stretch mt-4 mt-md-0">
+          <div class="col-lg-4 col-md-6 d-flex justify-content-center mt-4 mt-md-0" OnClick="location.href = '/mealticket'" style="cursor:pointer;">
             <div class="icon-box">
               <div class="icon"><i class="bx bx-file"></i></div>
-              <h4><a href="/mealticket">식권 구매</a></h4>
+              <h4>식권 구매</a></h4>
               <p>기숙사생을 위한 기숙사 식권 구매 포인트 온라인 간편 충전</p>
             </div>
           </div>
 
-          <div class="col-lg-4 col-md-6 d-flex align-items-stretch mt-4 mt-lg-0">
+          <div class="col-lg-4 col-md-6 d-flex justify-content-center mt-4 mt-md-0" OnClick="location.href = '/community'" style="cursor:pointer;">
             <div class="icon-box">
               <div class="icon"><i class="bx bx-tachometer"></i></div>
-              <h4><a href="/community">커뮤니티</a></h4>
+              <h4>커뮤니티</a></h4>
               <p>기숙사생들끼리 소통을 위한 기숙사내 자체 온라인 커뮤니티</p>
             </div>
           </div>
