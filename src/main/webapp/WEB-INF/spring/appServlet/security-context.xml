@@ -18,7 +18,7 @@
   					 ">
   	
   	<!-- Bean -->
-  	
+
   	<!-- 암호화 -->				 
   	<bean id="bcryptPasswordEncoder" class="org.springframework.security.crypto.bcrypt.BCryptPasswordEncoder"></bean>
   	
@@ -29,7 +29,7 @@
 	<security:intercept-url pattern="/mypage" access="hasRole('ROLE_ADMIN')" />
 	
 	<!-- 로그인 -->
-	<security:form-login/>
+	<security:form-login login-page="/login"/>
 
 	<!-- 자동로그인 -->
 	<security:remember-me data-source-ref="driverManagerDataSource" token-validity-seconds="604800"/>
@@ -58,8 +58,8 @@
 <security:authentication-manager>
 	<security:authentication-provider>
 		<security:jdbc-user-service data-source-ref="driverManagerDataSource"
-		users-by-username-query="select userid, userpw, enabled from tb1_member where userid=?"
-		authorities-by-username-query="select userid, auth from tb1_member_auth where userid=?"/>
+		users-by-username-query="select memberid, password, enabled from MEMBER where memberid=?"
+		authorities-by-username-query="select memberid, auth from MEMBERAUTH where memberid=?"/>
 		<security:password-encoder ref="bcryptPasswordEncoder"/>
 	</security:authentication-provider>
 </security:authentication-manager>
