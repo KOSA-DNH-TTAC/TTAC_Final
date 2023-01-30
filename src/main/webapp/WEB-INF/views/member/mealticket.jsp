@@ -52,7 +52,7 @@
       <div class="container">
 
         <ol>
-          <li><a href="index.html">Home</a></li>
+          <li><a href="/">Home</a></li>
           <li>식권구매</li>
         </ol>
         <h2>식권구매</h2>
@@ -64,44 +64,23 @@
     <section id="pricing" class="pricing">
       <div class="container">
 
-        <div class="row no-gutters">
+        <div class="row no-gutters" style="margin-top:10px;">
 
           <div class="col-lg-4 box">
             <h3>1회</h3>
-            <h4>₩ 6000<span>1회권</span></h4>
-            <ul>
-              <li><i class="bx bx-check"></i> Quam adipiscing vitae proin</li>
-              <li><i class="bx bx-check"></i> Nec feugiat nisl pretium</li>
-              <li><i class="bx bx-check"></i> Nulla at volutpat diam uteera</li>
-              <li class="na"><i class="bx bx-x"></i> <span>Pharetra massa massa ultricies</span></li>
-              <li class="na"><i class="bx bx-x"></i> <span>Massa ultricies mi quis hendrerit</span></li>
-            </ul>
+            <h4>₩ 6000<span>기숙사 내 식사 1회 분</span></h4>
             <a href="#" class="buy-btn">구매하기</a>
           </div>
 
           <div class="col-lg-4 box">
             <h3>10회</h3>
-            <h4>₩ 60000<span>10회권</span></h4>
-            <ul>
-              <li><i class="bx bx-check"></i> Quam adipiscing vitae proin</li>
-              <li><i class="bx bx-check"></i> Nec feugiat nisl pretium</li>
-              <li><i class="bx bx-check"></i> Nulla at volutpat diam uteera</li>
-              <li><i class="bx bx-check"></i> Pharetra massa massa ultricies</li>
-              <li><i class="bx bx-check"></i> Massa ultricies mi quis hendrerit</li>
-            </ul>
+            <h4>₩ 60000<span>기숙사 내 식사 10회 분</span></h4>
             <a href="#" class="buy-btn">구매하기</a>
           </div>
 
           <div class="col-lg-4 box">
             <h3>30회</h3>
-            <h4>₩ 180000<span>30회권</span></h4>
-            <ul>
-              <li><i class="bx bx-check"></i> Quam adipiscing vitae proin</li>
-              <li><i class="bx bx-check"></i> Nec feugiat nisl pretium</li>
-              <li><i class="bx bx-check"></i> Nulla at volutpat diam uteera</li>
-              <li><i class="bx bx-check"></i> Pharetra massa massa ultricies</li>
-              <li><i class="bx bx-check"></i> Massa ultricies mi quis hendrerit</li>
-            </ul>
+            <h4>₩ 180000<span>기숙사 내 식사 30회 분</span></h4>
             <a href="#" class="buy-btn">구매하기</a>
           </div>
 

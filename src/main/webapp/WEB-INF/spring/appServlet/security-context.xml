@@ -24,9 +24,9 @@
   	
 	<security:http auto-config="true" use-expressions="true">
 	<!-- 링크 별 요구 권한 -->
-	<security:intercept-url pattern="/application" access="permitAll" />
+	<!-- <security:intercept-url pattern="/nightOver" access="permitAll" />
 	<security:intercept-url pattern="/mealticket" access="hasRole('ROLE_MEMBER')" />
-	<security:intercept-url pattern="/mypage" access="hasRole('ROLE_ADMIN')" />
+	<security:intercept-url pattern="/mypage" access="hasRole('ROLE_ADMIN')" /> -->
 	
 	<!-- 로그인 -->
 	<security:form-login login-page="/login"/>
