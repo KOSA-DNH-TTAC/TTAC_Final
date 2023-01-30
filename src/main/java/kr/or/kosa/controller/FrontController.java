@@ -30,25 +30,25 @@ public class FrontController {
 	@GetMapping("/mypage")
 	public String myPage() {
 		
-		return "client/mypage";
+		return "member/mypage";
 	}
 	
 	@GetMapping("/community")
 	public String community() {
 		
-		return "client/community";
+		return "member/community";
 	}
 	
 	@GetMapping("/mealticket")
 	public String mealticket() {
 		
-		return "client/mealticket";
+		return "member/mealticket";
 	}
 	
 	@GetMapping("/application")
 	public String application() {
 		
-		return "client/application";
+		return "member/application";
 	}
 	
 }
