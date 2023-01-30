@@ -45,10 +45,10 @@ public class FrontController {
 		return "member/mealticket";
 	}
 	
-	@GetMapping("/application")
-	public String application() {
+	@GetMapping("/login")
+	public String login() {
 		
-		return "member/application";
+		return "common/login";
 	}
 	
 }
