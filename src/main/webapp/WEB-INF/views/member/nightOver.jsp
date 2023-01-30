@@ -47,16 +47,16 @@
   <main id="main">
   <div id="container">
   	<div id="box">
-  	
+  	<div id="date">
+  		<label class="label" for="start">Start date</label>
+  		<label class="label" for="end">End date</label>
+  		<label class="label" for="end">End date</label>
+  		<label class="label" for="end">End date</label>
+  		
+  	</div>
   	<div id="select">
-  		<select class="form-select" aria-label="Default select example">
-		  <option selected>시작날짜</option>
-		  <option value="1">달력나오게 하기</option>
-		</select>
-		<select class="form-select" aria-label="Default select example">
-		  <option selected>종료날짜</option>
-		  <option value="1">달력나오게하기</option>
-		</select>
+		<input class="form-select" type="date" id="start" name="trip-start" value="2000-10-04">
+		<input class="form-select" type="date" id="start" name="trip-start" value="2000-10-04">
 		<select class="form-select" aria-label="Default select example">
 		  <option selected>외박</option>
 		  <option value="1">외박</option>
@@ -75,6 +75,7 @@
 		  <label for="floatingTextarea2">외박 사유를 적어주세요.</label>
 		</div>
   	</div>
+  	<button type="submit" class="btn btn-warning">신청하기</button>
   	</div>
   </div>
   
