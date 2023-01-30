@@ -52,8 +52,8 @@
       <div class="container">
 
         <ol>
-          <li><a href="index.html">Home</a></li>
-          <li>커뮤니티</li>
+          <li><a href="/">Home</a></li>
+          <li>Community</li>
         </ol>
         <h2>커뮤니티</h2>
 
@@ -190,8 +190,15 @@
                 <li><a href="#">1</a></li>
                 <li class="active"><a href="#">2</a></li>
                 <li><a href="#">3</a></li>
+                <li><a href="#">4</a></li>
+                <li><a href="#">5</a></li>
+                
               </ul>
             </div>
+            <div class="d-grid gap-2 d-md-flex justify-content-md-end">
+			  <button class="btn btn-danger me-md-2 " style="background-color: #e96b56;" type="button" onclick="location.href='/board/write'">글쓰기</button>
+			</div>
+           
 
           </div><!-- End blog entries list -->
 
