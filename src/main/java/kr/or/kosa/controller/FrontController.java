@@ -51,4 +51,11 @@ public class FrontController {
 		return "common/login";
 	}
 	
+	@GetMapping("/error")
+	public String error() {
+		
+		return "common/errorPage";
+	}
+	
+	
 }
