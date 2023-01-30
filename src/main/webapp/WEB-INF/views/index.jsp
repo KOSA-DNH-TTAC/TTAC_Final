@@ -58,7 +58,7 @@
       <div class="container">
 
         <div class="row">
-          <div class="col-lg-4 col-md-6 d-flex justify-content-center" OnClick="location.href = '/application'" style="cursor:pointer;">
+          <div class="col-lg-4 col-md-6 d-flex justify-content-center" OnClick="location.href = '/nightOver'" style="cursor:pointer;">
             <div class="icon-box">
               <div class="icon"><i class="bx bxl-dribbble"></i></div>
               <h4>외박 신청</a></h4>
