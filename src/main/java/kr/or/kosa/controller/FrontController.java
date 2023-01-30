@@ -39,12 +39,6 @@ public class FrontController {
 		return "member/community";
 	}
 	
-	@GetMapping("/mealticket")
-	public String mealticket() {
-		
-		return "member/mealticket";
-	}
-	
 	@GetMapping("/login")
 	public String login() {
 		
