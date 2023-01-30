@@ -21,7 +21,7 @@
 		}
 		h1{
 			margin-left:480px;
-			color: black;
+			color: white;
 		}
 
 	</style>
