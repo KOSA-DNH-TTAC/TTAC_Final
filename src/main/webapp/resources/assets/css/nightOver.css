@@ -1,6 +1,4 @@
-#container{
-	width: 100%;
-}
+
 
 #box {
 
@@ -10,7 +8,7 @@
 	align-items: center;
 	margin: auto;
 	margin-bottom: 100px;
-	margin-top: 150px;
+	margin-top: 20px;
 	padding-top: 10px;
 	padding-left: 30px;
 	padding-right: 30px;
@@ -51,7 +49,7 @@
 	
 }
 
-.form-select{
+.form-select1{
 	display: flex;
 	flex-direction: row;
 	align-items: center;

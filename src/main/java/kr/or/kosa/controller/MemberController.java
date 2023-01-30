@@ -16,4 +16,9 @@ public class MemberController {
 		return "member/nightOver";
 	}
 	
+	@GetMapping("/mealticket")
+	public String mealticket() {
+		
+		return "member/mealticket";
+	}
 }

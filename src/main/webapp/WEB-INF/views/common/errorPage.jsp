@@ -35,7 +35,7 @@
 	<body id="error">
 	<div id="wrap">
 		<div id="image">
-			<img src="resources/assets/img/logo.png">
+			<a href="/"><img src="resources/assets/img/logo.png"></a>
 		</div>
 		<h1>요청하신 주소에 대한 권한이 없습니다.</h1>
 	</div>
