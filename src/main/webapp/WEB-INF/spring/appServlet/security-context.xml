@@ -1,0 +1,67 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<beans xmlns="http://www.springframework.org/schema/beans"
+ xmlns:xsi="http://www.w3.org/2001/XMLSchema-instance"
+ xmlns:context="http://www.springframework.org/schema/context"
+ xmlns:tx="http://www.springframework.org/schema/tx"
+ xmlns:mvc="http://www.springframework.org/schema/mvc"
+ xmlns:security="http://www.springframework.org/schema/security"
+ xsi:schemaLocation="http://www.springframework.org/schema/beans 
+                     http://www.springframework.org/schema/beans/spring-beans.xsd
+                     http://www.springframework.org/schema/context
+					http://www.springframework.org/schema/context/spring-context.xsd
+					http://www.springframework.org/schema/mvc
+					http://www.springframework.org/schema/mvc/spring-mvc.xsd
+  					 http://www.springframework.org/schema/security 
+  					 http://www.springframework.org/schema/security/spring-security.xsd
+  					  http://www.springframework.org/schema/tx 
+  					 http://www.springframework.org/schema/tx/spring-tx.xsd
+  					 ">
+  	
+  	<!-- Bean -->
+  	
+  	<!-- 암호화 -->				 
+  	<bean id="bcryptPasswordEncoder" class="org.springframework.security.crypto.bcrypt.BCryptPasswordEncoder"></bean>
+  	
+	<security:http auto-config="true" use-expressions="true">
+	<!-- 링크 별 요구 권한 -->
+	<security:intercept-url pattern="/application" access="permitAll" />
+	<security:intercept-url pattern="/mealticket" access="hasRole('ROLE_MEMBER')" />
+	<security:intercept-url pattern="/mypage" access="hasRole('ROLE_ADMIN')" />
+	
+	<!-- 로그인 -->
+	<security:form-login/>
+
+	<!-- 자동로그인 -->
+	<security:remember-me data-source-ref="driverManagerDataSource" token-validity-seconds="604800"/>
+	<!-- 로그아웃 -->
+	<security:logout invalidate-session="true" delete-cookies="remember-me, JSESSION_ID, JSESSIONID"/>
+	
+	<!-- <security:csrf disabled="true"/> -->
+
+</security:http>
+
+<!-- 
+	<security:authentication-manager>
+
+		<security:authentication-provider
+			user-service-ref="customUserDetailsService">
+
+			<security:password-encoder
+				ref="bcryptPasswordEncoder" />
+
+		</security:authentication-provider>
+
+	</security:authentication-manager>
+ -->
+
+
+<security:authentication-manager>
+	<security:authentication-provider>
+		<security:jdbc-user-service data-source-ref="driverManagerDataSource"
+		users-by-username-query="select userid, userpw, enabled from tb1_member where userid=?"
+		authorities-by-username-query="select userid, auth from tb1_member_auth where userid=?"/>
+		<security:password-encoder ref="bcryptPasswordEncoder"/>
+	</security:authentication-provider>
+</security:authentication-manager>
+
+</beans>
