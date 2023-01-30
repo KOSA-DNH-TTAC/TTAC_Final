@@ -168,8 +168,11 @@
       //ajax로 내 정보 가저옴
       //td값과 사진값 바꿔줌
       var contents = `<div class="row">
-					<div class="col-lg-4">
-						<img style="text-align:center" width="200px" src="http://image.newsis.com/2022/04/07/NISI20220407_0000969087_web.jpg" class="img-fluid" alt="Responsive image">
+					<div class="col-lg-4" style="text-align : center">
+							<img style="text-align:center" width="230px" src="http://image.newsis.com/2022/04/07/NISI20220407_0000969087_web.jpg" class="img-fluid" alt="Responsive image">
+							<br>
+							<br>
+							<button class="btn btn-warning">정보수정</button>
 					</div>
 					<div class="col-lg-8">
 						<table class="table">
@@ -211,6 +214,7 @@
 						    </tr>
 						  </tbody>
 						</table>
+						
 					</div>
 					</div>`
 			$('#content').append(contents)
