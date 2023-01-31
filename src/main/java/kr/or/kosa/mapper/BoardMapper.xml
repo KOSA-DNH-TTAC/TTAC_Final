@@ -5,11 +5,13 @@ PUBLIC "-//mybatis.org//DTD Mapper 3.0//EN"
 
 <mapper namespace="kr.or.kosa.dao.BoardDao">
 
-<select id="getBoardname" resultType="kr.or.kosa.dto.Board">
-
+<!-- 게시판 리스트 -->
+<select id="categoryList" resultType="kr.or.kosa.dto.Board">
+SELECT boardidx, boardname FROM BOARD WHERE universitycode='kosa';
 </select>
 
 <!-- 공지사항 목록 -->
+<!-- 학교별로 가져올 수 있게 쿼리문 수정해야 함 -->
 <select id="noticeList" resultType="kr.or.kosa.dto.Post">
 SELECT p.boardidx, p.universitycode, b.boardname, p.memberid, p.writedate, p.likenum, p.content, p.title
 FROM POST p JOIN BOARD b ON p.boardidx = b.boardidx
@@ -22,6 +24,14 @@ ORDER BY p.writedate DESC;
 SELECT p.boardidx, p.universitycode, b.boardname, p.memberid, p.writedate, p.likenum, p.content, p.title
 FROM POST p JOIN BOARD b ON p.boardidx = b.boardidx
 WHERE b.boardname='자유게시판'
+ORDER BY p.writedate DESC;
+</select>
+
+<!-- 새 게시판 목록 -->
+<select id="customBoardList" resultType="kr.or.kosa.dto.Post">
+SELECT p.boardidx, p.universitycode, b.boardname, p.memberid, p.writedate, p.likenum, p.content, p.title
+FROM POST p JOIN BOARD b ON p.boardidx = b.boardidx
+WHERE b.boardname=?
 ORDER BY p.writedate DESC;
 </select>
 

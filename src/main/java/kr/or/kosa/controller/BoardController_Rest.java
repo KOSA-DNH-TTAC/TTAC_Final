@@ -9,6 +9,7 @@ import org.springframework.http.ResponseEntity;
 import org.springframework.web.bind.annotation.RequestMapping;
 import org.springframework.web.bind.annotation.RestController;
 
+import kr.or.kosa.dto.Board;
 import kr.or.kosa.dto.Post;
 import kr.or.kosa.service.BoardService;
 
@@ -22,30 +23,16 @@ public class BoardController_Rest {
 		this.boardService = boardService;
 	}
 	
-	@RequestMapping("")
-	public ResponseEntity<List<Post>> noticeList() {
+	@RequestMapping("categoryList")
+	public ResponseEntity<List<Board>> categoryList() {
 		System.out.println("rest controller");
-		List<Post> noticeList = new ArrayList<Post>();
+		List<Board> categoryList = new ArrayList<Board>();
 		try {
-			noticeList = boardService.noticeList();
-			return new ResponseEntity<List<Post>>(noticeList, HttpStatus.OK);
+			categoryList = boardService.categoryList();
+			return new ResponseEntity<List<Board>>(categoryList, HttpStatus.OK);
 		} catch (Exception e) {
-			return new ResponseEntity<List<Post>>(noticeList, HttpStatus.BAD_REQUEST);
+			return new ResponseEntity<List<Board>>(categoryList, HttpStatus.BAD_REQUEST);
 		}
 	}
-	
-	/*
-	@RequestMapping("")
-	public ResponseEntity<List<Post>> freeBoardList() {
-		System.out.println("rest controller");
-		List<Post> freeBoardList = new ArrayList<Post>();
-		try {
-			freeBoardList = boardService.freeBoardList();
-			return new ResponseEntity<List<Post>>(freeBoardList, HttpStatus.OK);
-		} catch (Exception e) {
-			return new ResponseEntity<List<Post>>(freeBoardList, HttpStatus.BAD_REQUEST);
-		}
-	}
-	*/
 	
 }
