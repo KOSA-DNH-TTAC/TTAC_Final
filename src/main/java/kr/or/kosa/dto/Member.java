@@ -1,5 +1,7 @@
 package kr.or.kosa.dto;
 
+import java.util.List;
+
 import lombok.Data;
 
 @Data
@@ -18,5 +20,7 @@ public class Member {
 	private int demerit;
 	private int status;
 	private String enabled;
+	
+	private List<MemberAuth> authList;
 	
 }

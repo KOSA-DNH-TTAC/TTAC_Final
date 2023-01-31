@@ -58,6 +58,7 @@
                   <div class="center-wrap">
                     <div class="section text-center">
                       <h4 class="mb-4 pb-3">로그인</h4>
+                      <form>
                       <div class="form-group">
                         <input type="email" name="로그인" class="form-style" placeholder="ID" id="logemail" autocomplete="off">
                         <i class="input-icon uil uil-at"></i>
@@ -68,6 +69,7 @@
                       </div>
                       <a href="#" class="btn mt-4">로그인</a>
                       <p class="mb-0 mt-4 text-center"><a href="#0" class="link">비밀번호를 잊으셨나요?</a></p>
+                        </form>
                         </div>
                       </div>
                     </div>

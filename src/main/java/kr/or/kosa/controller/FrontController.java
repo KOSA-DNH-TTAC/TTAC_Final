@@ -64,6 +64,12 @@ public class FrontController {
 		return "common/login";
 	}
 	
+	@PostMapping("/login")
+	public String mylogin() {
+		System.out.println("로그인제출?");
+		return null;
+	}
+	
 	@GetMapping("/error")
 	public String error() {
 		
