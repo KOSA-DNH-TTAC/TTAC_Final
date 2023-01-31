@@ -43,15 +43,15 @@
 		<div class="headerwrap">
 			<div id="headerin">
 				<h1><a href="../" class="logo"><img src="resources/assets/img/logoBLUE.png" alt="로고" style="height:60px;"/></a></h1>		
-				<nav class="gnb">
-					<ul>
-					
-						<li class="menu last">
-							<button class="btn_sumit ml네일아트" onclick="document.location.href='/bbs/logout.php';">로그아웃</button><button class="btn_sumit blbtn ml네일아트" onclick="document.location.href='/';">홈페이지</button>
-						</li> <!--.menu.g1-->
-
-					</ul>
-				</nav>
+					<nav class="gnb">
+						<ul>
+						
+							<li class="menu last">
+								<button class="btn_sumit ml네일아트" onclick="document.location.href='/bbs/logout.php';">로그아웃</button><button class="btn_sumit blbtn ml네일아트" onclick="document.location.href='/';">홈페이지</button>
+							</li> <!--.menu.g1-->
+	
+						</ul>
+					</nav>
 			</div>
 
 		</div>
@@ -61,7 +61,7 @@
 
 		<div class="subcon">
 	<div class="leftcon">
-<nav id="sidemenu">
+	<nav id="sidemenu">
 		<ul class="submenu">
 			<li class="smenu" style="background-color:#4D6794; color:white;"><a href="/adminCoupon" ><h1>기숙사 통합관리 솔루션</h1></a></li>
 			<li class="smenu"><a href="/adminMember">회원관리</a>
@@ -69,16 +69,16 @@
 					<li ><a href="/adminMember">회원현황</a></li>
 					<li ><a href="../sub01/sub01_02.php">벌점관리</a></li>
 				</ul>	
-			</li>	
-			<li class="smenu"><a href="/adminCoupon">식권관리</a></li>
-			<li class="smenu"><a href="/adminPopular">외박관리</a></li>
-			<li class="smenu"><a href="/adminAnalyze">시설관리</a>
+			</li>
+			<li class="smenu"><a href="/adminCoupon" >식권관리</a></li>
+			<li class="smenu"><a href="/adminPopular" >외박관리</a></li>
+			<li class="smenu"><a href="/adminAnalyze" class="msub on">시설관리</a>
 				<ul class="sub ">
 					<li ><a href="/adminAnalyze">시설관리</a></li>
 					<li ><a href="/adminEnroll">시설등록</a></li>
 				</ul>	
 			</li>
-			<li class="smenu"><a href="adminCalendar" class="msub on">일정관리</a></li>
+			<li class="smenu"><a href="adminCalendar" >일정관리</a></li>
 			<li class="smenu"><a href="/adminSail" >통계관리</a></li>
 		</ul>
 
@@ -105,109 +105,79 @@ $(document).ready(function(){
 </script>
 
 </div>	<div class="con">
-		<h3 class="sub_h3">일정관리 <span></span></h3>
+		<h3 class="sub_h3">시설관리 <span>시설등록</span></h3>	
 
-<div class="coupon_top bmb">
-	<h3 class="bgtab txtin">일정 추가 / 수정</h3>	
-
-</div>
-
-<!--일정정보-->
-<div class="coupon">
-	<div class="ofh mb10">	
-		<select name="" class="dpi">
-			<option value="">10개씩보기</option>
-			<option value="">20개씩보기</option>
-			<option value="">30개씩 보기</option>
-			<option value="">50개씩 보기</option>
-		</select>
+<div class="bmb">
+	<div class="bgtab">
+		<h3 class="txtin"> 건물 정보 / 시설물 등록</h3>	
 	</div>
-	
-	<div class="bgtab bgtab2">
-		<div class="w70 fl">
-			<a href="#" class="btn_sumit">수정</a>
-			<a href="#" class="btn_sumit2">삭제</a>
-		</div>
-	</div>
-	<table class="comm_table tac bmb">	
-		<tr>
-			<th><input type="checkbox" value=""/></th>
-			<th>날짜</th>
-			<th>일정제목</th>
-			<th>일정내용</th>
-		</tr>
-		<tr>
-			<td><input type="checkbox" value=""/></td>
-			<td>200170800001</td>
-			<td class="tal">박예빈 소방훈련</td>
-			<td>소방의 날</td>
-		</tr>
-		<tr class="bgc">
-			<td><input type="checkbox" value=""/></td>
-			<td>200170800001</td>
-			<td class="tal">고범종 지진대피훈련</td>
-			<td>지진의 날</td>
-		</tr>
-		<tr class="bgc">
-			<td><input type="checkbox" value=""/></td>
-			<td>200170800001</td>
-			<td class="tal">도현정 위장훈련</td>
-			<td>군인의 날</td>
-		</tr>
-		<tr class="bgc">
-			<td><input type="checkbox" value=""/></td>
-			<td>200170800001</td>
-			<td class="tal">임준한 김장체험</td>
-			<td>세계 김치의 날</td>
-		</tr>
-	</table>
-</div>
-<!--쿠폰정보 e-->
-
-
-
-<!--쿠폰등록-->
-<div class="coupon_write bmb">
-	<h4 class="tit_nm">쿠폰등록</h4>
-	<table class="comm_table mb">
+	<table class="srch_table mb20">	
 		<colgroup>
-			<col width="180px"/>
-			<col width="*"/>
+			<col width="10%"/>
+			<col width="20%"/>
+			<col width="10%"/>
+			<col width="20%"/>
+			<col width="10%"/>
+			<col width="20%"/>
 		</colgroup>
 		<tr>
-			<th>날짜선택 <span class="blTxt">*</span></th>
-			<td><input class="form-select1" type="date" id="start" name="trip-start" value="2000-10-04">
-				 - <input class="form-select1" type="date" id="end" name="trip-start" value="2000-10-04">&nbsp;&nbsp;</td>			
-		</tr>
-		<tr>
-			<th>일정제목 <span class="blTxt">*</span></th>
-			<td><input type="text" class="w60"/></td>			
-		</tr>
-		<tr>
-			<th>일정내용 <span class="blTxt">*</span></th>
-			<td>				
-				<input type="text"/> 
+			<th>건물(동)</th>
+			<td><input type="text" class="w40"/>
+				<span><button type="button" class="btn_sumit2" onclick="();">등록</button></span>	
 			</td>
-		</tr>	
-		
-		
-	</table>
-
+			<th>층</th>
+			<td><input type="text" class="w40"/>
+				<span><button type="button" class="btn_sumit2" onclick="();">등록</button></span>	
+			</td>
+			<th>시설물</th>
+			<td><input type="text" class="w40"/>
+				<span><button type="button" class="btn_sumit2" onclick="();">등록</button></span>	
+			</td>
+		</tr>
+	</table> 
 </div>
-<!--쿠폰등록 e-->
 
 
-
-
-
-
-	<div class="ok_btn">
-		<ul>
-			<li><button type="button" class="btn_sumit2">일정등록</button></li>
-		</ul>
+<div><!--날짜지정검색시-->
+	<div class="bgtab bgtab2 ofh">
+		<div class="w50 fl">			
+			<p class="txtin wtTxt fsbb">등록 시설물 정보</p>
+		</div>
 	</div>
-</div> 
-<!--쿠폰등록 e-->
+</div><!--날짜지정검색시 e-->
+
+
+<table class="comm_table mb">
+	<thead>
+		<tr>
+			<th>건물(동)</th>
+			<th>층</th>
+			<th>시설물</th>					
+		</tr>
+	</thead>
+	<tbody>
+		<tr class="tar">
+			<td class="tac bgc">A동</td>
+			<td class="tal">5</td>
+			<td class="tal">세탁기</td>
+		</tr>
+		<tr class="tar">
+			<td class="tac bgc">B동</td>
+			<td class="tal">3</td>
+			<td class="tal">변기</td>
+		</tr>
+		<tr class="tar">
+			<td class="tac bgc">C동</td>
+			<td class="tal">7</td>
+			<td class="tal">세면대</td>
+		</tr>
+		<tr class="tar">
+			<td class="tac bgc">D동</td>
+			<td class="tal">12</td>
+			<td class="tal">에어컨</td>
+		</tr>
+	</tbody>
+</table>
 
 
 

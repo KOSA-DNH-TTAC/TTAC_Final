@@ -12,5 +12,8 @@ public interface BoardDao {
 	
 	// 공지사항
 	public List<Post> noticeList();
+	
+	// 자유게시판
+	public List<Post> freeBoardList();
 
 }

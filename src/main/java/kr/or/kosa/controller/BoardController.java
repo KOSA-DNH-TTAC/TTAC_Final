@@ -23,5 +23,18 @@ public class BoardController {
 		model.addAttribute("noticeList", noticeList);
 		return "member/board/noticeList";
 	}
+	
+	// 자유게시판
+	@GetMapping("freeBoardList")
+	public String freeBoardView(Model model) {
+		List<Post> freeBoardList = boardService.freeBoardList();
+		model.addAttribute("freeBoardList", freeBoardList);
+		return "member/board/freeBoardList";
+	}
 
+	@GetMapping("/boardWrite")
+	public String BoardWrite() {
+		
+		return "member/board/boardWrite";
+	}
 }

@@ -32,34 +32,41 @@ public class BoardService {
 	public List<Post> noticeList() {
 		BoardDao boardDao = sqlSession.getMapper(BoardDao.class);
 		List<Post> noticeList = boardDao.noticeList();
-		System.out.println("noticeList: " + noticeList);
 		
 		Date nowDate = new Date();
-		System.out.println("nowDate: " + nowDate);
-		
-		// SimpleDateFormat simpleDateFormat = new SimpleDateFormat("MM/dd");
-		// SimpleDateFormat simpleDateFormatTime = new SimpleDateFormat("HH:mm");	
-		
+	
 		SimpleDateFormat simpleDateFormat = new SimpleDateFormat("YYYY-MM-dd");
 		String formatNowDate = simpleDateFormat.format(nowDate);
-		System.out.println("formatNowDate: " + formatNowDate);
 		
 		for(Post p : noticeList) {
-			String setDate = "";
 			String writedate = p.getWriteDate().substring(0, 10);
 			if (formatNowDate.equals(writedate)) {
 				p.setWriteDate(p.getWriteDate().substring(11, 16));
 			} else {
 				p.setWriteDate(writedate.substring(5));
 			}
-			
-			
-			
 		}
-		
-		
-		
 		return noticeList;
+	}
+	
+	public List<Post> freeBoardList() {
+		BoardDao boardDao = sqlSession.getMapper(BoardDao.class);
+		List<Post> freeBoardList = boardDao.freeBoardList();
+		
+		Date nowDate = new Date();
+		
+		SimpleDateFormat simpleDateFormat = new SimpleDateFormat("YYYY-MM-dd");
+		String formatNowDate = simpleDateFormat.format(nowDate);
+		
+		for(Post p : freeBoardList) {
+			String writedate = p.getWriteDate().substring(0, 10);
+			if (formatNowDate.equals(writedate)) {
+				p.setWriteDate(p.getWriteDate().substring(11, 16));
+			} else {
+				p.setWriteDate(writedate.substring(5));
+			}
+		}
+		return freeBoardList;
 	}
 
 }

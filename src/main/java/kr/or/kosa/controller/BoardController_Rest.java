@@ -33,4 +33,19 @@ public class BoardController_Rest {
 			return new ResponseEntity<List<Post>>(noticeList, HttpStatus.BAD_REQUEST);
 		}
 	}
+	
+	/*
+	@RequestMapping("")
+	public ResponseEntity<List<Post>> freeBoardList() {
+		System.out.println("rest controller");
+		List<Post> freeBoardList = new ArrayList<Post>();
+		try {
+			freeBoardList = boardService.freeBoardList();
+			return new ResponseEntity<List<Post>>(freeBoardList, HttpStatus.OK);
+		} catch (Exception e) {
+			return new ResponseEntity<List<Post>>(freeBoardList, HttpStatus.BAD_REQUEST);
+		}
+	}
+	*/
+	
 }
