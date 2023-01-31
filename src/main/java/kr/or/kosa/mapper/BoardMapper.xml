@@ -3,10 +3,13 @@
 PUBLIC "-//mybatis.org//DTD Mapper 3.0//EN"
 "http://mybatis.org/dtd/mybatis-3-mapper.dtd">
 
-<mapper namespace="kr.or.kosa.dao.dao">
-	
-	
-	
+<mapper namespace="kr.or.kosa.dao.BoardDao">
+
+<select id="getBoardname" resultType="kr.or.kosa.dto.Board">
+
+</select>
+
+
 </mapper>
 
 

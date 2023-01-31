@@ -46,28 +46,36 @@
   
   <main id="main">
   <div id="container">
+   <section id="breadcrumbs" class="breadcrumbs">
+      <div class="container">
+
+        <ol>
+          <li><a href="/">Home</a></li>
+          <li>외박신청</li>
+        </ol>
+        <h2>외박신청</h2>
+
+      </div>
+    </section>
+  
   	<div id="box">
   	<div id="date">
-  		<label class="label" for="start">Start date</label>
-  		<label class="label" for="end">End date</label>
-  		<label class="label" for="end">End date</label>
-  		<label class="label" for="end">End date</label>
+  		<label class="label" for="start">시작 날짜</label>
+  		<label class="label" for="end">종료 날짜</label>
+  		<label class="label" for="end">신청 구분</label>
+  		<label class="label" for="end">증빙 첨부</label>
   		
   	</div>
   	<div id="select">
-		<input class="form-select" type="date" id="start" name="trip-start" value="2000-10-04">
-		<input class="form-select" type="date" id="start" name="trip-start" value="2000-10-04">
-		<select class="form-select" aria-label="Default select example">
+		<input class="form-select1" type="date" id="start" name="trip-start" value="2000-10-04">
+		<input class="form-select1" type="date" id="end" name="trip-start" value="2000-10-04">
+		<select class="form-select1" aria-label="Default select example">
 		  <option selected>외박</option>
 		  <option value="1">외박</option>
 		  <option value="2">장기외박</option>
 		</select>
-		<select class="form-select" aria-label="Default select example">
-		  <option selected>증빙자료 첨부</option>
-		  <option value="1">One</option>
-		  <option value="2">Two</option>
-		  <option value="3">Three</option>
-		</select>
+		<label class="form-select1" for="file" style="background-color:#FFC107; border-radius: 9px; cursor: pointer; justify-content: center;">파일 업로드</label>
+		<input class="file" id="file" type="file" style="display:none;">
   	</div>
   	<div id="reason">
   		<div class="form-floating">
