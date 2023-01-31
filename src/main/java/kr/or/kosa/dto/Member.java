@@ -21,6 +21,7 @@ public class Member {
 	private int status;
 	private String enabled;
 	
+	// resultMap을 이용...(memberauth테이블의 값 가져와서 넣어야함)
 	private List<MemberAuth> authList;
 	
 }
