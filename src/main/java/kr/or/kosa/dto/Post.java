@@ -1,7 +1,5 @@
 package kr.or.kosa.dto;
 
-import java.util.Date;
-
 import lombok.Data;
 
 @Data
@@ -14,7 +12,7 @@ public class Post {
 	private String title;
 	private String content;
 	private int readNum;
-	private Date writeDate;
+	private String writeDate;
 	private int likeNum;
 	private int status;
 }

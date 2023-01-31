@@ -9,7 +9,7 @@
 <meta charset="utf-8">
 <meta content="width=device-width, initial-scale=1.0" name="viewport">
 
-<title>DOTO:커뮤니티</title>
+<title>DOTO: 자유게시판</title>
 <meta content="" name="description">
 <meta content="" name="keywords">
 
@@ -62,9 +62,9 @@
 
 				<ol>
 					<li><a href="index.html">Home</a></li>
-					<li>커뮤니티</li>
+					<li>자유게시판</li>
 				</ol>
-				<h2>커뮤니티</h2>
+				<h2>자유게시판</h2>
 
 			</div>
 		</section>
@@ -78,7 +78,6 @@
 
 					<div class="col-lg-8 entries">
 
-						<c:forEach var="post" items="${postList}">
 							<article class="entry">
 
 								<h2 class="entry-title">
@@ -101,8 +100,6 @@
 
 							</article>
 							<!-- End blog entry -->
-
-						</c:forEach>
 
 						<article class="entry">
 
@@ -147,7 +144,7 @@
 							</div>
 							<!-- End sidebar search formn-->
 
-							<jsp:include page="/WEB-INF/views/member/board/boardInclude/category.jsp" />
+							<jsp:include page="/WEB-INF/views/member/board/boardInclude/category.jsp"></jsp:include>
 
 
 						</div>

@@ -9,7 +9,7 @@
 <meta charset="utf-8">
 <meta content="width=device-width, initial-scale=1.0" name="viewport">
 
-<title>DOTO:커뮤니티</title>
+<title>DOTO: 건의사항</title>
 <meta content="" name="description">
 <meta content="" name="keywords">
 
@@ -62,9 +62,9 @@
 
 				<ol>
 					<li><a href="index.html">Home</a></li>
-					<li>커뮤니티</li>
+					<li>건의사항</li>
 				</ol>
-				<h2>커뮤니티</h2>
+				<h2>건의사항</h2>
 
 			</div>
 		</section>
@@ -147,7 +147,18 @@
 							</div>
 							<!-- End sidebar search formn-->
 
-							<jsp:include page="/WEB-INF/views/member/board/boardInclude/category.jsp" />
+							<h3 class="sidebar-title">Categories</h3>
+							<div class="sidebar-item categories">
+								<ul>
+									<li><a href="#">General <span>(25)</span></a></li>
+									<li><a href="#">Lifestyle <span>(12)</span></a></li>
+									<li><a href="#">Travel <span>(5)</span></a></li>
+									<li><a href="#">Design <span>(22)</span></a></li>
+									<li><a href="#">Creative <span>(8)</span></a></li>
+									<li><a href="#">Education <span>(14)</span></a></li>
+								</ul>
+							</div>
+							<!-- End sidebar categories-->
 
 
 						</div>

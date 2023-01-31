@@ -9,7 +9,7 @@
 <meta charset="utf-8">
 <meta content="width=device-width, initial-scale=1.0" name="viewport">
 
-<title>DOTO:커뮤니티</title>
+<title>DOTO: 공지사항</title>
 <meta content="" name="description">
 <meta content="" name="keywords">
 
@@ -62,9 +62,9 @@
 
 				<ol>
 					<li><a href="index.html">Home</a></li>
-					<li>커뮤니티</li>
+					<li>공지사항</li>
 				</ol>
-				<h2>커뮤니티</h2>
+				<h2>공지사항</h2>
 
 			</div>
 		</section>
@@ -78,25 +78,23 @@
 
 					<div class="col-lg-8 entries">
 
-						<c:forEach var="post" items="${postList}">
+						<c:forEach items="${noticeList}" var="notice">
 							<article class="entry">
 
-								<h2 class="entry-title">
-									<a href="blog-single.html">${post.title}</a>
-								</h2>
+								<div class="entry-title">
+									<a href="blog-single.html">${notice.title}</a>
+								</div>
 
 								<div class="entry-meta">
 									<ul>
-										<li class="d-flex align-items-center"><i class="bi bi-person"></i><a href="blog-single.html">${post.memberId}</a></li>
-										<li class="d-flex align-items-center"><i class="bi bi-clock"></i> <a href="blog-single.html">${post.writeDate}</a></li>
-										<li class="d-flex align-items-center"><i class="bi bi-chat-dots"></i> <a href="blog-single.html">${reply.comment}</a></li>
-										<!-- reply.comment 댓글 개수 -->
-										<li class="d-flex align-items-center"><i class="bi bi-chat-dots" />${post.likeNum}</li>
+										<li class="d-flex align-items-center"><i class="bi bi-person"></i><a href="blog-single.html">${notice.memberId}</a></li>
+										<li class="d-flex align-items-center"><i class="bi bi-clock"></i> <a href="blog-single.html">${notice.writeDate}</a></li>
+										<li class="d-flex align-items-center"><i class="bi-hand-thumbs-up"></i>${notice.likeNum}</li>
 									</ul>
 								</div>
 
 								<div class="entry-content">
-									<p>${post.content}</p>
+									<p>${notice.content}</p>
 								</div>
 
 							</article>
