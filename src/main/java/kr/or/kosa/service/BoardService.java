@@ -33,24 +33,28 @@ public class BoardService {
 		BoardDao boardDao = sqlSession.getMapper(BoardDao.class);
 		List<Post> noticeList = boardDao.noticeList();
 		System.out.println("noticeList: " + noticeList);
-		System.out.println("시간: " + noticeList.get(0).getWriteDate());
 		
 		Date nowDate = new Date();
 		System.out.println("nowDate: " + nowDate);
 		
-		SimpleDateFormat simpleDateFormat = new SimpleDateFormat("MM/dd");
-		SimpleDateFormat simpleDateFormatTime = new SimpleDateFormat("HH:mm");		
+		// SimpleDateFormat simpleDateFormat = new SimpleDateFormat("MM/dd");
+		// SimpleDateFormat simpleDateFormatTime = new SimpleDateFormat("HH:mm");	
+		
+		SimpleDateFormat simpleDateFormat = new SimpleDateFormat("YYYY-MM-dd");
+		String formatNowDate = simpleDateFormat.format(nowDate);
+		System.out.println("formatNowDate: " + formatNowDate);
 		
 		for(Post p : noticeList) {
-			String formatNowDate = simpleDateFormat.format(nowDate);
-			String formatDate = simpleDateFormat.format(p.getWriteDate());
-			String formatTime = simpleDateFormatTime.format(p.getWriteDate());
-			
-			if (formatDate.equals(formatNowDate)) {
-				p.setWriteDate(formatTime);
+			String setDate = "";
+			String writedate = p.getWriteDate().substring(0, 10);
+			if (formatNowDate.equals(writedate)) {
+				p.setWriteDate(p.getWriteDate().substring(11, 16));
 			} else {
-				p.setWriteDate(formatDate);
+				p.setWriteDate(writedate.substring(5));
 			}
+			
+			
+			
 		}
 		
 		
