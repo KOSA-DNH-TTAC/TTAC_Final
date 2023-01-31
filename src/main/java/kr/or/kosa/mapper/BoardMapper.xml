@@ -9,9 +9,19 @@ PUBLIC "-//mybatis.org//DTD Mapper 3.0//EN"
 
 </select>
 
+<!-- 공지사항 목록 -->
 <select id="noticeList" resultType="kr.or.kosa.dto.Post">
-SELECT p.idx, p.boardidx, p.universitycode, b.boardname, p.memberid, p.writedate, p.likenum, p.content, p.title
+SELECT p.boardidx, p.universitycode, b.boardname, p.memberid, p.writedate, p.likenum, p.content, p.title
 FROM POST p JOIN BOARD b ON p.boardidx = b.boardidx
+WHERE b.boardname='공지사항'
+ORDER BY p.writedate DESC;
+</select>
+
+<!-- 자유게시판 목록 -->
+<select id="freeBoardList" resultType="kr.or.kosa.dto.Post">
+SELECT p.boardidx, p.universitycode, b.boardname, p.memberid, p.writedate, p.likenum, p.content, p.title
+FROM POST p JOIN BOARD b ON p.boardidx = b.boardidx
+WHERE b.boardname='자유게시판'
 ORDER BY p.writedate DESC;
 </select>
 
