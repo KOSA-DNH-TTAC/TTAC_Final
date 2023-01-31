@@ -3,8 +3,23 @@
 PUBLIC "-//mybatis.org//DTD Mapper 3.0//EN"
 "http://mybatis.org/dtd/mybatis-3-mapper.dtd">
 
-<mapper namespace="kr.or.kosa.dao.dao">
-	
+<mapper namespace="kr.or.kosa.dao.MemberDao">
+
+	<!-- getAllMember(전체조회) -->
+ <select id="getAllMember" parameterType="hashmap" 
+                           resultType="kr.or.kosa.dto.Member">             
+   SELECT m.memberid, m.universitycode, m.NAME, m.major,
+   m.email, m.gender, m.phone, m.parentsphone, m.memberpoint, m.demerit, a.AUTH
+   FROM MEMBER m LEFT join MEMBERAUTH a ON m.MEMBERID = a.MEMBERID WHERE a.auth = 'ROLE_MEMBER'
+ </select>
+ 
+ 
+ <!-- getMember (특정회원조회) -->
+ <select id="getMember" parameterType="String" resultType="kr.or.kosa.dto.Member">
+  SELECT memberid, universitycode, NAME, major, email, gender, phone, parentsphone, memberpoint, demerit
+  FROM MEMBER
+  WHERE memberid= #{memberid}
+ </select>
 	
 	
 </mapper>
