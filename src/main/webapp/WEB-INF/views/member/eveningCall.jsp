@@ -9,7 +9,7 @@
   <meta charset="utf-8">
   <meta content="width=device-width, initial-scale=1.0" name="viewport">
 
-  <title>DOTO:기숙사통합관리시스템</title>
+  <title>DOTO:저녁 점호</title>
   <meta content="" name="description">
   <meta content="" name="keywords">
 
@@ -27,76 +27,73 @@
   <link href="resources/assets/vendor/boxicons/css/boxicons.min.css" rel="stylesheet">
   <link href="resources/assets/vendor/glightbox/css/glightbox.min.css" rel="stylesheet">
   <link href="resources/assets/vendor/swiper/swiper-bundle.min.css" rel="stylesheet">
-  <link href="resources/assets/css/nightOver.css" rel="stylesheet">
 
   <!-- Template Main CSS File -->
   <link href="resources/assets/css/style.css" rel="stylesheet">
-  
-  <!-- Jquery -->
-  <script  src="http://code.jquery.com/jquery-latest.min.js"></script>
 
-  
 </head>
 
 <body>
 
-  <!-- ======= Header ======= -->
+   <!-- ======= Header ======= -->
   <c:import url="/WEB-INF/views/common/top.jsp" />
   <!-- End Header -->
-  
+
   <main id="main">
-  <div id="container">
-   <section id="breadcrumbs" class="breadcrumbs">
+
+    <!-- ======= Breadcrumbs ======= -->
+    <section id="breadcrumbs" class="breadcrumbs">
       <div class="container">
 
         <ol>
-          <li><a href="/">Home</a></li>
-          <li>외박신청</li>
+          <li><a href="index.html">Home</a></li>
+          <li>점호하기</li>
         </ol>
-        <h2>외박신청</h2>
+        <h2>점호하기</h2>
+
+      </div>
+    </section><!-- End Breadcrumbs -->
+
+    <!-- ======= Contact Section ======= -->
+    <section id="contact" class="contact">
+      <div class="container">
+
+		<!-- 나의 위치 -->
+        <div class="row">
+          <div>
+            <div class="info-box mb-4">
+              <i class="bx bx-map"></i>
+              <h3>나의 현재위치</h3>
+              <p>서울시 종로구 대학로</p>
+            	<form action="" method="post">
+              		<div><button type="submit" style="width:130px; height:20; border-radius: 50px; padding:5px; border: none; background-color:#E96B56; color:white; margin-top:10px; font-size: large;">점호하기</button></div>
+            	</form>
+            </div>
+          </div>
+        </div>
+      
+		<!-- 지도 -->
+        <div class="row">
+          <div>
+            <iframe class="mb-4 mb-lg-0" src="https://www.google.com/maps/embed?pb=!1m14!1m8!1m3!1d12097.433213460943!2d-74.0062269!3d40.7101282!3m2!1i1024!2i768!4f13.1!3m3!1m2!1s0x0%3A0xb89d1fe6bc499443!2sDowntown+Conference+Center!5e0!3m2!1smk!2sbg!4v1539943755621" frameborder="0" style="border:0; width: 100%; height: 384px;" allowfullscreen></iframe>
+          </div>
+        </div>
 
       </div>
     </section>
-  
-  	<div id="box">
-  	<div id="date">
-  		<label class="label" for="start">시작 날짜</label>
-  		<label class="label" for="end">종료 날짜</label>
-  		<label class="label" for="end">신청 구분</label>
-  		<label class="label" for="end">증빙 첨부</label>
-  		
-  	</div>
-  	<div id="select">
-		<input class="form-select1" type="date" id="start" name="trip-start" value="2000-10-04">
-		<input class="form-select1" type="date" id="end" name="trip-start" value="2000-10-04">
-		<select class="form-select1" aria-label="Default select example">
-		  <option selected>외박</option>
-		  <option value="1">외박</option>
-		  <option value="2">장기외박</option>
-		</select>
-		<label class="form-select1" for="file" style="background-color:#FFC107; border-radius: 9px; cursor: pointer; justify-content: center;">파일 업로드</label>
-		<input class="file" id="file" type="file" style="display:none;">
-  	</div>
-  	<div id="reason">
-  		<div class="form-floating">
-		  <textarea class="form-control" placeholder="외박 사유를 적어주세요." id="floatingTextarea2" style="height: 100px"></textarea>
-		  <label for="floatingTextarea2">외박 사유를 적어주세요.</label>
-		</div>
-  	</div>
-  	<button type="submit" class="btn btn-warning">신청하기</button>
-  	</div>
-  </div>
-  
+    <!-- End Contact Section -->
+
   </main>
-  <!-- ======= Footer ======= -->
+  <!-- End #main -->
+
+   <!-- ======= Footer ======= -->
 	<c:import url="/WEB-INF/views/common/footer.jsp" />
   <!-- End Footer -->
 
+
   <a href="#" class="back-to-top d-flex align-items-center justify-content-center"><i class="bi bi-arrow-up-short"></i></a>
 
-</body>
-
-<!-- Vendor JS Files -->
+  <!-- Vendor JS Files -->
   <script src="resources/assets/vendor/purecounter/purecounter_vanilla.js"></script>
   <script src="resources/assets/vendor/bootstrap/js/bootstrap.bundle.min.js"></script>
   <script src="resources/assets/vendor/glightbox/js/glightbox.min.js"></script>
@@ -107,5 +104,7 @@
 
   <!-- Template Main JS File -->
   <script src="resources/assets/js/main.js"></script>
+
+</body>
 
 </html>

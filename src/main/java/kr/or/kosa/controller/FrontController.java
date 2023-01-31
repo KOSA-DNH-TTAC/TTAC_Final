@@ -106,4 +106,16 @@ public class FrontController {
 		return "admin/adminCalendar";
 	}
 	
+	@GetMapping("/adminEnroll")
+	public String adminEnroll() {
+		
+		return "admin/adminEnroll";
+	}
+	
+	@GetMapping("/eveningCall")
+	public String eveningCall() {
+		
+		return "member/eveningCall";
+	}
+	
 }

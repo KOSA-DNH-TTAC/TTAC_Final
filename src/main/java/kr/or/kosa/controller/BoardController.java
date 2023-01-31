@@ -32,4 +32,9 @@ public class BoardController {
 		return "member/board/freeBoardList";
 	}
 
+	@GetMapping("/boardWrite")
+	public String BoardWrite() {
+		
+		return "member/board/boardWrite";
+	}
 }

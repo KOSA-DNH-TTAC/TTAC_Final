@@ -71,7 +71,12 @@
 			</li>	
 			<li class="smenu"><a href="/adminCoupon" >식권관리</a></li>
 			<li class="smenu"><a href="/adminPopular" class="msub on">외박관리</a></li>
-			<li class="smenu"><a href="/adminAnalyze">시설관리</a></li>
+			<li class="smenu"><a href="/adminAnalyze">시설관리</a>
+				<ul class="sub ">
+					<li ><a href="/adminAnalyze">시설관리</a></li>
+					<li ><a href="/adminEnroll">시설등록</a></li>
+				</ul>	
+			</li>
 			<li class="smenu"><a href="adminCalendar" >일정관리</a></li>
 			<li class="smenu"><a href="/adminSail" >통계관리</a></li>
 		</ul>
