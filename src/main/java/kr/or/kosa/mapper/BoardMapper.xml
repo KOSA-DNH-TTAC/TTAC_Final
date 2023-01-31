@@ -5,7 +5,7 @@ PUBLIC "-//mybatis.org//DTD Mapper 3.0//EN"
 
 <mapper namespace="kr.or.kosa.dao.BoardDao">
 
-<select id="getBoardname" resultType="kr.or.kosa.dto.Boardname">
+<select id="getBoardname" resultType="kr.or.kosa.dto.Board">
 
 </select>
 

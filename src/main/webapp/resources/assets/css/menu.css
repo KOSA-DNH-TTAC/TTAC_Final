@@ -1,0 +1,45 @@
+/*硫붾돱*/
+
+#header .lnb{background:#505357; overflow:hidden;}
+#header .lnb ul{overflow:hidden; float:right; margin: 0 auto;}
+#header .lnb ul li {float:left;}
+#header .lnb ul li a{display:block; width:100%;height:100%; float:left; line-height:40px; color:#ffffff; padding:0 15px; font-size:14px; text-transform:uppercase}
+#header .lnb ul li.bg_child{background:#f3bd17; margin-left:7.5px;}
+#header .lnb ul li.sns_link{width:40px; height:40px; text-indent:-999999px; background:#435e99; background:url(../img/ic_facebook.jpg) no-repeat  center center}
+#header .lnb ul li.twiter{background:#27a9e0; background:url(../img/ic_twiter.jpg) no-repeat  center center}}
+#header{width:100%; background-color:#fff;}
+#header h1{left:20px; top:10px; z-index:2; float:left; width:260px;}/*�숈씪 width*/
+#header h1 img{padding:12px 0 0 20px; max-width:230px;}
+#header .gnb{float: right; width: calc(100% - 260px);}/*�숈씪 width*/
+
+.headerwrap{background:#2a3954}
+.headerwrap:after{content:''; display:block; clear:both; }
+#headerin{position:relative; max-width: 2000px; min-width:1200px; width: 100%; margin: 0 auto;}
+.logo{margin-left:0;}
+.logo a{width:75px; height:70px;}
+.gnb{display:block;  z-index:3}
+.gnb .menu{float:left;}
+.gnb .menu .m{display:block; line-height: 70px; padding:0 13px;	font-size: 14px; color:#ffffff; font-weight:600;}
+.gnb .menu:hover .m{background:#1e88e5 ; color:#ffffff}
+.gnb .menu .sub{position:absolute; top: 70px; left:0; right:0; margin:auto;  background:#1e88e5 ; display:none; z-index:100; }
+.gnb .menu:hover .sub{display:block;}
+.gnb .menu .sub .subList{padding:5px 10px; left:260px;}/*�숈씪 width*/
+.gnb .menu .sub .subList:after{	content:""; display:block; clear:both;}
+/*.gnb .menu .sub4{padding-left:230px}*/
+.gnb .menu .sub5{padding-left:100px}
+.gnb .menu .sub6{padding-left:250px}
+/*.gnb .menu .sub7{padding-left:350px}*/
+
+.gnb .last{float:right; line-height:70px; padding:0 13px; color:#ffffff; font-size:0.9em}
+.gnb .menu .sub .subList{overflow:hidden; position:relative;}
+/*.gnb .menu .sub .subList:before{position:absolute; content:''; width:100px; height:5px; background:#0f449b; margin-left:-50px; left:50%; top:0}*/
+.gnb .menu .sub .subList .left{}
+.gnb .menu .sub .subList .left h2{font-size:24px; color:#ffffff}
+.gnb .menu .sub .subList .right{width:100%;overflow:hidden; }
+.gnb .menu .sub .subList  li{display:inline-block; padding-right:10px; vertical-align:top; line-height:55px;}
+.gnb .menu .sub .subList  li:last-child{padding-right:0;}
+.gnb .menu .sub .subList  li a{color:#ffffff}
+.gnb .menu .sub .subList  li a[target='_blank']:after {font-family: 'FontAwesome'; font-size:11px; display:inline-block; content:"\f08e"; margin: 0 0 0px 3px; vertical-align: middle;}
+.gnb .menu .sub .subList  li a:hover{font-weight:600}
+
+/*--header--*/
