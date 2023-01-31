@@ -1,0 +1,39 @@
+.catebox{max-width:350px;}
+#category{display: block; margin: 0; list-style: none; padding:20px; background:#fcfcfc; border:1px solid #e6e6e6}
+#category ul{font-size: 1em; list-style: none; padding-left:30px}
+#category li{display: block; width: 100%; display: block; clear: both; position:relative;}
+#category dl{position: relative;  background:#fff; overflow:hidden; z-index:1;}
+#category dt{padding-left:10px; line-height:40px; border:1px solid #dcdcdc; border-radius:3px;}
+#category .cate_li > dl dt{padding-left:30px;}
+#category dd{position: absolute; top:10px; right:10px}
+
+#category .cate_li:before{content:''; position:absolute; height:100%; left:15px; bottom:-6px; width:0px; border-left:1px dashed #c8c8c8; z-index:0}
+#category .category_dep li:after{content:''; position:absolute; width:100%; left:-15px; top:26px;  border-top:1px dashed #c8c8c8; z-index:0}
+
+
+
+#category .btn_actions{display:none; margin-left:10px}
+#category .btn_status{position: absolute; top: 3px; right: 0;}
+
+#category dl:hover dd, #category dd:hover {display: block;}
+#category dd strong{display: none;}
+#category a, {border: none;}
+#category .dl_info{position: absolute; left: 0; top: 0px; bottom:0; margin:auto}
+
+#category .cate_li > dl > .dl_info{position:absolute;  width: 25px; height: 20px;}
+#category .cate_li > dl > .dl_info:before{content:'\f07b'; font-family:'FontAwesome'; display:block; text-align:center; line-height:24px; color:#dcdcdc; padding-left:5px; font-size:12px;}
+/*#category .cate_li > dl > .dl_info:before{content:'\f105'; font-family:'FontAwesome';}*/
+#category .btn_liClosed > dl > .dl_info{display: block; width: 20px; height: 20px; background: url(../img/excol_closed.gif) 50% 50% no-repeat;}
+#category .btn_liClosed ul{display: none;}
+
+.btn_edit, .btn_delete, .btn_addChild{display: inline-block; vertical-align:middle; position:relative; width: 20px !Important; height: 20px !Important; margin: 0 1px 0 0; border:0px !Important; padding:0 !important; background:#1e88e5; border-radius:3px !important;}
+.btn_edit:before, .btn_delete:before, .btn_addChild:before{font-family:'FontAwesome'; position:absolute; line-height:22px; text-align:center; width:100%; color:#ffffff; font-size:10px; border-radius:3px;}
+.btn_actions * {cursor: pointer;}
+.btn_edit:before{content:'\f021';}
+.btn_delete:before{content:'\f068';}
+.btn_addChild:before{content:'\f067';}
+.dropzone .ui-droppable dt{color:#ffffff}
+.ui-draggable-dragging{max-width:270px}
+.dropzone .ui-droppable dt{border-color:#1e88e5; border-radius:0 !Important}
+
+#category .dropzone{ height:6px; /*background-color:#ffffff*/ !important; border-bottom:4px solid transparent }

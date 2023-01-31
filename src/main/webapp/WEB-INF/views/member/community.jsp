@@ -1,37 +1,46 @@
 <%@ page language="java" contentType="text/html; charset=UTF-8"
-    pageEncoding="UTF-8"%>
+	pageEncoding="UTF-8"%>
 <%@ taglib prefix="c" uri="http://java.sun.com/jsp/jstl/core"%>
 <%@ taglib prefix="fn" uri="http://java.sun.com/jsp/jstl/functions"%>
 <!DOCTYPE html>
 <html lang="en">
 
 <head>
-  <meta charset="utf-8">
-  <meta content="width=device-width, initial-scale=1.0" name="viewport">
+<meta charset="utf-8">
+<meta content="width=device-width, initial-scale=1.0" name="viewport">
 
-  <title>DOTO:커뮤니티</title>
-  <meta content="" name="description">
-  <meta content="" name="keywords">
+<title>DOTO:커뮤니티</title>
+<meta content="" name="description">
+<meta content="" name="keywords">
 
-  <!-- Favicons -->
-  <link href="resources/assets/img/favicon.png" rel="icon">
-  <link href="resources/assets/img/apple-touch-icon.png" rel="apple-touch-icon">
+<!-- Favicons -->
+<link href="resources/assets/img/favicon.png" rel="icon">
+<link href="resources/assets/img/apple-touch-icon.png"
+	rel="apple-touch-icon">
 
-  <!-- Google Fonts -->
-  <link href="https://fonts.googleapis.com/css?family=Open+Sans:300,300i,400,400i,600,600i,700,700i|Raleway:300,300i,400,400i,500,500i,600,600i,700,700i|Poppins:300,300i,400,400i,500,500i,600,600i,700,700i" rel="stylesheet">
+<!-- Google Fonts -->
+<link
+	href="https://fonts.googleapis.com/css?family=Open+Sans:300,300i,400,400i,600,600i,700,700i|Raleway:300,300i,400,400i,500,500i,600,600i,700,700i|Poppins:300,300i,400,400i,500,500i,600,600i,700,700i"
+	rel="stylesheet">
 
-  <!-- Vendor CSS Files -->
-  <link href="resources/assets/vendor/animate.css/animate.min.css" rel="stylesheet">
-  <link href="resources/assets/vendor/bootstrap/css/bootstrap.min.css" rel="stylesheet">
-  <link href="resources/assets/vendor/bootstrap-icons/bootstrap-icons.css" rel="stylesheet">
-  <link href="resources/assets/vendor/boxicons/css/boxicons.min.css" rel="stylesheet">
-  <link href="resources/assets/vendor/glightbox/css/glightbox.min.css" rel="stylesheet">
-  <link href="resources/assets/vendor/swiper/swiper-bundle.min.css" rel="stylesheet">
+<!-- Vendor CSS Files -->
+<link href="resources/assets/vendor/animate.css/animate.min.css"
+	rel="stylesheet">
+<link href="resources/assets/vendor/bootstrap/css/bootstrap.min.css"
+	rel="stylesheet">
+<link href="resources/assets/vendor/bootstrap-icons/bootstrap-icons.css"
+	rel="stylesheet">
+<link href="resources/assets/vendor/boxicons/css/boxicons.min.css"
+	rel="stylesheet">
+<link href="resources/assets/vendor/glightbox/css/glightbox.min.css"
+	rel="stylesheet">
+<link href="resources/assets/vendor/swiper/swiper-bundle.min.css"
+	rel="stylesheet">
 
-  <!-- Template Main CSS File -->
-  <link href="resources/assets/css/style.css" rel="stylesheet">
+<!-- Template Main CSS File -->
+<link href="resources/assets/css/style.css" rel="stylesheet">
 
-  <!-- =======================================================
+<!-- =======================================================
   * Template Name: Eterna - v4.10.0
   * Template URL: https://bootstrapmade.com/eterna-free-multipurpose-bootstrap-template/
   * Author: BootstrapMade.com
@@ -41,15 +50,15 @@
 
 <body>
 
-   <!-- ======= Header ======= -->
-  <c:import url="/WEB-INF/views/common/top.jsp" />
-  <!-- End Header -->
+	<!-- ======= Header ======= -->
+	<c:import url="/WEB-INF/views/common/top.jsp" />
+	<!-- End Header -->
 
-  <main id="main">
+	<main id="main">
 
-    <!-- ======= Breadcrumbs ======= -->
-    <section id="breadcrumbs" class="breadcrumbs">
-      <div class="container">
+		<!-- ======= Breadcrumbs ======= -->
+		<section id="breadcrumbs" class="breadcrumbs">
+			<div class="container">
 
         <ol>
           <li><a href="/">Home</a></li>
@@ -57,110 +66,104 @@
         </ol>
         <h2>커뮤니티</h2>
 
-      </div>
-    </section><!-- End Breadcrumbs -->
+			</div>
+		</section>
+		<!-- End Breadcrumbs -->
 
-    <!-- ======= Blog Section ======= -->
-    <section id="blog" class="blog">
-      <div class="container" data-aos="fade-up">
+		<!-- ======= Blog Section ======= -->
+		<section id="blog" class="blog">
+			<div class="container" data-aos="fade-up">
 
-        <div class="row">
+				<div class="row">
 
-          <div class="col-lg-8 entries">
+					<div class="col-lg-8 entries">
 
-            <article class="entry">
+						<c:forEach var="post" items="${postList}">
+							<article class="entry">
 
-              <!-- <div class="entry-img">
-                <img src="resources/assets/img/blog/blog-1.jpg" alt="" class="img-fluid">
-              </div> -->
+								<h2 class="entry-title">
+									<a href="blog-single.html">${post.title}</a>
+								</h2>
 
-              <h2 class="entry-title">
-                <a href="blog-single.html">님들아 그거아심?</a>
-              </h2>
+								<div class="entry-meta">
+									<ul>
+										<li class="d-flex align-items-center"><i class="bi bi-person"></i><a href="blog-single.html">${post.memberId}</a></li>
+										<li class="d-flex align-items-center"><i class="bi bi-clock"></i> <a href="blog-single.html">${post.writeDate}</a></li>
+										<li class="d-flex align-items-center"><i class="bi bi-chat-dots"></i> <a href="blog-single.html">${reply.comment}</a></li>
+										<!-- reply.comment 댓글 개수 -->
+										<li class="d-flex align-items-center"><i class="bi bi-chat-dots" />${post.likeNum}</li>
+									</ul>
+								</div>
 
-              <div class="entry-meta">
-                <ul>
-                  <li class="d-flex align-items-center"><i class="bi bi-person"></i> <a href="blog-single.html">John Doe</a></li>
-                  <li class="d-flex align-items-center"><i class="bi bi-clock"></i> <a href="blog-single.html"><time datetime="2020-01-01">Jan 1, 2020</time></a></li>
-                  <li class="d-flex align-items-center"><i class="bi bi-chat-dots"></i> <a href="blog-single.html">12 Comments</a></li>
-                </ul>
-              </div>
+								<div class="entry-content">
+									<p>${post.content}</p>
+								</div>
 
-              <div class="entry-content">
-                <p>
-               		 임준한 엉짱맨 !!! 
-                </p>
-               <!--  <div class="read-more">
-                  <a href="blog-single.html">Read More</a>
-                </div> -->
-              </div>
+							</article>
+							<!-- End blog entry -->
 
-            </article><!-- End blog entry -->
+						</c:forEach>
 
-            <article class="entry">
+						<article class="entry">
 
-             <!--  <div class="entry-img">
-                <img src="resources/assets/img/blog/blog-2.jpg" alt="" class="img-fluid">
-              </div> -->
 
-              <h2 class="entry-title">
-                <a href="blog-single.html">게시글 제목</a>
-              </h2>
+						<c:if test="${cpage > 1}">
+							<a
+								href="boardList.user?boardname=${boardname}&cp=${cpage-1}&ps=${pagesize}&boardname=${boardname}">이전</a>
+						</c:if>
+						<!-- page 목록 나열하기 -->
+						<c:forEach var="i" begin="1" end="${pagecount}" step="1">
+							<c:choose>
+								<c:when test="${cpage==i}">
+									<font color="red">[${i}]</font>
+								</c:when>
+								<c:otherwise>
+									<a
+										href="boardList.user?boardname=${boardname}&cp=${i}&ps=${pagesize}&boardname=${boardname}">[${i}]</a>
+								</c:otherwise>
+							</c:choose>
+						</c:forEach>
+						<!--다음 링크 -->
+						<c:if test="${cpage < pagecount}">
+							<a
+								href="boardList.user?boardname=${boardname}&cp=${cpage+1}&ps=${pagesize}&boardname=${boardname}">다음</a>
+						</c:if>
 
-              <div class="entry-meta">
-                <ul>
-                  <li class="d-flex align-items-center"><i class="bi bi-person"></i> <a href="blog-single.html">John Doe</a></li>
-                  <li class="d-flex align-items-center"><i class="bi bi-clock"></i> <a href="blog-single.html"><time datetime="2020-01-01">Jan 1, 2020</time></a></li>
-                  <li class="d-flex align-items-center"><i class="bi bi-chat-dots"></i> <a href="blog-single.html">12 Comments</a></li>
-                </ul>
-              </div>
+					</div>
+					<!-- End blog entries list -->
 
-              <div class="entry-content">
-                <p>
-                  뉴진스 하입보이요~
-                  cause i i i i~~~
-                </p>
-                <!-- <div class="read-more">
-                  <a href="blog-single.html">Read More</a>
-                </div> -->
-              </div>
+					<div class="col-lg-4">
 
-            </article><!-- End blog entry -->
+						<div class="sidebar">
 
-            <article class="entry">
+							<h3 class="sidebar-title">Search</h3>
+							<div class="sidebar-item search-form">
+								<form action="">
+									<input type="text">
+									<button type="submit">
+										<i class="bi bi-search"></i>
+									</button>
+								</form>
+							</div>
+							<!-- End sidebar search formn-->
 
-              <!-- <div class="entry-img">
-                <img src="resources/assets/img/blog/blog-3.jpg" alt="" class="img-fluid">
-              </div> -->
+							<jsp:include page="/WEB-INF/views/member/board/boardInclude/category.jsp" />
 
-              <h2 class="entry-title">
-                <a href="blog-single.html">무민(english)</a>
-              </h2>
 
-              <div class="entry-meta">
-                <ul>
-                  <li class="d-flex align-items-center"><i class="bi bi-person"></i> <a href="blog-single.html">John Doe</a></li>
-                  <li class="d-flex align-items-center"><i class="bi bi-clock"></i> <a href="blog-single.html"><time datetime="2020-01-01">Jan 1, 2020</time></a></li>
-                  <li class="d-flex align-items-center"><i class="bi bi-chat-dots"></i> <a href="blog-single.html">12 Comments</a></li>
-                </ul>
-              </div>
+						</div>
+						<!-- End sidebar -->
 
-              <div class="entry-content">
-                <p>
-                  
-                </p>
-                <!-- <div class="read-more">
-                  <a href="blog-single.html">Read More</a>
-                </div> -->
-              </div>
+					</div>
+					<!-- End blog sidebar -->
 
-            </article><!-- End blog entry -->
+				</div>
 
-            <article class="entry">
+			</div>
+		</section>
+		<!-- End Blog Section -->
 
-           <!--    <div class="entry-img">
-                <img src="resources/assets/img/blog/blog-4.jpg" alt="" class="img-fluid">
-              </div> -->
+	</main>
+	<!-- End #main -->
 
               <h2 class="entry-title">
                 <a href="blog-single.html">코범종</a>
@@ -290,21 +293,27 @@
 
  <!-- ======= Footer ======= -->
 	<c:import url="/WEB-INF/views/common/footer.jsp" />
-  <!-- End Footer -->
+	<!-- End Footer -->
 
-  <a href="#" class="back-to-top d-flex align-items-center justify-content-center"><i class="bi bi-arrow-up-short"></i></a>
+	<a href="#"
+		class="back-to-top d-flex align-items-center justify-content-center"><i
+		class="bi bi-arrow-up-short"></i></a>
 
-  <!-- Vendor JS Files -->
-  <script src="resources/assets/vendor/purecounter/purecounter_vanilla.js"></script>
-  <script src="resources/assets/vendor/bootstrap/js/bootstrap.bundle.min.js"></script>
-  <script src="resources/assets/vendor/glightbox/js/glightbox.min.js"></script>
-  <script src="resources/assets/vendor/isotope-layout/isotope.pkgd.min.js"></script>
-  <script src="resources/assets/vendor/swiper/swiper-bundle.min.js"></script>
-  <script src="resources/assets/vendor/waypoints/noframework.waypoints.js"></script>
-  <script src="resources/assets/vendor/php-email-form/validate.js"></script>
+	<!-- Vendor JS Files -->
+	<script
+		src="resources/assets/vendor/purecounter/purecounter_vanilla.js"></script>
+	<script
+		src="resources/assets/vendor/bootstrap/js/bootstrap.bundle.min.js"></script>
+	<script src="resources/assets/vendor/glightbox/js/glightbox.min.js"></script>
+	<script
+		src="resources/assets/vendor/isotope-layout/isotope.pkgd.min.js"></script>
+	<script src="resources/assets/vendor/swiper/swiper-bundle.min.js"></script>
+	<script
+		src="resources/assets/vendor/waypoints/noframework.waypoints.js"></script>
+	<script src="resources/assets/vendor/php-email-form/validate.js"></script>
 
-  <!-- Template Main JS File -->
-  <script src="resources/assets/js/main.js"></script>
+	<!-- Template Main JS File -->
+	<script src="resources/assets/js/main.js"></script>
 
 </body>
 

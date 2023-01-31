@@ -36,7 +36,7 @@
 	<!-- 로그아웃 -->
 	<security:logout invalidate-session="true" delete-cookies="remember-me, JSESSION_ID, JSESSIONID"/>
 	
-	<!-- <security:csrf disabled="true"/> -->
+	<security:csrf disabled="true"/>
 
 </security:http>
 

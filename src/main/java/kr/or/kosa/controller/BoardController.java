@@ -1,23 +1,32 @@
 package kr.or.kosa.controller;
 
-import org.springframework.stereotype.Controller;
-import org.springframework.web.bind.annotation.GetMapping;
-import org.springframework.web.bind.annotation.RequestMapping;
+import java.util.List;
 
+import org.springframework.beans.factory.annotation.Autowired;
+import org.springframework.stereotype.Controller;
+import org.springframework.ui.Model;
+import org.springframework.web.bind.annotation.GetMapping;
+
+import kr.or.kosa.dto.Post;
+import kr.or.kosa.service.BoardService;
 
 @Controller
-@RequestMapping("/board")
 public class BoardController {
+
+	@Autowired
+	private BoardService boardService;
+
+	// 공지사항 화면만
+	@GetMapping("noticeList")
+	public String noticeView(Model model) {
+		List<Post> noticeList = boardService.noticeList();
+		model.addAttribute("noticeList", noticeList);
+		return "member/board/noticeList";
+	}
 
 	@GetMapping("/write")
 	public String BoardWrite() {
 		
 		return "member/board/boardWrite";
-	}
-	
-	@GetMapping("/list")
-	public String BoardList() {
-		
-		return "member/board/boardList";
 	}
 }

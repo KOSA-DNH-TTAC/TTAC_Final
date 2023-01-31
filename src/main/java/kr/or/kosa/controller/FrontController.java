@@ -4,9 +4,13 @@ import java.util.Locale;
 
 import org.slf4j.Logger;
 import org.slf4j.LoggerFactory;
+import org.springframework.security.core.annotation.AuthenticationPrincipal;
 import org.springframework.stereotype.Controller;
 import org.springframework.ui.Model;
 import org.springframework.web.bind.annotation.GetMapping;
+import org.springframework.web.bind.annotation.PostMapping;
+
+import kr.or.kosa.dto.Member;
 
 @Controller
 public class FrontController {
@@ -27,10 +31,25 @@ public class FrontController {
 		return "index";
 	}
 	
+	//마이페이지
 	@GetMapping("/mypage")
 	public String myPage() {
 		//여기서 내 정보 조회까지 작업해서 뷰에 올려야 함
-		return "member/mypage";
+		return "member/mypage/mypageHome";
+	}
+	
+	//마이페이지 - 정보수정
+	@GetMapping("/mypage/modify")
+	public String myPageModify() {
+		return "member/mypage/modifyInfo";
+	}
+	
+	//마이페이지 - 정보수정 (제출 시)
+	@PostMapping("/mypage/modify")
+	public String myPageModifySubmit(@AuthenticationPrincipal Member member) {
+		System.out.println("정보수정 제출");
+		return "member/mypage/mypageHome";
+//		return null;
 	}
 	
 	@GetMapping("/community")
@@ -51,5 +70,40 @@ public class FrontController {
 		return "common/errorPage";
 	}
 	
+	@GetMapping("/adminPopular")
+	public String admin() {
+		
+		return "admin/adminPopular";
+	}
+	
+	@GetMapping("/adminAnalyze")
+	public String adminAnalyze() {
+		
+		return "admin/adminAnalyze";
+	}
+	
+	@GetMapping("/adminSail")
+	public String adminSail() {
+		
+		return "admin/adminSail";
+	}
+	
+	@GetMapping("/adminCoupon")
+	public String adminCoupon() {
+		
+		return "admin/adminMealCoupon";
+	}
+	
+	@GetMapping("/adminMember")
+	public String adminMember() {
+		
+		return "admin/adminMemberList";
+	}
+	
+	@GetMapping("/adminCalendar")
+	public String adminCalendar() {
+		
+		return "admin/adminCalendar";
+	}
 	
 }

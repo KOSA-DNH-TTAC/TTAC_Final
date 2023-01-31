@@ -1,0 +1,37 @@
+@charset"utf-8";
+
+
+
+
+
+@font-face {
+  font-family: 'ng';
+   font-style: normal;
+  font-weight: 300;
+  src: url("/webfont/NanumGothic/NanumGothic-Light.eot");
+  src: url("/webfont/NanumGothic/NanumGothic-Light.eot?#iefix") format("embedded-opentype"), url("/webfont/NanumGothic/NanumGothic-Light.woff2") format("woff2"), url("/webfont/NanumGothic/NanumGothic-Light.woff") format("woff"), url("/webfont/NanumGothic/NanumGothic-Light.ttf") format("truetype");
+}
+@font-face {
+  font-family: 'ng';
+  font-style: normal;
+  font-weight: 400;
+  src: url("/webfont/NanumGothic/NanumGothic-Regular.eot");
+  src: url("/webfont/NanumGothic/NanumGothic-Regular.eot?#iefix") format("embedded-opentype"), url("/webfont/NanumGothic/NanumGothic-Regular.woff2") format("woff2"), url("/webfont/NanumGothic/NanumGothic-Regular.woff") format("woff"), url("/webfont/NanumGothic/NanumGothic-Regular.ttf") format("truetype");
+}
+
+@font-face {
+  font-family: 'ng';
+  font-style: normal;
+  font-weight: 600;
+  src: url("/webfont/NanumGothic/NanumGothic-Bold.eot");
+  src: url("/webfont/NanumGothic/NanumGothic-Bold.eot?#iefix") format("embedded-opentype"), url("/webfont/NanumGothic/NanumGothic-Bold.woff2") format("woff2"), url("/webfont/NanumGothic/NanumGothic-Bold.woff") format("woff"), url("/webfont/NanumGothic/NanumGothic-Bold.ttf") format("truetype");
+}
+
+@font-face {
+  font-family: 'ng';
+  font-style: normal;
+  font-weight: 800;
+  src: url("/webfont/NanumGothic/NanumGothic-ExtraBold.eot");
+  src: url("/webfont/NanumGothic/NanumGothic-ExtraBold.eot?#iefix") format("embedded-opentype"), url("/webfont/NanumGothic/NanumGothic-ExtraBold.woff2") format("woff2"), url("/webfont/NanumGothic/NanumGothic-ExtraBold.woff") format("woff"), url("/webfont/NanumGothic/NanumGothic-ExtraBold.ttf") format("truetype");
+}
+
