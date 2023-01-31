@@ -10,14 +10,15 @@ import org.springframework.web.bind.annotation.GetMapping;
 import kr.or.kosa.dto.Post;
 import kr.or.kosa.service.BoardService;
 
+// 페이지 이동 Controller
 @Controller
 public class BoardController {
 
 	@Autowired
 	private BoardService boardService;
-
-	// 공지사항 화면만
-	@GetMapping("noticeList")
+	
+	// 공지사항
+	@GetMapping("공지사항")
 	public String noticeView(Model model) {
 		List<Post> noticeList = boardService.noticeList();
 		model.addAttribute("noticeList", noticeList);
@@ -25,7 +26,7 @@ public class BoardController {
 	}
 	
 	// 자유게시판
-	@GetMapping("freeBoardList")
+	@GetMapping("자유게시판")
 	public String freeBoardView(Model model) {
 		List<Post> freeBoardList = boardService.freeBoardList();
 		model.addAttribute("freeBoardList", freeBoardList);

@@ -22,13 +22,15 @@ public class BoardService {
 		this.sqlSession = sqlSession;
 	}
 	
-	public List<Board> getBoardname() {
+	// 게시판 리스트
+	public List<Board> categoryList() {
 		BoardDao boardDao = sqlSession.getMapper(BoardDao.class);
-		List<Board> boardnameList = boardDao.getBoardname();
-		System.out.println("boardnameList: " + boardnameList);
-		return boardnameList;
+		List<Board> categoryList = boardDao.categoryList();
+		System.out.println("categoryList: " + categoryList);
+		return categoryList;
 	}
 	
+	// 공지사항 목록
 	public List<Post> noticeList() {
 		BoardDao boardDao = sqlSession.getMapper(BoardDao.class);
 		List<Post> noticeList = boardDao.noticeList();
@@ -49,6 +51,7 @@ public class BoardService {
 		return noticeList;
 	}
 	
+	// 자유게시판 목록
 	public List<Post> freeBoardList() {
 		BoardDao boardDao = sqlSession.getMapper(BoardDao.class);
 		List<Post> freeBoardList = boardDao.freeBoardList();
@@ -67,6 +70,27 @@ public class BoardService {
 			}
 		}
 		return freeBoardList;
+	}
+	
+	// 새 게시판 목록
+	public List<Post> customBoardList() {
+		BoardDao boardDao = sqlSession.getMapper(BoardDao.class);
+		List<Post> customBoardList = boardDao.customBoardList();
+		
+		Date nowDate = new Date();
+		
+		SimpleDateFormat simpleDateFormat = new SimpleDateFormat("YYYY-MM-dd");
+		String formatNowDate = simpleDateFormat.format(nowDate);
+		
+		for(Post p : customBoardList) {
+			String writedate = p.getWriteDate().substring(0, 10);
+			if (formatNowDate.equals(writedate)) {
+				p.setWriteDate(p.getWriteDate().substring(11, 16));
+			} else {
+				p.setWriteDate(writedate.substring(5));
+			}
+		}
+		return customBoardList;
 	}
 
 }
