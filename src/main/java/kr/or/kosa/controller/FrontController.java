@@ -30,7 +30,7 @@ public class FrontController {
 	@GetMapping("/mypage")
 	public String myPage() {
 		//여기서 내 정보 조회까지 작업해서 뷰에 올려야 함
-		return "member/mypage";
+		return "member/mypage/mypageHome";
 	}
 	
 	@GetMapping("/community")
@@ -51,5 +51,40 @@ public class FrontController {
 		return "common/errorPage";
 	}
 	
+	@GetMapping("/adminPopular")
+	public String admin() {
+		
+		return "admin/adminPopular";
+	}
+	
+	@GetMapping("/adminAnalyze")
+	public String adminAnalyze() {
+		
+		return "admin/adminAnalyze";
+	}
+	
+	@GetMapping("/adminSail")
+	public String adminSail() {
+		
+		return "admin/adminSail";
+	}
+	
+	@GetMapping("/adminCoupon")
+	public String adminCoupon() {
+		
+		return "admin/adminMealCoupon";
+	}
+	
+	@GetMapping("/adminMember")
+	public String adminMember() {
+		
+		return "admin/adminMemberList";
+	}
+	
+	@GetMapping("/adminCalendar")
+	public String adminCalendar() {
+		
+		return "admin/adminCalendar";
+	}
 	
 }

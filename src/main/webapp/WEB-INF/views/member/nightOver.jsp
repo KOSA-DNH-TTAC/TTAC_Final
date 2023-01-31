@@ -68,7 +68,7 @@
   	</div>
   	<div id="select">
 		<input class="form-select1" type="date" id="start" name="trip-start" value="2000-10-04">
-		<input class="form-select1" type="date" id="start" name="trip-start" value="2000-10-04">
+		<input class="form-select1" type="date" id="end" name="trip-start" value="2000-10-04">
 		<select class="form-select1" aria-label="Default select example">
 		  <option selected>외박</option>
 		  <option value="1">외박</option>
