@@ -29,8 +29,8 @@ public class FrontController {
 	
 	@GetMapping("/mypage")
 	public String myPage() {
-		
-		return "member/mypage";
+		//여기서 내 정보 조회까지 작업해서 뷰에 올려야 함
+		return "member/mypage/mypageHome";
 	}
 	
 	@GetMapping("/community")
