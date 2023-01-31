@@ -7,6 +7,5 @@ public class PostLike {
 
 	private int likeIdx;
 	private int idx;
-	private String universityCode;
 	private String memberId;
 }

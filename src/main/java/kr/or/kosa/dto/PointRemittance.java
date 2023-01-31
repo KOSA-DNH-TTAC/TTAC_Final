@@ -8,9 +8,7 @@ import lombok.Data;
 public class PointRemittance {
 
 	private int pointIdx;
-	private String sUniversityCode;
 	private String sMemberId;
-	private String rUniversityCode;
 	private String rMemberId;
 	private Date pointDate;
 	private int pointAmount;

@@ -8,7 +8,6 @@ import lombok.Data;
 public class PaymentHistory {
 
 	private int payIdx;
-	private String universityCode;
 	private String memberId;
 	private Date payDate;
 	private int payAmount;

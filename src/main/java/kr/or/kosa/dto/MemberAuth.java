@@ -5,7 +5,7 @@ import lombok.Data;
 @Data
 public class MemberAuth {
 	
-	private String universityCode;
+//	private int authidx;
 	private String memberId;
 	private String auth;
 }
