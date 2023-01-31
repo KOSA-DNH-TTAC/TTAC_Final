@@ -20,15 +20,15 @@
   <link href="https://fonts.googleapis.com/css?family=Open+Sans:300,300i,400,400i,600,600i,700,700i|Raleway:300,300i,400,400i,500,500i,600,600i,700,700i|Poppins:300,300i,400,400i,500,500i,600,600i,700,700i" rel="stylesheet">
 
   <!-- Vendor CSS Files -->
-  <link href="resources/assets/vendor/animate.css/animate.min.css" rel="stylesheet">
-  <link href="resources/assets/vendor/bootstrap/css/bootstrap.min.css" rel="stylesheet">
-  <link href="resources/assets/vendor/bootstrap-icons/bootstrap-icons.css" rel="stylesheet">
-  <link href="resources/assets/vendor/boxicons/css/boxicons.min.css" rel="stylesheet">
-  <link href="resources/assets/vendor/glightbox/css/glightbox.min.css" rel="stylesheet">
-  <link href="resources/assets/vendor/swiper/swiper-bundle.min.css" rel="stylesheet">
+  <link href="${pageContext.request.contextPath}/resources/assets/vendor/animate.css/animate.min.css" rel="stylesheet">
+  <link href="${pageContext.request.contextPath}/resources/assets/vendor/bootstrap/css/bootstrap.min.css" rel="stylesheet">
+  <link href="${pageContext.request.contextPath}/resources/assets/vendor/bootstrap-icons/bootstrap-icons.css" rel="stylesheet">
+  <link href="${pageContext.request.contextPath}/resources/assets/vendor/boxicons/css/boxicons.min.css" rel="stylesheet">
+  <link href="${pageContext.request.contextPath}/resources/assets/vendor/glightbox/css/glightbox.min.css" rel="stylesheet">
+  <link href="${pageContext.request.contextPath}/resources/assets/vendor/swiper/swiper-bundle.min.css" rel="stylesheet">
 
   <!-- Template Main CSS File -->
-  <link href="resources/assets/css/style.css" rel="stylesheet">
+  <link href="${pageContext.request.contextPath}/resources/assets/css/style.css" rel="stylesheet">
   
   <!-- Jquery -->
   <script  src="http://code.jquery.com/jquery-latest.min.js"></script>
@@ -132,16 +132,16 @@
 </body>
 
 <!-- Vendor JS Files -->
-  <script src="resources/assets/vendor/purecounter/purecounter_vanilla.js"></script>
-  <script src="resources/assets/vendor/bootstrap/js/bootstrap.bundle.min.js"></script>
-  <script src="resources/assets/vendor/glightbox/js/glightbox.min.js"></script>
-  <script src="resources/assets/vendor/isotope-layout/isotope.pkgd.min.js"></script>
-  <script src="resources/assets/vendor/swiper/swiper-bundle.min.js"></script>
-  <script src="resources/assets/vendor/waypoints/noframework.waypoints.js"></script>
-  <script src="resources/assets/vendor/php-email-form/validate.js"></script>
+  <script src="${pageContext.request.contextPath}/resources/assets/vendor/purecounter/purecounter_vanilla.js"></script>
+  <script src="${pageContext.request.contextPath}/resources/assets/vendor/bootstrap/js/bootstrap.bundle.min.js"></script>
+  <script src="${pageContext.request.contextPath}/resources/assets/vendor/glightbox/js/glightbox.min.js"></script>
+  <script src="${pageContext.request.contextPath}/resources/assets/vendor/isotope-layout/isotope.pkgd.min.js"></script>
+  <script src="${pageContext.request.contextPath}/resources/assets/vendor/swiper/swiper-bundle.min.js"></script>
+  <script src="${pageContext.request.contextPath}/resources/assets/vendor/waypoints/noframework.waypoints.js"></script>
+  <script src="${pageContext.request.contextPath}/resources/assets/vendor/php-email-form/validate.js"></script>
 
   <!-- Template Main JS File -->
-  <script src="resources/assets/js/main.js"></script>
+  <script src="${pageContext.request.contextPath}/resources/assets/js/main.js"></script>
 
 <script type="text/javascript">
 	$('.list-group-item').click(function(e){
@@ -172,7 +172,7 @@
 							<img style="text-align:center" width="230px" src="http://image.newsis.com/2022/04/07/NISI20220407_0000969087_web.jpg" class="img-fluid" alt="Responsive image">
 							<br>
 							<br>
-							<button class="btn btn-warning">정보수정</button>
+							<button class="btn btn-warning" onclick="location.href='/mypage/modify'">정보수정</button>
 					</div>
 					<div class="col-lg-8">
 						<table class="table">
@@ -214,9 +214,8 @@
 						    </tr>
 						  </tbody>
 						</table>
-						
-					</div>
-					</div>`
+					`
+					
 			$('#content').append(contents)
 		}
     else if(menu == '외박내역'){
