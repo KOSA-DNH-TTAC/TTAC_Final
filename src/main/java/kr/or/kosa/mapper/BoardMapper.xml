@@ -9,6 +9,11 @@ PUBLIC "-//mybatis.org//DTD Mapper 3.0//EN"
 
 </select>
 
+<select id="noticeList" resultType="kr.or.kosa.dto.Post">
+SELECT p.idx, p.boardidx, p.universitycode, b.boardname, p.memberid, p.writedate, p.likenum, p.content, p.title
+FROM POST p JOIN BOARD b ON p.boardidx = b.boardidx
+ORDER BY p.writedate DESC;
+</select>
 
 </mapper>
 

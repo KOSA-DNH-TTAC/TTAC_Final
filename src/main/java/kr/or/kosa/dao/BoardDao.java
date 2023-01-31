@@ -3,6 +3,7 @@ package kr.or.kosa.dao;
 import java.util.List;
 
 import kr.or.kosa.dto.Board;
+import kr.or.kosa.dto.Post;
 
 public interface BoardDao {
 	
@@ -10,6 +11,6 @@ public interface BoardDao {
 	public List<Board> getBoardname();
 	
 	// 공지사항
-	public List<Board> noticeBoardList();
+	public List<Post> noticeList();
 
 }
