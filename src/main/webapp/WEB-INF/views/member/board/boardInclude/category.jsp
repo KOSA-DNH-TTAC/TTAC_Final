@@ -4,6 +4,7 @@
 <%@ taglib prefix="fn" uri="http://java.sun.com/jsp/jstl/functions"%>
 <meta content="" name="description">
 <meta content="" name="keywords">
+<script src="https://ajax.googleapis.com/ajax/libs/jquery/3.3.1/jquery.min.js"></script>
 
 <!-- Favicons -->
 <link href="resources/assets/img/favicon.png" rel="icon">
@@ -38,16 +39,55 @@
   * Author: BootstrapMade.com
   * License: https://bootstrapmade.com/license/
   ======================================================== -->
+  
+  <script type="text/javascript">
+  
+  $(document).ready(function() {
+		/* $.ajax(
+			 {  
+				type : "get",
+				url  : "categoryList",
+				success : function(data){ 
+					console.log(data);
+				$('#ul').append(<c:forEach var='categoryList' items='${categoryList}'>
+					+ '<li><a href=/' + data.boardnameList.boardname 
+					+ ">${boardnameList.boardname}</a></li></c:forEach>"
+					); 
+				} 
+			 } 
+		     )  ; */
+		
+		   //@restcontroller방식 ajax
+			 $.ajax(
+					 {  
+						type : "get",
+						url  : "categoryList",
+						success : function(data){ 
+							console.log(data);
+							createTable(data, "@Restcontroller");
+						} 
+					 } 
+			       )    
+		});
+  
+		//Json 전용 table 생성
+		function createTable(data){
+			$('#list').empty();
+			var opr="";
+			$.each(data,function(index,data){
+				opr += "<li><a href=/"+data.boardName+">"+data.boardName+"</a></li>";
+			});
+			$('#list').append(opr);
+		}
 
+  </script>
+	<div>
 	<h3 class="sidebar-title">게시판</h3>
+	
+	
 	<div class="sidebar-item categories">
-		<ul>
-		<!-- <c:forEach var="boardList" items="${boardList}">
-			<li><a href="boardList.?boardname=${boardList.boardname}">${boardList.boardname}<span>(25)</span></a></li>
-		</c:forEach>  -->
-			<li><a href="/noticeList">공지사항</a></li>
-			<li><a href="/opinionList">건의사항</a></li>
-			<li><a href="/freeBoardList">자유게시판</a></li>
-			<li><a href="#">Creative <span>(8)</span></a></li>	
+		<ul id="list">
+			
+
 		</ul>
 	</div>
