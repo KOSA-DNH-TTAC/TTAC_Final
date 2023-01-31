@@ -1546,12 +1546,15 @@ section {
 # Blog
 --------------------------------------------------------------*/
 .blog {
-  padding: 40px 0 20px 0;
+  padding: 25px 0 20px 0;
 }
 
 .blog .entry {
-  padding: 5px;
-  margin-bottom: 60px;
+  padding-top: 30px;
+  padding-left: 30px;
+  padding-right: 30px;
+  padding-bottom: 10px;
+  margin-bottom: 20px;
   box-shadow: 0 4px 16px rgba(0, 0, 0, 0.1);
 }
 
@@ -1562,10 +1565,10 @@ section {
 }
 
 .blog .entry .entry-title {
-  font-size: 28px;
+  font-size: 20px;
   font-weight: bold;
   padding: 0;
-  margin: 0 0 20px 0;
+  margin: 0 0 10px 0;
 }
 
 .blog .entry .entry-title a {
@@ -1610,6 +1613,7 @@ section {
 
 .blog .entry .entry-content p {
   line-height: 24px;
+  font-size: 15px;
 }
 
 .blog .entry .entry-content .read-more {

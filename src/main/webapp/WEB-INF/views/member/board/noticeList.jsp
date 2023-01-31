@@ -102,9 +102,7 @@
 
 						</c:forEach>
 
-						<article class="entry">
-
-
+						<div>
 						<c:if test="${cpage > 1}">
 							<a
 								href="boardList.user?boardname=${boardname}&cp=${cpage-1}&ps=${pagesize}&boardname=${boardname}">이전</a>
@@ -126,6 +124,7 @@
 							<a
 								href="boardList.user?boardname=${boardname}&cp=${cpage+1}&ps=${pagesize}&boardname=${boardname}">다음</a>
 						</c:if>
+						</div>
 
 					</div>
 					<!-- End blog entries list -->
