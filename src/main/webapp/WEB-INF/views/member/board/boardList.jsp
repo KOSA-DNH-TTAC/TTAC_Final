@@ -56,7 +56,7 @@
 								<li><a href="index.html">Home</a></li>
 								<li>커스텀게시판!!!!</li>
 							</ol>
-							<h2>커스텀게시판!!!!</h2>
+							<h2 id="boardList">커스텀게시판!!!!</h2>
 
 						</div>
 					</section>
