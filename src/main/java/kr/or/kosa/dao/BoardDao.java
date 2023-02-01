@@ -17,6 +17,6 @@ public interface BoardDao {
 	public List<Post> freeBoardList();
 	
 	// 새 게시판
-	public List<Post> customBoardList();
+	public List<Post> customBoardList(String boardName);
 
 }

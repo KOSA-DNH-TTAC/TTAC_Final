@@ -41,17 +41,18 @@
 					function () {
 						console.log("asd");
 						var boardName = "";
-						boardName = $(this).attr('seq');
-						console.log("boardName : " + boardName);
+						boardName = $('.boardName').attr('seq');
+						console.log("boardName : "+boardName);
 						$.ajax(
 							{
 								type: "get",
-								url: "board/" + boardName,
+								url: "boardAjax/" + boardName,
 								data: {
 									boardName: boardName
 								},
-								success: function (result) {
-									console.log("result : " + result);
+								success: function (data) {
+									console.log("data : " + data);
+									console.log("박예삐");
 									$('#boardList').empty;
 									$('#boardList').append("임준한");
 								}
@@ -69,6 +70,8 @@
 
 							$(document).on('click', '#boardName', function (e) {
 								e.preventDefault();
+								/* $('#ttac').empty;
+								$('#ttac').append("머임"); */
 								$('#boardList').empty;
 								$('#boardList').append("임준한");
 							})
@@ -86,7 +89,7 @@
 					var opr = "";
 					$.each(data, function (index, data) {
 						//opr += "<li><input type='button' id='boardName'>"+data.boardName+"</input></li>";
-						opr += "<li><button class='boardName' seq='" + data.boardName + "'> " + data.boardName + "</button></li>";
+						opr += "<li><button class='boardName' seq='"+data.boardName+"'> "+ data.boardName + "</button></li>";
 					});
 					$('#list').append(opr);
 				}

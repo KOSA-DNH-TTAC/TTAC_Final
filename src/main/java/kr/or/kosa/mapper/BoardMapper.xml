@@ -7,7 +7,8 @@ PUBLIC "-//mybatis.org//DTD Mapper 3.0//EN"
 
 <!-- 게시판 리스트 -->
 <select id="categoryList" resultType="kr.or.kosa.dto.Board">
-SELECT boardidx, boardname FROM BOARD WHERE universitycode='kosa';
+SELECT boardidx, boardname FROM BOARD WHERE universitycode='kosa'
+AND boardname NOT IN('공지사항', '건의사항', '자유게시판', '거래게시판')
 </select>
 
 <!-- 공지사항 목록 -->
@@ -16,7 +17,7 @@ SELECT boardidx, boardname FROM BOARD WHERE universitycode='kosa';
 SELECT p.boardidx, p.universitycode, b.boardname, p.memberid, p.writedate, p.likenum, p.content, p.title
 FROM POST p JOIN BOARD b ON p.boardidx = b.boardidx
 WHERE b.boardname='공지사항'
-ORDER BY p.writedate DESC;
+ORDER BY p.writedate DESC
 </select>
 
 <!-- 자유게시판 목록 -->
@@ -24,15 +25,15 @@ ORDER BY p.writedate DESC;
 SELECT p.boardidx, p.universitycode, b.boardname, p.memberid, p.writedate, p.likenum, p.content, p.title
 FROM POST p JOIN BOARD b ON p.boardidx = b.boardidx
 WHERE b.boardname='자유게시판'
-ORDER BY p.writedate DESC;
+ORDER BY p.writedate DESC
 </select>
 
-<!-- 새 게시판 목록 -->
-<select id="customBoardList" resultType="kr.or.kosa.dto.Post">
+<!-- 새 게시판 글 목록 -->
+<select id="customBoardList" parameterType="String" resultType="kr.or.kosa.dto.Post">
 SELECT p.boardidx, p.universitycode, b.boardname, p.memberid, p.writedate, p.likenum, p.content, p.title
 FROM POST p JOIN BOARD b ON p.boardidx = b.boardidx
-WHERE b.boardname=?
-ORDER BY p.writedate DESC;
+WHERE b.boardname=#{boardName} and p.universitycode='kosa'
+ORDER BY p.writedate DESC
 </select>
 
 </mapper>
