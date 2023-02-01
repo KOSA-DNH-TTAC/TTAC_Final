@@ -73,9 +73,9 @@ public class BoardService {
 	}
 	
 	// 새 게시판 목록
-	public List<Post> customBoardList() {
+	public List<Post> customBoardList(String boardName) {
 		BoardDao boardDao = sqlSession.getMapper(BoardDao.class);
-		List<Post> customBoardList = boardDao.customBoardList();
+		List<Post> customBoardList = boardDao.customBoardList(boardName);
 		
 		Date nowDate = new Date();
 		
