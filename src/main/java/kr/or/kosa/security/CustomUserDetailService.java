@@ -18,15 +18,9 @@ public class CustomUserDetailService implements UserDetailsService {
 	@Override
 	public UserDetails loadUserByUsername(String memberid) throws UsernameNotFoundException {
 		
-		System.out.println("memberid : " + memberid);
-		
-
-		System.out.println("Load User By Memberid : " + memberid);
-		System.out.println("멤버dao autowired됐나? : " + dao);
-		//userName means userid
 		Member dto = dao.getMember(memberid);
-		System.out.println("queried by memberdao : " + dto);
-		
+//		System.out.println("queried by memberdao : " + dto);
+		System.out.println("로그인 된 아이디 : " + dto);
 		
 		return dto == null ? null : new CustomUser(dto);
 	}
