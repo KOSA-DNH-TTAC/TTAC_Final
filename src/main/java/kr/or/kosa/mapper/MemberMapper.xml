@@ -8,6 +8,7 @@ PUBLIC "-//mybatis.org//DTD Mapper 3.0//EN"
 	<resultMap type="kr.or.kosa.dto.Member" id="memberMap">
 	   <result property="memberId" column="memberid"/>
 	   <result property="password" column="password"/>
+	   <result property="universityCode" column="universitycode"/>
 	   <result property="name" column="name"/>
 	   <result property="major" column="major"/>
 	   <result property="email" column="email"/>
@@ -35,10 +36,10 @@ PUBLIC "-//mybatis.org//DTD Mapper 3.0//EN"
 	 
 	 
 	<!-- getMember (특정회원조회 : 아이디) -->
-	<select id="getMember" parameterType="String" resultType="kr.or.kosa.dto.Member">
-	 SELECT memberid, password, universitycode, NAME, major, email, gender, phone, parentsphone, memberpoint, demerit
-	 FROM MEMBER
-	 WHERE memberid= #{memberid}
+	<select id="getMember" parameterType="String" resultType="kr.or.kosa.dto.Member" resultMap="memberMap">
+	SELECT m.memberid, m.password, m.universitycode, m.NAME, m.major, m.email, m.gender, m.phone,
+	m.parentsphone, m.memberpoint, m.demerit, a.auth
+	FROM MEMBER m LEFT JOIN MEMBERAUTH a ON m.MEMBERID = a.MEMBERID WHERE m.memberid = #{memberid}
 	</select>
 	 
 	<!-- getMemberByName (특정회원조회 : 이름) -->
