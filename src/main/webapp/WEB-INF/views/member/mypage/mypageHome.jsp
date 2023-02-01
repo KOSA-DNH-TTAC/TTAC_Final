@@ -80,6 +80,11 @@
           #content {
             margin-top: 5px;
           }
+          .list-group-item.active {
+            /* <a href="#" class="list-group-item list-group-item-action active" aria-current="true">내 정보 조회</a> */
+          	background-color: #ff7600 !important;
+		        border-color: #ff7600	!important;
+          }
         </style>
       </head>
 
@@ -111,18 +116,62 @@
                       <a href="#" class="list-group-item list-group-item-action">결제내역</a>
                       <a href="#" class="list-group-item list-group-item-action">내 커뮤니티</a>
                       <a href="#" class="list-group-item list-group-item-action">벌점이력</a>
-                      <a class="list-group-item list-group-item-action disabled">쪽지함</a>
                     </div>
                     <!-- </div> -->
                   </div>
 
                   <div id="contentBox" class="col-lg-10" style="background:white">
-                    <h2 id="mptitle" style="margin :15px 0 20px 0">제목</h2>
+                    <h2 id="mptitle" style="margin :15px 0 20px 0">내 정보 조회</h2>
 
                     <!-- content start -->
                     <div id="content">
-                      <p>여기에 컨텐츠 들어감</p>
-                      <p>마이페이지에 최초 접속시 뷰에 내 정보 조회 띄워줄건데 이걸 ajax로 뷰단에서 할지 아니면 컨트롤러에서 싣어서 뷰를 리턴할지?</p>
+                      <div class="row">
+                        <div class="col-lg-4" style="text-align : center">
+                            <img style="text-align:center" width="230px" src="http://image.newsis.com/2022/04/07/NISI20220407_0000969087_web.jpg" class="img-fluid" alt="Responsive image">
+                            <br>
+                            <br>
+                            <button class="btn btn-warning" onclick="location.href='/mypage/modify'">정보수정</button>
+                        </div>
+                        <div class="col-lg-8">
+                          <table class="table">
+                            <thead>
+                              <tr>
+                                <th scope="row">이름</th>
+                                <td class="infoTd">${member.name}</td>
+                              </tr>
+                            </thead>
+                            <tbody>
+                              <tr>
+                                 <th scope="row">학번</th>
+                                 <td class="infoTd">${member.memberId}</td>
+                                
+                              </tr>
+                              <tr>
+                                <th scope="row">학과</th>
+                                <td class="infoTd">${member.major}</td>
+                              </tr>
+                              <tr>
+                                <th scope="row">기숙사</th>
+                                <td class="infoTd">${member.room}</td>
+                              </tr>
+                              <tr>
+                                <th scope="row">이메일</th>
+                                <td class="infoTd">${member.email}</td>
+                              </tr>
+                              <tr>
+                                <th scope="row">연락처</th>
+                                <td class="infoTd">${member.phone}</td>
+                              </tr>
+                              <tr>
+                                <th scope="row">보호자연락처</th>
+                                <td class="infoTd">${member.parentsPhone}</td>
+                              </tr>
+                              <tr>
+                                <th scope="row">벌점</th>
+                                <td class="infoTd">${member.demerit} 점</td>
+                              </tr>
+                            </tbody>
+                          </table>
                     </div>
                     <!-- content end -->
                   </div>
@@ -447,7 +496,7 @@
             })
 
             var contents = `
-          <p align="left">누적 벌점 : 18점</p>
+          <p align="left"><b>누적 벌점 : 18점</b></p>
           <table class="table">
             <thead>
               <tr>
@@ -482,12 +531,6 @@
         `
             $('#content').empty()
             $('#content').append(contents)
-
-          }
-          else if (menu == '쪽지함') {
-            console.log("여기에 쪽지함이 들어갈까요?")
-            $('#content').empty()
-
 
           }
         })
