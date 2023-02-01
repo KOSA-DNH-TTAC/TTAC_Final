@@ -39,7 +39,7 @@
 
 <!-- Template Main CSS File -->
 <link href="resources/assets/css/style.css" rel="stylesheet">
-
+ 	
 <!-- =======================================================
   * Template Name: Eterna - v4.10.0
   * Template URL: https://bootstrapmade.com/eterna-free-multipurpose-bootstrap-template/
@@ -105,6 +105,8 @@
                   </c:forEach>
 
                   <article class="entry">
+                  	게시글 띄워줄곳
+                  </article>
 
 
                   <c:if test="${cpage > 1}">
