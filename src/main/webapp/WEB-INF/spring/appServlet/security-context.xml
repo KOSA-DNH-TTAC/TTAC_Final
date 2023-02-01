@@ -18,29 +18,33 @@
   					 ">
   	
   	<!-- Bean -->
-
+	<bean id="customUserDetailsService" class="kr.or.kosa.security.CustomUserDetailService"></bean>
   	<!-- 암호화 -->				 
   	<bean id="bcryptPasswordEncoder" class="org.springframework.security.crypto.bcrypt.BCryptPasswordEncoder"></bean>
   	
 	<security:http auto-config="true" use-expressions="true">
 	<!-- 링크 별 요구 권한 -->
 	<!-- <security:intercept-url pattern="/nightOver" access="permitAll" />
-	<security:intercept-url pattern="/mealticket" access="hasRole('ROLE_MEMBER')" />
-	<security:intercept-url pattern="/mypage" access="hasRole('ROLE_ADMIN')" /> -->
+	<security:intercept-url pattern="/mealticket" access="hasRole('ROLE_MEMBER')" />-->
+	<security:intercept-url pattern="/mypage" access="isAuthenticated()" /> 
 	
-	<!-- 로그인 -->
-	<security:form-login login-page="/login"/>
-
+	<!-- 로그인
+	<security:form-login login-page="/userlogin" login-processing-url="/userlogin" default-target-url="/"/>
+	 -->
+	 <security:form-login login-page="/userlogin" />
 	<!-- 자동로그인 -->
 	<security:remember-me data-source-ref="driverManagerDataSource" token-validity-seconds="604800"/>
 	<!-- 로그아웃 -->
 	<security:logout invalidate-session="true" delete-cookies="remember-me, JSESSION_ID, JSESSIONID"/>
 	
+	<!-- access-denied-handler -->
+	<security:access-denied-handler error-page="/error"/>
+	
 	<security:csrf disabled="true"/>
 
 </security:http>
 
-<!-- 
+
 	<security:authentication-manager>
 
 		<security:authentication-provider
@@ -52,9 +56,9 @@
 		</security:authentication-provider>
 
 	</security:authentication-manager>
- -->
 
 
+<!-- 
 <security:authentication-manager>
 	<security:authentication-provider>
 		<security:jdbc-user-service data-source-ref="driverManagerDataSource"
@@ -63,5 +67,5 @@
 		<security:password-encoder ref="bcryptPasswordEncoder"/>
 	</security:authentication-provider>
 </security:authentication-manager>
-
+ -->
 </beans>

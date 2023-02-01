@@ -58,17 +58,18 @@ public class FrontController {
 		return "member/community";
 	}
 	
-	@GetMapping("/login")
+	@GetMapping("/userlogin")
 	public String login() {
 		
 		return "common/login";
 	}
-	
+	/*
 	@PostMapping("/login")
 	public String mylogin() {
 		System.out.println("로그인제출?");
 		return null;
 	}
+	*/
 	
 	@GetMapping("/error")
 	public String error() {

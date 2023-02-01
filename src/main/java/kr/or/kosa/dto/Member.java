@@ -16,6 +16,7 @@ public class Member {
 	private String gender;
 	private String phone;
 	private String parentsPhone;
+	private String room;
 	private int memberPoint;
 	private int demerit;
 	private int status;

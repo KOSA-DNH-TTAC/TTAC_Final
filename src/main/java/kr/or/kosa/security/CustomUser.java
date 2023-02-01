@@ -17,9 +17,9 @@ public class CustomUser extends User {
 
 	private Member member;
 
-	public CustomUser(String username, String password, 
+	public CustomUser(String memberid, String password, 
 			Collection<? extends GrantedAuthority> authorities) {
-		super(username, password, authorities);
+		super(memberid, password, authorities);
 	}
 
 	public CustomUser(Member vo) {
