@@ -124,4 +124,10 @@ public class FrontController {
 		return "member/eveningCall";
 	}
 	
+	@GetMapping("/memberCalendar")
+	public String calendar() {
+		
+		return "member/memberCalendar";
+	}
+	
 }
