@@ -38,14 +38,16 @@ public class BoardController_Rest {
 	}
 	
 	// 게시판 상세보기
-	@GetMapping("/{allBoard}/{idx}")
-	public ResponseEntity<List<Post>> boardContent(@PathVariable int idx){
+	@GetMapping("{allBoard}/{boardIdx}")
+	public ResponseEntity<List<Post>> boardContent(@PathVariable("boardIdx") String boardIdx){
 		
-		System.out.println("RestController 도는중.. .9");
+		
+		System.out.println("idx: " + boardIdx);
+		System.out.println("RestController 도는중.. .13");
 		
 		List<Post> boardContent = new ArrayList<Post>();
 		try {
-			boardContent = boardService.boardContent(idx);
+			boardContent = boardService.boardContent(boardIdx);
 			System.out.println("RestController: " + boardContent);
 			return new ResponseEntity<List<Post>>(boardContent, HttpStatus.OK);
 		} catch (Exception e) {

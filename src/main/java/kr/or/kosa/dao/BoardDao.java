@@ -1,6 +1,5 @@
 package kr.or.kosa.dao;
 
-import java.util.HashMap;
 import java.util.List;
 
 import kr.or.kosa.dto.Board;
@@ -19,5 +18,5 @@ public interface BoardDao {
 	
 	
 	// 게시글 상세보기
-	public List<Post> boardContent(int idx);
+	public List<Post> boardContent(String idx);
 }

@@ -25,7 +25,7 @@ public class BoardController {
 	public String allBoardView(Model model, @PathVariable String allBoard) {
 		List<Post> allBoardList = boardService.allBoardList(allBoard); // 글목록
 		model.addAttribute("allBoardList", allBoardList);
-
+		System.out.println("allBoardList : "+allBoardList);
 		String viewPage = "member/board/";
 		if (allBoard.equals("공지사항")) {
 			viewPage += "noticeList";
