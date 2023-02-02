@@ -145,4 +145,10 @@ public class FrontController {
 		return "member/memberCalendar";
 	}
 	
+	@GetMapping("/facility")
+	public String facility() {
+		
+		return "member/facilityReport";
+	}
+	
 }
