@@ -28,6 +28,13 @@ WHERE b.boardname=#{boardName} and p.universitycode='kosa'
 ORDER BY p.writedate DESC
 </select>
 
+<!-- 게시글 상세보기 -->
+<select id="boardContent" parameterType="int" resultType="kr.or.kosa.dto.Post">
+SELECT p.universitycode, b.boardname, p.memberid, p.writedate, p.likenum, p.content, p.title
+FROM POST p JOIN BOARD b ON p.BOARDIDX = b.BOARDIDX
+WHERE p.IDX=#{idx}
+</select>
+
 </mapper>
 
 

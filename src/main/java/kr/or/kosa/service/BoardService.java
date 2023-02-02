@@ -28,33 +28,12 @@ public class BoardService {
 		List<Board> categoryList = boardDao.categoryList();
 		return categoryList;
 	}
-	
-	// 공지사항 목록
-	public List<Post> noticeList() {
-		BoardDao boardDao = sqlSession.getMapper(BoardDao.class);
-		List<Post> noticeList = boardDao.noticeList();
-		
-		Date nowDate = new Date();
-	
-		SimpleDateFormat simpleDateFormat = new SimpleDateFormat("YYYY-MM-dd");
-		String formatNowDate = simpleDateFormat.format(nowDate);
-		
-		for(Post p : noticeList) {
-			String writedate = p.getWriteDate().substring(0, 10);
-			if (formatNowDate.equals(writedate)) {
-				p.setWriteDate(p.getWriteDate().substring(11, 16));
-			} else {
-				p.setWriteDate(writedate.substring(5));
-			}
-		}
-		return noticeList;
-	}
+
 	
 	// 기본 제공 게시판 글 목록
 		public List<Post> allBoardList(String allBoard) {
 			BoardDao boardDao = sqlSession.getMapper(BoardDao.class);
 			List<Post> allBoardList = boardDao.allBoardList(allBoard);
-			System.out.println("서비스 돌아가는중....");
 			Date nowDate = new Date();
 		
 			SimpleDateFormat simpleDateFormat = new SimpleDateFormat("YYYY-MM-dd");
@@ -68,30 +47,8 @@ public class BoardService {
 					p.setWriteDate(writedate.substring(5));
 				}
 			}
-			System.out.println(allBoardList);
 			return allBoardList;
-		}
-	
-	// 자유게시판 목록
-	public List<Post> freeBoardList() {
-		BoardDao boardDao = sqlSession.getMapper(BoardDao.class);
-		List<Post> freeBoardList = boardDao.freeBoardList();
-		
-		Date nowDate = new Date();
-		
-		SimpleDateFormat simpleDateFormat = new SimpleDateFormat("YYYY-MM-dd");
-		String formatNowDate = simpleDateFormat.format(nowDate);
-		
-		for(Post p : freeBoardList) {
-			String writedate = p.getWriteDate().substring(0, 10);
-			if (formatNowDate.equals(writedate)) {
-				p.setWriteDate(p.getWriteDate().substring(11, 16));
-			} else {
-				p.setWriteDate(writedate.substring(5));
-			}
-		}
-		return freeBoardList;
-	}
+		}	
 	
 	// 커스텀 생성 게시판 목록
 	public List<Post> customBoardList(String boardName) {
@@ -112,6 +69,17 @@ public class BoardService {
 			}
 		}
 		return customBoardList;
+	}
+	
+	// 게시글 상세보기
+	public List<Post> boardContent(int idx) {
+		
+		System.out.println("서비스 진입");
+		
+		BoardDao boardDao = sqlSession.getMapper(BoardDao.class);
+		List<Post> boardContent = boardDao.boardContent(idx);
+		System.out.println(boardContent);
+		return boardContent;
 	}
 
 }

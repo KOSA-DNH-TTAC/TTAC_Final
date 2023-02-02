@@ -1,5 +1,6 @@
 package kr.or.kosa.dao;
 
+import java.util.HashMap;
 import java.util.List;
 
 import kr.or.kosa.dto.Board;
@@ -15,5 +16,8 @@ public interface BoardDao {
 	
 	// 커스텀 생성 게시판
 	public List<Post> customBoardList(String boardName);
-
+	
+	
+	// 게시글 상세보기
+	public List<Post> boardContent(int idx);
 }

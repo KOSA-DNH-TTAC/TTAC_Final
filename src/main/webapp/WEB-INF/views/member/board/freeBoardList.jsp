@@ -40,6 +40,9 @@
   ======================================================== -->
 			</head>
 
+
+
+
 			<body>
 
 				<!-- ======= Header ======= -->
@@ -74,15 +77,15 @@
 										<article class="entry">
 
 											<div class="entry-title">
-												<a href="자유게시판?idx=${freeBoard.idx}">
-												<c:choose>
-													<c:when test="${freeBoard.title != null && fn:length(freeBoard.title) > 80}">
-														${fn:substring(freeBoard.title,0,80)}...
-													</c:when>
-													<c:otherwise>
-														${freeBoard.title}
-													</c:otherwise>
-												</c:choose>
+												<a onclick='boardContent(event)' href='javascript:void(0)'>
+													<c:choose>
+														<c:when test="${freeBoard.title != null && fn:length(freeBoard.title) > 80}">
+															${fn:substring(freeBoard.title,0,80)}...
+														</c:when>
+														<c:otherwise>
+															${freeBoard.title}
+														</c:otherwise>
+													</c:choose>
 												</a>
 											</div>
 
@@ -197,7 +200,36 @@
 
 				<!-- Template Main JS File -->
 				<script src="resources/assets/js/main.js"></script>
+				
 
 			</body>
+			<script type="text/javascript">
 
+			//	$(document).ready(function () {
+
+					// 게시글 ajax
+					//$(document).on(
+						/* 		"click",
+								".entry-title", function(){
+							console.log(allBoard), */
+							function boardContent(e){
+								//console.log(event.target)
+								e.preventDefault();
+							$.ajax(
+							{
+								type: "get",
+								url: "/"+{allBoard}+"/"+${allBoardList.idx},
+								contentType: "application/json; charset=utf-8",
+								success: function (data) {
+									console.log(data);
+									$('#blog').empty();
+									var contentView = "asdf";
+									$('#blog').append(contentView);
+								}
+							}
+						)}
+					//)
+			//	});
+
+			</script>
 			</html>
