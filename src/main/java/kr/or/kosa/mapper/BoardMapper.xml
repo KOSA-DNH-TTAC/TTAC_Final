@@ -11,20 +11,12 @@ SELECT boardidx, boardname FROM BOARD WHERE universitycode='kosa'
 AND boardname NOT IN('공지사항', '건의사항', '자유게시판', '거래게시판')
 </select>
 
-<!-- 공지사항 목록 -->
-<!-- 학교별로 가져올 수 있게 쿼리문 수정해야 함 -->
-<select id="noticeList" resultType="kr.or.kosa.dto.Post">
-SELECT p.boardidx, p.universitycode, b.boardname, p.memberid, p.writedate, p.likenum, p.content, p.title
+<!-- 학교 코드 포함해서 가져올 수 있게 출력 -->
+<!-- 기본 제공 게시판 글 목록 -->
+<select id="allBoardList" resultType="kr.or.kosa.dto.Post">
+SELECT p.idx, p.boardidx, p.universitycode, b.boardname, p.memberid, p.writedate, p.likenum, p.content, p.title
 FROM POST p JOIN BOARD b ON p.boardidx = b.boardidx
-WHERE b.boardname='공지사항'
-ORDER BY p.writedate DESC
-</select>
-
-<!-- 자유게시판 목록 -->
-<select id="freeBoardList" resultType="kr.or.kosa.dto.Post">
-SELECT p.boardidx, p.universitycode, b.boardname, p.memberid, p.writedate, p.likenum, p.content, p.title
-FROM POST p JOIN BOARD b ON p.boardidx = b.boardidx
-WHERE b.boardname='자유게시판'
+WHERE b.boardname=#{allBoard}
 ORDER BY p.writedate DESC
 </select>
 
@@ -34,6 +26,13 @@ SELECT p.boardidx, p.universitycode, b.boardname, p.memberid, p.writedate, p.lik
 FROM POST p JOIN BOARD b ON p.boardidx = b.boardidx
 WHERE b.boardname=#{boardName} and p.universitycode='kosa'
 ORDER BY p.writedate DESC
+</select>
+
+<!-- 게시글 상세보기 -->
+<select id="boardContent" parameterType="int" resultType="kr.or.kosa.dto.Post">
+SELECT p.universitycode, b.boardname, p.memberid, p.writedate, p.likenum, p.content, p.title
+FROM POST p JOIN BOARD b ON p.BOARDIDX = b.BOARDIDX
+WHERE p.IDX=#{idx}
 </select>
 
 </mapper>

@@ -70,7 +70,7 @@
 
 								<div class="col-lg-8 entries">
 
-									<c:forEach items="${noticeList}" var="notice">
+									<c:forEach items="${allBoardList}" var="notice">
 										<article class="entry">
 
 											<div class="entry-title">

@@ -85,6 +85,18 @@ public class FrontController {
 	}
 	*/
 	
+	@GetMapping("/message")
+	public String messageBox() {
+		//쪽지함
+		return "member/message/notebox";
+	}
+	
+	@GetMapping("/message/writing")
+	public String messageWriting() {
+		//쪽지쓰기
+		return "member/message/writing";
+	}
+	
 	@GetMapping("/error")
 	public String error() {
 		

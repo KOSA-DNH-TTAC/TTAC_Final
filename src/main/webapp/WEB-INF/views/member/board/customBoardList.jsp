@@ -8,13 +8,15 @@
 				<meta charset="utf-8">
 				<meta content="width=device-width, initial-scale=1.0" name="viewport">
 
-				<title>DOTO: 자유게시판</title>
+				<title>DOTO: 커스텀게시판!!!!</title>
 				<meta content="" name="description">
 				<meta content="" name="keywords">
+				
+				<script src="https://ajax.googleapis.com/ajax/libs/jquery/3.3.1/jquery.min.js"></script>
 
 				<!-- Favicons -->
-				<link href="resources/assets/img/favicon.png" rel="icon">
-				<link href="resources/assets/img/apple-touch-icon.png" rel="apple-touch-icon">
+				<link href="/resources/assets/img/favicon.png" rel="icon">
+				<link href="/resources/assets/img/apple-touch-icon.png" rel="apple-touch-icon">
 
 				<!-- Google Fonts -->
 				<link
@@ -22,15 +24,15 @@
 					rel="stylesheet">
 
 				<!-- Vendor CSS Files -->
-				<link href="resources/assets/vendor/animate.css/animate.min.css" rel="stylesheet">
-				<link href="resources/assets/vendor/bootstrap/css/bootstrap.min.css" rel="stylesheet">
-				<link href="resources/assets/vendor/bootstrap-icons/bootstrap-icons.css" rel="stylesheet">
-				<link href="resources/assets/vendor/boxicons/css/boxicons.min.css" rel="stylesheet">
-				<link href="resources/assets/vendor/glightbox/css/glightbox.min.css" rel="stylesheet">
-				<link href="resources/assets/vendor/swiper/swiper-bundle.min.css" rel="stylesheet">
+				<link href="/resources/assets/vendor/animate.css/animate.min.css" rel="stylesheet">
+				<link href="/resources/assets/vendor/bootstrap/css/bootstrap.min.css" rel="stylesheet">
+				<link href="/resources/assets/vendor/bootstrap-icons/bootstrap-icons.css" rel="stylesheet">
+				<link href="/resources/assets/vendor/boxicons/css/boxicons.min.css" rel="stylesheet">
+				<link href="/resources/assets/vendor/glightbox/css/glightbox.min.css" rel="stylesheet">
+				<link href="/resources/assets/vendor/swiper/swiper-bundle.min.css" rel="stylesheet">
 
 				<!-- Template Main CSS File -->
-				<link href="resources/assets/css/style.css" rel="stylesheet">
+				<link href="/resources/assets/css/style.css" rel="stylesheet">
 
 				<!-- =======================================================
   * Template Name: Eterna - v4.10.0
@@ -39,9 +41,6 @@
   * License: https://bootstrapmade.com/license/
   ======================================================== -->
 			</head>
-
-
-
 
 			<body>
 
@@ -57,9 +56,9 @@
 
 							<ol>
 								<li><a href="index.html">Home</a></li>
-								<li>자유게시판</li>
+								<li>${boardName}</li>
 							</ol>
-							<h2>자유게시판</h2>
+							<h2>${boardName}</h2>
 
 						</div>
 					</section>
@@ -73,35 +72,25 @@
 
 								<div class="col-lg-8 entries">
 
-									<c:forEach items="${allBoardList}" var="freeBoard">
+									<c:forEach items="${boardList}" var="boardList">
 										<article class="entry">
 
 											<div class="entry-title">
-												<a onclick='boardContent(event)' href='javascript:void(0)'>
-													<c:choose>
-														<c:when test="${freeBoard.title != null && fn:length(freeBoard.title) > 80}">
-															${fn:substring(freeBoard.title,0,80)}...
-														</c:when>
-														<c:otherwise>
-															${freeBoard.title}
-														</c:otherwise>
-													</c:choose>
-												</a>
+												<a href="blog-single.html">${boardList.title}</a>
 											</div>
 
 											<div class="entry-meta">
 												<ul>
 													<li class="d-flex align-items-center"><i class="bi bi-person"></i><a
-															href="blog-single.html">${freeBoard.memberId}</a></li>
+															href="blog-single.html">${boardList.memberId}</a></li>
 													<li class="d-flex align-items-center"><i class="bi bi-clock"></i> <a
-															href="blog-single.html">${freeBoard.writeDate}</a></li>
-													<li class="d-flex align-items-center"><i class="bi-hand-thumbs-up"></i>${freeBoard.likeNum}
-													</li>
+															href="blog-single.html">${boardList.writeDate}</a></li>
+													<li class="d-flex align-items-center"><i class="bi-hand-thumbs-up"></i>${boardList.likeNum}</li>
 												</ul>
 											</div>
 
 											<div class="entry-content">
-												<p>${freeBoard.content}</p>
+												<p>${boardList.content}</p>
 											</div>
 
 										</article>
@@ -115,11 +104,6 @@
 											<li class="active"><a href="#">2</a></li>
 											<li><a href="#">3</a></li>
 										</ul>
-									</div>
-
-									<div class="d-grid gap-2 d-md-flex justify-content-md-end">
-										<button type="submit" onclick="location.href='/boardWrite'"
-											style="width:130px; height:20; border-radius: 50px; padding:5px; border: none; background-color:#E96B56; color:white; margin-top:10px; font-size: large;">글쓰기</button>
 									</div>
 
 									<div>
@@ -190,46 +174,17 @@
 						class="bi bi-arrow-up-short"></i></a>
 
 				<!-- Vendor JS Files -->
-				<script src="resources/assets/vendor/purecounter/purecounter_vanilla.js"></script>
-				<script src="resources/assets/vendor/bootstrap/js/bootstrap.bundle.min.js"></script>
-				<script src="resources/assets/vendor/glightbox/js/glightbox.min.js"></script>
-				<script src="resources/assets/vendor/isotope-layout/isotope.pkgd.min.js"></script>
-				<script src="resources/assets/vendor/swiper/swiper-bundle.min.js"></script>
-				<script src="resources/assets/vendor/waypoints/noframework.waypoints.js"></script>
-				<script src="resources/assets/vendor/php-email-form/validate.js"></script>
+				<script src="/resources/assets/vendor/purecounter/purecounter_vanilla.js"></script>
+				<script src="/resources/assets/vendor/bootstrap/js/bootstrap.bundle.min.js"></script>
+				<script src="/resources/assets/vendor/glightbox/js/glightbox.min.js"></script>
+				<script src="/resources/assets/vendor/isotope-layout/isotope.pkgd.min.js"></script>
+				<script src="/resources/assets/vendor/swiper/swiper-bundle.min.js"></script>
+				<script src="/resources/assets/vendor/waypoints/noframework.waypoints.js"></script>
+				<script src="/resources/assets/vendor/php-email-form/validate.js"></script>
 
 				<!-- Template Main JS File -->
-				<script src="resources/assets/js/main.js"></script>
-				
+				<script src="/resources/assets/js/main.js"></script>
 
 			</body>
-			<script type="text/javascript">
 
-			//	$(document).ready(function () {
-
-					// 게시글 ajax
-					//$(document).on(
-						/* 		"click",
-								".entry-title", function(){
-							console.log(allBoard), */
-							function boardContent(e){
-								//console.log(event.target)
-								e.preventDefault();
-							$.ajax(
-							{
-								type: "get",
-								url: "/"+{allBoard}+"/"+${allBoardList.idx},
-								contentType: "application/json; charset=utf-8",
-								success: function (data) {
-									console.log(data);
-									$('#blog').empty();
-									var contentView = "asdf";
-									$('#blog').append(contentView);
-								}
-							}
-						)}
-					//)
-			//	});
-
-			</script>
 			</html>

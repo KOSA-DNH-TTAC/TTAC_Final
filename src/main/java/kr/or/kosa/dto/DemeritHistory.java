@@ -12,5 +12,6 @@ public class DemeritHistory {
 	private String memberId;
 	private int demerit;
 	private Date demeritDate;
+	private String demeritReason;
 
 }

@@ -6,12 +6,9 @@ import java.util.List;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.http.HttpStatus;
 import org.springframework.http.ResponseEntity;
-import org.springframework.ui.Model;
 import org.springframework.web.bind.annotation.GetMapping;
 import org.springframework.web.bind.annotation.PathVariable;
 import org.springframework.web.bind.annotation.RequestMapping;
-import org.springframework.web.bind.annotation.RequestMethod;
-import org.springframework.web.bind.annotation.RequestParam;
 import org.springframework.web.bind.annotation.RestController;
 
 import kr.or.kosa.dto.Board;
@@ -40,37 +37,21 @@ public class BoardController_Rest {
 		}
 	}
 	
-	
-	// 동적 게시판별 글 보기
-	@GetMapping("boardAjax/{boardName}")
-	public ResponseEntity<List<Post>> boardListView(@PathVariable("boardName") String boardName) {
-		System.out.println("Rest Controller.!!.!!........");
-		System.out.println("parameter: " + boardName);
+	// 게시판 상세보기
+	@GetMapping("/{allBoard}/{idx}")
+	public ResponseEntity<List<Post>> boardContent(@PathVariable int idx){
 		
-		List<Post> boardList = new ArrayList<Post>();
+		System.out.println("RestController 도는중.. .9");
+		
+		List<Post> boardContent = new ArrayList<Post>();
 		try {
-			boardList = boardService.customBoardList(boardName);
-			System.out.println("boardList: " + boardList);
-			return new ResponseEntity<List<Post>>(boardList, HttpStatus.OK);
+			boardContent = boardService.boardContent(idx);
+			System.out.println("RestController: " + boardContent);
+			return new ResponseEntity<List<Post>>(boardContent, HttpStatus.OK);
 		} catch (Exception e) {
-			return new ResponseEntity<List<Post>>(boardList, HttpStatus.BAD_REQUEST);
+			return new ResponseEntity<List<Post>>(boardContent, HttpStatus.BAD_REQUEST);
 		}
-	}
-
-	/*
-	 * @GetMapping("boardList") public ResponseEntity<List<Post>>
-	 * boardListView(@PathVariable String boardName) {
-	 * System.out.println("ㅇ??????ㄱ"); System.out.println("parameter: " +
-	 * boardName);
-	 * 
-	 * List<Post> boardList = new ArrayList<Post>(); try { boardList =
-	 * boardService.customBoardList(); System.out.println("Service 돌앗나???????");
-	 * System.out.println("boardList: " + boardList); return new
-	 * ResponseEntity<List<Post>>(boardList, HttpStatus.OK); } catch (Exception e) {
-	 * return new ResponseEntity<List<Post>>(boardList, HttpStatus.BAD_REQUEST); } }
-	 */
-	
-	// /customboard?boardname=덕질게시판
+	} 
 	
 	
 } 
