@@ -21,7 +21,6 @@
 			<link href="resources/assets/vendor/boxicons/css/boxicons.min.css" rel="stylesheet">
 			<link href="resources/assets/vendor/glightbox/css/glightbox.min.css" rel="stylesheet">
 			<link href="resources/assets/vendor/swiper/swiper-bundle.min.css" rel="stylesheet">
-			<link href="resources/assets/css/yb.css" rel="stylesheet">
 
 			<!-- Template Main CSS File -->
 			<link href="resources/assets/css/style.css" rel="stylesheet">
@@ -35,40 +34,54 @@
 
 			<script type="text/javascript">
 
+
+				$(document).on(
+					"click",
+					".boardName",
+					function () {
+						console.log("asd");
+						var boardName = "";
+						boardName = $('.boardName').attr('seq');
+						console.log("boardName : "+boardName);
+						$.ajax(
+							{
+								type: "get",
+								url: "boardAjax/" + boardName,
+								data: {
+									boardName: boardName
+								},
+								success: function (data) {
+									console.log("data : " + data);
+									console.log("박예삐");
+									$('#boardList').empty;
+									$('#boardList').append("임준한");
+								}
+							}
+						)
+					});
+
+
 				$.ajax(
 					{
 						type: "get",
 						url: "categoryList",
 						success: function (data) {
+							console.log(data)
+
+							$(document).on('click', '#boardName', function (e) {
+								e.preventDefault();
+								/* $('#ttac').empty;
+								$('#ttac').append("머임"); */
+								$('#boardList').empty;
+								$('#boardList').append("임준한");
+							})
+
 							createTable(data, "@Restcontroller");
+
 						}
 					}
 				)
 
-				$(document).on(
-					"click",
-					"#boardName",
-					function () {						
-						var boardName = "";
-						boardName = $(this).attr('seq');
-						
-						location.href= "board/" + boardName;
-						
-						console.log("boardName : " + boardName);
-						
-						$.ajax(
-							{
-								type: "get",
-								// url: "board/" + boardName,
-								data: {
-									// boardName: boardName
-								},
-								success: function (result) {
-									//console.log("result : " + result);
-								}
-							}
-						)
-					});
 
 				//Json 전용 table 생성
 				function createTable(data) {
@@ -76,7 +89,7 @@
 					var opr = "";
 					$.each(data, function (index, data) {
 						//opr += "<li><input type='button' id='boardName'>"+data.boardName+"</input></li>";
-						opr += "<li><button class='ybbtn' id='boardName' seq='" + data.boardName + "'>" + data.boardName + "</button></li>";
+						opr += "<li><button class='boardName' seq='"+data.boardName+"'> "+ data.boardName + "</button></li>";
 					});
 					$('#list').append(opr);
 				}

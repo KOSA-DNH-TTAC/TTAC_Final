@@ -16,11 +16,13 @@ public class Member {
 	private String gender;
 	private String phone;
 	private String parentsPhone;
+	private String room;
 	private int memberPoint;
 	private int demerit;
 	private int status;
 	private String enabled;
 	
+	// resultMap을 이용...(memberauth테이블의 값 가져와서 넣어야함)
 	private List<MemberAuth> authList;
 	
 }

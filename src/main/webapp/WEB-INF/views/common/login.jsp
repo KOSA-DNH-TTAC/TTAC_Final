@@ -58,16 +58,17 @@
                   <div class="center-wrap">
                     <div class="section text-center">
                       <h4 class="mb-4 pb-3">로그인</h4>
-                      <form>
+                      <form action="/login" method="POST">
                       <div class="form-group">
-                        <input type="email" name="로그인" class="form-style" placeholder="ID" id="logemail" autocomplete="off">
+                        <input type="text" name="username" class="form-style" placeholder="ID" id="logemail" autocomplete="off">
                         <i class="input-icon uil uil-at"></i>
                       </div>  
                       <div class="form-group mt-2">
-                        <input type="password" name="logpass" class="form-style" placeholder="Password" id="logpass" autocomplete="off">
+                        <input type="password" name="password" class="form-style" placeholder="Password" id="logpass" autocomplete="off">
                         <i class="input-icon uil uil-lock-alt"></i>
                       </div>
-                      <a href="#" class="btn mt-4">로그인</a>
+                      <a type="submit" class="btn mt-4">로그인</a>
+                      <input name="submit" type="submit" value="Login"/>
                       <p class="mb-0 mt-4 text-center"><a href="#0" class="link">비밀번호를 잊으셨나요?</a></p>
                         </form>
                         </div>
@@ -78,7 +79,6 @@
               </div>
             </div>
   </main><!-- End #main -->
-	
   <!-- ======= Footer ======= -->
 	<c:import url="/WEB-INF/views/common/footer.jsp" />
   <!-- End Footer -->

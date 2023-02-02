@@ -34,7 +34,7 @@
             <ul>
               <li><i class="bx bx-chevron-right"></i> <a href="/adminMember">성균관대학교</a></li>
               <li><i class="bx bx-chevron-right"></i> <a href="/eveningCall">상명대학교</a></li>
-              <li><i class="bx bx-chevron-right"></i> <a href="#">강남대학교</a></li>
+              <li><i class="bx bx-chevron-right"></i> <a href="/memberCalendar">강남대학교</a></li>
               <li><i class="bx bx-chevron-right"></i> <a href="#">한서대학교</a></li>
               <li><i class="bx bx-chevron-right"></i> <a href="#">서울여자대학교</a></li>
             </ul>

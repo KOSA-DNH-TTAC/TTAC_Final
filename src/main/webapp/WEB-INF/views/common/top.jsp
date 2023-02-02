@@ -31,7 +31,7 @@
               <li><a href="/mypage">내 정보</a></li>
               <li><a href="#">마이 포인트 : 100p</a></li>
               <li><a href="#">내 식권보기</a></li>
-              <li><a href="/login">로그인</a></li>
+              <li><a href="/userlogin">로그인</a></li>
             </ul>
           </li>
           <!-- <li><a href="contact.html">Contact</a></li> -->
