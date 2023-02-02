@@ -35,6 +35,11 @@ FROM POST p JOIN BOARD b ON p.BOARDIDX = b.BOARDIDX
 WHERE p.IDX=#{idx}
 </select>
 
+<!-- 글 작성 (파일첨부 x) -->
+<insert id="boardInsert" parameterType="kr.or.kosa.dto.Post">
+INSERT INTO POST (BOARDIDX,MEMBERID,UNIVERSITYCODE,TITLE,CONTENT,WRITEDATE)
+VALUES(#{boardIdx},#{memberId},#{universityCode},#{title},#{content},NOW())
+</insert>
 </mapper>
 
 

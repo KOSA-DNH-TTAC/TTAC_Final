@@ -1,7 +1,9 @@
 package kr.or.kosa.service;
 
+import java.sql.SQLException;
 import java.text.SimpleDateFormat;
 import java.util.Date;
+import java.util.HashMap;
 import java.util.List;
 
 import org.apache.ibatis.session.SqlSession;
@@ -80,6 +82,25 @@ public class BoardService {
 		List<Post> boardContent = boardDao.boardContent(idx);
 		System.out.println(boardContent);
 		return boardContent;
+	}
+	
+	// 자유게시판 글쓰기
+	public int freeBoardWrite(Post post) {
+		
+		int result = 0;
+		
+		try {
+			BoardDao boardDao = sqlSession.getMapper(BoardDao.class);
+			result = boardDao.boardInsert(post);
+			
+			System.out.println("");
+		} catch (ClassNotFoundException e) {
+			e.printStackTrace();
+		} catch (SQLException e) {
+			e.printStackTrace();
+		}
+		
+		return result;
 	}
 
 }
