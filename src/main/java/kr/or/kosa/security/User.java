@@ -9,7 +9,7 @@ import org.springframework.security.core.userdetails.UserDetails;
 import kr.or.kosa.dto.Member;
 import kr.or.kosa.dto.MemberAuth;
 
-public class CustomUserDetails implements UserDetails {
+public class User implements UserDetails {
 	
 
 	private static final long serialVersionUID = 1L;
@@ -208,7 +208,7 @@ public class CustomUserDetails implements UserDetails {
 		this.authorities = authorities;
 	}
 	
-	public CustomUserDetails(Member vo, Collection<GrantedAuthority> auth) {
+	public User(Member vo, Collection<GrantedAuthority> auth) {
 		
 		username = vo.getMemberId();
 		universityCode = vo.getUniversityCode();
