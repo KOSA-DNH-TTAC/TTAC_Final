@@ -71,10 +71,10 @@
           <div class="col-lg-12 entries">
 
             <article class="entry">
-				<form action="#" method="POST" enctype="form-data">
+				<form action="/자유게시판/freeBoardWrite" method="POST" enctype="form-data">
 					<div class="mb-3">
 					  <label for="title" class="form-label">게시글 제목</label>
-					  <input type="text" class="form-control" id="title" placeholder="제목을 작성해주세요." autofocus required>
+					  <input type="text" class="form-control" name="title" id="title" placeholder="제목을 작성해주세요." autofocus required>
 					</div>
 					<div class="mb-3">
 					  <label for="content" class="form-label">내용</label>
@@ -87,12 +87,12 @@
                     </div>
                     
                     
-                    	
+                    <%-- 	
                   		<!-- 숨길 데이터들 -->
 	                    <input name="refer" value="${refer}" type="hidden" />
 	              		<input name="b_code" value="${b_code}" type="hidden" />
 	              		<input name="depth" value="${depth}" type="hidden" />
-	              		<input name="step" value="${step}" type="hidden" />
+	              		<input name="step" value="${step}" type="hidden" /> --%>
 				</form>
             </article><!-- End blog entry -->
 

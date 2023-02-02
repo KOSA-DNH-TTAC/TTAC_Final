@@ -1,5 +1,6 @@
 package kr.or.kosa.dao;
 
+import java.sql.SQLException;
 import java.util.List;
 
 import kr.or.kosa.dto.Board;
@@ -16,7 +17,9 @@ public interface BoardDao {
 	// 커스텀 생성 게시판
 	public List<Post> customBoardList(String boardName);
 	
-	
 	// 게시글 상세보기
 	public List<Post> boardContent(String idx);
+	
+	// 글 작성(파일첨부 x)
+	public int boardInsert(Post post) throws ClassNotFoundException, SQLException;
 }
