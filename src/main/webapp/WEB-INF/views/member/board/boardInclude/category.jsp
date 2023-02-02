@@ -50,7 +50,7 @@
 								}
 							)
 
-							//Json 전용 table 생성
+							// 커스텀 게시판 카테고리
 							function createTable(data) {
 								$('#list').empty();
 								var opr = "";
@@ -60,6 +60,7 @@
 								$('#list').append(opr);
 							}
 
+							// 
 								$(document).on(					
 									"click",
 									".ybbtn", function(){
