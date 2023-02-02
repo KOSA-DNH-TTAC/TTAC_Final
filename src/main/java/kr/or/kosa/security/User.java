@@ -3,17 +3,17 @@ package kr.or.kosa.security;
 import java.util.Collection;
 import java.util.List;
 
-import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.security.core.GrantedAuthority;
 import org.springframework.security.core.userdetails.UserDetails;
-import org.springframework.stereotype.Service;
 
 import kr.or.kosa.dto.Member;
 import kr.or.kosa.dto.MemberAuth;
-import kr.or.kosa.service.MemberService;
-import lombok.Data;
 
-public class CustomUserDetails implements UserDetails {
+public class User implements UserDetails {
+	
+
+	private static final long serialVersionUID = 1L;
+	
 	
 	private String username;
 	private String universityCode;
@@ -208,7 +208,7 @@ public class CustomUserDetails implements UserDetails {
 		this.authorities = authorities;
 	}
 	
-	public CustomUserDetails(Member vo, Collection<GrantedAuthority> auth) {
+	public User(Member vo, Collection<GrantedAuthority> auth) {
 		
 		username = vo.getMemberId();
 		universityCode = vo.getUniversityCode();

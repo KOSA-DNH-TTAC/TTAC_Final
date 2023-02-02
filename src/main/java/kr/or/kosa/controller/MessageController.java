@@ -11,7 +11,7 @@ import org.springframework.web.bind.annotation.GetMapping;
 import org.springframework.web.bind.annotation.RestController;
 
 import kr.or.kosa.security.CustomUser;
-import kr.or.kosa.security.CustomUserDetails;
+import kr.or.kosa.security.User;
 import kr.or.kosa.service.MessageService;
 
 @RestController
@@ -27,7 +27,7 @@ public class MessageController {
 	//쪽지 전체 조회
 	@GetMapping("/notebox")
 	public ResponseEntity<String> getReceivedMsg(){
-		CustomUserDetails user = (CustomUserDetails) SecurityContextHolder.getContext().getAuthentication().getPrincipal();
+		User user = (User) SecurityContextHolder.getContext().getAuthentication().getPrincipal();
 
 		System.out.println(user);
 		return null;

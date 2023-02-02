@@ -38,7 +38,7 @@ public class CustomUserDetailService implements UserDetailsService {
 		for(MemberAuth a : dto.getAuthList()) {
 			grantedAuthorities.add(new SimpleGrantedAuthority(a.getAuth()));
 		}
-		CustomUserDetails user = new CustomUserDetails(dto, grantedAuthorities);
+		User user = new User(dto, grantedAuthorities);
 		System.out.println(user.toString());
 //		return dto == null ? null : new CustomUser(dto);
 		return user;
