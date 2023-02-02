@@ -36,6 +36,4 @@
 	<beans:bean id="chattingHandler" class="kr.or.kosa.socket.ChattingHandler"/>
 	
 	
-	
-	
 </beans:beans>

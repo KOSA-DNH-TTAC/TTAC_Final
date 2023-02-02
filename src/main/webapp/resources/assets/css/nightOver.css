@@ -1,6 +1,4 @@
-#container{
-	width: 100%;
-}
+
 
 #box {
 
@@ -10,7 +8,7 @@
 	align-items: center;
 	margin: auto;
 	margin-bottom: 100px;
-	margin-top: 150px;
+	margin-top: 20px;
 	padding-top: 10px;
 	padding-left: 30px;
 	padding-right: 30px;
@@ -35,6 +33,17 @@
 	padding-bottom: 10px;
 }
 
+#date1{
+	width: 100%;
+	display : flex;
+	justify-content: space-between;
+	align-items: center;
+	margin-left : 10px;
+	margin-right : 10px;
+	padding-top: 10px;
+	padding-bottom: 10px;
+}
+
 #date{
 	width: 100%;
 	display : flex;
@@ -51,11 +60,29 @@
 	
 }
 
-.form-select{
+.form-select1{
 	display: flex;
 	flex-direction: row;
 	align-items: center;
 	padding: 12px 16px;
+	
+	 width: 100%;
+	/*height: 48px;
+	
+	background: #FFFFFF;
+	border: 2px solid #5470FF;*/
+	border: 1px solid #5470FF;
+	border-radius: 8px;
+	text-align: center; 
+		
+}
+
+.form-select2{
+	display: flex;
+	flex-direction: row;
+	align-items: center;
+	padding: 12px 16px;
+	justify-content: center;
 	
 	 width: 180px;
 	/*height: 48px;

@@ -1,18 +1,29 @@
 package kr.or.kosa.controller;
 
+import java.security.Principal;
 import java.util.Locale;
 
 import org.slf4j.Logger;
 import org.slf4j.LoggerFactory;
+import org.springframework.beans.factory.annotation.Autowired;
+import org.springframework.security.core.annotation.AuthenticationPrincipal;
 import org.springframework.stereotype.Controller;
 import org.springframework.ui.Model;
 import org.springframework.web.bind.annotation.GetMapping;
+import org.springframework.web.bind.annotation.PostMapping;
+import org.springframework.web.servlet.ModelAndView;
+
+import kr.or.kosa.dto.Member;
+import kr.or.kosa.service.MemberService;
 
 @Controller
 public class FrontController {
 	
 	private static final Logger logger = LoggerFactory.getLogger(FrontController.class);
 
+	@Autowired
+	MemberService memberservice;
+	
 	@GetMapping("")
 	public String home(Locale locale, Model model) {
 //		logger.info("Welcome home! The client locale is {}.", locale);
@@ -27,10 +38,32 @@ public class FrontController {
 		return "index";
 	}
 	
+	//마이페이지
 	@GetMapping("/mypage")
-	public String myPage() {
+	public ModelAndView myPage(Principal principal) {
 		
-		return "member/mypage";
+		ModelAndView mv = new ModelAndView();
+		//여기서 내 정보 조회까지 작업해서 뷰에 올린다
+		Member member = null;
+		String memberid = principal.getName();
+		member = memberservice.getMemberById(memberid);
+		mv.setViewName("member/mypage/mypageHome");
+		mv.addObject(member);
+		return mv;
+	}
+	
+	//마이페이지 - 정보수정
+	@GetMapping("/mypage/modify")
+	public String myPageModify() {
+		return "member/mypage/modifyInfo";
+	}
+	
+	//마이페이지 - 정보수정 (제출 시)
+	@PostMapping("/mypage/modify")
+	public String myPageModifySubmit(@AuthenticationPrincipal Member member) {
+		System.out.println("정보수정 제출");
+		return "member/mypage/mypageHome";
+//		return null;
 	}
 	
 	@GetMapping("/community")
@@ -39,16 +72,29 @@ public class FrontController {
 		return "member/community";
 	}
 	
-	@GetMapping("/mealticket")
-	public String mealticket() {
-		
-		return "member/mealticket";
-	}
-	
-	@GetMapping("/login")
+	@GetMapping("/userlogin")
 	public String login() {
 		
 		return "common/login";
+	}
+	/*
+	@PostMapping("/login")
+	public String mylogin() {
+		System.out.println("로그인제출?");
+		return null;
+	}
+	*/
+	
+	@GetMapping("/message")
+	public String messageBox() {
+		//쪽지함
+		return "member/message/notebox";
+	}
+	
+	@GetMapping("/message/writing")
+	public String messageWriting() {
+		//쪽지쓰기
+		return "member/message/writing";
 	}
 	
 	@GetMapping("/error")
@@ -57,5 +103,64 @@ public class FrontController {
 		return "common/errorPage";
 	}
 	
+	@GetMapping("/adminPopular")
+	public String admin() {
+		
+		return "admin/adminPopular";
+	}
+	
+	@GetMapping("/adminAnalyze")
+	public String adminAnalyze() {
+		
+		return "admin/adminAnalyze";
+	}
+	
+	@GetMapping("/adminSail")
+	public String adminSail() {
+		
+		return "admin/adminSail";
+	}
+	
+	@GetMapping("/adminCoupon")
+	public String adminCoupon() {
+		
+		return "admin/adminMealCoupon";
+	}
+	
+	@GetMapping("/adminMember")
+	public String adminMember() {
+		
+		return "admin/adminMemberList";
+	}
+	
+	@GetMapping("/adminCalendar")
+	public String adminCalendar() {
+		
+		return "admin/adminCalendar";
+	}
+	
+	@GetMapping("/adminEnroll")
+	public String adminEnroll() {
+		
+		return "admin/adminEnroll";
+	}
+	
+	@GetMapping("/eveningCall")
+	public String eveningCall() {
+		
+		return "member/eveningCall";
+	}
+	
+	@GetMapping("/memberCalendar")
+	public String calendar() {
+		
+		return "member/memberCalendar";
+	}
+	
+	@GetMapping("/facility")
+	public String facility() {
+		
+		return "member/facilityReport";
+	}
 	
 }

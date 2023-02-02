@@ -3,9 +3,53 @@
 PUBLIC "-//mybatis.org//DTD Mapper 3.0//EN"
 "http://mybatis.org/dtd/mybatis-3-mapper.dtd">
 
-<mapper namespace="kr.or.kosa.dao.dao">
+<mapper namespace="kr.or.kosa.dao.MemberDao">
+	<!-- JOIN 등으로 기존 VO와 구조가 다른 데이터가 리턴되는 경우 resultMap으로 묶는다.-->
+	<resultMap type="kr.or.kosa.dto.Member" id="memberMap">
+	   <result property="memberId" column="memberid"/>
+	   <result property="password" column="password"/>
+	   <result property="universityCode" column="universitycode"/>
+	   <result property="name" column="name"/>
+	   <result property="major" column="major"/>
+	   <result property="email" column="email"/>
+	   <result property="gender" column="gender"/>
+	   <result property="phone" column="phone"/>
+	   <result property="parentsPhone" column="parentsPhone"/>
+	   <result property="room" column="room"/>
+	   <result property="memberPoint" column="memberPoint"/>
+	   <result property="demerit" column="demerit"/>
+	   <collection property="authList" resultMap="authMap">
+	   </collection> 
+	 </resultMap>
+	  
+	 <resultMap type="kr.or.kosa.dto.MemberAuth" id="authMap">
+	   <result property="memberId" column="memberid"/>
+	   <result property="auth" column="auth"/>
+	 </resultMap>
 	
-	
+	<!-- getAllMember(전체조회) -->
+	<select id="getAllMember" parameterType="string" resultMap="memberMap" resultType="kr.or.kosa.dto.Member">             
+	  SELECT m.memberid, m.password, m.universitycode, m.name, m.major,
+	  m.email, m.gender, m.phone, m.parentsphone, m.room, m.memberpoint, m.demerit, auth
+	  FROM MEMBER m LEFT join MEMBERAUTH a ON m.MEMBERID = a.MEMBERID WHERE a.auth = 'ROLE_MEMBER'
+	  AND m.UNIVERSITYCODE = #{universitycode}
+	</select>
+	 
+	 
+	<!-- getMember (특정회원조회 : 아이디) -->
+	<select id="getMember" parameterType="String" resultType="kr.or.kosa.dto.Member" resultMap="memberMap">
+	SELECT m.memberid, m.password, m.universitycode, m.NAME, m.major, m.email, m.gender, m.phone,
+	m.parentsphone, m.room, m.memberpoint, m.demerit, a.auth
+	FROM MEMBER m LEFT JOIN MEMBERAUTH a ON m.MEMBERID = a.MEMBERID WHERE m.memberid = #{memberid}
+	</select>
+	 
+	<!-- getMemberByName (특정회원조회 : 이름) -->
+	<select id="getMemberByName" parameterType="String" resultType="kr.or.kosa.dto.Member">
+	 SELECT memberid, password, universitycode, NAME, major, email, gender, phone, parentsphone, room, memberpoint, demerit
+	 FROM MEMBER
+	 WHERE name= #{name} AND universitycode = #{universitycode}
+	</select>
+	 
 	
 </mapper>
 

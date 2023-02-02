@@ -16,11 +16,16 @@
 		#wrap{
 		margin: auto;
 	}
-		img{
-			margin-left: 490px;
+		#image{
+			display : flex;
+			flex-direction:row;
+			justify-content: center;
+			align-items: center;
 		}
 		h1{
-			margin-left:480px;
+			display : flex;
+			justify-content: center;
+			align-items: center;
 			color: white;
 		}
 
@@ -29,7 +34,9 @@
 	</head>
 	<body id="error">
 	<div id="wrap">
-		<img src="resources/assets/img/logo.png">
+		<div id="image">
+			<a href="/"><img src="resources/assets/img/logo.png"></a>
+		</div>
 		<h1>요청하신 주소에 대한 권한이 없습니다.</h1>
 	</div>
 	</body>
