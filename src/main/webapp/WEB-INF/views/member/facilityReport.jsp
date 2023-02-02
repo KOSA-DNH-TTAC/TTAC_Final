@@ -60,6 +60,8 @@
 
       </div>
     </section>
+    
+    
   	<div style="display: flex; flex-direction: row; justify-content: center; align-items: center;">
   	<div id="box" style="width: 275px; height: 553.44px; left: 61.27px; background: #FFFFFF;">
   	<div id="select" style="display:flex; flex-direction:column; justify-content:center; width:100%;">
