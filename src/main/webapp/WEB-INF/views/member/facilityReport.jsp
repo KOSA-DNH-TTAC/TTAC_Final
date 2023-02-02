@@ -92,33 +92,76 @@
   	</div>
   	
   	
-  	<div id="box" style="width: 835px; height: 553.44px; background: #FFFFFF;">
   	
-  	<div id="select" style="display:flex; flex-direction:row; justify-content:center; width:100%;">
-		기숙사 건물(동)
-		<select class="form-select1" aria-label="Default select example">
+  	
+  	
+  	
+  	<div id="box" style="width: 835px; height: 553.44px; background: #FFFFFF;">
+  	  	<div id="date1">
+  		<label class="label" for="start">기숙사 건물(동)</label>
+  		<label class="label" for="end">기숙사 층</label>
+  		<label class="label" for="end">시설물</label>
+  	</div>
+  	<div id="select" style="display:flex; flex-direction:row; width:100%;">
+		<select class="form-select2" aria-label="Default select example">
 		  <option selected>명륜학사 A동</option>
 		  <option value="1">명륜학사 A동</option>
 		  <option value="2">장기외박</option>
 		</select>
-		기숙사 층 
-		<select class="form-select1" aria-label="Default select example">
+		<select class="form-select2" aria-label="Default select example">
 		  <option selected>명륜학사 A동</option>
 		  <option value="1">명륜학사 A동</option>
 		  <option value="2">장기외박</option>
 		</select>
-		시설물
-		<select class="form-select1" aria-label="Default select example">
+		<select class="form-select2" aria-label="Default select example">
 		  <option selected>명륜학사 A동</option>
 		  <option value="1">명륜학사 A동</option>
 		  <option value="2">장기외박</option>
 		</select>
   	</div>
-  	<div id="reason">
-  		<div class="form-floating">
-		  <textarea class="form-control" placeholder="외박 사유를 적어주세요." id="floatingTextarea2" style="height:200px;"></textarea>
-		  <label for="floatingTextarea2">외박 사유를 적어주세요.</label>
-		</div>
+  	<div id="reason" style="border:none;">
+  		<table class="table" id='nightoverTable'>
+            <thead>
+            <tr>
+              <th scope="col">외박기간</th>
+              <th scope="col">외박사유</th>
+              <th scope="col">신청일자</th>
+              <th scope="col">승인여부</th>
+            </tr>
+          </thead>
+          <tbody>
+            <tr>
+              <td>2023.01.30 ~ 2023.01.31</td>
+              <td>병원</td>
+              <td>2023.01.29</td>
+              <td>승인</td>
+            </tr>
+            <tr>
+              <td>2023.01.30 ~ 2023.01.31</td>
+              <td>병원</td>
+              <td>2023.01.29</td>
+              <td>승인</td>
+            </tr>
+            <tr>
+              <td>2023.01.30 ~ 2023.01.31</td>
+              <td>코사를 탈주</td>
+              <td>2023.01.29</td>
+              <td>미승인</td>
+            </tr>   
+          	<tr>
+              <td>2023.01.30 ~ 2023.01.31</td>
+              <td>병원</td>
+              <td>2023.01.29</td>
+              <td>승인</td>
+            </tr>
+          	<tr>
+	            <td>2023.01.30 ~ 2023.01.31</td>
+	            <td>병원</td>
+	            <td>2023.01.29</td>
+	            <td>승인</td>
+	          </tr>
+          </tbody>
+        </table>
   	</div>
   	</div>
   	</div>

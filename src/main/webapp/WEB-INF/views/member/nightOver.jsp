@@ -67,7 +67,6 @@
   		<label class="label" for="end">종료 날짜</label>
   		<label class="label" for="end">신청 구분</label>
   		<label class="label" for="end">증빙 첨부</label>
-  		
   	</div>
   	<div id="select">
 		<input class="form-select1" type="date" id="start" name="trip-start" value="2000-10-04">
