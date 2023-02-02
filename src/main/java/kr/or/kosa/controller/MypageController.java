@@ -17,7 +17,7 @@ import kr.or.kosa.service.MemberService;
 @RequestMapping("/mypage")
 public class MypageController {
 	
-	MemberService memberservice;
+	private MemberService memberservice;
 	
 	@Autowired
     public void setMemberService(MemberService memberservice) {

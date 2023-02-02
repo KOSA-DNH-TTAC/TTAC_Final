@@ -61,13 +61,7 @@
       </div>
     </section>
     
-    <div class="blog-pagination">
-										<ul class="justify-content-center">
-											<li><a href="#">1</a></li>
-											<li class="active"><a href="#">2</a></li>
-											<li><a href="#">3</a></li>
-										</ul>
-									</div>
+    
   	<div style="display: flex; flex-direction: row; justify-content: center; align-items: center;">
   	<div id="box" style="width: 275px; height: 553.44px; left: 61.27px; background: #FFFFFF;">
   	<div id="select" style="display:flex; flex-direction:column; justify-content:center; width:100%;">

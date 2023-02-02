@@ -36,14 +36,6 @@ public class BoardController {
 	
 //////////////////////////////////////////////////////////////////////////////////////////////////////////////
 	
-	
-	// 공지사항
-	@GetMapping("공지사항")
-	public String noticeView(Model model) {
-		List<Post> noticeList = boardService.noticeList();
-		model.addAttribute("noticeList", noticeList);
-		return "member/board/noticeList";
-
 	// 기본 제공 게시판
 	@GetMapping("{allBoard}")
 	public String allBoardView(Model model, @PathVariable String allBoard) {
