@@ -7,6 +7,7 @@ import org.springframework.stereotype.Controller;
 import org.springframework.ui.Model;
 import org.springframework.web.bind.annotation.GetMapping;
 import org.springframework.web.bind.annotation.PathVariable;
+import org.springframework.web.bind.annotation.PostMapping;
 
 import kr.or.kosa.dto.Post;
 import kr.or.kosa.service.BoardService;
@@ -49,10 +50,51 @@ public class BoardController {
 	}
 	
 	
-	// 게시판 글쓰기 이것도 게시판마다 달라야함
+	// 커스텀 게시판 글쓰기 이것도 게시판마다 달라야함
 	@GetMapping("/boardWrite")
 	public String BoardWrite() {
-		
 		return "member/board/boardWrite";
 	}
+	
+	@PostMapping("/boardWrite")
+	public String BoardWriteOk() {
+		return "member/board/boardWrite";
+	}
+	
+	//공지사항 글쓰기
+	@GetMapping("/noticeWrite")
+	public String noticeWrite() {
+		return "member/board/noticeWrite";
+	}
+	//공지사항 글쓰기
+	@PostMapping("/noticeWrite")
+	public String noticeWriteOk() {
+		return "member/board/noticeWrite";
+	}
+	
+	//건의사항 글쓰기
+	@GetMapping("/opinionWrite")
+	public String opinionWrite() {
+		return "member/board/opinionWrite";
+	}
+	//건의사항 글쓰기
+	@PostMapping("/opinionWrite")
+	public String opinionWriteOk() {
+		return "member/board/opinionWrite";
+	}
+		
+	//자유게시판 글쓰기
+	@GetMapping("/freeBoardWrite")
+	public String freeBoardWrite() {
+		return "member/board/freeBoardWrite";
+	}
+	//자유게시판 글쓰기
+	@PostMapping("/freeBoardWrite")
+	public String freeBoardWriteOk() {
+		return "member/board/freeBoardWrite";
+	}
+	
+	
+	
+	
 }
