@@ -8,7 +8,7 @@
 				<meta charset="utf-8">
 				<meta content="width=device-width, initial-scale=1.0" name="viewport">
 
-				<title>DOTO: 공지사항</title>
+				<title>DOTO: 거래게시판</title>
 				<meta content="" name="description">
 				<meta content="" name="keywords">
 
@@ -54,9 +54,9 @@
 
 							<ol>
 								<li><a href="index.html">Home</a></li>
-								<li>공지사항</li>
+								<li>거래게시판</li>
 							</ol>
-							<h2>공지사항</h2>
+							<h2>거래게시판</h2>
 
 						</div>
 					</section>
@@ -70,25 +70,25 @@
 
 								<div class="col-lg-8 entries">
 
-									<c:forEach items="${allBoardList}" var="notice">
+									<c:forEach items="${allBoardList}" var="productList">
 										<article class="entry">
 
 											<div class="entry-title">
-												<a href="blog-single.html">${notice.title}</a>
+												<a href="blog-single.html">${productList.title}</a>
 											</div>
 
 											<div class="entry-meta">
 												<ul>
 													<li class="d-flex align-items-center"><i class="bi bi-person"></i><a
-															href="blog-single.html">${notice.memberId}</a></li>
+															href="blog-single.html">${productList.memberId}</a></li>
 													<li class="d-flex align-items-center"><i class="bi bi-clock"></i> <a
-															href="blog-single.html">${notice.writeDate}</a></li>
-													<li class="d-flex align-items-center"><i class="bi-hand-thumbs-up"></i>${notice.likeNum}</li>
+															href="blog-single.html">${productList.writeDate}</a></li>
+													<li class="d-flex align-items-center"><i class="bi-hand-thumbs-up"></i>${productList.likeNum}</li>
 												</ul>
 											</div>
 
 											<div class="entry-content">
-												<p>${notice.content}</p>
+												<p>${productList.content}</p>
 											</div>
 
 										</article>
@@ -103,6 +103,7 @@
 											<li><a href="#">3</a></li>
 										</ul>
 									</div>
+									
 									<div class="d-grid gap-2 d-md-flex justify-content-md-end">
 									  <button type="submit" onclick="location.href='/boardWrite'" style="width:130px; height:20; border-radius: 50px; padding:5px; border: none; background-color:#E96B56; color:white; margin-top:10px; font-size: large;">글쓰기</button>
 									</div>

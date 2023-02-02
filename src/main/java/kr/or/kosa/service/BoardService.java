@@ -26,7 +26,6 @@ public class BoardService {
 	public List<Board> categoryList() {
 		BoardDao boardDao = sqlSession.getMapper(BoardDao.class);
 		List<Board> categoryList = boardDao.categoryList();
-		System.out.println("categoryList: " + categoryList);
 		return categoryList;
 	}
 	
@@ -51,6 +50,28 @@ public class BoardService {
 		return noticeList;
 	}
 	
+	// 기본 제공 게시판 글 목록
+		public List<Post> allBoardList(String allBoard) {
+			BoardDao boardDao = sqlSession.getMapper(BoardDao.class);
+			List<Post> allBoardList = boardDao.allBoardList(allBoard);
+			System.out.println("서비스 돌아가는중....");
+			Date nowDate = new Date();
+		
+			SimpleDateFormat simpleDateFormat = new SimpleDateFormat("YYYY-MM-dd");
+			String formatNowDate = simpleDateFormat.format(nowDate);
+			
+			for(Post p : allBoardList) {
+				String writedate = p.getWriteDate().substring(0, 10);
+				if (formatNowDate.equals(writedate)) {
+					p.setWriteDate(p.getWriteDate().substring(11, 16));
+				} else {
+					p.setWriteDate(writedate.substring(5));
+				}
+			}
+			System.out.println(allBoardList);
+			return allBoardList;
+		}
+	
 	// 자유게시판 목록
 	public List<Post> freeBoardList() {
 		BoardDao boardDao = sqlSession.getMapper(BoardDao.class);
@@ -72,7 +93,7 @@ public class BoardService {
 		return freeBoardList;
 	}
 	
-	// 새 게시판 목록
+	// 커스텀 생성 게시판 목록
 	public List<Post> customBoardList(String boardName) {
 		BoardDao boardDao = sqlSession.getMapper(BoardDao.class);
 		List<Post> customBoardList = boardDao.customBoardList(boardName);
