@@ -74,7 +74,16 @@
 										<article class="entry">
 
 											<div class="entry-title">
-												<a href="blog-single.html">${freeBoard.title}</a>
+												<a href="자유게시판?idx=${freeBoard.idx}">
+												<c:choose>
+													<c:when test="${freeBoard.title != null && fn:length(freeBoard.title) > 80}">
+														${fn:substring(freeBoard.title,0,80)}...
+													</c:when>
+													<c:otherwise>
+														${freeBoard.title}
+													</c:otherwise>
+												</c:choose>
+												</a>
 											</div>
 
 											<div class="entry-meta">
@@ -83,7 +92,8 @@
 															href="blog-single.html">${freeBoard.memberId}</a></li>
 													<li class="d-flex align-items-center"><i class="bi bi-clock"></i> <a
 															href="blog-single.html">${freeBoard.writeDate}</a></li>
-													<li class="d-flex align-items-center"><i class="bi-hand-thumbs-up"></i>${freeBoard.likeNum}</li>
+													<li class="d-flex align-items-center"><i class="bi-hand-thumbs-up"></i>${freeBoard.likeNum}
+													</li>
 												</ul>
 											</div>
 
@@ -103,9 +113,10 @@
 											<li><a href="#">3</a></li>
 										</ul>
 									</div>
-									
+
 									<div class="d-grid gap-2 d-md-flex justify-content-md-end">
-									  <button type="submit" onclick="location.href='/boardWrite'" style="width:130px; height:20; border-radius: 50px; padding:5px; border: none; background-color:#E96B56; color:white; margin-top:10px; font-size: large;">글쓰기</button>
+										<button type="submit" onclick="location.href='/boardWrite'"
+											style="width:130px; height:20; border-radius: 50px; padding:5px; border: none; background-color:#E96B56; color:white; margin-top:10px; font-size: large;">글쓰기</button>
 									</div>
 
 									<div>
