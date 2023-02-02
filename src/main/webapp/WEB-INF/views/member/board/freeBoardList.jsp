@@ -11,7 +11,9 @@
 				<title>DOTO: 자유게시판</title>
 				<meta content="" name="description">
 				<meta content="" name="keywords">
-
+				
+				<script src="http://code.jquery.com/jquery-1.9.1.js"></script>
+				
 				<!-- Favicons -->
 				<link href="resources/assets/img/favicon.png" rel="icon">
 				<link href="resources/assets/img/apple-touch-icon.png" rel="apple-touch-icon">
@@ -77,13 +79,14 @@
 										<article class="entry">
 
 											<div class="entry-title">
-												<a onclick='boardContent(event)' href='javascript:void(0)'>
+												<!-- <a onclick='boardContent(event)' id="idx" href='javascript:void(0)'> -->
+												<BUTTON ID="FREEBUTTON" ONCLICK="boardContent(this)" STYLE="WIDTH:70PX; HEIGHT:30PX;" NAME="${freeBoard.idx}">${freeBoard.idx}</BUTTON>	
 													<c:choose>
 														<c:when test="${freeBoard.title != null && fn:length(freeBoard.title) > 80}">
 															${fn:substring(freeBoard.title,0,80)}...
 														</c:when>
 														<c:otherwise>
-															${freeBoard.title}
+															${freeBoard.title}  ${freeBoard.idx}
 														</c:otherwise>
 													</c:choose>
 												</a>
@@ -212,19 +215,46 @@
 						/* 		"click",
 								".entry-title", function(){
 							console.log(allBoard), */
-							function boardContent(e){
+							function boardContent(dd){
+								var test = $(dd);
+								console.log(dd);
 								//console.log(event.target)
-								e.preventDefault();
+								var boardIdx = $(dd).attr('name');
+								console.log(boardIdx);
+								
 							$.ajax(
 							{
 								type: "get",
-								url: "/"+{allBoard}+"/"+${allBoardList.idx},
+								url: '${allBoard}'+'/'+boardIdx,
 								contentType: "application/json; charset=utf-8",
 								success: function (data) {
+									
+									var title = data.title;
+									var memberId = data.memberId;
+									var writerDate = data.writerDate;
+									var likeNum = data.likeNum;
+									var content = data.content;
 									console.log(data);
 									$('#blog').empty();
-									var contentView = "asdf";
-									$('#blog').append(contentView);
+ 									$('#blog').append('<div class="container" data-aos="fade-up"><div class="row"><div class="col-lg-8 entries"><article class="entry"><h2 class="entry-title">'+
+																			'<a href="blog-single.html">'+title+'</a>'+
+																		'</h2>'+
+												
+																		'<div class="entry-meta">'+
+																			'<ul>'+
+																				'<li class="d-flex align-items-center"><i class="bi bi-person"></i><a href="blog-single.html">'+memberId+'</a></li>'+
+																				'<li class="d-flex align-items-center"><i class="bi bi-clock"></i><a href="blog-single.html">'+writeDate+'</a></li>'+
+																				'<li class="d-flex align-items-center"><i class="bi bi-chat-dots"></i> <a href="blog-single.html">아이고!!!!!!!!!!</a></li>'+
+																				'<li class="d-flex align-items-center"><i class="bi bi-chat-dots" />'+likeNum+'</li>'+
+																			'</ul>'+
+																		'</div>'+
+																		'<div class="entry-content">'+
+																			'<p>'+content+'</p>'+
+																		'</div>'+
+																	'</article>'+
+																'</div>'+
+															'</div>'+
+														'</div>');
 								}
 							}
 						)}

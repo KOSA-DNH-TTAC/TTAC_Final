@@ -72,7 +72,7 @@ public class BoardService {
 	}
 	
 	// 게시글 상세보기
-	public List<Post> boardContent(int idx) {
+	public List<Post> boardContent(String idx) {
 		
 		System.out.println("서비스 진입");
 		
