@@ -1,5 +1,6 @@
 package kr.or.kosa.controller;
 
+import java.security.Principal;
 import java.util.List;
 
 import org.springframework.beans.factory.annotation.Autowired;
@@ -9,15 +10,29 @@ import org.springframework.web.bind.annotation.GetMapping;
 import org.springframework.web.bind.annotation.PathVariable;
 import org.springframework.web.bind.annotation.PostMapping;
 
+import kr.or.kosa.dto.Member;
 import kr.or.kosa.dto.Post;
 import kr.or.kosa.service.BoardService;
+import kr.or.kosa.service.MemberService;
 
 // 페이지 이동 Controller
 @Controller
 public class BoardController {
 
-	@Autowired
 	private BoardService boardService;
+	private MemberService memberservice;
+	
+	@Autowired
+	public void setBoardService(BoardService boardService) {
+		this.boardService = boardService;
+	}
+	
+	@Autowired
+    public void setMemberService(MemberService memberservice) {
+        this.memberservice = memberservice;
+    }
+	
+//////////////////////////////////////////////////////////////////////////////////////////////////////////////
 	
 	
 	// 공지사항
@@ -68,7 +83,10 @@ public class BoardController {
 	}
 	//공지사항 글쓰기
 	@PostMapping("/noticeWrite")
-	public String noticeWriteOk() {
+	public String noticeWriteOk(Principal principal) {
+		Member member = null;
+		String memberid = principal.getName();
+		member = memberservice.getMemberById(memberid);
 		return "member/board/noticeWrite";
 	}
 	

@@ -17,8 +17,12 @@ import kr.or.kosa.service.MemberService;
 @RequestMapping("/mypage")
 public class MypageController {
 	
-	@Autowired
 	MemberService memberservice;
+	
+	@Autowired
+    public void setMemberService(MemberService memberservice) {
+        this.memberservice = memberservice;
+    }
 	
 	//비동기를 위한 RestController임
 	
