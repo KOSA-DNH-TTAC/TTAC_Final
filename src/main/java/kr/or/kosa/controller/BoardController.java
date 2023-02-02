@@ -39,10 +39,10 @@ public class BoardController {
 	// 추가 게시판
 	@GetMapping("board/{boardName}")
 	public String boardList(Model model, @PathVariable String boardName) {
-		System.out.println("button태그25!!!");
+		System.out.println("button태그29!!!");
 		System.out.println("일반 Controller boardName: " + boardName);
 		
-		List<Post> boardList = boardService.customBoardList(boardName);
+		List<Post> boardList = boardService.customBoardList(boardName);//글목록
 		model.addAttribute("boardList", boardList);
 		System.out.println("boardList: " + boardList);
 		return "member/board/boardList";

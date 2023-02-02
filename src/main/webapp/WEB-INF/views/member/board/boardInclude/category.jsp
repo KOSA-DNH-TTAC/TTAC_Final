@@ -15,16 +15,16 @@
 				rel="stylesheet">
 
 			<!-- Vendor CSS Files -->
-			<link href="resources/assets/vendor/animate.css/animate.min.css" rel="stylesheet">
-			<link href="resources/assets/vendor/bootstrap/css/bootstrap.min.css" rel="stylesheet">
-			<link href="resources/assets/vendor/bootstrap-icons/bootstrap-icons.css" rel="stylesheet">
-			<link href="resources/assets/vendor/boxicons/css/boxicons.min.css" rel="stylesheet">
-			<link href="resources/assets/vendor/glightbox/css/glightbox.min.css" rel="stylesheet">
-			<link href="resources/assets/vendor/swiper/swiper-bundle.min.css" rel="stylesheet">
-			<link href="resources/assets/css/yb.css" rel="stylesheet">
+			<link href="/resources/assets/vendor/animate.css/animate.min.css" rel="stylesheet">
+			<link href="/resources/assets/vendor/bootstrap/css/bootstrap.min.css" rel="stylesheet">
+			<link href="/resources/assets/vendor/bootstrap-icons/bootstrap-icons.css" rel="stylesheet">
+			<link href="/resources/assets/vendor/boxicons/css/boxicons.min.css" rel="stylesheet">
+			<link href="/resources/assets/vendor/glightbox/css/glightbox.min.css" rel="stylesheet">
+			<link href="/resources/assets/vendor/swiper/swiper-bundle.min.css" rel="stylesheet">
+			<link href="/resources/assets/css/yb.css" rel="stylesheet">
 
 			<!-- Template Main CSS File -->
-			<link href="resources/assets/css/style.css" rel="stylesheet">
+			<link href="/resources/assets/css/style.css" rel="stylesheet">
 
 			<!-- =======================================================
   * Template Name: Eterna - v4.10.0
@@ -34,52 +34,45 @@
   ======================================================== -->
 
 			<script type="text/javascript">
-
-				$.ajax(
-					{
-						type: "get",
-						url: "categoryList",
-						success: function (data) {
-							createTable(data, "@Restcontroller");
-						}
-					}
-				)
-
-				$(document).on(
-					"click",
-					"#boardName",
-					function () {						
-						var boardName = "";
-						boardName = $(this).attr('seq');
-						
-						location.href= "board/" + boardName;
-						
-						console.log("boardName : " + boardName);
-						
-						$.ajax(
-							{
-								type: "get",
-								// url: "board/" + boardName,
-								data: {
-									// boardName: boardName
-								},
-								success: function (result) {
-									//console.log("result : " + result);
+				
+					$.ajax(
+								{
+									type: "get",
+									url: "/categoryList",
+									success: function (data) {
+										console.log("성공")
+										console.log(data)
+										createTable(data); //, "@Restcontroller"
+									},
+									error : function(err){
+										console.log("error")
+									}
 								}
-							}
-						)
-					});
+							)
 
-				//Json 전용 table 생성
-				function createTable(data) {
-					$('#list').empty();
-					var opr = "";
-					$.each(data, function (index, data) {
-						//opr += "<li><input type='button' id='boardName'>"+data.boardName+"</input></li>";
-						opr += "<li><button class='ybbtn' id='boardName' seq='" + data.boardName + "'>" + data.boardName + "</button></li>";
-					});
-					$('#list').append(opr);
-				}
+							//Json 전용 table 생성
+							function createTable(data) {
+								$('#list').empty();
+								var opr = "";
+								$.each(data, function (index, data) {
+									opr += "<li><button class='ybbtn' id='boardName' seq='" + data.boardName + "'>" + data.boardName + "</button></li>";
+								});
+								$('#list').append(opr);
+							}
+
+								$(document).on(					
+									"click",
+									".ybbtn", function(){
+									var boardName = "";
+										boardName = $(this).attr('seq');
+										
+										location.href= "${pageContext.request.contextPath}/board/" + boardName;
+										
+										console.log("boardName : " + boardName);
+							})
+
+						
+				
 
 
 			</script>
@@ -87,10 +80,10 @@
 
 			<div class="sidebar-item categories">
 				<ul>
-					<li><a href='공지사항'>공지사항</a></li>
-					<li><a href='건의사항'>건의사항</a></li>
-					<li><a href='자유게시판'>자유게시판</a></li>
-					<li><a href='거래게시판'>거래게시판</a></li>
+					<li><a href='${pageContext.request.contextPath}/공지사항'>공지사항</a></li>
+					<li><a href='${pageContext.request.contextPath}/건의사항'>건의사항</a></li>
+					<li><a href='${pageContext.request.contextPath}/자유게시판'>자유게시판</a></li>
+					<li><a href='${pageContext.request.contextPath}/거래게시판'>거래게시판</a></li>
 				</ul>
 				<ul id="list">
 				</ul>

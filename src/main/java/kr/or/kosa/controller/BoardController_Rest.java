@@ -29,7 +29,7 @@ public class BoardController_Rest {
 	}
 	
 	// 게시판 종류
-	@RequestMapping("categoryList")
+	@RequestMapping("/categoryList")
 	public ResponseEntity<List<Board>> categoryList() {
 		List<Board> categoryList = new ArrayList<Board>();
 		try {
