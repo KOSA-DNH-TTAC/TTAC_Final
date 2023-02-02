@@ -270,8 +270,159 @@ a:hover {
 .sec_cal .cal_wrap .day.disable {
     color: #ddd;
 }
+
+@import 'https://fonts.googleapis.com/css?family=Open+Sans:600,700';
+
+* {font-family: 'Open Sans', sans-serif;}
+
+.rwd-table {
+  margin: auto;
+  min-width: 300px;
+  max-width: 100%;
+  border-collapse: collapse;
+}
+
+.rwd-table tr:first-child {
+  border-top: none;
+  background: #428bca;
+  color: #fff;
+}
+
+.rwd-table tr {
+  border-top: 1px solid #ddd;
+  border-bottom: 1px solid #ddd;
+  background-color: #f5f9fc;
+}
+
+.rwd-table tr:nth-child(odd):not(:first-child) {
+  background-color: #ebf3f9;
+}
+
+.rwd-table th {
+  display: none;
+}
+
+.rwd-table td {
+  display: block;
+}
+
+.rwd-table td:first-child {
+  margin-top: .5em;
+}
+
+.rwd-table td:last-child {
+  margin-bottom: .5em;
+}
+
+.rwd-table td:before {
+  content: attr(data-th) ": ";
+  font-weight: bold;
+  width: 120px;
+  display: inline-block;
+  color: #000;
+}
+
+.rwd-table th,
+.rwd-table td {
+  text-align: left;
+}
+
+.rwd-table {
+  color: #333;
+  border-radius: .4em;
+  overflow: hidden;
+}
+
+.rwd-table tr {
+  border-color: #bfbfbf;
+}
+
+.rwd-table th,
+.rwd-table td {
+  padding: .5em 1em;
+}
+@media screen and (max-width: 601px) {
+  .rwd-table tr:nth-child(2) {
+    border-top: none;
+  }
+}
+@media screen and (min-width: 600px) {
+  .rwd-table tr:hover:not(:first-child) {
+    background-color: #d8e7f3;
+  }
+  .rwd-table td:before {
+    display: none;
+  }
+  .rwd-table th,
+  .rwd-table td {
+    display: table-cell;
+    padding: .25em .5em;
+  }
+  .rwd-table th:first-child,
+  .rwd-table td:first-child {
+    padding-left: 0;
+  }
+  .rwd-table th:last-child,
+  .rwd-table td:last-child {
+    padding-right: 0;
+  }
+  .rwd-table th,
+  .rwd-table td {
+    padding: 1em !important;
+  }
+}
+
+
+/* THE END OF THE IMPORTANT STUFF */
+
+/* Basic Styling */
+th{
+  background-color:#E96B56;
+}
+h1 {
+  text-align: center;
+  font-size: 2.4em;
+  color: #f2f2f2;
+}
+.container {
+  display: block;
+}
+h3 {
+  display: inline-block;
+  position: relative;
+  text-align: center;
+  font-size: 1.5em;
+  color: #cecece;
+}
+h3:before {
+  content: "\25C0";
+  position: absolute;
+  left: -50px;
+  -webkit-animation: leftRight 2s linear infinite;
+  animation: leftRight 2s linear infinite;
+}
+h3:after {
+  content: "\25b6";
+  position: absolute;
+  right: -50px;
+  -webkit-animation: leftRight 2s linear infinite reverse;
+  animation: leftRight 2s linear infinite reverse;
+}
+@-webkit-keyframes leftRight {
+  0%    { -webkit-transform: translateX(0)}
+  25%   { -webkit-transform: translateX(-10px)}
+  75%   { -webkit-transform: translateX(10px)}
+  100%  { -webkit-transform: translateX(0)}
+}
+@keyframes leftRight {
+  0%    { transform: translateX(0)}
+  25%   { transform: translateX(-10px)}
+  75%   { transform: translateX(10px)}
+  100%  { transform: translateX(0)}
+}
 </style>
-<script type="text/javascript">
+
+<script>
 $(document).ready(function() {
     calendarInit();
 });
@@ -386,9 +537,9 @@ function calendarInit() {
     </section> 
     
     
-    <div style="display:flex; justify-content:center; align-items:center;">
+    <div class="row no-gutters" style="display:flex; flex-direction:row; justify-content:center; align-items:center; paddding:50px;">
     
-    	<div class="sec_cal">
+    	<div class="sec_cal" style="width:500px; margin:0 0 50px 0; margin-top:0px;">
 		  <div class="cal_nav">
 		    <a href="javascript:;" class="nav-btn go-prev">prev</a>
 		    <div class="year-month"></div>
@@ -407,103 +558,75 @@ function calendarInit() {
 		    <div class="dates"></div>
 		  </div>
 		</div>
-    </div>
+ 
     
-    <div>
+    <div style="width:500px; margin-bottom:80px;">
      <table class="rwd-table">
     <tbody>
       <tr>
-        <th>Supplier Code</th>
-        <th>Supplier Name</th>
-        <th>Invoice Number</th>
-        <th>Invoice Date</th>
-        <th>Due Date</th>
-        <th>Net Amount</th>
+        <th style="text-align: center;">날짜</th>
+        <th style="text-align: center;">일정</th>
       </tr>
       <tr>
         <td data-th="Supplier Code">
-          UPS5005
+          2023.02.08
         </td>
         <td data-th="Supplier Name">
-          UPS
-        </td>
-        <td data-th="Invoice Number">
-          ASDF19218
-        </td>
-        <td data-th="Invoice Date">
-          06/25/2016
-        </td>
-        <td data-th="Due Date">
-          12/25/2016
-        </td>
-        <td data-th="Net Amount">
-          $8,322.12
+          세계 도넛의 날
         </td>
       </tr>
       <tr>
         <td data-th="Supplier Code">
-          UPS3449
+          2023.02.12
         </td>
         <td data-th="Supplier Name">
-          UPS South Inc.
-        </td>
-        <td data-th="Invoice Number">
-          ASDF29301
-        </td>
-        <td data-th="Invoice Date">
-          6/24/2016
-        </td>
-        <td data-th="Due Date">
-          12/25/2016
-        </td>
-        <td data-th="Net Amount">
-          $3,255.49
+          제순의 날
         </td>
       </tr>
       <tr>
         <td data-th="Supplier Code">
-          BOX5599
+          2023.02.19
         </td>
         <td data-th="Supplier Name">
-          BOX Pro West
-        </td>
-        <td data-th="Invoice Number">
-          ASDF43000
-        </td>
-        <td data-th="Invoice Date">
-          6/27/2016
-        </td>
-        <td data-th="Due Date">
-          12/25/2016
-        </td>
-        <td data-th="Net Amount">
-          $45,255.49
+          소방훈련
         </td>
       </tr>
       <tr>
         <td data-th="Supplier Code">
-          PAN9999
+          2023.02.25
         </td>
         <td data-th="Supplier Name">
-          Pan Providers and Co.
+          세계 젤리의 날
         </td>
-        <td data-th="Invoice Number">
-          ASDF33433
+      </tr>
+      <tr>
+        <td data-th="Supplier Code">
+          2023.02.08
         </td>
-        <td data-th="Invoice Date">
-          6/29/2016
+        <td data-th="Supplier Name">
+          지진대피훈련
         </td>
-        <td data-th="Due Date">
-          12/25/2016
+      </tr>
+      <tr>
+        <td data-th="Supplier Code">
+          2023.02.12
         </td>
-        <td data-th="Net Amount">
-          $12,335.69
+        <td data-th="Supplier Name">
+          일꾼의 날
+        </td>
+      </tr>
+      <tr>
+        <td data-th="Supplier Code">
+          2023.02.19
+        </td>
+        <td data-th="Supplier Name">
+          도넛 방석의 날
         </td>
       </tr>
     </tbody>
   </table>
     </div>
-    
+       </div>
     
   
   </main>
