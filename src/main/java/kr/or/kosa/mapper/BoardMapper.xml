@@ -20,6 +20,14 @@ WHERE b.boardname='공지사항'
 ORDER BY p.writedate DESC
 </select>
 
+<!-- 기본 제공 게시판 글 목록 -->
+<select id="allBoardList" resultType="kr.or.kosa.dto.Post">
+SELECT p.boardidx, p.universitycode, b.boardname, p.memberid, p.writedate, p.likenum, p.content, p.title
+FROM POST p JOIN BOARD b ON p.boardidx = b.boardidx
+WHERE b.boardname=#{allBoard}
+ORDER BY p.writedate DESC
+</select>
+
 <!-- 자유게시판 목록 -->
 <select id="freeBoardList" resultType="kr.or.kosa.dto.Post">
 SELECT p.boardidx, p.universitycode, b.boardname, p.memberid, p.writedate, p.likenum, p.content, p.title
