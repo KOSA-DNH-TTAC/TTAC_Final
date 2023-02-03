@@ -15,8 +15,10 @@ import org.springframework.web.bind.annotation.PostMapping;
 import org.springframework.web.servlet.ModelAndView;
 
 import kr.or.kosa.dto.Member;
+import kr.or.kosa.dto.Message;
 import kr.or.kosa.security.User;
 import kr.or.kosa.service.MemberService;
+import kr.or.kosa.service.MessageService;
 
 @Controller
 public class FrontController {
@@ -25,6 +27,9 @@ public class FrontController {
 
 	@Autowired
 	MemberService memberservice;
+	
+	@Autowired
+	MessageService msgservice;
 	
 	@GetMapping("")
 	public String home(Locale locale, Model model) {
@@ -96,8 +101,16 @@ public class FrontController {
 	
 	@GetMapping("/message/writing")
 	public String messageWriting() {
-		//쪽지쓰기
+		//쪽지쓰기 뷰
 		return "member/message/writing";
+	}
+	
+	@PostMapping("/message/writing")
+	public String messageSend(Message msg) {
+		//쪽지 보내기
+		System.out.println(msg);
+		msgservice.sendMsg(msg);
+		return "member/message/notebox"; //나중에 리다이렉트로 바꾸기
 	}
 	
 	@GetMapping("/error")
