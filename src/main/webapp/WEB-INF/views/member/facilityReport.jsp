@@ -95,8 +95,10 @@
 
       </div>
     </section>
-  	<div style="display: flex; flex-direction: row; justify-content: center; align-items: center; margin-top:0px;">
-  	<div id="box1" style="width: 275px; height: 553.44px; left: 61.27px; background: #FFFFFF;">
+    
+    
+  	<div style="display: flex; flex-direction: row; justify-content: center; align-items: center;">
+  	<div id="box" style="width: 275px; height: 553.44px; left: 61.27px; background: #FFFFFF;">
   	<div id="select" style="display:flex; flex-direction:column; justify-content:center; width:100%;">
 		<select class="form-select3" aria-label="Default select example">
 		  <option selected>기숙사 건물(동)</option>

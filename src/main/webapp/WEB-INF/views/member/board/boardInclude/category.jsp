@@ -40,9 +40,7 @@
 									type: "get",
 									url: "/categoryList",
 									success: function (data) {
-										console.log("성공")
-										console.log(data)
-										createTable(data); //, "@Restcontroller"
+										createTable(data);
 									},
 									error : function(err){
 										console.log("error")
@@ -50,7 +48,7 @@
 								}
 							)
 
-							//Json 전용 table 생성
+							// 커스텀 게시판 카테고리
 							function createTable(data) {
 								$('#list').empty();
 								var opr = "";
@@ -60,6 +58,8 @@
 								$('#list').append(opr);
 							}
 
+							
+								// 커스텀 생성 게시판 카테고리
 								$(document).on(					
 									"click",
 									".ybbtn", function(){
@@ -69,7 +69,15 @@
 										location.href= "${pageContext.request.contextPath}/board/" + boardName;
 										
 										console.log("boardName : " + boardName);
-							})
+								})
+								
+								// 기본 제공 게시판 카테고리
+								$(document).on(					
+									"click",
+									".allBoard", function(){
+									var allBoard = "";
+									allBoard = $(this).attr('seq');
+								})
 
 						
 				
@@ -80,10 +88,10 @@
 
 			<div class="sidebar-item categories">
 				<ul>
-					<li><a href='${pageContext.request.contextPath}/공지사항'>공지사항</a></li>
-					<li><a href='${pageContext.request.contextPath}/건의사항'>건의사항</a></li>
-					<li><a href='${pageContext.request.contextPath}/자유게시판'>자유게시판</a></li>
-					<li><a href='${pageContext.request.contextPath}/거래게시판'>거래게시판</a></li>
+					<li><a class="allBoard" seq="공지사항" href='${pageContext.request.contextPath}/공지사항'>공지사항</a></li>
+					<li><a class="allBoard" seq="건의사항" href='${pageContext.request.contextPath}/건의사항'>건의사항</a></li>
+					<li><a class="allBoard" seq="자유게시판" href='${pageContext.request.contextPath}/자유게시판'>자유게시판</a></li>
+					<li><a class="allBoard" seq="거래게시판" href='${pageContext.request.contextPath}/거래게시판'>거래게시판</a></li>
 				</ul>
 				<ul id="list">
 				</ul>

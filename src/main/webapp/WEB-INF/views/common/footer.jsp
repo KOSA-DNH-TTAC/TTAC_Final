@@ -47,7 +47,7 @@
               <li><i class="bx bx-chevron-right"></i> <a href="#">상명행복생활관</a></li>
               <li><i class="bx bx-chevron-right"></i> <a href="#">심전생활관</a></li>
               <li><i class="bx bx-chevron-right"></i> <a href="#">한서생활관</a></li>
-              <li><i class="bx bx-chevron-right"></i> <a href="#">샬롬하우스</a></li>
+              <li><i class="bx bx-chevron-right"></i> <a href="">샬롬하우스</a></li>
             </ul>
           </div>
 

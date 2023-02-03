@@ -1,7 +1,9 @@
 package kr.or.kosa.service;
 
+import java.sql.SQLException;
 import java.text.SimpleDateFormat;
 import java.util.Date;
+import java.util.HashMap;
 import java.util.List;
 
 import org.apache.ibatis.session.SqlSession;
@@ -26,53 +28,31 @@ public class BoardService {
 	public List<Board> categoryList() {
 		BoardDao boardDao = sqlSession.getMapper(BoardDao.class);
 		List<Board> categoryList = boardDao.categoryList();
-		System.out.println("categoryList: " + categoryList);
 		return categoryList;
 	}
+
 	
-	// 공지사항 목록
-	public List<Post> noticeList() {
-		BoardDao boardDao = sqlSession.getMapper(BoardDao.class);
-		List<Post> noticeList = boardDao.noticeList();
+	// 기본 제공 게시판 글 목록
+		public List<Post> allBoardList(String allBoard) {
+			BoardDao boardDao = sqlSession.getMapper(BoardDao.class);
+			List<Post> allBoardList = boardDao.allBoardList(allBoard);
+			Date nowDate = new Date();
 		
-		Date nowDate = new Date();
-	
-		SimpleDateFormat simpleDateFormat = new SimpleDateFormat("YYYY-MM-dd");
-		String formatNowDate = simpleDateFormat.format(nowDate);
-		
-		for(Post p : noticeList) {
-			String writedate = p.getWriteDate().substring(0, 10);
-			if (formatNowDate.equals(writedate)) {
-				p.setWriteDate(p.getWriteDate().substring(11, 16));
-			} else {
-				p.setWriteDate(writedate.substring(5));
+			SimpleDateFormat simpleDateFormat = new SimpleDateFormat("YYYY-MM-dd");
+			String formatNowDate = simpleDateFormat.format(nowDate);
+			
+			for(Post p : allBoardList) {
+				String writedate = p.getWriteDate().substring(0, 10);
+				if (formatNowDate.equals(writedate)) {
+					p.setWriteDate(p.getWriteDate().substring(11, 16));
+				} else {
+					p.setWriteDate(writedate.substring(5));
+				}
 			}
-		}
-		return noticeList;
-	}
+			return allBoardList;
+		}	
 	
-	// 자유게시판 목록
-	public List<Post> freeBoardList() {
-		BoardDao boardDao = sqlSession.getMapper(BoardDao.class);
-		List<Post> freeBoardList = boardDao.freeBoardList();
-		
-		Date nowDate = new Date();
-		
-		SimpleDateFormat simpleDateFormat = new SimpleDateFormat("YYYY-MM-dd");
-		String formatNowDate = simpleDateFormat.format(nowDate);
-		
-		for(Post p : freeBoardList) {
-			String writedate = p.getWriteDate().substring(0, 10);
-			if (formatNowDate.equals(writedate)) {
-				p.setWriteDate(p.getWriteDate().substring(11, 16));
-			} else {
-				p.setWriteDate(writedate.substring(5));
-			}
-		}
-		return freeBoardList;
-	}
-	
-	// 새 게시판 목록
+	// 커스텀 생성 게시판 목록
 	public List<Post> customBoardList(String boardName) {
 		BoardDao boardDao = sqlSession.getMapper(BoardDao.class);
 		List<Post> customBoardList = boardDao.customBoardList(boardName);
@@ -91,6 +71,36 @@ public class BoardService {
 			}
 		}
 		return customBoardList;
+	}
+	
+	// 게시글 상세보기
+	public List<Post> boardContent(String idx) {
+		
+		System.out.println("서비스 진입");
+		
+		BoardDao boardDao = sqlSession.getMapper(BoardDao.class);
+		List<Post> boardContent = boardDao.boardContent(idx);
+		System.out.println(boardContent);
+		return boardContent;
+	}
+	
+	// 자유게시판 글쓰기
+	public int freeBoardWrite(Post post) {
+		
+		int result = 0;
+		
+		try {
+			BoardDao boardDao = sqlSession.getMapper(BoardDao.class);
+			result = boardDao.boardInsert(post);
+			
+			System.out.println("");
+		} catch (ClassNotFoundException e) {
+			e.printStackTrace();
+		} catch (SQLException e) {
+			e.printStackTrace();
+		}
+		
+		return result;
 	}
 
 }

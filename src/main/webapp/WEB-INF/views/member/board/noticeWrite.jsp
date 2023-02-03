@@ -9,7 +9,7 @@
   <meta charset="utf-8">
   <meta content="width=device-width, initial-scale=1.0" name="viewport">
 
-  <title>DOTO:커뮤니티</title>
+  <title>DOTO:공지사항</title>
   <meta content="" name="description">
   <meta content="" name="keywords">
 
@@ -56,9 +56,9 @@
 
         <ol>
           <li><a href="/">Home</a></li>
-          <li>Community</li>
+          <li>글쓰기</li>
         </ol>
-        <h2>커뮤니티</h2>
+        <h2>글쓰기</h2>
       </div>
     </section><!-- End Breadcrumbs -->
 
@@ -76,19 +76,21 @@
 					  <label for="title" class="form-label">게시글 제목</label>
 					  <input type="text" class="form-control" id="title" placeholder="제목을 작성해주세요." autofocus required>
 					</div>
+					
 					<div class="mb-3">
-					  <label for="content" class="form-label">내용</label>
-					  <textarea id="content" name="content" placeholder="작성해주세요"> </textarea>
+					<label for="getfile" class="form-label">파일</label>
+					<input type="file" class="form-control" accept="image/board/*" id="getfile" name="filename1">
 					</div>
 					
-					<div class="col-sm-2">
-                      <button type="submit" id="btn" class="btn btn-primary">확인</button>
-                    </div>
-
-                    <div class="d-grid gap-2 d-md-flex justify-content-md-end">
+					<div class="mb-3">
+					  <textarea id="content" name="content" placeholder="글을 작성해주세요."> </textarea>
+					</div>
+					
+					<div class="d-grid gap-2 d-md-flex justify-content-md-end">
 					<button onclick="history.go(-1)" style="width:130px; height:20; border-radius: 50px; padding:5px; border: none; background-color:#000000; color:white; margin-top:10px; font-size: large;">취소</button>
 					<button type="submit" style="width:130px; height:20; border-radius: 50px; padding:5px; border: none; background-color:#E96B56; color:white; margin-top:10px; font-size: large;">확인</button>
                     </div>
+                    
                     
                     
                     	
