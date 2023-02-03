@@ -9,12 +9,12 @@
   <meta charset="utf-8">
   <meta content="width=device-width, initial-scale=1.0" name="viewport">
 
-  <title>DOTO:기숙사통합관리시스템</title>
+  <title>DOTO:mealticket</title>
   <meta content="" name="description">
   <meta content="" name="keywords">
 
   <!-- Favicons -->
-  <link href="resources/assets/img/3projectpavicon.ico" rel="icon">
+  <link href="resources/assets/img/favicon.png" rel="icon">
   <link href="resources/assets/img/apple-touch-icon.png" rel="apple-touch-icon">
 
   <!-- Google Fonts -->
@@ -27,18 +27,53 @@
   <link href="resources/assets/vendor/boxicons/css/boxicons.min.css" rel="stylesheet">
   <link href="resources/assets/vendor/glightbox/css/glightbox.min.css" rel="stylesheet">
   <link href="resources/assets/vendor/swiper/swiper-bundle.min.css" rel="stylesheet">
-  <link href="resources/assets/css/nightOver.css" rel="stylesheet">
 
   <!-- Template Main CSS File -->
   <link href="resources/assets/css/style.css" rel="stylesheet">
   
-  <!-- Jquery -->
-  <script  src="http://code.jquery.com/jquery-latest.min.js"></script>
-  
-  <!-- bootstrap5 -->
-<link href="https://cdn.jsdelivr.net/npm/bootstrap@5.2.3/dist/css/bootstrap.min.css" rel="stylesheet" integrity="sha384-rbsA2VBKQhggwzxH7pPCaAqO46MgnOM80zW1RWuH61DGLwZJEdK2Kadq2F9CUG65" crossorigin="anonymous">
+  <link href="resources/assets/css/nightOver.css" rel="stylesheet">
 
-  
+  <!-- =======================================================
+  * Template Name: Eterna - v4.10.0
+  * Template URL: https://bootstrapmade.com/eterna-free-multipurpose-bootstrap-template/
+  * Author: BootstrapMade.com
+  * License: https://bootstrapmade.com/license/
+  ======================================================== -->
+  <style>
+.blog-pagination {
+  color: #878787;
+}
+
+.blog-pagination ul {
+  display: flex;
+  padding: 0;
+  margin: 0;
+  list-style: none;
+}
+
+.blog-pagination li {
+  margin: 0 5px;
+  transition: 0.3s;
+}
+
+.blog-pagination li a {
+  color: #545454;
+  padding: 7px 16px;
+  display: flex;
+  align-items: center;
+  justify-content: center;
+}
+
+.blog-pagination li.active,
+.blog-pagination li:hover {
+  background: #e96b56;
+}
+
+.blog-pagination li.active a,
+.blog-pagination li:hover a {
+  color: #fff;
+}
+  </style>
 </head>
 
 <body>
@@ -49,14 +84,14 @@
   
   <main id="main">
   <div id="container">
-   <section id="breadcrumbs" class="breadcrumbs">
+   <section id="breadcrumbs" class="breadcrumbs" style="margin-bottom:0px;">
       <div class="container">
 
         <ol>
           <li><a href="/">Home</a></li>
-          <li>외박신청</li>
+          <li>시설물신고</li>
         </ol>
-        <h2>외박신청</h2>
+        <h2>시설물신고</h2>
 
       </div>
     </section>
@@ -65,21 +100,18 @@
   	<div style="display: flex; flex-direction: row; justify-content: center; align-items: center;">
   	<div id="box" style="width: 275px; height: 553.44px; left: 61.27px; background: #FFFFFF;">
   	<div id="select" style="display:flex; flex-direction:column; justify-content:center; width:100%;">
-		기숙사 건물(동)
-		<select class="form-select1" aria-label="Default select example">
-		  <option selected>명륜학사 A동</option>
+		<select class="form-select3" aria-label="Default select example">
+		  <option selected>기숙사 건물(동)</option>
 		  <option value="1">명륜학사 A동</option>
 		  <option value="2">명륜학사 B동</option>
 		</select>
-		기숙사 층 
-		<select class="form-select1" aria-label="Default select example">
-		  <option selected>1층</option>
+		<select class="form-select3" aria-label="Default select example">
+		  <option selected>기숙사 층</option>
 		  <option value="1">1층</option>
 		  <option value="2">2층</option>
 		</select>
-		시설물
-		<select class="form-select1" aria-label="Default select example">
-		  <option selected>세탁기</option>
+		<select class="form-select3" aria-label="Default select example">
+		  <option selected>시설물</option>
 		  <option value="1">세탁기</option>
 		  <option value="2">변기</option>
 		</select>
@@ -90,7 +122,7 @@
 		  <label for="floatingTextarea2">신고 상세 설명</label>
 		</div>
   	</div>
-  	<button type="submit" class="btn btn-warning">신청하기</button>
+  	<button type="submit" class="btn btn-warning" style="width:130px; height:20; border-radius: 50px; padding:5px; border: none; background-color:#E96B56; color:white; margin-top:10px; font-size: large;">신청하기</button>
   	</div>
   	
   	
@@ -98,73 +130,115 @@
   	
   	
   	
-  	<div id="box" style="width: 835px; height: 553.44px; background: #FFFFFF;">
-  	  	<div id="date1">
-  		<label class="label" for="start">기숙사 건물(동)</label>
-  		<label class="label" for="end">기숙사 층</label>
-  		<label class="label" for="end">시설물</label>
-  	</div>
+  	<div id="box2" style="width: 835px; height: 553.44px; background: #FFFFFF;">
   	<div id="select" style="display:flex; flex-direction:row; width:100%;">
 		<select class="form-select2" aria-label="Default select example">
-		  <option selected>명륜학사 A동</option>
+		  <option selected>기숙사 건물(동)</option>
 		  <option value="1">명륜학사 A동</option>
 		  <option value="2">장기외박</option>
 		</select>
 		<select class="form-select2" aria-label="Default select example">
-		  <option selected>명륜학사 A동</option>
+		  <option selected>기숙사 층</option>
 		  <option value="1">명륜학사 A동</option>
 		  <option value="2">장기외박</option>
 		</select>
 		<select class="form-select2" aria-label="Default select example">
-		  <option selected>명륜학사 A동</option>
+		  <option selected>시설물</option>
 		  <option value="1">명륜학사 A동</option>
 		  <option value="2">장기외박</option>
 		</select>
   	</div>
-  	<div id="reason" style="border:none;">
+  	<div id="reason1" style="border:none;">
+  	<h3 style="margin-left: 10px; color:#4B4B4B;"><b>시설물 현황</b></h3>
   		<table class="table" id='nightoverTable'>
             <thead>
             <tr>
-              <th scope="col">외박기간</th>
-              <th scope="col">외박사유</th>
-              <th scope="col">신청일자</th>
-              <th scope="col">승인여부</th>
+              <th>기숙사 건물(동)</th>
+              <th>기숙사 층</th>
+              <th>시설물</th>
+              <th>신고 상세</th>
             </tr>
           </thead>
           <tbody>
             <tr>
-              <td>2023.01.30 ~ 2023.01.31</td>
-              <td>병원</td>
-              <td>2023.01.29</td>
-              <td>승인</td>
+              <td>명륜학사 A동</td>
+              <td>7층</td>
+              <td>세탁기</td>
+              <td>세탁기가 작동하지 않습니다.</td>
             </tr>
             <tr>
-              <td>2023.01.30 ~ 2023.01.31</td>
-              <td>병원</td>
-              <td>2023.01.29</td>
-              <td>승인</td>
+              <td>명륜학사 B동</td>
+              <td>6층</td>
+              <td>변기</td>
+              <td>변기가 내려가지 않습니다.</td>
             </tr>
             <tr>
-              <td>2023.01.30 ~ 2023.01.31</td>
-              <td>코사를 탈주</td>
-              <td>2023.01.29</td>
-              <td>미승인</td>
+              <td>명륜학사 B동</td>
+              <td>3층</td>
+              <td>정수기</td>
+              <td>정수기가 온수가 나오지 않습니다.</td>
             </tr>   
           	<tr>
-              <td>2023.01.30 ~ 2023.01.31</td>
-              <td>병원</td>
-              <td>2023.01.29</td>
-              <td>승인</td>
+              <td>명륜학사 A동</td>
+              <td>2층</td>
+              <td>세면대</td>
+              <td>세면대 물이 나오지 않습니다.</td>
             </tr>
           	<tr>
-	            <td>2023.01.30 ~ 2023.01.31</td>
-	            <td>병원</td>
-	            <td>2023.01.29</td>
-	            <td>승인</td>
-	          </tr>
+	          <td>명륜학사 B동</td>
+              <td>4층</td>
+              <td>거울</td>
+              <td>화장실 거울이 깨져있습니다.</td>
+	        </tr>
+	        <tr>
+              <td>명륜학사 A동</td>
+              <td>2층</td>
+              <td>세면대</td>
+              <td>세면대 물이 나오지 않습니다.</td>
+            </tr>
+            <tr>
+	          <td>명륜학사 B동</td>
+              <td>4층</td>
+              <td>거울</td>
+              <td>화장실 거울이 깨져있습니다.</td>
+	        </tr>
           </tbody>
         </table>
+        
   	</div>
+  	
+  	
+  	<!-- 페이징 -->
+  		<div class="blog-pagination">
+        <ul class="justify-content-center">
+           <li class="active"><a href="#">1</a></li>
+           <li><a href="#">2</a></li>
+           <li><a href="#">3</a></li>
+        </ul>
+  	</div>
+  	<div>
+		<c:if test="${cpage > 1}">
+			<a
+				href="boardList.user?boardname=${boardname}&cp=${cpage-1}&ps=${pagesize}&boardname=${boardname}">이전</a>
+		</c:if>
+		<!-- page 목록 나열하기 -->
+		<c:forEach var="i" begin="1" end="${pagecount}" step="1">
+			<c:choose>
+				<c:when test="${cpage==i}">
+					<font color="red">[${i}]</font>
+				</c:when>
+				<c:otherwise>
+					<a
+						href="boardList.user?boardname=${boardname}&cp=${i}&ps=${pagesize}&boardname=${boardname}">[${i}]</a>
+				</c:otherwise>
+			</c:choose>
+		</c:forEach>
+		<!--다음 링크 -->
+		<c:if test="${cpage < pagecount}">
+			<a
+				href="boardList.user?boardname=${boardname}&cp=${cpage+1}&ps=${pagesize}&boardname=${boardname}">다음</a>
+		</c:if>
+	</div>  	
   	</div>
   	</div>
   </div>
