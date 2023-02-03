@@ -9,12 +9,12 @@
   <meta charset="utf-8">
   <meta content="width=device-width, initial-scale=1.0" name="viewport">
 
-  <title>DOTO:기숙사통합관리시스템</title>
+  <title>DOTO:mealticket</title>
   <meta content="" name="description">
   <meta content="" name="keywords">
 
   <!-- Favicons -->
-  <link href="resources/assets/img/3projectpavicon.ico" rel="icon">
+  <link href="resources/assets/img/favicon.png" rel="icon">
   <link href="resources/assets/img/apple-touch-icon.png" rel="apple-touch-icon">
 
   <!-- Google Fonts -->
@@ -27,18 +27,18 @@
   <link href="resources/assets/vendor/boxicons/css/boxicons.min.css" rel="stylesheet">
   <link href="resources/assets/vendor/glightbox/css/glightbox.min.css" rel="stylesheet">
   <link href="resources/assets/vendor/swiper/swiper-bundle.min.css" rel="stylesheet">
-  <link href="resources/assets/css/nightOver.css" rel="stylesheet">
 
   <!-- Template Main CSS File -->
   <link href="resources/assets/css/style.css" rel="stylesheet">
   
-  <!-- Jquery -->
-  <script  src="http://code.jquery.com/jquery-latest.min.js"></script>
-  
-  <!-- bootstrap5 -->
-<link href="https://cdn.jsdelivr.net/npm/bootstrap@5.2.3/dist/css/bootstrap.min.css" rel="stylesheet" integrity="sha384-rbsA2VBKQhggwzxH7pPCaAqO46MgnOM80zW1RWuH61DGLwZJEdK2Kadq2F9CUG65" crossorigin="anonymous">
+  <link href="resources/assets/css/nightOver.css" rel="stylesheet">
 
-  
+  <!-- =======================================================
+  * Template Name: Eterna - v4.10.0
+  * Template URL: https://bootstrapmade.com/eterna-free-multipurpose-bootstrap-template/
+  * Author: BootstrapMade.com
+  * License: https://bootstrapmade.com/license/
+  ======================================================== -->
 </head>
 
 <body>
