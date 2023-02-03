@@ -64,7 +64,7 @@ public class MypageController {
 		
 		List<Post> list = new ArrayList<Post>();
 		list = memberservice.getPostings(user.getMemberId());
-		System.out.println(list);
+//		System.out.println(list);
 		return new ResponseEntity<>(list, HttpStatus.OK);
 	}
 
