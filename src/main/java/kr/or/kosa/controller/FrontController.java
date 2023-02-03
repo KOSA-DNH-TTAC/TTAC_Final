@@ -7,6 +7,7 @@ import org.slf4j.Logger;
 import org.slf4j.LoggerFactory;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.security.core.annotation.AuthenticationPrincipal;
+import org.springframework.security.core.context.SecurityContextHolder;
 import org.springframework.stereotype.Controller;
 import org.springframework.ui.Model;
 import org.springframework.web.bind.annotation.GetMapping;
@@ -14,6 +15,7 @@ import org.springframework.web.bind.annotation.PostMapping;
 import org.springframework.web.servlet.ModelAndView;
 
 import kr.or.kosa.dto.Member;
+import kr.or.kosa.security.User;
 import kr.or.kosa.service.MemberService;
 
 @Controller
@@ -40,15 +42,16 @@ public class FrontController {
 	
 	//마이페이지
 	@GetMapping("/mypage")
-	public ModelAndView myPage(Principal principal) {
+	public ModelAndView myPage() {
 		
 		ModelAndView mv = new ModelAndView();
 		//여기서 내 정보 조회까지 작업해서 뷰에 올린다
-		Member member = null;
-		String memberid = principal.getName();
-		member = memberservice.getMemberById(memberid);
+//		Member member = null;
+//		String memberid = principal.getName();
+//		member = memberservice.getMemberById(memberid);
+		User member = (User) SecurityContextHolder.getContext().getAuthentication().getPrincipal();
 		mv.setViewName("member/mypage/mypageHome");
-		mv.addObject(member);
+		mv.addObject("member", member);	
 		return mv;
 	}
 	

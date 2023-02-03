@@ -1,264 +1,288 @@
-<%@ page language="java" contentType="text/html; charset=UTF-8" pageEncoding="UTF-8" %>
-	<%@ taglib prefix="c" uri="http://java.sun.com/jsp/jstl/core" %>
-		<%@ taglib prefix="fn" uri="http://java.sun.com/jsp/jstl/functions" %>
-			<!DOCTYPE html>
-			<html lang="en">
+<%@ page language="java" contentType="text/html; charset=UTF-8"
+	pageEncoding="UTF-8"%>
+<%@ taglib prefix="c" uri="http://java.sun.com/jsp/jstl/core"%>
+<%@ taglib prefix="fn" uri="http://java.sun.com/jsp/jstl/functions"%>
+<!DOCTYPE html>
+<html lang="en">
 
-			<head>
-				<meta charset="utf-8">
-				<meta content="width=device-width, initial-scale=1.0" name="viewport">
+<head>
+<meta charset="utf-8">
+<meta content="width=device-width, initial-scale=1.0" name="viewport">
 
-				<title>DOTO: 자유게시판</title>
-				<meta content="" name="description">
-				<meta content="" name="keywords">
-				
-				<script src="http://code.jquery.com/jquery-1.9.1.js"></script>
-				
-				<!-- Favicons -->
-				<link href="resources/assets/img/favicon.png" rel="icon">
-				<link href="resources/assets/img/apple-touch-icon.png" rel="apple-touch-icon">
+<title>DOTO: 자유게시판</title>
+<meta content="" name="description">
+<meta content="" name="keywords">
 
-				<!-- Google Fonts -->
-				<link
-					href="https://fonts.googleapis.com/css?family=Open+Sans:300,300i,400,400i,600,600i,700,700i|Raleway:300,300i,400,400i,500,500i,600,600i,700,700i|Poppins:300,300i,400,400i,500,500i,600,600i,700,700i"
-					rel="stylesheet">
+<script src="http://code.jquery.com/jquery-1.9.1.js"></script>
 
-				<!-- Vendor CSS Files -->
-				<link href="resources/assets/vendor/animate.css/animate.min.css" rel="stylesheet">
-				<link href="resources/assets/vendor/bootstrap/css/bootstrap.min.css" rel="stylesheet">
-				<link href="resources/assets/vendor/bootstrap-icons/bootstrap-icons.css" rel="stylesheet">
-				<link href="resources/assets/vendor/boxicons/css/boxicons.min.css" rel="stylesheet">
-				<link href="resources/assets/vendor/glightbox/css/glightbox.min.css" rel="stylesheet">
-				<link href="resources/assets/vendor/swiper/swiper-bundle.min.css" rel="stylesheet">
+<!-- Favicons -->
+<link href="resources/assets/img/favicon.png" rel="icon">
+<link href="resources/assets/img/apple-touch-icon.png"
+	rel="apple-touch-icon">
 
-				<!-- Template Main CSS File -->
-				<link href="resources/assets/css/style.css" rel="stylesheet">
+<!-- Google Fonts -->
+<link
+	href="https://fonts.googleapis.com/css?family=Open+Sans:300,300i,400,400i,600,600i,700,700i|Raleway:300,300i,400,400i,500,500i,600,600i,700,700i|Poppins:300,300i,400,400i,500,500i,600,600i,700,700i"
+	rel="stylesheet">
+<!-- Vendor CSS Files -->
+<link href="resources/assets/vendor/animate.css/animate.min.css"
+	rel="stylesheet">
+<link href="resources/assets/vendor/bootstrap/css/bootstrap.min.css"
+	rel="stylesheet">
+<link href="resources/assets/vendor/bootstrap-icons/bootstrap-icons.css"
+	rel="stylesheet">
+<link href="resources/assets/vendor/boxicons/css/boxicons.min.css"
+	rel="stylesheet">
+<link href="resources/assets/vendor/glightbox/css/glightbox.min.css"
+	rel="stylesheet">
+<link href="resources/assets/vendor/swiper/swiper-bundle.min.css"
+	rel="stylesheet">
+<link href="/resources/assets/css/yb.css" rel="stylesheet">
 
-				<!-- =======================================================
-				  * Template Name: Eterna - v4.10.0
-				  * Template URL: https://bootstrapmade.com/eterna-free-multipurpose-bootstrap-template/
-				  * Author: BootstrapMade.com
-				  * License: https://bootstrapmade.com/license/
-				  ======================================================== -->
-			</head>
+<!-- Template Main CSS File -->
+<link href="resources/assets/css/style.css" rel="stylesheet">
 
+<!-- =======================================================
+  * Template Name: Eterna - v4.10.0
+  * Template URL: https://bootstrapmade.com/eterna-free-multipurpose-bootstrap-template/
+  * Author: BootstrapMade.com
+  * License: https://bootstrapmade.com/license/
+  ======================================================== -->
+<style>
+img {
+	width: 100px;
+	height: 100px;
+	margin-left: 5%;
+}
+</style>
+</head>
 
+<body>
 
+	<!-- ======= Header ======= -->
+	<c:import url="/WEB-INF/views/common/top.jsp" />
+	<!-- End Header -->
 
-			<body>
+	<main id="main">
 
-				<!-- ======= Header ======= -->
-				<c:import url="/WEB-INF/views/common/top.jsp" />
-				<!-- End Header -->
+		<!-- ======= Breadcrumbs ======= -->
+		<section id="breadcrumbs" class="breadcrumbs">
+			<div class="container">
 
-				<main id="main">
+				<ol>
+					<li><a href="index.html">Home</a></li>
+					<li>자유게시판</li>
+				</ol>
+				<h2>자유게시판</h2>
 
-					<!-- ======= Breadcrumbs ======= -->
-					<section id="breadcrumbs" class="breadcrumbs">
-						<div class="container">
+			</div>
+		</section>
+		<!-- End Breadcrumbs -->
 
-							<ol>
-								<li><a href="index.html">Home</a></li>
-								<li>자유게시판</li>
-							</ol>
-							<h2>자유게시판</h2>
+		<!-- ======= Blog Section ======= -->
+		<section id="blog" class="blog">
+			<div class="container" data-aos="fade-up">
 
-						</div>
-					</section>
-					<!-- End Breadcrumbs -->
+				<div class="row">
 
-					<!-- ======= Blog Section ======= -->
-					<section id="blog" class="blog">
-						<div class="container" data-aos="fade-up">
+					<div id="contentsDiv" class="col-lg-8 entries">
 
-							<div class="row">
+						<c:forEach items="${allBoardList}" var="freeBoard">
+							<article class="entry">
 
-								<div class="col-lg-8 entries">
-
-									<c:forEach items="${allBoardList}" var="freeBoard">
-										<article class="entry">
-
-											<div class="entry-title">
-												<!-- <a onclick='boardContent(event)' id="idx" href='javascript:void(0)'> -->
-												<BUTTON ID="FREEBUTTON" ONCLICK="boardContent(this)" STYLE="WIDTH:70PX; HEIGHT:30PX;" NAME="${freeBoard.idx}">${freeBoard.idx}</BUTTON>	
-													<c:choose>
-														<c:when test="${freeBoard.title != null && fn:length(freeBoard.title) > 80}">
+								<div>
+									<!-- <a onclick='boardContent(event)' id="idx" href='javascript:void(0)'> -->
+									<BUTTON class="boardIdxButton" id="freebutton"
+										onclick="boardContent(this)" name="${freeBoard.idx}">
+										<c:choose>
+											<c:when
+												test="${freeBoard.title != null && fn:length(freeBoard.title) > 80}">
 															${fn:substring(freeBoard.title,0,80)}...
 														</c:when>
-														<c:otherwise>
+											<c:otherwise>
 															${freeBoard.title}  ${freeBoard.idx}
 														</c:otherwise>
 													</c:choose>
 											</div>
 
-											<div class="entry-meta">
-												<ul>
-													<li class="d-flex align-items-center"><i class="bi bi-person"></i><a
-															href="blog-single.html">${freeBoard.memberId}</a></li>
-													<li class="d-flex align-items-center"><i class="bi bi-clock"></i> <a
-															href="blog-single.html">${freeBoard.writeDate}</a></li>
-													<li class="d-flex align-items-center"><i class="bi-hand-thumbs-up"></i>${freeBoard.likeNum}
-													</li>
-												</ul>
-											</div>
-
-											<div class="entry-content">
-												<p>${freeBoard.content}</p>
-											</div>
-
-										</article>
-										<!-- End blog entry -->
-
-									</c:forEach>
-
-									<div class="blog-pagination">
-										<ul class="justify-content-center">
-											<li><a href="#">1</a></li>
-											<li class="active"><a href="#">2</a></li>
-											<li><a href="#">3</a></li>
-										</ul>
-									</div>
-
-									<div class="d-grid gap-2 d-md-flex justify-content-md-end">
-										<button type="submit" onclick="location.href='/자유게시판/freeBoardWrite'"
-											style="width:130px; height:20; border-radius: 50px; padding:5px; border: none; background-color:#E96B56; color:white; margin-top:10px; font-size: large;">글쓰기</button>
-									</div>
-
-									<div>
-										<c:if test="${cpage > 1}">
-											<a
-												href="boardList.user?boardname=${boardname}&cp=${cpage-1}&ps=${pagesize}&boardname=${boardname}">이전</a>
-										</c:if>
-										<!-- page 목록 나열하기 -->
-										<c:forEach var="i" begin="1" end="${pagecount}" step="1">
-											<c:choose>
-												<c:when test="${cpage==i}">
-													<font color="red">[${i}]</font>
-												</c:when>
-												<c:otherwise>
-													<a
-														href="boardList.user?boardname=${boardname}&cp=${i}&ps=${pagesize}&boardname=${boardname}">[${i}]</a>
-												</c:otherwise>
-											</c:choose>
-										</c:forEach>
-										<!--다음 링크 -->
-										<c:if test="${cpage < pagecount}">
-											<a
-												href="boardList.user?boardname=${boardname}&cp=${cpage+1}&ps=${pagesize}&boardname=${boardname}">다음</a>
-										</c:if>
-									</div>
-
+								<div class="entry-meta">
+									<ul>
+										<li class="d-flex align-items-center"><i
+											class="bi bi-person"></i><a href="blog-single.html">${freeBoard.memberId}</a></li>
+										<li class="d-flex align-items-center"><i
+											class="bi bi-clock"></i> <a href="blog-single.html">${freeBoard.writeDate}</a></li>
+										<li class="d-flex align-items-center"><i
+											class="bi-hand-thumbs-up"></i>${freeBoard.likeNum}</li>
+									</ul>
 								</div>
-								<!-- End blog entries list -->
 
-								<div class="col-lg-4">
-
-									<div class="sidebar">
-
-										<h3 class="sidebar-title">Search</h3>
-										<div class="sidebar-item search-form">
-											<form action="">
-												<input type="text">
-												<button type="submit">
-													<i class="bi bi-search"></i>
-												</button>
-											</form>
-										</div>
-										<!-- End sidebar search formn-->
-
-										<jsp:include page="/WEB-INF/views/member/board/boardInclude/category.jsp" />
-
-
-									</div>
-									<!-- End sidebar -->
-
+								<div class="entry-content">
+									<p>${freeBoard.content}</p>
 								</div>
-								<!-- End blog sidebar -->
 
+							</article>
+							<!-- End blog entry -->
+
+						</c:forEach>
+
+						<div class="blog-pagination">
+							<ul class="justify-content-center">
+								<li><a href="#">1</a></li>
+								<li class="active"><a href="#">2</a></li>
+								<li><a href="#">3</a></li>
+							</ul>
+						</div>
+
+						<div class="d-grid gap-2 d-md-flex justify-content-md-end">
+							<button type="submit"
+								onclick="location.href='/자유게시판/freeBoardWrite'"
+								style="width: 130px; height: 20; border-radius: 50px; padding: 5px; border: none; background-color: #E96B56; color: white; margin-top: 10px; font-size: large;">글쓰기</button>
+						</div>
+
+						<div>
+							<c:if test="${cpage > 1}">
+								<a
+									href="boardList.user?boardname=${boardname}&cp=${cpage-1}&ps=${pagesize}&boardname=${boardname}">이전</a>
+							</c:if>
+							<!-- page 목록 나열하기 -->
+							<c:forEach var="i" begin="1" end="${pagecount}" step="1">
+								<c:choose>
+									<c:when test="${cpage==i}">
+										<font color="red">[${i}]</font>
+									</c:when>
+									<c:otherwise>
+										<a
+											href="boardList.user?boardname=${boardname}&cp=${i}&ps=${pagesize}&boardname=${boardname}">[${i}]</a>
+									</c:otherwise>
+								</c:choose>
+							</c:forEach>
+							<!--다음 링크 -->
+							<c:if test="${cpage < pagecount}">
+								<a
+									href="boardList.user?boardname=${boardname}&cp=${cpage+1}&ps=${pagesize}&boardname=${boardname}">다음</a>
+							</c:if>
+						</div>
+
+					</div>
+					<!-- End blog entries list -->
+
+					<div class="col-lg-4">
+
+						<div class="sidebar">
+
+							<h3 class="sidebar-title">Search</h3>
+							<div class="sidebar-item search-form">
+								<form action="">
+									<input type="text">
+									<button type="submit">
+										<i class="bi bi-search"></i>
+									</button>
+								</form>
 							</div>
+							<!-- End sidebar search formn-->
+
+							<jsp:include
+								page="/WEB-INF/views/member/board/boardInclude/category.jsp" />
+
 
 						</div>
-					</section>
-					<!-- End Blog Section -->
+						<!-- End sidebar -->
 
-				</main>
-				<!-- End #main -->
+					</div>
+					<!-- End blog sidebar -->
 
-				<!-- ======= Footer ======= -->
-				<c:import url="/WEB-INF/views/common/footer.jsp" />
-				<!-- End Footer -->
+				</div>
 
-				<a href="#" class="back-to-top d-flex align-items-center justify-content-center"><i
-						class="bi bi-arrow-up-short"></i></a>
+			</div>
+		</section>
+		<!-- End Blog Section -->
 
-				<!-- Vendor JS Files -->
-				<script src="resources/assets/vendor/purecounter/purecounter_vanilla.js"></script>
-				<script src="resources/assets/vendor/bootstrap/js/bootstrap.bundle.min.js"></script>
-				<script src="resources/assets/vendor/glightbox/js/glightbox.min.js"></script>
-				<script src="resources/assets/vendor/isotope-layout/isotope.pkgd.min.js"></script>
-				<script src="resources/assets/vendor/swiper/swiper-bundle.min.js"></script>
-				<script src="resources/assets/vendor/waypoints/noframework.waypoints.js"></script>
-				<script src="resources/assets/vendor/php-email-form/validate.js"></script>
+	</main>
+	<!-- End #main -->
 
-				<!-- Template Main JS File -->
-				<script src="resources/assets/js/main.js"></script>
-				
+	<!-- ======= Footer ======= -->
+	<c:import url="/WEB-INF/views/common/footer.jsp" />
+	<!-- End Footer -->
 
-			</body>
-			<script type="text/javascript">
+	<a href="#"
+		class="back-to-top d-flex align-items-center justify-content-center"><i
+		class="bi bi-arrow-up-short"></i></a>
 
-			//	$(document).ready(function () {
+	<!-- Vendor JS Files -->
+	<script
+		src="resources/assets/vendor/purecounter/purecounter_vanilla.js"></script>
+	<script
+		src="resources/assets/vendor/bootstrap/js/bootstrap.bundle.min.js"></script>
+	<script src="resources/assets/vendor/glightbox/js/glightbox.min.js"></script>
+	<script
+		src="resources/assets/vendor/isotope-layout/isotope.pkgd.min.js"></script>
+	<script src="resources/assets/vendor/swiper/swiper-bundle.min.js"></script>
+	<script
+		src="resources/assets/vendor/waypoints/noframework.waypoints.js"></script>
+	<script src="resources/assets/vendor/php-email-form/validate.js"></script>
 
-					// 게시글 ajax
-					//$(document).on(
-						/* 		"click",
-								".entry-title", function(){
-							console.log(allBoard), */
-							function boardContent(dd){
-								var test = $(dd);
-								console.log(dd);
-								//console.log(event.target)
-								var boardIdx = $(dd).attr('name');
-								console.log(boardIdx);
-								
-							$.ajax(
-							{
-								type: "get",
-								url: '${allBoard}'+'/'+boardIdx,
-								contentType: "application/json; charset=utf-8",
-								success: function (data) {
-									
-									var title = data.title;
-									var memberId = data.memberId;
-									var writerDate = data.writerDate;
-									var likeNum = data.likeNum;
-									var content = data.content;
-									console.log(data);
-									$('#blog').empty();
- 									$('#blog').append('<div class="container" data-aos="fade-up"><div class="row"><div class="col-lg-8 entries"><article class="entry"><h2 class="entry-title">'+
-																			'<a href="blog-single.html">'+title+'</a>'+
-																		'</h2>'+
-												
-																		'<div class="entry-meta">'+
-																			'<ul>'+
-																				'<li class="d-flex align-items-center"><i class="bi bi-person"></i><a href="blog-single.html">'+memberId+'</a></li>'+
-																				'<li class="d-flex align-items-center"><i class="bi bi-clock"></i><a href="blog-single.html">'+writeDate+'</a></li>'+
-																				'<li class="d-flex align-items-center"><i class="bi bi-chat-dots"></i> <a href="blog-single.html">아이고!!!!!!!!!!</a></li>'+
-																				'<li class="d-flex align-items-center"><i class="bi bi-chat-dots" />'+likeNum+'</li>'+
-																			'</ul>'+
-																		'</div>'+
-																		'<div class="entry-content">'+
-																			'<p>'+content+'</p>'+
-																		'</div>'+
-																	'</article>'+
-																'</div>'+
-															'</div>'+
-														'</div>');
-								}
-							}
-						)}
-					//)
-			//	});
+	<!-- Template Main JS File -->
+	<script src="resources/assets/js/main.js"></script>
 
-			</script>
-			</html>
+
+</body>
+<script type="text/javascript">
+	//	$(document).ready(function () {
+
+	// 게시글 ajax
+	//$(document).on(
+	/* 		"click",
+			".entry-title", function(){
+		console.log(allBoard), */
+	function boardContent(dd) {
+		var test = $(dd);
+		console.log(dd);
+		//console.log(event.target)
+		var boardIdx = $(dd).attr('name');
+		console.log(boardIdx);
+
+		$
+				.ajax({
+					type : "get",
+					url : '${allBoard}' + '/' + boardIdx,
+					contentType : "application/json; charset=utf-8",
+					success : function(data) {
+						$('#contentsDiv').empty();
+						$('#contentsDiv')
+								.append(
+										'<div class="container" data-aos="fade-up"><div class="row"><div class="col-lg-8 entries"><article class="entry"><h2 class="entry-title">'
+												+ '<a href="blog-single.html">'
+												+ data[0].title
+												+ '</a>'
+												+ '</h2>'
+												+
+
+												'<div class="entry-meta">'
+												+ '<ul>'
+												+ '<li class="d-flex align-items-center"><i class="bi bi-person"></i><a href="blog-single.html">'
+												+ data[0].memberId
+												+ '</a></li>'
+												+ '<li class="d-flex align-items-center"><i class="bi bi-clock"></i><a href="blog-single.html">'
+												+ data[0].writeDate
+												+ '</a></li>'
+												+ '<li class="d-flex align-items-center"><i class="bi bi-chat-dots"></i> <a href="blog-single.html">아이고!!!!!!!!!!</a></li>'
+												+ '<li class="d-flex align-items-center"><i class="bi bi-chat-dots" />'
+												+ data[0].likeNum
+												+ '</li>'
+												+ '</ul>'
+												+ '</div>'
+												+ '<div class="entry-content">'
+												+ '<p>'
+												+ data[0].content
+												+ '</p>'
+												+ '</div>'
+												+ '</article>'
+												+ '</div>'
+												+ '</div>' + '</div>');
+					}
+				})
+	}
+	//)
+	//	});
+</script>
+</html>
