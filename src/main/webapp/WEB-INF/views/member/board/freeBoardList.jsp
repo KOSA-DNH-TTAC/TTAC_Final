@@ -25,6 +25,7 @@
 	href="https://fonts.googleapis.com/css?family=Open+Sans:300,300i,400,400i,600,600i,700,700i|Raleway:300,300i,400,400i,500,500i,600,600i,700,700i|Poppins:300,300i,400,400i,500,500i,600,600i,700,700i"
 	rel="stylesheet">
 
+<<<<<<< HEAD
 <!-- Vendor CSS Files -->
 <link href="resources/assets/vendor/animate.css/animate.min.css"
 	rel="stylesheet">
@@ -57,6 +58,15 @@ img {
 }
 </style>
 </head>
+=======
+				<!-- =======================================================
+				  * Template Name: Eterna - v4.10.0
+				  * Template URL: https://bootstrapmade.com/eterna-free-multipurpose-bootstrap-template/
+				  * Author: BootstrapMade.com
+				  * License: https://bootstrapmade.com/license/
+				  ======================================================== -->
+			</head>
+>>>>>>> a859024d95c2e42cde318be912387e9b286e36f8
 
 
 
