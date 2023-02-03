@@ -49,7 +49,7 @@
   * License: https://bootstrapmade.com/license/
   ======================================================== -->
 <style>
-img {
+.p img {
 	width: 100px;
 	height: 100px;
 	margin-left: 5%;
@@ -65,20 +65,8 @@ img {
 
 	<main id="main">
 
-		<!-- ======= Breadcrumbs ======= -->
-		<section id="breadcrumbs" class="breadcrumbs">
-			<div class="container">
-
-				<ol>
-					<li><a href="index.html">Home</a></li>
-					<li>자유게시판</li>
-				</ol>
-				<h2>자유게시판</h2>
-
-			</div>
-		</section>
-		<!-- End Breadcrumbs -->
-
+	<c:import url="/WEB-INF/views/member/board/boardInclude/boardCategory.jsp" />
+		
 		<!-- ======= Blog Section ======= -->
 		<section id="blog" class="blog">
 			<div class="container" data-aos="fade-up">
@@ -118,7 +106,7 @@ img {
 									</ul>
 								</div>
 
-								<div class="entry-content">
+								<div id="textImage" class="entry-content">
 									<p>${freeBoard.content}</p>
 								</div>
 
@@ -229,13 +217,13 @@ img {
 
 </body>
 <script type="text/javascript">
-	//	$(document).ready(function () {
-
-	// 게시글 ajax
-	//$(document).on(
-	/* 		"click",
-			".entry-title", function(){
-		console.log(allBoard), */
+	
+	$(document).ready(function () {
+		$("#text p img").removeAttr("width");
+        $("#text p img").removeAttr("height");
+	})
+	
+	
 	function boardContent(dd) {
 		var test = $(dd);
 		console.log(dd);
@@ -243,8 +231,7 @@ img {
 		var boardIdx = $(dd).attr('name');
 		console.log(boardIdx);
 
-		$
-				.ajax({
+		$.ajax({
 					type : "get",
 					url : '${allBoard}' + '/' + boardIdx,
 					contentType : "application/json; charset=utf-8",
@@ -257,9 +244,7 @@ img {
 												+ data[0].title
 												+ '</a>'
 												+ '</h2>'
-												+
-
-												'<div class="entry-meta">'
+												+ '<div class="entry-meta">'
 												+ '<ul>'
 												+ '<li class="d-flex align-items-center"><i class="bi bi-person"></i><a href="blog-single.html">'
 												+ data[0].memberId
