@@ -432,17 +432,12 @@
             //제목 뒤엔 [n]으로 댓글 수 표시
             $.ajax({
               type: "GET",
-              url: "/mypage/myinfo",
+              url: "/mypage/myboard",
               success: function (result) {
                 console.log("성공")
                 console.log(result);
-              },
-              error: function (err) {
-                console.log("에러");
-                console.log(err);
-              }
-            })
-            var contents = `
+                
+                var contents = `
           <table class="table">
             <thead>
               <tr>
@@ -478,6 +473,13 @@
             $('#content').empty()
             $('#content').append(contents)
 
+              },
+              error: function (err) {
+                console.log("에러");
+                console.log(err);
+              }
+            })
+           
 
           }
           else if (menu == '벌점이력') {
