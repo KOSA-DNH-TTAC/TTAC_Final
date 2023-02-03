@@ -6,6 +6,7 @@ import java.util.Locale;
 import org.slf4j.Logger;
 import org.slf4j.LoggerFactory;
 import org.springframework.beans.factory.annotation.Autowired;
+import org.springframework.security.access.prepost.PreAuthorize;
 import org.springframework.security.core.annotation.AuthenticationPrincipal;
 import org.springframework.security.core.context.SecurityContextHolder;
 import org.springframework.stereotype.Controller;
@@ -94,10 +95,12 @@ public class FrontController {
 	*/
 	
 	@GetMapping("/message")
+	@PreAuthorize("isAuthenticated()")
 	public String messageBox() {
 		//쪽지함
 		return "member/message/notebox";
 	}
+	
 	
 	@GetMapping("/message/writing")
 	public String messageWriting() {
@@ -106,11 +109,23 @@ public class FrontController {
 	}
 	
 	@PostMapping("/message/writing")
-	public String messageSend(Message msg) {
+	public String messageSend(Message message, Model model) {
 		//쪽지 보내기
-		System.out.println(msg);
-		msgservice.sendMsg(msg);
-		return "member/message/notebox"; //나중에 리다이렉트로 바꾸기
+		System.out.println(message);
+		msgservice.sendMsg(message);
+		int result = 0;
+		String msg = "";
+		String url = "";
+		if (result < 1) {
+			msg = "쪽지 전송 성공";
+			url = "/message";
+		} else {
+			msg = "쪽지 보내기 실패";
+			url = "/message/writing";
+		}
+		model.addAttribute("msg", msg);
+		model.addAttribute("url", url);
+		return "/common/redirect";
 	}
 	
 	@GetMapping("/error")

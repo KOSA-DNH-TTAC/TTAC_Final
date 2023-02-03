@@ -56,8 +56,7 @@
 		</security:authentication-provider>
 
 	</security:authentication-manager>
-
-
+	
 <!-- 
 <security:authentication-manager>
 	<security:authentication-provider>

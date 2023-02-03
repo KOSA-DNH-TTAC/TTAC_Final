@@ -276,7 +276,6 @@
 	 })
 
    $('#writing').on("click", function(){
-    console.log("쪽지쓰기 누름")
     location.href = "/message/writing"
    })
 	</script>
