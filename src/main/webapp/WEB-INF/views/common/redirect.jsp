@@ -10,8 +10,8 @@
 </head>
 </html>
 <%
-  String msg = (String)request.getAttribute("board_msg");
-  String url = (String)request.getAttribute("board_url");
+  String msg = (String)request.getAttribute("msg");
+  String url = (String)request.getAttribute("url");
   
   if(msg != null && url != null){
 %>
