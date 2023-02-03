@@ -113,24 +113,30 @@
 
                     <!-- content start -->
                     <div id="content">
-                    <form>
+                    <form action="/message/writing" method="POST">
                     <table class="table table-warning" id='writingTable'>
                     <tbody>
                       <tr>
                         <td><b>받는 사람 ID</b></td>
                         <div class="col-lg-4">
-                        	<td><input type="text" class="form-control 	g-3"></td>
+                        	<td><input type="text" name="rMemberId" class="form-control g-3"></td>
                         </div>
                       </tr>
                       <tr>
                         <td colspan="2">
-                        	<textarea class="form-control" id="exampleFormControlTextarea1" rows="3"></textarea>
+                        	<textarea class="form-control" name="messageTitle" placeholder='제목을 입력하세요' exampleFormControlTextarea1" rows="1"></textarea>
+                        </td>
+                      </tr>
+                      <tr>
+                        <td colspan="2">
+                        	<textarea class="form-control" name="messageContent" placeholder="내용을 입력하세요" id="exampleFormControlTextarea1" rows="3"></textarea>
                         </td>
                       </tr>
                     </tbody>
                   </table>
+                  <button type="submit" id="writing" class="btn btn-warning">쪽지쓰기</button>
                   </form>
-                  <button id="writing" class="btn btn-warning">쪽지쓰기</button>
+                  
                       
                     </div>
                     <!-- content end -->

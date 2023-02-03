@@ -11,6 +11,7 @@ import org.springframework.security.core.annotation.AuthenticationPrincipal;
 import org.springframework.security.core.context.SecurityContextHolder;
 import org.springframework.web.bind.annotation.GetMapping;
 import org.springframework.web.bind.annotation.PathVariable;
+import org.springframework.web.bind.annotation.PostMapping;
 import org.springframework.web.bind.annotation.RequestMapping;
 import org.springframework.web.bind.annotation.RestController;
 
@@ -35,7 +36,7 @@ public class MessageController {
 	public ResponseEntity<List<Message>> getReceivedMsg(){
 		User user = (User) SecurityContextHolder.getContext().getAuthentication().getPrincipal();
 		List<Message> list = service.getReceivedMsg(user.getMemberId());
-		
+//		System.out.println(list);
 		return new ResponseEntity<List<Message>>(list, HttpStatus.OK);
 	     
 	}
@@ -45,7 +46,7 @@ public class MessageController {
 	public ResponseEntity<List<Message>> getSendMsg(){
 		User user = (User) SecurityContextHolder.getContext().getAuthentication().getPrincipal();
 		List<Message> list = service.getSendMsg(user.getMemberId());
-		
+//		System.out.println(list);
 		return new ResponseEntity<List<Message>>(list, HttpStatus.OK);
 	     
 	}
@@ -53,13 +54,14 @@ public class MessageController {
 	
 	//쪽지 하나 조회
 	@GetMapping("/read/{idx}")
-	public ResponseEntity<Message> readMsg(@PathVariable("idx")int idx){
-		User user = (User) SecurityContextHolder.getContext().getAuthentication().getPrincipal();
-		Message msg = service.getMsg(idx);
+	public ResponseEntity<Message> readMsg(@PathVariable("idx")String idx){
+		int index = Integer.parseInt(idx);
+		Message msg = service.getMsg(index);
 		
 		return new ResponseEntity<Message>(msg, HttpStatus.OK);
 	     
 	}
 	
 	//쪽지 작성
+//	@PostMapping("/writing")
 }

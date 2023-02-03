@@ -15,19 +15,19 @@ PUBLIC "-//mybatis.org//DTD Mapper 3.0//EN"
 	<!--  getSendMessage(보낸 메시지 전체 조회) -->
 	<select id="getSendMessage" parameterType="String" resultType="kr.or.kosa.dto.Message">
 	  SELECT MESSAGEIDX, sMEMBERID, rMEMBERID, MESSAGETITLE, MESSAGECONTENT, MESSAGEDATE,
-	  STATUS FROM MESSAGE WHERE sMEMBERID = #{memberid}
+	  STATUS FROM MESSAGE WHERE sMEMBERID = #{memberid} ORDER BY messagedate desc;
 	</select>
 	 
 	<!-- getMessage (특정메시지조회 : 인덱스) -->
 	<select id="getMessage" parameterType="String" resultType="kr.or.kosa.dto.Message">
 	  SELECT MESSAGEIDX, sMEMBERID, rMEMBERID, MESSAGETITLE, MESSAGECONTENT, MESSAGEDATE,
-	  STATUS FROM MESSAGE WHERE MESSAGEIDX = #{index}
+	  STATUS FROM MESSAGE WHERE MESSAGEIDX = #{index} ORDER BY messagedate desc;
 	</select>
 	
 	<!-- sendMessage(쪽지 보내기) -->
 	<insert id="sendMessage" parameterType="kr.or.kosa.dto.Message">
-		INSERT INTO (sMEMBERID, rMEMBERID, MESSAGETITLE, MESSAGECONTENT, MESSAGEDATE)
-		VALUES(#{sMemberId}, #{rMemberId}, #{messageTitle}, #{messageContent}, sysdate)
+		INSERT INTO MESSAGE(sMEMBERID, rMEMBERID, MESSAGETITLE, MESSAGECONTENT, MESSAGEDATE)
+		VALUES(#{sMemberId}, #{rMemberId}, #{messageTitle}, #{messageContent}, now())
 	</insert>
 	
 </mapper>
