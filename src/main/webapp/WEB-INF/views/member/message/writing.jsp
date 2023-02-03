@@ -124,7 +124,7 @@
                       </tr>
                       <tr>
                         <td colspan="2">
-                        	<textarea class="form-control" name="messageTitle" placeholder='제목을 입력하세요' exampleFormControlTextarea1" rows="1"></textarea>
+                        	<textarea class="form-control" name="messageTitle" maxlength='30' placeholder='제목을 입력하세요' exampleFormControlTextarea1" rows="1"></textarea>
                         </td>
                       </tr>
                       <tr>
