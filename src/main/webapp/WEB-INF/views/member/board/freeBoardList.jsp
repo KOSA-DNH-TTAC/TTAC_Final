@@ -89,7 +89,6 @@
 															${freeBoard.title}  ${freeBoard.idx}
 														</c:otherwise>
 													</c:choose>
-												</a>
 											</div>
 
 											<div class="entry-meta">

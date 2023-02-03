@@ -3,6 +3,9 @@ package kr.or.kosa.controller;
 import java.security.Principal;
 import java.util.List;
 
+import javax.servlet.http.HttpServletRequest;
+import javax.servlet.http.HttpSession;
+
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Controller;
 import org.springframework.ui.Model;
@@ -112,8 +115,9 @@ public class BoardController {
 	}
 	//자유게시판 글쓰기
 	@PostMapping("/자유게시판/freeBoardWrite")
-	public String freeBoardWriteOk(Principal principal,Model model, @RequestParam("title") String title,
+	public String freeBoardWriteOk(HttpServletRequest request, Principal principal,Model model, @RequestParam("title") String title,
 																	@RequestParam("content") String content) {
+		
 		String msg = "";
 		String url = "";
 		int result = 0;
@@ -121,6 +125,7 @@ public class BoardController {
 		Member member = null;
 		String memberid = principal.getName();
 		member = memberService.getMemberById(memberid);
+		
 		
 		if(memberid == null) {
 			msg = "세션이 만료되었습니다.";
