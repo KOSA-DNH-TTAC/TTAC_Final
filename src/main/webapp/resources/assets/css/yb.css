@@ -85,3 +85,23 @@
 	width: 0px;
 	height: 0px;
 }
+
+.boardCategory {
+	list-style: none;
+}
+
+div.divider {
+    display: inline-block;
+    width: 1px;
+    height: 200px;
+    background-color: #e3e3e3;
+}
+
+div.wrap {
+    box-sizing: border-box;
+    /* font-size: 0; */
+    text-align: center;
+    white-space: nowrap;
+    overflow: hidden;
+    overflow-x: auto;
+}

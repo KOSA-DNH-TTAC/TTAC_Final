@@ -80,18 +80,18 @@
 
 								<div>
 									<!-- <a onclick='boardContent(event)' id="idx" href='javascript:void(0)'> -->
-									<BUTTON class="boardIdxButton" id="freebutton"
+									<button class="boardIdxButton" id="freebutton"
 										onclick="boardContent(this)" name="${freeBoard.idx}">
 										<c:choose>
-											<c:when
-												test="${freeBoard.title != null && fn:length(freeBoard.title) > 80}">
+											<c:when	test="${freeBoard.title != null && fn:length(freeBoard.title) > 80}">
 															${fn:substring(freeBoard.title,0,80)}...
-														</c:when>
+											</c:when>
 											<c:otherwise>
-															${freeBoard.title}  ${freeBoard.idx}
-														</c:otherwise>
-													</c:choose>
-											</div>
+												${freeBoard.title}  ${freeBoard.idx}
+											</c:otherwise>
+										</c:choose>
+									</button>
+								</div>
 
 								<div class="entry-meta">
 									<ul>

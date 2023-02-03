@@ -42,6 +42,7 @@ public class BoardController {
 	@GetMapping("{allBoard}")
 	public String allBoardView(Model model, @PathVariable String allBoard) {
 		List<Post> allBoardList = boardService.allBoardList(allBoard); // 글목록
+		System.out.println("POST: " + allBoardList);
 		model.addAttribute("allBoardList", allBoardList);
 		String viewPage = "member/board/";
 		if (allBoard.equals("공지사항")) {
