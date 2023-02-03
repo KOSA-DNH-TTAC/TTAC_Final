@@ -17,8 +17,7 @@
 
 <!-- Favicons -->
 <link href="resources/assets/img/favicon.png" rel="icon">
-<link href="resources/assets/img/apple-touch-icon.png"
-	rel="apple-touch-icon">
+<link href="resources/assets/img/apple-touch-icon.png" rel="apple-touch-icon">
 
 <!-- Google Fonts -->
 <link
@@ -48,13 +47,7 @@
   * Author: BootstrapMade.com
   * License: https://bootstrapmade.com/license/
   ======================================================== -->
-<style>
-.p img {
-	width: 100px;
-	height: 100px;
-	margin-left: 5%;
-}
-</style>
+ <link href="resources/assets/css/nightOver.css" rel="stylesheet">
 </head>
 
 <body>
@@ -65,8 +58,20 @@
 
 	<main id="main">
 
-	<c:import url="/WEB-INF/views/member/board/boardInclude/boardCategory.jsp" />
-		
+		<!-- ======= Breadcrumbs ======= -->
+		<section id="breadcrumbs" class="breadcrumbs">
+			<div class="container">
+
+				<ol>
+					<li><a href="index.html">Home</a></li>
+					<li>자유게시판</li>
+				</ol>
+				<h2>자유게시판</h2>
+
+			</div>
+		</section>
+		<!-- End Breadcrumbs -->
+
 		<!-- ======= Blog Section ======= -->
 		<section id="blog" class="blog">
 			<div class="container" data-aos="fade-up">
@@ -90,8 +95,10 @@
 											<c:otherwise>
 															${freeBoard.title}  ${freeBoard.idx}
 														</c:otherwise>
-													</c:choose>
-											</div>
+										</c:choose>
+										<!-- </a> -->
+									</BUTTON>
+								</div>
 
 								<div class="entry-meta">
 									<ul>
@@ -104,7 +111,7 @@
 									</ul>
 								</div>
 
-								<div id="textImage" class="entry-content">
+								<div class="entry-content">
 									<p>${freeBoard.content}</p>
 								</div>
 
@@ -215,13 +222,13 @@
 
 </body>
 <script type="text/javascript">
-	
-	$(document).ready(function () {
-		$("#text p img").removeAttr("width");
-        $("#text p img").removeAttr("height");
-	})
-	
-	
+	//	$(document).ready(function () {
+
+	// 게시글 ajax
+	//$(document).on(
+	/* 		"click",
+			".entry-title", function(){
+		console.log(allBoard), */
 	function boardContent(dd) {
 		var test = $(dd);
 		console.log(dd);
@@ -229,41 +236,45 @@
 		var boardIdx = $(dd).attr('name');
 		console.log(boardIdx);
 
-		$.ajax({
+		$
+				.ajax({
 					type : "get",
 					url : '${allBoard}' + '/' + boardIdx,
 					contentType : "application/json; charset=utf-8",
 					success : function(data) {
 						$('#contentsDiv').empty();
 						$('#contentsDiv')
-								.append(
-										'<div class="container" data-aos="fade-up"><div class="row"><div class="col-lg-8 entries"><article class="entry"><h2 class="entry-title">'
-												+ '<a href="blog-single.html">'
-												+ data[0].title
-												+ '</a>'
-												+ '</h2>'
-												+ '<div class="entry-meta">'
-												+ '<ul>'
-												+ '<li class="d-flex align-items-center"><i class="bi bi-person"></i><a href="blog-single.html">'
-												+ data[0].memberId
-												+ '</a></li>'
-												+ '<li class="d-flex align-items-center"><i class="bi bi-clock"></i><a href="blog-single.html">'
-												+ data[0].writeDate
-												+ '</a></li>'
-												+ '<li class="d-flex align-items-center"><i class="bi bi-chat-dots"></i> <a href="blog-single.html">아이고!!!!!!!!!!</a></li>'
-												+ '<li class="d-flex align-items-center"><i class="bi bi-chat-dots" />'
-												+ data[0].likeNum
-												+ '</li>'
-												+ '</ul>'
-												+ '</div>'
-												+ '<div class="entry-content">'
-												+ '<p>'
-												+ data[0].content
-												+ '</p>'
-												+ '</div>'
-												+ '</article>'
-												+ '</div>'
-												+ '</div>' + '</div>');
+								.append( '<div class="container" data-aos="fade-up"><div class="row"><div class="col-lg-12 entries"><article class="entry"><h2 class="entry-title">'
+	                                    + '<a href="blog-single.html">'
+	                                    + data[0].title
+	                                    + '</a>'
+	                                    + '</h2>'
+	                                    +
+
+	                                    '<div class="entry-meta">'
+	                                    + '<ul>'
+	                                    + '<li class="d-flex align-items-center"><i class="bi bi-person"></i><a href="blog-single.html">'
+	                                    + data[0].memberId
+	                                    + '</a></li>'
+	                                    + '<li class="d-flex align-items-center"><i class="bi bi-clock"></i><a href="blog-single.html">'
+	                                    + data[0].writeDate
+	                                    + '</a></li>'
+	                                    + '<li class="d-flex align-items-center"><i class="bi-hand-thumbs-up"></i>'
+	                                    + data[0].likeNum
+	                                    + '</li>'
+	                                    + '</ul>'
+	                                    + '</div>'
+	                                    + '<div class="entry-content" style="margin-bottom:50px;">'
+	                                    + '<p style="margin-top: 40px;">'
+	                                    + data[0].content
+	                                    + '</p>'
+	                                    + '</div>'
+	                                    + '</article>'
+	                                    + '</div>'
+	                                    + '</div>' + '</div>'+
+	                                    '<b>&nbsp 댓글 수  <i class="bi bi-chat-dots"></i> 482</b>'+
+	                                    '<hr>'+
+	                                    '<div class="box"><ul><li><b>박예빈</b> <br> 정말 좋은 글인걸요? 잘 읽었습니다^^</li></ul></div>');
 					}
 				})
 	}
