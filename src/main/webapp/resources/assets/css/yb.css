@@ -33,3 +33,50 @@
 	color: #e96b56;
 	transition: 0.3s;
 }
+
+.boardIdxButton {
+	padding: 0; 
+	list-style: none;
+	background-color: #fff;
+	border: none;
+	font-weight: bold;
+	color: #545454;
+	margin: 0 0 10px 0;
+	font-size: 20px;
+}
+
+.boardIdxButton:hover {
+	padding: 0; 
+	list-style: none;
+	background-color: #fff;
+	border: none;
+	font-weight: bold;
+	color: #e96b56;
+	transition: 0.3s;
+	margin: 0 0 10px 0;
+	font-size: 20px;
+}
+
+.categories .sidebar .categories ul {
+  list-style: none;
+  padding: 0;
+}
+
+.categories .sidebar .categories ul li+li {
+  padding-top: 10px;
+}
+
+.categories .sidebar .categories ul a {
+  color: #545454;
+  transition: 0.3s;
+}
+
+.categories .sidebar .categories ul a:hover {
+  color: #e96b56;
+}
+
+.categories .sidebar .categories ul a span {
+  padding-left: 5px;
+  color: #aaaaaa;
+  font-size: 14px;
+}

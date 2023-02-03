@@ -22,25 +22,25 @@ public class BoardController {
 
 	private BoardService boardService;
 	private MemberService memberService;
-	
+
 	@Autowired
 	public void setBoardService(BoardService boardService) {
 		this.boardService = boardService;
 	}
-	
+
 	@Autowired
-    public void setMemberService(MemberService memberService) {
-        this.memberService = memberService;
-    }
-	
+	public void setMemberService(MemberService memberService) {
+		this.memberService = memberService;
+	}
+
 //////////////////////////////////////////////////////////////////////////////////////////////////////////////
-	
+
 	// 기본 제공 게시판
 	@GetMapping("{allBoard}")
 	public String allBoardView(Model model, @PathVariable String allBoard) {
 		List<Post> allBoardList = boardService.allBoardList(allBoard); // 글목록
 		model.addAttribute("allBoardList", allBoardList);
-		System.out.println("allBoardList : "+allBoardList);
+		System.out.println("allBoardList : " + allBoardList);
 		String viewPage = "member/board/";
 		if (allBoard.equals("공지사항")) {
 			viewPage += "noticeList";
@@ -55,102 +55,102 @@ public class BoardController {
 		return viewPage;
 	}
 
-	/*
-	 * // 커스텀 생성 게시판
-	 * 
-	 * @GetMapping("board/{boardName}") public String boardList(Model
-	 * model, @PathVariable String boardName) {
-	 * 
-	 * List<Post> boardList = boardService.customBoardList(boardName);// 글목록
-	 * model.addAttribute("boardList", boardList); model.addAttribute("boardName",
-	 * boardName);
-	 * 
-	 * return "member/board/customBoardList"; }
-	 * 
-	 * // 게시판 글쓰기 이것도 게시판마다 달라야함
-	 * 
-	 * @GetMapping("/{boardName}/boardWrite") public String BoardWrite() {
-	 * 
-	 * return "member/board/boardWrite"; }
-	 */
-	
+	// 커스텀 생성 게시판
+
+	@GetMapping("board/{boardName}")
+	public String boardList(Model model, @PathVariable String boardName) {
+
+		List<Post> boardList = boardService.customBoardList(boardName);// 글목록
+		model.addAttribute("boardList", boardList);
+		model.addAttribute("boardName", boardName);
+
+		return "member/board/customBoardList";
+	}
+
+	// 게시판 글쓰기 이것도 게시판마다 달라야함
+
+	@GetMapping("/{boardName}/boardWrite")
+	public String BoardWrite() {
+		return "member/board/boardWrite";
+	}
+
 	@PostMapping("/{boardName}/boardWrite")
 	public String BoardWriteOk() {
 		return "member/board/boardWrite";
 	}
-	
-	//공지사항 글쓰기
+
+	// 공지사항 글쓰기
 	@GetMapping("/공지사항/noticeWrite")
 	public String noticeWrite() {
 		return "member/board/noticeWrite";
 	}
-	//공지사항 글쓰기
+
+	// 공지사항 글쓰기
 	@PostMapping("/공지사항/noticeWrite")
-	public String noticeWriteOk(Principal principal,Model model ,@PathVariable("title") String title,
-																 @PathVariable("content") String content) {
+	public String noticeWriteOk(Principal principal, Model model, @PathVariable("title") String title,
+			@PathVariable("content") String content) {
 		Member member = null;
 		String memberid = principal.getName();
 		member = memberService.getMemberById(memberid);
 		return "member/board/noticeWrite";
 	}
-	
-	//건의사항 글쓰기
+
+	// 건의사항 글쓰기
 	@GetMapping("/건의사항/opinionWrite")
 	public String opinionWrite() {
 		return "member/board/opinionWrite";
 	}
-	//건의사항 글쓰기
+
+	// 건의사항 글쓰기
 	@PostMapping("/건의사항/opinionWrite")
 	public String opinionWriteOk() {
 		return "member/board/opinionWrite";
 	}
-		
-	//자유게시판 글쓰기
+
+	// 자유게시판 글쓰기
 	@GetMapping("/자유게시판/freeBoardWrite")
 	public String freeBoardWrite() {
 		return "member/board/freeBoardWrite";
 	}
-	//자유게시판 글쓰기
+
+	// 자유게시판 글쓰기
 	@PostMapping("/자유게시판/freeBoardWrite")
-	public String freeBoardWriteOk(Principal principal,Model model, @RequestParam("title") String title,
-																	@RequestParam("content") String content) {
+	public String freeBoardWriteOk(Principal principal, Model model, @RequestParam("title") String title,
+			@RequestParam("content") String content) {
 		String msg = "";
 		String url = "";
 		int result = 0;
-		
+
 		Member member = null;
 		String memberid = principal.getName();
 		member = memberService.getMemberById(memberid);
-		
-		if(memberid == null) {
+
+		if (memberid == null) {
 			msg = "세션이 만료되었습니다.";
 			url = "/";
-		}else {
+		} else {
 			Post post = new Post();
-			
+
 			post.setBoardIdx(3);
 			post.setUniversityCode(member.getUniversityCode());
 			post.setMemberId(member.getMemberId());
 			post.setTitle(title);
 			post.setContent(content);
-			
+
 			result = boardService.freeBoardWrite(post);
-			
+
 			if (result < 1) {
 				msg = "글 작성이 실패했습니다.";
 				url = "/자유게시판/freeBoardWrite";
-			}else {
+			} else {
 				msg = "글 작성이 완료되었습니다!";
 				url = "/자유게시판";
 			}
-			
-			model.addAttribute("msg",msg);
-			model.addAttribute("url",url);
+
+			model.addAttribute("msg", msg);
+			model.addAttribute("url", url);
 		}
 		return "/common/redirect";
 	}
-	
-	
-	
-	
+
 }
