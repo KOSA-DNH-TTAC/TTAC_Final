@@ -71,13 +71,13 @@
 										console.log("boardName : " + boardName);
 								})
 								
-								// 기본 제공 게시판 카테고리
+								/* // 기본 제공 게시판 카테고리
 								$(document).on(					
 									"click",
 									".allBoard", function(){
 									var allBoard = "";
 									allBoard = $(this).attr('seq');
-								})
+								}) */
 
 						
 				
