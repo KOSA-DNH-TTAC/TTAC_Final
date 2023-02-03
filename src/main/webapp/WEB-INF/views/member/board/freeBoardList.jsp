@@ -102,10 +102,8 @@ img {
 											<c:otherwise>
 															${freeBoard.title}  ${freeBoard.idx}
 														</c:otherwise>
-										</c:choose>
-										<!-- </a> -->
-									</BUTTON>
-								</div>
+													</c:choose>
+											</div>
 
 								<div class="entry-meta">
 									<ul>
