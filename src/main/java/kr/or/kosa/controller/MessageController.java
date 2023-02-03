@@ -10,6 +10,8 @@ import org.springframework.security.core.Authentication;
 import org.springframework.security.core.annotation.AuthenticationPrincipal;
 import org.springframework.security.core.context.SecurityContextHolder;
 import org.springframework.web.bind.annotation.GetMapping;
+import org.springframework.web.bind.annotation.PathVariable;
+import org.springframework.web.bind.annotation.RequestMapping;
 import org.springframework.web.bind.annotation.RestController;
 
 import kr.or.kosa.dto.Message;
@@ -18,6 +20,7 @@ import kr.or.kosa.security.User;
 import kr.or.kosa.service.MessageService;
 
 @RestController
+@RequestMapping("/message")
 public class MessageController {
 	
 	private MessageService service;
@@ -27,7 +30,7 @@ public class MessageController {
 		this.service = service;
 	}
 	
-	//쪽지 전체 조회
+	//받은 쪽지 전체 조회
 	@GetMapping("/notebox")
 	public ResponseEntity<List<Message>> getReceivedMsg(){
 		User user = (User) SecurityContextHolder.getContext().getAuthentication().getPrincipal();
@@ -38,8 +41,25 @@ public class MessageController {
 	}
 	
 	//보낸 쪽지 전체 조회
+	@GetMapping("/getSend")
+	public ResponseEntity<List<Message>> getSendMsg(){
+		User user = (User) SecurityContextHolder.getContext().getAuthentication().getPrincipal();
+		List<Message> list = service.getSendMsg(user.getMemberId());
+		
+		return new ResponseEntity<List<Message>>(list, HttpStatus.OK);
+	     
+	}
+	
 	
 	//쪽지 하나 조회
+	@GetMapping("/read/{idx}")
+	public ResponseEntity<Message> readMsg(@PathVariable("idx")int idx){
+		User user = (User) SecurityContextHolder.getContext().getAuthentication().getPrincipal();
+		Message msg = service.getMsg(idx);
+		
+		return new ResponseEntity<Message>(msg, HttpStatus.OK);
+	     
+	}
 	
 	//쪽지 작성
 }
