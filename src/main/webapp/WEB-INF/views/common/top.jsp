@@ -25,11 +25,12 @@
           <li><a href="portfolio.html">Portfolio</a></li>
           <li><a href="team.html">Team</a></li>
           <li><a href="pricing.html">Pricing</a></li> -->
-          <li><a href="공지사항">Community</a></li>
+          <li><a href="/공지사항">Community</a></li>
           <li class="dropdown"><a><span>마이페이지</span> <i class="bi bi-chevron-down"></i></a>
             <ul>
               <li><a href="/mypage">내 정보</a></li>
               <li><a href="#">마이 포인트 : 100p</a></li>
+              <li><a href="/message">쪽지함</a></li>
               <li><a href="#">내 식권보기</a></li>
               <li><a href="/userlogin">로그인</a></li>
             </ul>

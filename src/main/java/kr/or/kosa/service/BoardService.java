@@ -76,11 +76,8 @@ public class BoardService {
 	// 게시글 상세보기
 	public List<Post> boardContent(String idx) {
 		
-		System.out.println("서비스 진입");
-		
 		BoardDao boardDao = sqlSession.getMapper(BoardDao.class);
 		List<Post> boardContent = boardDao.boardContent(idx);
-		System.out.println(boardContent);
 		return boardContent;
 	}
 	
@@ -92,8 +89,7 @@ public class BoardService {
 		try {
 			BoardDao boardDao = sqlSession.getMapper(BoardDao.class);
 			result = boardDao.boardInsert(post);
-			
-			System.out.println("");
+
 		} catch (ClassNotFoundException e) {
 			e.printStackTrace();
 		} catch (SQLException e) {

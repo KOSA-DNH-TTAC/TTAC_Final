@@ -9,6 +9,7 @@ import org.springframework.stereotype.Service;
 
 import kr.or.kosa.dao.MemberDao;
 import kr.or.kosa.dto.Member;
+import kr.or.kosa.dto.Post;
 
 @Service
 public class MemberService {
@@ -45,6 +46,14 @@ public class MemberService {
 		//일단 생각해둔건 컨트롤러에서 principal로 유저 정보 받아와서 그 유저의 학교코드 넣는거
 		MemberDao dao = sqlsession.getMapper(MemberDao.class);
 		list = dao.getMemberByName(name, universitycode);
+		return list;
+	}
+	
+	//특정회원이 작성한 글 가져오기
+	public List<Post> getPostings(String memberid){
+		MemberDao dao = sqlsession.getMapper(MemberDao.class);
+		List<Post> list = new ArrayList<Post>();
+		list = dao.getPosts(memberid);
 		return list;
 	}
 }

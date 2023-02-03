@@ -5,10 +5,12 @@ import java.util.List;
 
 import org.apache.ibatis.session.SqlSession;
 import org.springframework.beans.factory.annotation.Autowired;
+import org.springframework.security.core.context.SecurityContextHolder;
 import org.springframework.stereotype.Service;
 
 import kr.or.kosa.dao.MessageDao;
 import kr.or.kosa.dto.Message;
+import kr.or.kosa.security.User;
 
 @Service
 public class MessageService {
@@ -49,6 +51,9 @@ public class MessageService {
 	
 	//쪽지 쓰기
 	public int sendMsg(Message msg) {
+		User user = (User) SecurityContextHolder.getContext().getAuthentication().getPrincipal();
+		msg.setSMemberId(user.getMemberId());
+		System.out.println(msg);
 		MessageDao dao = sqlsession.getMapper(MessageDao.class);
 		int result = 0;
 		result = dao.sendMessage(msg);

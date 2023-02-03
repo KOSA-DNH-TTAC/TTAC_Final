@@ -5,6 +5,7 @@ import java.util.List;
 import org.apache.ibatis.annotations.Param;
 
 import kr.or.kosa.dto.Member;
+import kr.or.kosa.dto.Post;
 
 public interface MemberDao {
 	
@@ -19,5 +20,7 @@ public interface MemberDao {
 	
 	//정보 수정(마이페이지)
 	
+	//특정 회원이 쓴 글들
+	public List<Post> getPosts(String memberid);
 	
 }

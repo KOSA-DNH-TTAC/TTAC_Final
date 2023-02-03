@@ -1,6 +1,8 @@
 package kr.or.kosa.controller;
 
 import java.security.Principal;
+import java.util.ArrayList;
+import java.util.List;
 
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.http.HttpStatus;
@@ -12,7 +14,9 @@ import org.springframework.web.bind.annotation.RequestMapping;
 import org.springframework.web.bind.annotation.RestController;
 
 import kr.or.kosa.dto.Member;
+import kr.or.kosa.dto.Post;
 import kr.or.kosa.security.User;
+import kr.or.kosa.service.BoardService;
 import kr.or.kosa.service.MemberService;
 
 @RestController
@@ -30,7 +34,7 @@ public class MypageController {
 	
 	//내 정보 조회
 	@GetMapping("/myinfo")
-	public ResponseEntity<Member> myinfo(Principal principal){
+	public ResponseEntity<User> myinfo(){
 //		Member member = null;
 //		String memberid = principal.getName(); 우리가 기존에 쓰는건 이렇게 Principal로 로그인한 사람의 아이디를 받아오고
 //		member = memberservice.getMemberById(memberid);//그 아이디로 DB에 조회작업을 또 하는 거였음
@@ -41,8 +45,9 @@ public class MypageController {
 		//아래처럼 쓰면 DB작업 없이 시큐리티에서 가지고 있는 로그인 유저 정보를 MemberDto처럼 쓸 수 있음
 		//근데 어려우면 걍 세션 쓰거나 DB조회하셈
 		User user = (User) SecurityContextHolder.getContext().getAuthentication().getPrincipal();
-		Member member = memberservice.getMemberById(user.getMemberId());
-		return new ResponseEntity<Member>(member, HttpStatus.OK);
+		System.out.println("내 정보 확인 비동기");
+//		Member member = memberservice.getMemberById(user.getMemberId());
+		return new ResponseEntity<>(user, HttpStatus.OK);
 	}
 	
 	
@@ -53,6 +58,14 @@ public class MypageController {
 	//내 벌점 조회
 	
 	//내 커뮤니티 조회
-	
-	//쪽지함 ???
+	@GetMapping("/myboard")
+	public ResponseEntity<List<Post>> mycommunity(){
+		User user = (User) SecurityContextHolder.getContext().getAuthentication().getPrincipal();
+		
+		List<Post> list = new ArrayList<Post>();
+		list = memberservice.getPostings(user.getMemberId());
+		System.out.println(list);
+		return new ResponseEntity<>(list, HttpStatus.OK);
+	}
+
 }

@@ -48,7 +48,6 @@ public class BoardController_Rest {
 		List<Post> boardContent = new ArrayList<Post>();
 		try {
 			boardContent = boardService.boardContent(boardIdx);
-			System.out.println("RestController: " + boardContent);
 			return new ResponseEntity<List<Post>>(boardContent, HttpStatus.OK);
 		} catch (Exception e) {
 			return new ResponseEntity<List<Post>>(boardContent, HttpStatus.BAD_REQUEST);
