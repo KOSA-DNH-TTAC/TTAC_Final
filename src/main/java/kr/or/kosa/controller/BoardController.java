@@ -13,7 +13,9 @@ import org.springframework.web.bind.annotation.GetMapping;
 import org.springframework.web.bind.annotation.PathVariable;
 import org.springframework.web.bind.annotation.PostMapping;
 import org.springframework.web.bind.annotation.RequestParam;
+import org.springframework.web.multipart.MultipartFile;
 
+import kr.or.kosa.dto.File;
 import kr.or.kosa.dto.Member;
 import kr.or.kosa.dto.Post;
 import kr.or.kosa.service.BoardService;
@@ -54,12 +56,10 @@ public class BoardController {
 		} else if (allBoard.equals("거래게시판")) {
 			viewPage += "productBoardList";
 		}
-
 		return viewPage;
 	}
 
 	// 커스텀 생성 게시판
-
 	@GetMapping("board/{boardName}")
 	public String boardList(Model model, @PathVariable String boardName) {
 
@@ -90,12 +90,50 @@ public class BoardController {
 
 	// 공지사항 글쓰기
 	@PostMapping("/공지사항/noticeWrite")
-	public String noticeWriteOk(Principal principal, Model model, @PathVariable("title") String title,
-			@PathVariable("content") String content) {
-		Member member = null;
-		String memberid = principal.getName();
-		member = memberService.getMemberById(memberid);
-		return "member/board/noticeWrite";
+	public String noticeWriteOk(Principal principal, Model model,MultipartFile file, @PathVariable("title") String title,
+																							 @PathVariable("content") String content) {
+
+		String msg = "";
+		String url = "";
+		int result = 0;
+		
+		
+		if (principal == null) {
+			
+			msg = "세션이 만료되었습니다.";
+			url = "/";
+			
+		} else {
+			
+			Member member = null;
+			String memberid = principal.getName();
+			member = memberService.getMemberById(memberid);
+			
+			String uploadFolder = "D:\\A_TeachingMaterial\\6.JspSpring\\workspace\\springProj2\\src\\main\\webapp\\resources\\upload";
+			File FFF = new File();
+			FFF.getFileName()
+
+			post.setBoardIdx(3);
+			post.setUniversityCode(member.getUniversityCode());
+			post.setMemberId(member.getMemberId());
+			post.setTitle(title);
+			post.setContent(content);
+
+			result = boardService.freeBoardWrite(post);
+
+			if (result < 1) {
+				msg = "글 작성이 실패했습니다.";
+				url = "/자유게시판/freeBoardWrite";
+			} else {
+				msg = "글 작성이 완료되었습니다!";
+				url = "/자유게시판";
+			}
+		}
+		
+		model.addAttribute("msg", msg);
+		model.addAttribute("url", url);
+		
+		return "/common/redirect";
 	}
 
 	// 건의사항 글쓰기
@@ -119,19 +157,23 @@ public class BoardController {
 	// 자유게시판 글쓰기
 	@PostMapping("/자유게시판/freeBoardWrite")
 	public String freeBoardWriteOk(Principal principal, Model model, @RequestParam("title") String title,
-			@RequestParam("content") String content) {
+																	 @RequestParam("content") String content) {
+		
 		String msg = "";
 		String url = "";
 		int result = 0;
-
-		Member member = null;
-		String memberid = principal.getName();
-		member = memberService.getMemberById(memberid);
-
-		if (memberid == null) {
+		
+		
+		if (principal == null) {
+			
 			msg = "세션이 만료되었습니다.";
 			url = "/";
+			
 		} else {
+			
+			Member member = null;
+			String memberid = principal.getName();
+			member = memberService.getMemberById(memberid);
 			Post post = new Post();
 
 			post.setBoardIdx(3);
@@ -149,10 +191,11 @@ public class BoardController {
 				msg = "글 작성이 완료되었습니다!";
 				url = "/자유게시판";
 			}
-
-			model.addAttribute("msg", msg);
-			model.addAttribute("url", url);
 		}
+		
+		model.addAttribute("msg", msg);
+		model.addAttribute("url", url);
+		
 		return "/common/redirect";
 	}
 
