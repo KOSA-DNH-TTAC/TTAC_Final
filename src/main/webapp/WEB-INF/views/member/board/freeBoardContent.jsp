@@ -16,9 +16,7 @@
 					<div class="entry-meta">
 						<ul>
 							<li class="d-flex align-items-center"><i class="bi bi-person"></i><a href="blog-single.html">${freeBoard.memberId}</a></li>
-							<li class="d-flex align-items-center"><i class="bi bi-clock"></i><a href="blog-single.html">${freeBoard.writeDate}</a></li>
-							<li class="d-flex align-items-center"><i class="bi bi-chat-dots"></i> <a href="blog-single.html">아이고!!!!!!!!!!</a></li>
-							<!-- reply.comment 댓글 개수 -->
+							<li class="d-flex align-items-center"><i class="bi bi-clock"></i>${freeBoard.writeDate}</a></li>
 							<li class="d-flex align-items-center"><i class="bi bi-chat-dots" />${freeBoard.likeNum}</li>
 						</ul>
 					</div>

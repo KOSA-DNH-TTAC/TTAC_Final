@@ -59,7 +59,6 @@ public class BoardController {
 		String viewPage = "member/board/" + allBoard;
 
 		List<Post> allBoardList = boardService.allBoardList(param); // 글목록
-		System.out.println("POST: " + allBoardList);
 		model.addAttribute("allBoardList", allBoardList);
 
 		return viewPage;
@@ -68,8 +67,6 @@ public class BoardController {
 	// 커스텀 생성 게시판
 	@GetMapping("board/{boardName}")
 	public String boardList(Model model, @PathVariable String boardName) {
-
-		System.out.println("커스텀 여기 돌아야함. .");
 		
 		List<Post> boardList = boardService.customBoardList(boardName);// 글목록
 		model.addAttribute("boardList", boardList);

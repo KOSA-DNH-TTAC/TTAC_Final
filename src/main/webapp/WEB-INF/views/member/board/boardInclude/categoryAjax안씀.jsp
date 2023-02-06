@@ -61,7 +61,7 @@
 					});
 
 
-				$.ajax(
+				/* $.ajax(
 					{
 						type: "get",
 						url: "categoryList",
@@ -70,8 +70,7 @@
 
 							$(document).on('click', '#boardName', function (e) {
 								e.preventDefault();
-								/* $('#ttac').empty;
-								$('#ttac').append("머임"); */
+								
 								$('#boardList').empty;
 								$('#boardList').append("임준한");
 							})
@@ -81,7 +80,7 @@
 						}
 					}
 				)
-
+ */
 
 				//Json 전용 table 생성
 				function createTable(data) {
