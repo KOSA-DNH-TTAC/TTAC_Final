@@ -12,10 +12,10 @@ public interface BoardDao {
 	public List<Board> categoryList();
 	
 	// 기본 제공 게시판 글 목록
-	public List<Post> allBoardList(String allBoard);
+	public List<Post> allBoardList(String boardIdx);
 	
 	// 커스텀 생성 게시판
-	public List<Post> customBoardList(String boardName);
+	public List<Post> customBoardList(String boardIdx);
 	
 	// 게시글 상세보기
 	public List<Post> boardContent(String idx);

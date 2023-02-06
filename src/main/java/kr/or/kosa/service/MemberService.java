@@ -54,6 +54,7 @@ public class MemberService {
 		MemberDao dao = sqlsession.getMapper(MemberDao.class);
 		List<Post> list = new ArrayList<Post>();
 		list = dao.getPosts(memberid);
+		System.out.println(list);
 		return list;
 	}
 }

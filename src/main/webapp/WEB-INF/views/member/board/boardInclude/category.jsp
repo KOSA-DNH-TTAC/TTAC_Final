@@ -66,21 +66,9 @@
 									var boardName = "";
 										boardName = $(this).attr('seq');
 										
-										location.href= "${pageContext.request.contextPath}/board/" + boardName;
-										
-										console.log("boardName : " + boardName);
+										location.href= "${pageContext.request.contextPath}/board/" + customBoardList;
 								})
-								
-								/* // 기본 제공 게시판 카테고리
-								$(document).on(					
-									"click",
-									".allBoard", function(){
-									var allBoard = "";
-									allBoard = $(this).attr('seq');
-								}) */
-
-						
-				
+									
 
 
 			</script>
@@ -88,10 +76,10 @@
 
 			<div class="sidebar-item categories">
 				<ul>
-					<li><a class="allBoard" seq="공지사항" href='${pageContext.request.contextPath}/공지사항'>공지사항</a></li>
-					<li><a class="allBoard" seq="건의사항" href='${pageContext.request.contextPath}/건의사항'>건의사항</a></li>
-					<li><a class="allBoard" seq="자유게시판" href='${pageContext.request.contextPath}/자유게시판'>자유게시판</a></li>
-					<li><a class="allBoard" seq="거래게시판" href='${pageContext.request.contextPath}/거래게시판'>거래게시판</a></li>
+					<li><a class="allBoard"  href='${pageContext.request.contextPath}/noticeList'>공지사항</a></li>
+					<li><a class="allBoard"  href='${pageContext.request.contextPath}/opinionList'>건의사항</a></li>
+					<li><a class="allBoard"  href='${pageContext.request.contextPath}/freeBoardList'>자유게시판</a></li>
+					<li><a class="allBoard"  href='${pageContext.request.contextPath}/productBoardList'>거래게시판</a></li>
 				</ul>
 				<ul id="list">
 				</ul>
