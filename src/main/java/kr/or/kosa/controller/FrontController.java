@@ -87,15 +87,19 @@ public class FrontController {
 		int result = 0;
 		String msg = "";
 		String url = "";
+		String icon = "";
 		if (result < 1) {
+			icon = "success";
 			msg = "쪽지 전송 성공";
 			url = "/message";
 		} else {
+			icon = "error";
 			msg = "쪽지 보내기 실패";
 			url = "/message/writing";
 		}
 		model.addAttribute("msg", msg);
 		model.addAttribute("url", url);
+		model.addAttribute("icon", icon);
 		return "/common/redirect";
 	}
 	
