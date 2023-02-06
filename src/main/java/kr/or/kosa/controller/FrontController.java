@@ -100,6 +100,9 @@ public class FrontController {
 	public String messageSend(Message message, Model model) {
 		//쪽지 보내기
 		System.out.println(message);
+		
+		String contents = message.getMessageContent().replace("\r\n","<br>");
+		message.setMessageContent(contents);
 		msgservice.sendMsg(message);
 		int result = 0;
 		String msg = "";
