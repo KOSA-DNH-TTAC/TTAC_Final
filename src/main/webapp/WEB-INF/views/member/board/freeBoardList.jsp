@@ -20,22 +20,14 @@
 <link href="resources/assets/img/apple-touch-icon.png" rel="apple-touch-icon">
 
 <!-- Google Fonts -->
-<link
-	href="https://fonts.googleapis.com/css?family=Open+Sans:300,300i,400,400i,600,600i,700,700i|Raleway:300,300i,400,400i,500,500i,600,600i,700,700i|Poppins:300,300i,400,400i,500,500i,600,600i,700,700i"
-	rel="stylesheet">
+<link href="https://fonts.googleapis.com/css?family=Open+Sans:300,300i,400,400i,600,600i,700,700i|Raleway:300,300i,400,400i,500,500i,600,600i,700,700i|Poppins:300,300i,400,400i,500,500i,600,600i,700,700i" rel="stylesheet">
 <!-- Vendor CSS Files -->
-<link href="resources/assets/vendor/animate.css/animate.min.css"
-	rel="stylesheet">
-<link href="resources/assets/vendor/bootstrap/css/bootstrap.min.css"
-	rel="stylesheet">
-<link href="resources/assets/vendor/bootstrap-icons/bootstrap-icons.css"
-	rel="stylesheet">
-<link href="resources/assets/vendor/boxicons/css/boxicons.min.css"
-	rel="stylesheet">
-<link href="resources/assets/vendor/glightbox/css/glightbox.min.css"
-	rel="stylesheet">
-<link href="resources/assets/vendor/swiper/swiper-bundle.min.css"
-	rel="stylesheet">
+<link href="resources/assets/vendor/animate.css/animate.min.css" rel="stylesheet">
+<link href="resources/assets/vendor/bootstrap/css/bootstrap.min.css" rel="stylesheet">
+<link href="resources/assets/vendor/bootstrap-icons/bootstrap-icons.css" rel="stylesheet">
+<link href="resources/assets/vendor/boxicons/css/boxicons.min.css" rel="stylesheet">
+<link href="resources/assets/vendor/glightbox/css/glightbox.min.css" rel="stylesheet">
+<link href="resources/assets/vendor/swiper/swiper-bundle.min.css" rel="stylesheet">
 <link href="/resources/assets/css/yb.css" rel="stylesheet">
 
 <!-- Template Main CSS File -->
@@ -83,19 +75,17 @@
 						<c:forEach items="${allBoardList}" var="freeBoard">
 							<article class="entry">
 
-								<div>
-									<!-- <a onclick='boardContent(event)' id="idx" href='javascript:void(0)'> -->
-									<button class="boardIdxButton" id="freebutton"
-										onclick="boardContent(this); replyContent(this)" name="${freeBoard.idx}">
+								<div class="entry-title">									
+									<a href="/freeBoardList/${freeBoard.idx}">
 										<c:choose>
 											<c:when	test="${freeBoard.title != null && fn:length(freeBoard.title) > 80}">
 															${fn:substring(freeBoard.title,0,80)}...
 											</c:when>
 											<c:otherwise>
-												${freeBoard.title}  ${freeBoard.idx}
+												${freeBoard.title}
 											</c:otherwise>
 										</c:choose>
-									</button>
+									</a>
 								</div>
 
 								<div class="entry-meta">
@@ -242,8 +232,10 @@
  				    + '</h2>'
                     + '<div class="entry-meta">'
                     + '<ul>'
-                    + '<li class="d-flex align-items-center"><i class="bi bi-person"></i><a href="blog-single.html">'
-                    + data.boardContent[0].memberId
+                    + '<li class="d-flex align-items-center"><i class="bi bi-person"></i><a href="blog-single.html" value="'
+                    + data.boardContent[0].memberId 
+                    + '">'
+                    + '익명'
                     + '</a></li>'
                     + '<li class="d-flex align-items-center"><i class="bi bi-clock"></i><a href="blog-single.html">'
                     + data.boardContent[0].writeDate
@@ -261,18 +253,18 @@
                     + '</article>'
                     + '</div>'
                     + '</div>' + '</div>'
-                    + '<b>&nbsp 댓글 수  <i class="bi bi-chat-dots"></i>'
+                    + '<b><i class="bi bi-chat-dots"></i>&nbsp'
                     + data.boardContent[0].replyCount
                     + '</b>'
                     + '<hr>'
- 	                + '<div class="box"><ul style=" list-style-type: none;">'
+ 	                + '<div class="box"><ul class="ybreply" style=" list-style-type: none;">'
                     
                 $.each(data.replyContent, function(index) {
                 boardAndReply +=
  	                
- 	                '<li style="margin-bottom:20px;"><b value="' 
+ 	                '<li class="ybreply2"><b value="' 
  	                + data.replyContent[index].memberId 
- 	                + '">익명</b><br>'
+ 	                + '">익명</b></li><li>'
  	                + data.replyContent[index].replyContent 
  	                + '</li>' + '<hr>'
                     })
@@ -286,7 +278,6 @@
 				})
 
 	}
-	//)
-	//	});
+	
 </script>
 </html>

@@ -85,6 +85,14 @@
           	background-color: #ff7600 !important;
 		        border-color: #ff7600	!important;
           }
+
+          .hjtitle{
+            color : black;
+          }
+          .hjtitle:hover {
+            color: #e96b56;
+            transition: 0.3s;
+          }
         </style>
       </head>
 
@@ -195,9 +203,16 @@
                   if(day < 10){
                     day = "0" + day;
                   }
+                  var title;
 
+                  if((msg.messageTitle).length > 28){
+                    console.log("제목이길다")
+                    title = msg.messageTitle.substr(0, 28) + "..."
+                  }else{
+                    title = msg.messageTitle
+                  }
                   opr += "<tr><td>"+msg.smemberId+
-                  "</td><td style='text-align:left'>"+msg.messageTitle+
+                  "</td><td style='text-align:left'>"+"<a class='hjtitle' href='message/read/" + msg.messageIdx + "'>" +title+ "</a>" +
                   "</td><td>"+ year + "." + month + "." + day +
                   "</td></tr>";
                  
@@ -257,8 +272,17 @@
                     day = "0" + day;
                   }
 
+                  var title;
+
+                  if((msg.messageTitle).length > 28){
+                    console.log("제목이길다")
+                    title = msg.messageTitle.substr(0, 28) + "..."
+                  }else{
+                    title = msg.messageTitle
+                  }
+
                   opr += "<tr><td>"+msg.rmemberId+
-                  "</td><td style='text-align:left'>"+msg.messageTitle+
+                  "</td><td style='text-align:left'>"+"<a class='hjtitle' href='message/read/" + msg.messageIdx + "'>" +title+ "</a>" +
                   "</td><td>"+ year + "." + month + "." + day +
                   "</td></tr>";
                   

@@ -105,3 +105,12 @@ div.wrap {
     overflow: hidden;
     overflow-x: auto;
 }
+
+.ybreply {
+	padding: 0;
+}
+
+.ybreply2 {
+	padding: 0;
+	margin-bottom: 10px;
+}

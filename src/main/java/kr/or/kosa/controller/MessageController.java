@@ -14,6 +14,7 @@ import org.springframework.web.bind.annotation.PathVariable;
 import org.springframework.web.bind.annotation.PostMapping;
 import org.springframework.web.bind.annotation.RequestMapping;
 import org.springframework.web.bind.annotation.RestController;
+import org.springframework.web.servlet.ModelAndView;
 
 import kr.or.kosa.dto.Message;
 import kr.or.kosa.security.CustomUser;
@@ -54,12 +55,23 @@ public class MessageController {
 	
 	//쪽지 하나 조회
 	@GetMapping("/read/{idx}")
-	public ResponseEntity<Message> readMsg(@PathVariable("idx")String idx){
+//	public ResponseEntity<Message> readMsg(@PathVariable("idx")String idx){
+//		int index = Integer.parseInt(idx);
+//		Message msg = service.getMsg(index);
+//		
+//		return new ResponseEntity<Message>(msg, HttpStatus.OK);
+//	     
+//	}
+	public ModelAndView readMsg(@PathVariable("idx")String idx) {
+		ModelAndView mv = new ModelAndView();
+		
 		int index = Integer.parseInt(idx);
 		Message msg = service.getMsg(index);
+		System.out.println(msg);
+		mv.setViewName("member/message/note");
+		mv.addObject("msg", msg);
+		return mv;
 		
-		return new ResponseEntity<Message>(msg, HttpStatus.OK);
-	     
 	}
 	
 	//쪽지 작성

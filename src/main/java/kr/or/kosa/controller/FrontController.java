@@ -12,6 +12,7 @@ import org.springframework.security.core.context.SecurityContextHolder;
 import org.springframework.stereotype.Controller;
 import org.springframework.ui.Model;
 import org.springframework.web.bind.annotation.GetMapping;
+import org.springframework.web.bind.annotation.PathVariable;
 import org.springframework.web.bind.annotation.PostMapping;
 import org.springframework.web.servlet.ModelAndView;
 
@@ -46,35 +47,6 @@ public class FrontController {
 		return "index";
 	}
 	
-	//마이페이지
-	@GetMapping("/mypage")
-	public ModelAndView myPage() {
-		
-		ModelAndView mv = new ModelAndView();
-		//여기서 내 정보 조회까지 작업해서 뷰에 올린다
-//		Member member = null;
-//		String memberid = principal.getName();
-//		member = memberservice.getMemberById(memberid);
-		User member = (User) SecurityContextHolder.getContext().getAuthentication().getPrincipal();
-		mv.setViewName("member/mypage/mypageHome");
-		mv.addObject("member", member);	
-		return mv;
-	}
-	
-	//마이페이지 - 정보수정
-	@GetMapping("/mypage/modify")
-	public String myPageModify() {
-		return "member/mypage/modifyInfo";
-	}
-	
-	//마이페이지 - 정보수정 (제출 시)
-	@PostMapping("/mypage/modify")
-	public String myPageModifySubmit(@AuthenticationPrincipal Member member) {
-		System.out.println("정보수정 제출");
-		return "member/mypage/mypageHome";
-//		return null;
-	}
-	
 	@GetMapping("/community")
 	public String community() {
 		
@@ -101,30 +73,53 @@ public class FrontController {
 		return "member/message/notebox";
 	}
 	
-	
 	@GetMapping("/message/writing")
-	public String messageWriting() {
+	public ModelAndView messageWriting() {
 		//쪽지쓰기 뷰
-		return "member/message/writing";
+		ModelAndView mv = new ModelAndView();
+		mv.setViewName("member/message/writing");
+		mv.addObject("reiceiver", "");
+		
+		return mv;
+	}
+	@GetMapping("/message/writing/{receiver}")
+	public ModelAndView replyMessage(@PathVariable("receiver") String receiver) {
+		//쪽지쓰기 뷰
+		ModelAndView mv = new ModelAndView();
+		mv.setViewName("member/message/writing");
+		if(receiver!=null) {
+			mv.addObject("receiver", receiver);
+		}else {
+			mv.addObject("reiceiver", "");
+		}
+		
+		return mv;
 	}
 	
 	@PostMapping("/message/writing")
 	public String messageSend(Message message, Model model) {
 		//쪽지 보내기
 		System.out.println(message);
+		
+		String contents = message.getMessageContent().replace("\r\n","<br>");
+		message.setMessageContent(contents);
 		msgservice.sendMsg(message);
 		int result = 0;
 		String msg = "";
 		String url = "";
+		String icon = "";
 		if (result < 1) {
+			icon = "success";
 			msg = "쪽지 전송 성공";
 			url = "/message";
 		} else {
+			icon = "error";
 			msg = "쪽지 보내기 실패";
 			url = "/message/writing";
 		}
 		model.addAttribute("msg", msg);
 		model.addAttribute("url", url);
+		model.addAttribute("icon", icon);
 		return "/common/redirect";
 	}
 	

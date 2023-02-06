@@ -1,9 +1,7 @@
 package kr.or.kosa.controller;
 
 import java.util.ArrayList;
-import java.util.HashMap;
 import java.util.List;
-import java.util.Map;
 
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.http.HttpStatus;
@@ -16,6 +14,7 @@ import org.springframework.web.bind.annotation.RequestParam;
 import org.springframework.web.bind.annotation.RestController;
 
 import kr.or.kosa.dto.Board;
+import kr.or.kosa.dto.Reply;
 import kr.or.kosa.service.BoardService;
 
 @RestController
@@ -52,7 +51,7 @@ public class BoardController_Rest {
 			return new ResponseEntity<List<Post>>(boardContent, HttpStatus.BAD_REQUEST);
 		}
 	}
-	*/
+	
 	
 	// 게시판 상세보기
 		@GetMapping("{allBoard}/{boardIdx}")
@@ -70,9 +69,10 @@ public class BoardController_Rest {
 			}
 		}
 	
-	/*
+	*/
+	
 	// 게시판 댓글 보기
-	@GetMapping("{allBoard}/{idx}")
+	@GetMapping("/{allBoard}/{idx}/{idx}")
 	public ResponseEntity<List<Reply>> replyContent(@PathVariable("idx") String idx) {
 		
 		System.out.println("도는겨마는겨");
@@ -87,7 +87,7 @@ public class BoardController_Rest {
 			return new ResponseEntity<List<Reply>>(replyContent, HttpStatus.BAD_REQUEST);
 		}
 	}
-	*/
+	
 
 		// 게시판 상세보기
 		//@GetMapping("/eveningCall/{arr}")

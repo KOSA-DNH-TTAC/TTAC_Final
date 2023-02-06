@@ -53,10 +53,23 @@ PUBLIC "-//mybatis.org//DTD Mapper 3.0//EN"
 	
 	<!-- 특정 회원이 쓴 글들 -->
 	<select id="getPosts" parameterType="String" resultType="kr.or.kosa.dto.Post">
-	SELECT p.idx, p.boardidx, b.boardname, p.memberid, p.universitycode, p.title, p.content,
+	<!-- SELECT p.idx, p.boardidx, b.boardname, p.memberid, p.universitycode, p.title, p.content,
 	p.readnum, p.writedate, p.likenum, p.status
-	FROM POST p LEFT JOIN BOARD b ON p.boardidx = b.boardidx WHERE p.memberid=#{memberid}
+	FROM POST p LEFT JOIN BOARD b ON p.boardidx = b.boardidx WHERE p.memberid=#{memberid}-->
+	SELECT COUNT(replyidx) replyCount, p.idx, p.boardidx, p.universitycode, b.boardname, p.memberid, p.writedate, p.likenum, p.content, p.title
+	FROM POST p LEFT OUTER JOIN BOARD b ON p.boardidx = b.boardidx
+	LEFT OUTER JOIN REPLY r ON p.idx = r.idx
+	WHERE p.memberid = #{memberid}
+	GROUP BY idx
+	ORDER BY p.writedate DESC
 	</select>
+	
+	<!-- 정보 수정 -->
+	<update id="updateMember" parameterType="kr.or.kosa.dto.Member">
+		UPDATE MEMBER
+		SET password=#{password}, phone=#{phone}, parentsPhone=#{parentsPhone}
+		WHERE memberid=#{memberId}
+	</update>
 	
 </mapper>
 

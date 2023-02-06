@@ -86,6 +86,10 @@
             background-color: #ff7600 !important;
             border-color: #ff7600 !important;
           }
+
+          #hjreply{
+            color : #bababa;
+          }
         </style>
       </head>
 
@@ -463,7 +467,7 @@
                   }
 
                   contents += "<tr><td>" + post.boardName +
-                    "</td><td style='text-align:left'>" + post.title +
+                    "</td><td style='text-align:left'>" + post.title + "&nbsp;<span id='hjreply'> <i class='bi-chat-dots'>" + post.replyCount + "</span>" +
                     "</td><td>" + localetime +
                     "</td></tr>";
 
