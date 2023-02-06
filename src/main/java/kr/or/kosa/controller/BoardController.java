@@ -96,12 +96,22 @@ public class BoardController {
 
 	// 공지사항 글쓰기
 	@PostMapping("/noticeList/noticeWrite")
-	public String noticeWriteOk(Principal principal, Model model,MultipartFile file, @PathVariable("title") String title,
-																							 @PathVariable("content") String content) {
+	public String noticeWriteOk(Principal principal, Model model,@RequestParam("file") MultipartFile[] file,
+															 	 @RequestParam("title") String title,
+															     @RequestParam("content") String content) {
 
 		String msg = "";
 		String url = "";
 		int result = 0;
+
+			for(MultipartFile multipartFile : file) {
+				System.out.println("--------------------------------------");
+				System.out.println("Upload File Name : " + multipartFile.getOriginalFilename());
+				System.out.println("Upload File Size : " + multipartFile.getSize());
+			}
+		
+		
+		
 		
 		
 		if (principal == null) {
@@ -159,11 +169,12 @@ public class BoardController {
 		
 		String msg = "";
 		String url = "";
+		String icon = "";
 		int result = 0;
 		
 		
 		if (principal == null) {
-			
+			icon = "warning";
 			msg = "세션이 만료되었습니다.";
 			url = "/";
 			
@@ -183,16 +194,19 @@ public class BoardController {
 			result = boardService.freeBoardWrite(post);
 
 			if (result < 1) {
+				icon = "error";
 				msg = "글 작성이 실패했습니다.";
-				url = "/자유게시판/freeBoardWrite";
+				url = "/freeBoardList/freeBoardWrite";
 			} else {
+				icon = "success";
 				msg = "글 작성이 완료되었습니다!";
-				url = "/자유게시판";
+				url = "/freeBoardList";
 			}
 		}
 		
 		model.addAttribute("msg", msg);
 		model.addAttribute("url", url);
+		model.addAttribute("icon", icon);
 		
 		return "/common/redirect";
 	}
