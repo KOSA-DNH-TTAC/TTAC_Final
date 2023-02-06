@@ -5,6 +5,7 @@ import java.util.List;
 
 import kr.or.kosa.dto.Board;
 import kr.or.kosa.dto.Post;
+import kr.or.kosa.dto.Reply;
 
 public interface BoardDao {
 	
@@ -19,6 +20,9 @@ public interface BoardDao {
 	
 	// 게시글 상세보기
 	public List<Post> boardContent(String idx);
+	
+	// 댓글 목록
+	public List<Reply> replyContent(String idx);
 	
 	// 글 작성(파일첨부 x)
 	public int boardInsert(Post post) throws ClassNotFoundException, SQLException;

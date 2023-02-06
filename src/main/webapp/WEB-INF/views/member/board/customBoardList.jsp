@@ -81,10 +81,8 @@
 
 											<div class="entry-meta">
 												<ul>
-													<li class="d-flex align-items-center"><i class="bi bi-person"></i><a
-															href="blog-single.html">${boardList.memberId}</a></li>
-													<li class="d-flex align-items-center"><i class="bi bi-clock"></i> <a
-															href="blog-single.html">${boardList.writeDate}</a></li>
+													<li class="d-flex align-items-center"><i class="bi bi-person"></i>익명</li>
+													<li class="d-flex align-items-center"><i class="bi bi-clock"></i>${boardList.writeDate}</li>
 													<li class="d-flex align-items-center"><i class="bi-hand-thumbs-up"></i>${boardList.likeNum}</li>
 													<li class="d-flex align-items-center"><i class="bi-chat-dots"></i>${boardList.replyCount}</li>
 												</ul>
