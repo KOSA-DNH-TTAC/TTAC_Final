@@ -11,28 +11,41 @@ SELECT boardidx, boardname FROM BOARD WHERE universitycode='kosa'
 AND boardname NOT IN('공지사항', '건의사항', '자유게시판', '거래게시판')
 </select>
 
-<!-- 학교 코드 포함해서 가져올 수 있게 출력 -->
 <!-- 기본 제공 게시판 글 목록 -->
 <select id="allBoardList" resultType="kr.or.kosa.dto.Post">
-SELECT p.idx, p.boardidx, p.universitycode, b.boardname, p.memberid, p.writedate, p.likenum, p.content, p.title
-FROM POST p JOIN BOARD b ON p.boardidx = b.boardidx
-WHERE b.boardname=#{param}
-ORDER BY p.writedate DESC
+SELECT COUNT(replyidx) replyCount, p.idx, p.boardidx, p.universitycode, b.boardname, p.memberid, p.writedate, p.likenum, p.content, p.title
+FROM POST p LEFT OUTER JOIN BOARD b ON p.boardidx = b.boardidx
+LEFT OUTER JOIN REPLY r ON p.idx = r.idx
+WHERE b.boardname=#{param} and p.universitycode='kosa' AND p.status='21'
+GROUP BY idx
+ORDER BY p.writedate DESC;
 </select>
 
 <!-- 새 게시판 글 목록 -->
-<select id="customBoardList" parameterType="int" resultType="kr.or.kosa.dto.Post">
-SELECT p.boardidx, p.universitycode, b.boardname, p.memberid, p.writedate, p.likenum, p.content, p.title
-FROM POST p JOIN BOARD b ON p.boardidx = b.boardidx
-WHERE b.boardidx=#{boardidx} and p.universitycode='kosa'
-ORDER BY p.writedate DESC
+<select id="customBoardList" resultType="kr.or.kosa.dto.Post">
+SELECT COUNT(replyidx) replyCount, p.idx, p.boardidx, p.universitycode, b.boardname, p.memberid, p.writedate, p.likenum, p.content, p.title
+FROM POST p LEFT OUTER JOIN BOARD b ON p.boardidx = b.boardidx
+LEFT OUTER JOIN REPLY r ON p.idx = r.idx
+WHERE b.boardname=#{param} and p.universitycode='kosa' AND p.status='21'
+GROUP BY idx
+ORDER BY p.writedate DESC;
 </select>
 
 <!-- 게시글 상세보기 -->
 <select id="boardContent" parameterType="String" resultType="kr.or.kosa.dto.Post">
-SELECT p.idx, p.boardIdx, p.universitycode, b.boardname, p.memberid, p.writedate, p.likenum, p.content, p.title
-FROM POST p JOIN BOARD b ON p.BOARDIDX = b.BOARDIDX
+SELECT count(replyidx) replyCount, p.universitycode, b.boardname, p.memberid, p.writedate, p.likenum, p.content, p.title
+FROM POST p LEFT OUTER JOIN BOARD b ON p.BOARDIDX = b.BOARDIDX
+LEFT OUTER JOIN REPLY r ON p.IDX = r. IDX
 WHERE p.IDX=#{idx}
+</select>
+
+<!-- 댓글 목록 -->
+<select id="replyContent" parameterType="String" resultType="kr.or.kosa.dto.Reply">
+SELECT replyidx, parentreplyidx, idx, memberid, replycontent, replydate FROM REPLY
+WHERE idx=#{idx} AND STATUS='21'
+ORDER BY replydate ASC;
+
+
 </select>
 
 <!-- 글 작성 (파일첨부 x) -->

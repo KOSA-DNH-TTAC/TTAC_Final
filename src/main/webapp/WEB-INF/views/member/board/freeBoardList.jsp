@@ -86,7 +86,7 @@
 								<div>
 									<!-- <a onclick='boardContent(event)' id="idx" href='javascript:void(0)'> -->
 									<button class="boardIdxButton" id="freebutton"
-										onclick="boardContent(this)" name="${freeBoard.idx}">
+										onclick="boardContent(this); replyContent(this)" name="${freeBoard.idx}">
 										<c:choose>
 											<c:when	test="${freeBoard.title != null && fn:length(freeBoard.title) > 80}">
 															${fn:substring(freeBoard.title,0,80)}...
@@ -100,21 +100,22 @@
 
 								<div class="entry-meta">
 									<ul>
-										<li class="d-flex align-items-center"><i
-											class="bi bi-person"></i><a href="blog-single.html">${freeBoard.memberId}</a></li>
-										<li class="d-flex align-items-center"><i
-											class="bi bi-clock"></i> <a href="blog-single.html">${freeBoard.writeDate}</a></li>
-										<li class="d-flex align-items-center"><i
-											class="bi-hand-thumbs-up"></i>${freeBoard.likeNum}</li>
+										<li class="d-flex align-items-center"><i class="bi bi-person"></i>익명</li>
+										<li class="d-flex align-items-center"><i class="bi bi-clock"></i>${freeBoard.writeDate}</a></li>
+										<li class="d-flex align-items-center"><i class="bi-hand-thumbs-up"></i>${freeBoard.likeNum}</li>
+										<li class="d-flex align-items-center"><i class="bi-chat-dots"></i>${freeBoard.replyCount}</li>
 									</ul>
 								</div>
 
 								<div class="entry-content">
 									<p>${freeBoard.content}</p>
 								</div>
-
 							</article>
 							<!-- End blog entry -->
+							
+							<!-- reply -->
+							<div id="replyDiv">
+							</div>
 
 						</c:forEach>
 
@@ -220,61 +221,70 @@
 
 </body>
 <script type="text/javascript">
-	//	$(document).ready(function () {
-
-	// 게시글 ajax
-	//$(document).on(
-	/* 		"click",
-			".entry-title", function(){
-		console.log(allBoard), */
+	
 	function boardContent(dd) {
 		var test = $(dd);
-		console.log(dd);
-		//console.log(event.target)
 		var boardIdx = $(dd).attr('name');
-		console.log(boardIdx);
 
-		$
-				.ajax({
-					type : "get",
-					url : '${allBoard}' + '/' + boardIdx,
-					contentType : "application/json; charset=utf-8",
-					success : function(data) {
-						$('#contentsDiv').empty();
-						$('#contentsDiv')
-								.append( '<div class="container" data-aos="fade-up"><div class="row"><div class="col-lg-12 entries"><article class="entry"><h2 class="entry-title">'
-	                                    + '<a href="blog-single.html">'
-	                                    + data[0].title
-	                                    + '</a>'
-	                                    + '</h2>'
-	                                    +
-
-	                                    '<div class="entry-meta">'
-	                                    + '<ul>'
-	                                    + '<li class="d-flex align-items-center"><i class="bi bi-person"></i><a href="blog-single.html">'
-	                                    + data[0].memberId
-	                                    + '</a></li>'
-	                                    + '<li class="d-flex align-items-center"><i class="bi bi-clock"></i><a href="blog-single.html">'
-	                                    + data[0].writeDate
-	                                    + '</a></li>'
-	                                    + '<li class="d-flex align-items-center"><i class="bi-hand-thumbs-up"></i>'
-	                                    + data[0].likeNum
-	                                    + '</li>'
-	                                    + '</ul>'
-	                                    + '</div>'
-	                                    + '<div class="entry-content" style="margin-bottom:50px;">'
-	                                    + '<p style="margin-top: 40px;">'
-	                                    + data[0].content
-	                                    + '</p>'
-	                                    + '</div>'
-	                                    + '</article>'
-	                                    + '</div>'
-	                                    + '</div>' + '</div>'+
-	                                    '<b>&nbsp 댓글 수  <i class="bi bi-chat-dots"></i> 482</b>'+
-	                                    '<hr>'+
-	                                    '<div class="box"><ul><li><b>박예빈</b> <br> 정말 좋은 글인걸요? 잘 읽었습니다^^</li></ul></div>');
+		$.ajax({
+			type : "get",
+			url : '${allBoard}' + '/' + boardIdx,
+			contentType : "application/json; charset=utf-8",
+			success : function(data) {
+				console.log(data);
+				var boardAndReply = "";
+				$('#contentsDiv').empty();
+				boardAndReply += 
+					'<div class="container" data-aos="fade-up"><div class="row"><div class="col-lg-12 entries"><article class="entry"><h2 class="entry-title">'
+                    + '<a href="blog-single.html">'
+                    + data.boardContent[0].title
+                    + '</a>'
+ 				    + '</h2>'
+                    + '<div class="entry-meta">'
+                    + '<ul>'
+                    + '<li class="d-flex align-items-center"><i class="bi bi-person"></i><a href="blog-single.html">'
+                    + data.boardContent[0].memberId
+                    + '</a></li>'
+                    + '<li class="d-flex align-items-center"><i class="bi bi-clock"></i><a href="blog-single.html">'
+                    + data.boardContent[0].writeDate
+                    + '</a></li>'
+                    + '<li class="d-flex align-items-center"><i class="bi-hand-thumbs-up"></i>'
+                    + data.boardContent[0].likeNum
+                    + '</li>'
+                    + '</ul>'
+                    + '</div>'
+                    + '<div class="entry-content" style="margin-bottom:50px;">'
+                    + '<p style="margin-top: 40px;">'
+                    + data.boardContent[0].content
+                    + '</p>'
+                    + '</div>'
+                    + '</article>'
+                    + '</div>'
+                    + '</div>' + '</div>'
+                    + '<b><i class="bi bi-chat-dots"></i>&nbsp'
+                    + data.boardContent[0].replyCount
+                    + '</b>'
+                    + '<hr>'
+ 	                + '<div class="box"><ul class="ybreply" style=" list-style-type: none;">'
+                    
+                $.each(data.replyContent, function(index) {
+                boardAndReply +=
+ 	                
+ 	                '<li class="ybreply2"><b value="' 
+ 	                + data.replyContent[index].memberId 
+ 	                + '">익명</b></li><li>'
+ 	                + data.replyContent[index].replyContent 
+ 	                + '</li>' + '<hr>'
+                    })
+                
+                boardAndReply += '<li><textarea class="form-control" name="messageContent" placeholder="댓글을 입력하세요." id="exampleFormControlTextarea1"></textarea></li>'
+ 	                + '</ul></div>'
+                
+				$('#contentsDiv')
+					.append(boardAndReply);
 					}
 				})
+
 	}
 	//)
 	//	});
