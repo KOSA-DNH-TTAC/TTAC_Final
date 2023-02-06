@@ -16,7 +16,7 @@ AND boardname NOT IN('공지사항', '건의사항', '자유게시판', '거래�
 <select id="allBoardList" resultType="kr.or.kosa.dto.Post">
 SELECT p.idx, p.boardidx, p.universitycode, b.boardname, p.memberid, p.writedate, p.likenum, p.content, p.title
 FROM POST p JOIN BOARD b ON p.boardidx = b.boardidx
-WHERE b.boardidx=#{allBoardIdx}
+WHERE b.boardname=#{param}
 ORDER BY p.writedate DESC
 </select>
 
