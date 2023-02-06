@@ -44,8 +44,6 @@ WHERE p.IDX=#{idx}
 SELECT replyidx, parentreplyidx, idx, memberid, replycontent, replydate FROM REPLY
 WHERE idx=#{idx} AND STATUS='21'
 ORDER BY replydate ASC;
-
-
 </select>
 
 <!-- 글 작성 (파일첨부 x) -->

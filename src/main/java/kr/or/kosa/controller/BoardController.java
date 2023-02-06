@@ -58,7 +58,7 @@ public class BoardController {
 
 		String viewPage = "member/board/" + allBoard;
 
-		List<Post> allBoardList = boardService.allBoardList(param); // 글목록
+		List<Post> allBoardList = boardService.allBoardList(param);
 		model.addAttribute("allBoardList", allBoardList);
 
 		return viewPage;
@@ -67,15 +67,28 @@ public class BoardController {
 	// 커스텀 생성 게시판
 	@GetMapping("board/{boardName}")
 	public String boardList(Model model, @PathVariable String boardName) {
-		
-		List<Post> boardList = boardService.customBoardList(boardName);// 글목록
+		List<Post> boardList = boardService.customBoardList(boardName);
 		model.addAttribute("boardList", boardList);
 		model.addAttribute("boardName", boardName);
 
 		return "member/board/customBoardList";
 	}
+	
+	// 게시글 보기
+	@GetMapping("/{boardName}/{idx}")
+	public String boardContent(Model model, 
+			@PathVariable("idx") String idx, @PathVariable("boardName") String boardName) {
+		List<Post> boardContent = boardService.boardContent(idx);
+		model.addAttribute("boardContent", boardContent);
+		
+		String viewPage = "member/board/" + boardName;
+		return viewPage;
+	}
 
-	// 게시판 글쓰기 이것도 게시판마다 달라야함
+	
+	
+	
+	// 게시판 글쓰기
 
 	@GetMapping("/{boardName}/boardWrite")
 	public String BoardWrite() {
