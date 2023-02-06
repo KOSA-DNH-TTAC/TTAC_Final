@@ -64,9 +64,11 @@ public class BoardController {
 	}
 
 	// 커스텀 생성 게시판
-	@GetMapping("board/customBoardList")
+	@GetMapping("board/{boardName}")
 	public String boardList(Model model, @PathVariable String boardName) {
 
+		System.out.println("커스텀 여기 돌아야함. .");
+		
 		List<Post> boardList = boardService.customBoardList(boardName);// 글목록
 		model.addAttribute("boardList", boardList);
 		model.addAttribute("boardName", boardName);

@@ -16,4 +16,5 @@ public class Post {
 	private String writeDate;
 	private int likeNum;
 	private int status;
+	private int replyCount;
 }
