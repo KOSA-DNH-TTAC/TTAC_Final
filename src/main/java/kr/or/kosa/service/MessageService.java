@@ -52,7 +52,7 @@ public class MessageService {
 	//쪽지 쓰기
 	public int sendMsg(Message msg) {
 		User user = (User) SecurityContextHolder.getContext().getAuthentication().getPrincipal();
-		msg.setSMemberId(user.getMemberId());
+		msg.setSmemberId(user.getMemberId());
 		System.out.println(msg);
 		MessageDao dao = sqlsession.getMapper(MessageDao.class);
 		int result = 0;
