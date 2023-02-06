@@ -130,7 +130,7 @@
 
 						<div class="d-grid gap-2 d-md-flex justify-content-md-end">
 							<button type="submit"
-								onclick="location.href='/자유게시판/freeBoardWrite'"
+								onclick="location.href='/freeBoardList/freeBoardWrite'"
 								style="width: 130px; height: 20; border-radius: 50px; padding: 5px; border: none; background-color: #E96B56; color: white; margin-top: 10px; font-size: large;">글쓰기</button>
 						</div>
 
@@ -274,7 +274,9 @@
 	                                    + '</div>' + '</div>'+
 	                                    '<b>&nbsp 댓글 수  <i class="bi bi-chat-dots"></i> 482</b>'+
 	                                    '<hr>'+
-	                                    '<div class="box"><ul><li><b>박예빈</b> <br> 정말 좋은 글인걸요? 잘 읽었습니다^^</li></ul></div>');
+	                                    '<div class="box"><ul style=" list-style-type: none;"><li style="margin-bottom:20px;"><b>박예빈</b> <br> 정말 좋은 글인걸요? 잘 읽었습니다^^</li>'+
+	                                    '<li><textarea class="form-control" name="messageContent" placeholder="댓글을 입력하세요." id="exampleFormControlTextarea1"></textarea></li>'+
+	                                    '</ul></div>');
 					}
 				})
 	}

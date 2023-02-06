@@ -71,15 +71,15 @@
           <div class="col-lg-12 entries">
 
             <article class="entry">
-				<form action="#" method="POST" enctype="form-data">
+				<form action="#" method="POST" enctype="multipart/form-data">
 					<div class="mb-3">
 					  <label for="title" class="form-label">게시글 제목</label>
 					  <input type="text" class="form-control" id="title" placeholder="제목을 작성해주세요." autofocus required>
 					</div>
 					
 					<div class="mb-3">
-					<label for="getfile" class="form-label">파일</label>
-					<input type="file" class="form-control" accept="image/board/*" id="getfile" name="filename1">
+					<label for="file" class="form-label">파일</label>
+					<input type="file" class="form-control" id="file" name="file">
 					</div>
 					
 					<div class="mb-3">
@@ -94,11 +94,6 @@
                     
                     
                     	
-                  		<!-- 숨길 데이터들 -->
-	                    <input name="refer" value="${refer}" type="hidden" />
-	              		<input name="b_code" value="${b_code}" type="hidden" />
-	              		<input name="depth" value="${depth}" type="hidden" />
-	              		<input name="step" value="${step}" type="hidden" />
 				</form>
             </article><!-- End blog entry -->
 
