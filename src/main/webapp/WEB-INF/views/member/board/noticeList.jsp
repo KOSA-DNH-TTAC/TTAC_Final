@@ -79,11 +79,8 @@
 
 											<div class="entry-meta">
 												<ul>
-													<li class="d-flex align-items-center"><i class="bi bi-person"></i><a
-															href="blog-single.html">${notice.memberId}</a></li>
-													<li class="d-flex align-items-center"><i class="bi bi-clock"></i> <a
-															href="blog-single.html">${notice.writeDate}</a></li>
-													<li class="d-flex align-items-center"><i class="bi-hand-thumbs-up"></i>${notice.likeNum}</li>
+													<li class="d-flex align-items-center"><i class="bi bi-person"></i>관리자</a></li>
+													<li class="d-flex align-items-center"><i class="bi bi-clock"></i>${notice.writeDate}</a></li>
 												</ul>
 											</div>
 
@@ -104,7 +101,7 @@
 										</ul>
 									</div>
 									<div class="d-grid gap-2 d-md-flex justify-content-md-end">
-									  <button type="submit" onclick="location.href='/공지사항/noticeWrite'" style="width:130px; height:20; border-radius: 50px; padding:5px; border: none; background-color:#E96B56; color:white; margin-top:10px; font-size: large;">글쓰기</button>
+									  <button type="submit" onclick="location.href='/noticeList/noticeWrite'" style="width:130px; height:20; border-radius: 50px; padding:5px; border: none; background-color:#E96B56; color:white; margin-top:10px; font-size: large;">글쓰기</button>
 									</div>
 
 									<div>
