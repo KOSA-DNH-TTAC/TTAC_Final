@@ -30,11 +30,12 @@
 
   <!-- Template Main CSS File -->
   <link href="resources/assets/css/style.css" rel="stylesheet">
+  <script src="http://code.jquery.com/jquery-1.9.1.js"></script>
   <script type="text/javascript" src="//dapi.kakao.com/v2/maps/sdk.js?appkey=ae20ffc78d270b6473f02625716b04d5"></script>
   <script src="resources/assets/js/eveningCallMap.js"></script>
   <script>
-	/*  function mySpaceReport(){
-		//페이지 로드 시 비동기 함수 호출
+	  function mySpaceReport(){
+		//버튼 클릭시 함수 실행
 			$.ajax(
 				{
 					 cache : false,
@@ -51,7 +52,7 @@
 							console.log(error);
 			            }
 			        }); // $.ajax 
-	 }	   */
+	 }	   
   </script>
 </head>
 
@@ -86,8 +87,8 @@
             <div class="info-box mb-4">
               <i class="bx bx-map"></i>
               <h3>나의 현재위치</h3>
-              <p>서울시 종로구 대학로</p>
-              	<div><button type="submit" onclick="mySpaceReport()"; style="width:130px; height:20; border-radius: 50px; padding:5px; border: none; background-color:#E96B56; color:white; margin-top:10px; font-size: large;">점호하기</button></div>
+              <p id="location"></p>
+              	<div><button id="report" onclick="mySpaceReport()"; style="width:130px; height:20; border-radius: 50px; padding:5px; border: none; background-color:#E96B56; color:white; margin-top:10px; font-size: large;">점호하기</button></div>
             </div>
           </div>
         </div>

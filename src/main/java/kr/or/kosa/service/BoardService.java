@@ -11,6 +11,7 @@ import org.springframework.stereotype.Service;
 
 import kr.or.kosa.dao.BoardDao;
 import kr.or.kosa.dto.Board;
+import kr.or.kosa.dto.Domitory;
 import kr.or.kosa.dto.Post;
 import kr.or.kosa.dto.Reply;
 
@@ -108,6 +109,27 @@ public class BoardService {
 		}
 
 		return result;
+	}
+	
+	// 점호 위치값 비교하기
+	public String eveningCall(double lat, double lon) {
+		BoardDao boardDao = sqlSession.getMapper(BoardDao.class);
+		System.out.println("서비스 옴?");
+		Domitory domitory = boardDao.eveningCall(lat, lon);
+		System.out.println("replyContent: " + domitory);
+		double domitoryLat = domitory.getDomitoryLatitude();
+		double domitoryLon = domitory.getDomitoryLogitude();
+		
+		String alert = "SUCCESS";
+		if(!((domitoryLat - lat)<0.005)) {
+			alert = "FAIL";
+		}
+		if(!((domitoryLon - lon)<0.005)) {
+			alert = "FAIL";
+		}
+		
+		
+		return alert;
 	}
 
 }
