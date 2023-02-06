@@ -14,7 +14,6 @@ import org.springframework.web.bind.annotation.RequestMapping;
 import org.springframework.web.bind.annotation.RestController;
 
 import kr.or.kosa.dto.Board;
-import kr.or.kosa.dto.Post;
 import kr.or.kosa.service.BoardService;
 
 @RestController
@@ -38,20 +37,6 @@ public class BoardController_Rest {
 			return new ResponseEntity<List<Board>>(categoryList, HttpStatus.BAD_REQUEST);
 		}
 	}
-
-	/*
-	// 게시판 상세보기
-	@GetMapping("{allBoard}/{boardIdx}")
-	public ResponseEntity<List<Post>> boardContent(@PathVariable("boardIdx") String boardIdx) {
-		List<Post> boardContent = new ArrayList<Post>();
-		try {
-			boardContent = boardService.boardContent(boardIdx);
-			return new ResponseEntity<List<Post>>(boardContent, HttpStatus.OK);
-		} catch (Exception e) {
-			return new ResponseEntity<List<Post>>(boardContent, HttpStatus.BAD_REQUEST);
-		}
-	}
-	*/
 	
 	// 게시판 상세보기
 		@GetMapping("{allBoard}/{boardIdx}")
@@ -68,24 +53,5 @@ public class BoardController_Rest {
 				return new ResponseEntity<>(map, HttpStatus.BAD_REQUEST);
 			}
 		}
-	
-	/*
-	// 게시판 댓글 보기
-	@GetMapping("{allBoard}/{idx}")
-	public ResponseEntity<List<Reply>> replyContent(@PathVariable("idx") String idx) {
-		
-		System.out.println("도는겨마는겨");
-		
-		List<Reply> replyContent = new ArrayList<Reply>();
-		try {
-			System.out.println("asdf");
-			replyContent = boardService.replyContent(idx);
-			System.out.println("replyContent: " + replyContent);
-			return new ResponseEntity<List<Reply>>(replyContent, HttpStatus.OK);
-		} catch (Exception e) {
-			return new ResponseEntity<List<Reply>>(replyContent, HttpStatus.BAD_REQUEST);
-		}
-	}
-	*/
 
 }
