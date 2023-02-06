@@ -1,0 +1,22 @@
+<?xml version="1.0" encoding="UTF-8" ?>
+<!DOCTYPE mapper
+PUBLIC "-//mybatis.org//DTD Mapper 3.0//EN"
+"http://mybatis.org/dtd/mybatis-3-mapper.dtd">
+
+<mapper namespace="kr.or.kosa.dao.PaymentHistoryDao">
+		 
+
+	<!-- insertPayment(결제 생성) -->
+	<insert id="insertPayment" parameterType="kr.or.kosa.dto.Message">
+		INSERT INTO PAYMENTHISTORY(MEMBERID, PAYDATE, PAYAMOUNT, PAYKINDS)
+		VALUES(#{memberId},now(),#{payAmount},#{payKinds})
+		
+	</insert>
+	<!-- getAllPaymentHistory(전체 조회) -->
+	<select id="getReceivedMessage" parameterType="string" resultType="kr.or.kosa.dto.Message">             
+	  SELECT MESSAGEIDX, sMEMBERID, rMEMBERID, MESSAGETITLE, MESSAGECONTENT, MESSAGEDATE,
+	  STATUS FROM MESSAGE WHERE rMEMBERID = #{memberid} ORDER BY messagedate desc
+	</select>
+
+	
+</mapper>
