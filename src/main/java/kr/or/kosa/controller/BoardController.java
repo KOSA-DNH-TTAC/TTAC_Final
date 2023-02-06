@@ -89,13 +89,13 @@ public class BoardController {
 	}
 
 	// 공지사항 글쓰기
-	@GetMapping("/공지사항/noticeWrite")
+	@GetMapping("/noticeList/noticeWrite")
 	public String noticeWrite() {
 		return "member/board/noticeWrite";
 	}
 
 	// 공지사항 글쓰기
-	@PostMapping("/공지사항/noticeWrite")
+	@PostMapping("/noticeList/noticeWrite")
 	public String noticeWriteOk(Principal principal, Model model,MultipartFile file, @PathVariable("title") String title,
 																							 @PathVariable("content") String content) {
 
@@ -117,15 +117,7 @@ public class BoardController {
 			
 			String uploadFolder = "D:\\A_TeachingMaterial\\6.JspSpring\\workspace\\springProj2\\src\\main\\webapp\\resources\\upload";
 			File FFF = new File();
-			FFF.getFileName()
-
-			post.setBoardIdx(3);
-			post.setUniversityCode(member.getUniversityCode());
-			post.setMemberId(member.getMemberId());
-			post.setTitle(title);
-			post.setContent(content);
-
-			result = boardService.freeBoardWrite(post);
+		
 
 			if (result < 1) {
 				msg = "글 작성이 실패했습니다.";
@@ -143,25 +135,25 @@ public class BoardController {
 	}
 
 	// 건의사항 글쓰기
-	@GetMapping("/건의사항/opinionWrite")
+	@GetMapping("/opinionList/opinionWrite")
 	public String opinionWrite() {
 		return "member/board/opinionWrite";
 	}
 
 	// 건의사항 글쓰기
-	@PostMapping("/건의사항/opinionWrite")
+	@PostMapping("/opinionList/opinionWrite")
 	public String opinionWriteOk() {
 		return "member/board/opinionWrite";
 	}
 
 	// 자유게시판 글쓰기
-	@GetMapping("/자유게시판/freeBoardWrite")
+	@GetMapping("/freeBoardList/freeBoardWrite")
 	public String freeBoardWrite() {
 		return "member/board/freeBoardWrite";
 	}
 
 	// 자유게시판 글쓰기
-	@PostMapping("/자유게시판/freeBoardWrite")
+	@PostMapping("/freeBoardList/freeBoardWrite")
 	public String freeBoardWriteOk(Principal principal, Model model, @RequestParam("title") String title,
 																	 @RequestParam("content") String content) {
 		
