@@ -10,6 +10,7 @@ import org.springframework.http.ResponseEntity;
 import org.springframework.security.core.context.SecurityContextHolder;
 import org.springframework.web.bind.annotation.GetMapping;
 import org.springframework.web.bind.annotation.PathVariable;
+import org.springframework.web.bind.annotation.PostMapping;
 import org.springframework.web.bind.annotation.RequestMapping;
 import org.springframework.web.bind.annotation.RestController;
 
@@ -21,7 +22,7 @@ import kr.or.kosa.service.MemberService;
 
 @RestController
 @RequestMapping("/mypage")
-public class MypageController {
+public class MypageController_Rest {
 	
 	private MemberService memberservice;
 	
@@ -44,14 +45,26 @@ public class MypageController {
 		//그래서 앞으로 시큐리티를 쓰는 부분(로그인한 사람의 정보를 가져오는 곳)에서는
 		//아래처럼 쓰면 DB작업 없이 시큐리티에서 가지고 있는 로그인 유저 정보를 MemberDto처럼 쓸 수 있음
 		//근데 어려우면 걍 세션 쓰거나 DB조회하셈
+		
+		
+		
+
+//		맵.put("result","success")
+//		맵.put("result","loginerror")
+		//맵.put("data",user)
+		/*
+		{
+			result : "success",
+			data : {userdto }
+		}
+		*/
+		
 		User user = (User) SecurityContextHolder.getContext().getAuthentication().getPrincipal();
-		System.out.println("내 정보 확인 비동기");
-//		Member member = memberservice.getMemberById(user.getMemberId());
 		return new ResponseEntity<>(user, HttpStatus.OK);
 	}
 	
 	
-	//내 정보 수정
+	//내 정보 수정(POST)
 	
 	//내 외박 내역 조회
 	

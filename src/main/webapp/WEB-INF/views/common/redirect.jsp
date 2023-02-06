@@ -12,6 +12,7 @@
 <%
   String msg = (String)request.getAttribute("msg");
   String url = (String)request.getAttribute("url");
+  String icon = (String)request.getAttribute("icon");
   
   if(msg != null && url != null){
 %>
@@ -19,7 +20,7 @@
 	Swal.fire({
 			title: '알림',
 			text: '<%= msg %>',
-			icon: 'info'}).then(function(){
+			icon: '<%=icon%>'}).then(function(){
 		location.href='<%=url%>';
 	});
 	

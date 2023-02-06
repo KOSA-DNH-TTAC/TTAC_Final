@@ -2,6 +2,7 @@ package kr.or.kosa.dto;
 
 import java.util.List;
 
+import kr.or.kosa.security.User;
 import lombok.Data;
 
 @Data
@@ -24,5 +25,26 @@ public class Member {
 	
 	// resultMap을 이용...(memberauth테이블의 값 가져와서 넣어야함)
 	private List<MemberAuth> authList;
+	
+	public Member(User user) {
+		universityCode = user.getUniversityCode();
+		memberId = user.getMemberId();
+		password = user.getPassword();
+		name = user.getUsername();
+		major = user.getMajor();
+		email = user.getEmail();
+		gender = user.getGender();
+		phone = user.getPhone();
+		parentsPhone = user.getParentsPhone();
+		room = user.getRoom();
+		memberPoint = user.getMemberPoint();
+		demerit = user.getDemerit();
+		status = user.getStatus();
+		enabled = user.getEnabled();
+		authList = user.getAuthList();
+	}
+	
+	public Member() {
+	}
 	
 }

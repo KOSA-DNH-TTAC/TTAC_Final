@@ -46,35 +46,6 @@ public class FrontController {
 		return "index";
 	}
 	
-	//마이페이지
-	@GetMapping("/mypage")
-	public ModelAndView myPage() {
-		
-		ModelAndView mv = new ModelAndView();
-		//여기서 내 정보 조회까지 작업해서 뷰에 올린다
-//		Member member = null;
-//		String memberid = principal.getName();
-//		member = memberservice.getMemberById(memberid);
-		User member = (User) SecurityContextHolder.getContext().getAuthentication().getPrincipal();
-		mv.setViewName("member/mypage/mypageHome");
-		mv.addObject("member", member);	
-		return mv;
-	}
-	
-	//마이페이지 - 정보수정
-	@GetMapping("/mypage/modify")
-	public String myPageModify() {
-		return "member/mypage/modifyInfo";
-	}
-	
-	//마이페이지 - 정보수정 (제출 시)
-	@PostMapping("/mypage/modify")
-	public String myPageModifySubmit(@AuthenticationPrincipal Member member) {
-		System.out.println("정보수정 제출");
-		return "member/mypage/mypageHome";
-//		return null;
-	}
-	
 	@GetMapping("/community")
 	public String community() {
 		
@@ -116,15 +87,19 @@ public class FrontController {
 		int result = 0;
 		String msg = "";
 		String url = "";
+		String icon = "";
 		if (result < 1) {
+			icon = "success";
 			msg = "쪽지 전송 성공";
 			url = "/message";
 		} else {
+			icon = "error";
 			msg = "쪽지 보내기 실패";
 			url = "/message/writing";
 		}
 		model.addAttribute("msg", msg);
 		model.addAttribute("url", url);
+		model.addAttribute("icon", icon);
 		return "/common/redirect";
 	}
 	

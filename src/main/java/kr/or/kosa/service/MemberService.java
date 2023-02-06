@@ -5,6 +5,7 @@ import java.util.List;
 
 import org.apache.ibatis.session.SqlSession;
 import org.springframework.beans.factory.annotation.Autowired;
+import org.springframework.security.crypto.bcrypt.BCryptPasswordEncoder;
 import org.springframework.stereotype.Service;
 
 import kr.or.kosa.dao.MemberDao;
@@ -20,7 +21,10 @@ public class MemberService {
 	public void setSqlsession(SqlSession sqlsession) {
 	   this.sqlsession = sqlsession;
 	}
-	
+	//암호화
+	@Autowired
+	private BCryptPasswordEncoder bCryptPasswordEncoder;
+  
 	
 	//전체회원조회
 	public List<Member> getAllMember(String universitycode){
@@ -56,5 +60,17 @@ public class MemberService {
 		list = dao.getPosts(memberid);
 		System.out.println(list);
 		return list;
+	}
+	
+	//정보수정
+	public int editMember(Member member) {
+		String rawpwd = member.getPassword();
+		String encodedpwd = bCryptPasswordEncoder.encode(rawpwd);
+		member.setPassword(encodedpwd);
+		System.out.println("서비스에서 암호화 후 : " + member);
+		MemberDao dao = sqlsession.getMapper(MemberDao.class);
+		int result = 0;
+		result = dao.updateMember(member);
+		return result;
 	}
 }
