@@ -4,6 +4,7 @@ import java.sql.SQLException;
 import java.util.List;
 
 import kr.or.kosa.dto.Board;
+import kr.or.kosa.dto.Domitory;
 import kr.or.kosa.dto.Post;
 import kr.or.kosa.dto.Reply;
 
@@ -26,4 +27,7 @@ public interface BoardDao {
 	
 	// 글 작성(파일첨부 x)
 	public int boardInsert(Post post) throws ClassNotFoundException, SQLException;
+	
+	//점호하기
+	public Domitory eveningCall(double lat, double lon);
 }

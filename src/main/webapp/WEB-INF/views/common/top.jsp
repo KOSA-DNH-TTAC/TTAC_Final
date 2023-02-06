@@ -32,6 +32,7 @@
               <li><a href="#">마이 포인트 : 100p</a></li>
               <li><a href="/message">쪽지함</a></li>
               <li><a href="#">내 식권보기</a></li>
+              <li><a href="/eveningCall"><b style="color:black">점호하기</b></a></li> <!-- #E96B56 -->
               <li><a href="/userlogin">로그인</a></li>
             </ul>
           </li>
