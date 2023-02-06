@@ -66,10 +66,11 @@ public class BoardController_Rest {
 				return new ResponseEntity<>(map, HttpStatus.BAD_REQUEST);
 			}
 		}
+	
 	*/
 	
 	// 게시판 댓글 보기
-	@GetMapping("/{allBoard}/{idx}")
+	@GetMapping("/{allBoard}/{idx}/{idx}")
 	public ResponseEntity<List<Reply>> replyContent(@PathVariable("idx") String idx) {
 		
 		System.out.println("도는겨마는겨");

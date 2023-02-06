@@ -20,22 +20,14 @@
 <link href="resources/assets/img/apple-touch-icon.png" rel="apple-touch-icon">
 
 <!-- Google Fonts -->
-<link
-	href="https://fonts.googleapis.com/css?family=Open+Sans:300,300i,400,400i,600,600i,700,700i|Raleway:300,300i,400,400i,500,500i,600,600i,700,700i|Poppins:300,300i,400,400i,500,500i,600,600i,700,700i"
-	rel="stylesheet">
+<link href="https://fonts.googleapis.com/css?family=Open+Sans:300,300i,400,400i,600,600i,700,700i|Raleway:300,300i,400,400i,500,500i,600,600i,700,700i|Poppins:300,300i,400,400i,500,500i,600,600i,700,700i" rel="stylesheet">
 <!-- Vendor CSS Files -->
-<link href="resources/assets/vendor/animate.css/animate.min.css"
-	rel="stylesheet">
-<link href="resources/assets/vendor/bootstrap/css/bootstrap.min.css"
-	rel="stylesheet">
-<link href="resources/assets/vendor/bootstrap-icons/bootstrap-icons.css"
-	rel="stylesheet">
-<link href="resources/assets/vendor/boxicons/css/boxicons.min.css"
-	rel="stylesheet">
-<link href="resources/assets/vendor/glightbox/css/glightbox.min.css"
-	rel="stylesheet">
-<link href="resources/assets/vendor/swiper/swiper-bundle.min.css"
-	rel="stylesheet">
+<link href="resources/assets/vendor/animate.css/animate.min.css" rel="stylesheet">
+<link href="resources/assets/vendor/bootstrap/css/bootstrap.min.css" rel="stylesheet">
+<link href="resources/assets/vendor/bootstrap-icons/bootstrap-icons.css" rel="stylesheet">
+<link href="resources/assets/vendor/boxicons/css/boxicons.min.css" rel="stylesheet">
+<link href="resources/assets/vendor/glightbox/css/glightbox.min.css" rel="stylesheet">
+<link href="resources/assets/vendor/swiper/swiper-bundle.min.css" rel="stylesheet">
 <link href="/resources/assets/css/yb.css" rel="stylesheet">
 
 <!-- Template Main CSS File -->
@@ -83,10 +75,8 @@
 						<c:forEach items="${allBoardList}" var="freeBoard">
 							<article class="entry">
 
-								<div>
-									<!-- <a onclick='boardContent(event)' id="idx" href='javascript:void(0)'> -->
-									<button class="boardIdxButton" id="freebutton"
-										onclick="boardContent(this); replyContent(this)" name="${freeBoard.idx}">
+								<div class="entry-title">									
+									<a href="/freeBoardList/${freeBoard.idx}">
 										<c:choose>
 											<c:when	test="${freeBoard.title != null && fn:length(freeBoard.title) > 80}">
 															${fn:substring(freeBoard.title,0,80)}...
@@ -95,7 +85,7 @@
 												${freeBoard.title}
 											</c:otherwise>
 										</c:choose>
-									</button>
+									</a>
 								</div>
 
 								<div class="entry-meta">

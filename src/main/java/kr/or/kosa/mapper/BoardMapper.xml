@@ -33,7 +33,7 @@ ORDER BY p.writedate DESC;
 
 <!-- 게시글 상세보기 -->
 <select id="boardContent" parameterType="String" resultType="kr.or.kosa.dto.Post">
-SELECT count(replyidx) replyCount, p.universitycode, b.boardname, p.memberid, p.writedate, p.likenum, p.content, p.title
+SELECT count(replyidx) replyCount, p.idx, p.universitycode, b.boardname, p.memberid, p.writedate, p.likenum, p.content, p.title
 FROM POST p LEFT OUTER JOIN BOARD b ON p.BOARDIDX = b.BOARDIDX
 LEFT OUTER JOIN REPLY r ON p.IDX = r. IDX
 WHERE p.IDX=#{idx}
