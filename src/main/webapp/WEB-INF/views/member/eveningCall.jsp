@@ -32,6 +32,27 @@
   <link href="resources/assets/css/style.css" rel="stylesheet">
   <script type="text/javascript" src="//dapi.kakao.com/v2/maps/sdk.js?appkey=ae20ffc78d270b6473f02625716b04d5"></script>
   <script src="resources/assets/js/eveningCallMap.js"></script>
+  <script>
+	/*  function mySpaceReport(){
+		//페이지 로드 시 비동기 함수 호출
+			$.ajax(
+				{
+					 cache : false,
+			            url : "/eveningCall", 
+			            type:"POST", 
+			            dataType:"html",	
+			            success : function(data) {
+			                $('#hotboardtable').empty(data);
+			                $('#hotboardtable').append(data);
+			            }, // success 
+			    
+			            error : function(request,status,error) {
+			            	alert("code:" +request.status+"\n" + "message:"+request.responseText+"\n"+"error:"+error);
+							console.log(error);
+			            }
+			        }); // $.ajax 
+	 }	   */
+  </script>
 </head>
 
 <body>
@@ -66,9 +87,7 @@
               <i class="bx bx-map"></i>
               <h3>나의 현재위치</h3>
               <p>서울시 종로구 대학로</p>
-            	<form action="" method="post">
-              		<div><button type="submit" style="width:130px; height:20; border-radius: 50px; padding:5px; border: none; background-color:#E96B56; color:white; margin-top:10px; font-size: large;">점호하기</button></div>
-            	</form>
+              	<div><button type="submit" onclick="mySpaceReport()"; style="width:130px; height:20; border-radius: 50px; padding:5px; border: none; background-color:#E96B56; color:white; margin-top:10px; font-size: large;">점호하기</button></div>
             </div>
           </div>
         </div>
