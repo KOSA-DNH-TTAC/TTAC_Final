@@ -9,6 +9,7 @@ public class Post {
 	private int boardIdx;
 	private String universityCode;
 	private String memberId;
+	private String boardName;
 	private String title;
 	private String content;
 	private int readNum;

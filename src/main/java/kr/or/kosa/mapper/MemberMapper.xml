@@ -51,6 +51,13 @@ PUBLIC "-//mybatis.org//DTD Mapper 3.0//EN"
 	</select>
 	 
 	
+	<!-- 특정 회원이 쓴 글들 -->
+	<select id="getPosts" parameterType="String" resultType="kr.or.kosa.dto.Post">
+	SELECT p.idx, p.boardidx, b.boardname, p.memberid, p.universitycode, p.title, p.content,
+	p.readnum, p.writedate, p.likenum, p.status
+	FROM POST p LEFT JOIN BOARD b ON p.boardidx = b.boardidx WHERE p.memberid=#{memberid}
+	</select>
+	
 </mapper>
 
 

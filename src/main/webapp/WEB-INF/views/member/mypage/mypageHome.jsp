@@ -80,10 +80,11 @@
           #content {
             margin-top: 5px;
           }
+
           .list-group-item.active {
             /* <a href="#" class="list-group-item list-group-item-action active" aria-current="true">내 정보 조회</a> */
-          	background-color: #ff7600 !important;
-		        border-color: #ff7600	!important;
+            background-color: #ff7600 !important;
+            border-color: #ff7600 !important;
           }
         </style>
       </head>
@@ -127,10 +128,12 @@
                     <div id="content">
                       <div class="row">
                         <div class="col-lg-4" style="text-align : center">
-                            <img style="text-align:center" width="230px" src="http://image.newsis.com/2022/04/07/NISI20220407_0000969087_web.jpg" class="img-fluid" alt="Responsive image">
-                            <br>
-                            <br>
-                            <button class="btn btn-warning" onclick="location.href='/mypage/modify'">정보수정</button>
+                          <img style="text-align:center" width="230px"
+                            src="http://image.newsis.com/2022/04/07/NISI20220407_0000969087_web.jpg" class="img-fluid"
+                            alt="Responsive image">
+                          <br>
+                          <br>
+                          <button class="btn btn-warning" onclick="location.href='/mypage/modify'">정보수정</button>
                         </div>
                         <div class="col-lg-8">
                           <table class="table">
@@ -142,9 +145,9 @@
                             </thead>
                             <tbody>
                               <tr>
-                                 <th scope="row">학번</th>
-                                 <td class="infoTd">${member.memberId}</td>
-                                
+                                <th scope="row">학번</th>
+                                <td class="infoTd">${member.memberId}</td>
+
                               </tr>
                               <tr>
                                 <th scope="row">학과</th>
@@ -172,12 +175,12 @@
                               </tr>
                             </tbody>
                           </table>
+                        </div>
+                        <!-- content end -->
+                      </div>
                     </div>
-                    <!-- content end -->
-                  </div>
-                </div>
 
-              </div>
+                  </div>
             </section>
 
 
@@ -302,9 +305,9 @@
 						</table>
 					`
 
-            $('#content').append(contents)
+                $('#content').append(contents)
 
-            },
+              },
               error: function (err) {
                 console.log("에러");
                 console.log(err);
@@ -315,7 +318,7 @@
 
             //ajax로 내 정보 가저옴
             //td값과 사진값 바꿔줌
-            
+
           }
           else if (menu == '외박내역') {
 
@@ -432,51 +435,50 @@
             //제목 뒤엔 [n]으로 댓글 수 표시
             $.ajax({
               type: "GET",
-              url: "/mypage/myinfo",
+              url: "/mypage/myboard",
               success: function (result) {
                 console.log("성공")
                 console.log(result);
+
+                var contents = `<table class="table">
+                    <thead>
+                      <tr>
+                        <th scope="col">게시판</th>
+                        <th scope="col">글제목</th>
+                        <th scope="col">작성일</th>
+                      </tr>
+                    </thead>
+                    <tbody>`
+                $.each(result, function (index, post) {
+                  var time = new Date(post.writeDate);
+                  var localetime = time.toLocaleString("ko-KR");
+                  var year = time.getFullYear();
+                  var month = time.getMonth() + 1;
+                  var day = time.getDate();
+                  if (month < 10) {
+                    month = "0" + month;
+                  }
+                  if (day < 10) {
+                    day = "0" + day;
+                  }
+
+                  contents += "<tr><td>" + post.boardName +
+                    "</td><td style='text-align:left'>" + post.title +
+                    "</td><td>" + localetime +
+                    "</td></tr>";
+
+                })
+                contents += "</tbody></table>"
+
+                $('#content').empty()
+                $('#content').append(contents)
+
               },
               error: function (err) {
                 console.log("에러");
                 console.log(err);
               }
             })
-            var contents = `
-          <table class="table">
-            <thead>
-              <tr>
-                <th scope="col">게시판</th>
-                <th scope="col">글제목</th>
-                <th scope="col">작성일</th>
-              </tr>
-            </thead>
-            <tbody>
-              <tr>
-                <td>자유게시판</td>
-                <td>3층 요즘 너무 시끄럽지 않나요 [3]</td>
-                <td>23.01.17</td>
-              </tr>
-              <tr>
-                <td>자유게시판</td>
-                <td>같이 엽떡 시켜드실 분 구해용 [25]</td>
-                <td>23.01.17</td>
-              </tr>
-              <tr>
-                <td>건의게시판</td>
-                <td>휴게실에서 술을 먹는 걸 봤습니다 [1]</td>
-                <td>23.01.17</td>
-              </tr>
-              <tr>
-                <td>자유게시판</td>
-                <td>행운의 편지......... [3]</td>
-                <td>23.01.17</td>
-              </tr>
-            </tbody>
-          </table>
-        `
-            $('#content').empty()
-            $('#content').append(contents)
 
 
           }

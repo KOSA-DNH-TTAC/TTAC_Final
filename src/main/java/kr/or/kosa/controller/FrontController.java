@@ -6,6 +6,7 @@ import java.util.Locale;
 import org.slf4j.Logger;
 import org.slf4j.LoggerFactory;
 import org.springframework.beans.factory.annotation.Autowired;
+import org.springframework.security.access.prepost.PreAuthorize;
 import org.springframework.security.core.annotation.AuthenticationPrincipal;
 import org.springframework.security.core.context.SecurityContextHolder;
 import org.springframework.stereotype.Controller;
@@ -15,8 +16,10 @@ import org.springframework.web.bind.annotation.PostMapping;
 import org.springframework.web.servlet.ModelAndView;
 
 import kr.or.kosa.dto.Member;
+import kr.or.kosa.dto.Message;
 import kr.or.kosa.security.User;
 import kr.or.kosa.service.MemberService;
+import kr.or.kosa.service.MessageService;
 
 @Controller
 public class FrontController {
@@ -25,6 +28,9 @@ public class FrontController {
 
 	@Autowired
 	MemberService memberservice;
+	
+	@Autowired
+	MessageService msgservice;
 	
 	@GetMapping("")
 	public String home(Locale locale, Model model) {
@@ -89,15 +95,37 @@ public class FrontController {
 	*/
 	
 	@GetMapping("/message")
+	@PreAuthorize("isAuthenticated()")
 	public String messageBox() {
 		//쪽지함
 		return "member/message/notebox";
 	}
 	
+	
 	@GetMapping("/message/writing")
 	public String messageWriting() {
-		//쪽지쓰기
+		//쪽지쓰기 뷰
 		return "member/message/writing";
+	}
+	
+	@PostMapping("/message/writing")
+	public String messageSend(Message message, Model model) {
+		//쪽지 보내기
+		System.out.println(message);
+		msgservice.sendMsg(message);
+		int result = 0;
+		String msg = "";
+		String url = "";
+		if (result < 1) {
+			msg = "쪽지 전송 성공";
+			url = "/message";
+		} else {
+			msg = "쪽지 보내기 실패";
+			url = "/message/writing";
+		}
+		model.addAttribute("msg", msg);
+		model.addAttribute("url", url);
+		return "/common/redirect";
 	}
 	
 	@GetMapping("/error")

@@ -12,7 +12,10 @@
   <title>DOTO:mealticket</title>
   <meta content="" name="description">
   <meta content="" name="keywords">
-
+  
+  <script src="https://js.tosspayments.com/v1/payment"></script>
+  <!-- Jquery -->
+        <script src="http://code.jquery.com/jquery-latest.min.js"></script>
   <!-- Favicons -->
   <link href="resources/assets/img/favicon.png" rel="icon">
   <link href="resources/assets/img/apple-touch-icon.png" rel="apple-touch-icon">
@@ -109,6 +112,35 @@
 
   <!-- Template Main JS File -->
   <script src="resources/assets/js/main.js"></script>
+  
+  <script type="text/javascript">
+  
+  $('.buy-btn').click(function(){
+	  console.log("클릭!!")
+	  test()
+  })
+  function test(){
+	  console.log("test 함수")
+      let successurl =  "http://localhost:8090/";
+      let failurl ="";
+      let price = 1;
+          var clientKey = 'test_ck_D5GePWvyJnrK0W0k6q8gLzN97Eoq'
+          var tossPayments = TossPayments(clientKey) // 클라이언트 키로 초기화하기
+
+          tossPayments.requestPayment('카드', { // 결제 수단
+			// 결제 정보
+			amount: price,
+			orderId: 'QTIk82kxDPefXZC8MLFj0',
+			orderName: "식권 구매",
+			customerName: "도현정",
+			successUrl: successurl,
+			failUrl: "https://www.musinsa.com/app/",	
+			flowMode: 'D',
+			easyPay: '토스페이'
+			})
+	}
+  	
+  </script>
 
 </body>
 

@@ -1,6 +1,8 @@
 package kr.or.kosa.controller;
 
 import java.security.Principal;
+import java.util.ArrayList;
+import java.util.List;
 
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.http.HttpStatus;
@@ -12,7 +14,9 @@ import org.springframework.web.bind.annotation.RequestMapping;
 import org.springframework.web.bind.annotation.RestController;
 
 import kr.or.kosa.dto.Member;
+import kr.or.kosa.dto.Post;
 import kr.or.kosa.security.User;
+import kr.or.kosa.service.BoardService;
 import kr.or.kosa.service.MemberService;
 
 @RestController
@@ -54,6 +58,15 @@ public class MypageController {
 	//내 벌점 조회
 	
 	//내 커뮤니티 조회
-	
-	//쪽지함 ???
+	@GetMapping("/myboard")
+	public ResponseEntity<List<Post>> mycommunity(){
+		User user = (User) SecurityContextHolder.getContext().getAuthentication().getPrincipal();
+		//아마 Post list와 댓글 개수만 모은 list를 함께 보내야 할듯 order by로 순서를 잘 맞춰서...
+		//그래서 뷰단에서 자바스크립트로 for문을 돌려서 맞춰야할듯
+		List<Post> list = new ArrayList<Post>();
+		list = memberservice.getPostings(user.getMemberId());
+//		System.out.println(list);
+		return new ResponseEntity<>(list, HttpStatus.OK);
+	}
+
 }

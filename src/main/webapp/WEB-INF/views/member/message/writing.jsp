@@ -80,12 +80,10 @@
           #content {
             margin-top: 5px;
           }
-          .list-group-item.active {
-            /* <a href="#" class="list-group-item list-group-item-action active" aria-current="true">내 정보 조회</a> */
-          	background-color: #ff7600 !important;
-		        border-color: #ff7600	!important;
+          .table>:not(caption)>*>*{
+          	background-color: #F8F9FA;
+          	border:none;
           }
-
         </style>
       </head>
 
@@ -107,30 +105,36 @@
                 </ol>
                 <h2>쪽지쓰기</h2>
 
-                <div class="row no-gutters" style="margin-top:10px; margin-bottom : 25px">
-                  <div id="contentBox" class="col-lg-12" style="background:white">
+                <div class="row no-gutters" style="margin-top:10px; margin-bottom : 25px; ">
+                  <div id="contentBox" class="col-lg-6" style="margin: auto; background: #F8F9FA; box-shadow: 0 4px 16px rgb(0 0 0 / 10%); border-radius: 9px;">
                     <h2 id="mptitle" style="margin :15px 0 20px 0">쪽지 작성</h2>
 
                     <!-- content start -->
                     <div id="content">
-                    <form>
+                    <form action="/message/writing" method="POST">
                     <table class="table table-warning" id='writingTable'>
                     <tbody>
                       <tr>
                         <td><b>받는 사람 ID</b></td>
                         <div class="col-lg-4">
-                        	<td><input type="text" class="form-control 	g-3"></td>
+                        	<td><input type="text" name="rMemberId" class="form-control g-3"></td>
                         </div>
                       </tr>
                       <tr>
+                        <td colspan="3">
+                        	<input class="form-control" name="messageTitle" maxlength='30' placeholder='제목을 입력하세요' exampleFormControlTextarea1" rows="1">
+                        </td>
+                      </tr>
+                      <tr>
                         <td colspan="2">
-                        	<textarea class="form-control" id="exampleFormControlTextarea1" rows="3"></textarea>
+                        	<textarea class="form-control" name="messageContent" placeholder="내용을 입력하세요" id="exampleFormControlTextarea1" rows="3"></textarea>
                         </td>
                       </tr>
                     </tbody>
                   </table>
+                  <button type="submit" id="writing" style="width:130px; height:20; border-radius: 50px; padding:5px; border: none; background-color:#E96B56; color:white; margin-top:0px; margin-bottom:15px; font-size: large;">쪽지 보내기</button>
                   </form>
-                  <button id="writing" class="btn btn-warning">쪽지쓰기</button>
+                  
                       
                     </div>
                     <!-- content end -->

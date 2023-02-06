@@ -3,7 +3,7 @@
 .ybbtn {
 	padding: 0; 
 	list-style: none;
-	background-color: #fff;
+	background-color: rgba(0, 0, 0, 0);
 	border: none;
 	color: #545454;
 }
@@ -11,7 +11,7 @@
 .ybbtn:hover {
 	padding: 0; 
 	list-style: none;
-	background-color: #fff;
+	background-color: rgba(0, 0, 0, 0);
 	border: none;
 	color: #e96b56;
 	transition: 0.3s;
@@ -20,7 +20,7 @@
 #boardName {
 	padding: 0; 
 	list-style: none;
-	background-color: #fff;
+	background-color: rgba(0, 0, 0, 0);
 	border: none;
 	color: #545454;
 }
@@ -28,7 +28,7 @@
 #boardName:hover {
 	padding: 0; 
 	list-style: none;
-	background-color: #fff;
+	background-color: rgba(0, 0, 0, 0);
 	border: none;
 	color: #e96b56;
 	transition: 0.3s;
@@ -37,7 +37,7 @@
 .boardIdxButton {
 	padding: 0; 
 	list-style: none;
-	background-color: #fff;
+	background-color: rgba(0, 0, 0, 0);
 	border: none;
 	font-weight: bold;
 	color: #545454;
@@ -48,7 +48,7 @@
 .boardIdxButton:hover {
 	padding: 0; 
 	list-style: none;
-	background-color: #fff;
+	background-color: rgba(0, 0, 0, 0);
 	border: none;
 	font-weight: bold;
 	color: #e96b56;
@@ -79,4 +79,29 @@
   padding-left: 5px;
   color: #aaaaaa;
   font-size: 14px;
+}
+
+#textImage img{
+	width: 0px;
+	height: 0px;
+}
+
+.boardCategory {
+	list-style: none;
+}
+
+div.divider {
+    display: inline-block;
+    width: 1px;
+    height: 200px;
+    background-color: #e3e3e3;
+}
+
+div.wrap {
+    box-sizing: border-box;
+    /* font-size: 0; */
+    text-align: center;
+    white-space: nowrap;
+    overflow: hidden;
+    overflow-x: auto;
 }

@@ -122,36 +122,8 @@
 
                     <!-- content start -->
                     <div id="content">
-                                          <table class="table" id='nightoverTable'>
-                      <thead>
-                      <tr>
-                        <th scope="col">보낸 사람</th>
-                        <th scope="col">내용</th>
-                        <th scope="col">받은날짜</th>
-                      </tr>
-                    </thead>
-                    <tbody>
-                      <tr>
-                        <td>박예빈</td>
-                        <td>예빈이는 제순을 싫어해</td>
-                        <td>2023.01.29</td>
-                      </tr>
-                      <tr>
-                        <td>임준한</td>
-                        <td>자꾸자꾸싫어하면나는어떡해ㅜ</td>
-                        <td>2023.01.29</td>
-                      </tr>
-                      <tr>
-                        <td>고범종</td>
-                        <td>배고프다</td>
-                        <td>2023.01.29</td>
-                      </tr>   
-                      <tr>
-                        <td>kglim</td>
-                        <td>점심시간!!!!</td>
-                        <td>2023.01.29</td>
-                      </tr>
-                    </tbody>
+                      <table class="table" id='msgtable'>
+                      
                   </table>
                   <button id="writing" class="btn btn-warning">쪽지쓰기</button>
                       
@@ -198,6 +170,50 @@
         crossorigin="anonymous"></script>
 
 	<script>
+
+    function getFirstMsgList(){
+      $.ajax({
+              type: "GET",
+              url: "/message/notebox",
+              success: function (result) {
+                // console.log("성공")
+                // console.log(result);
+                
+                var opr="<thead><tr>"+
+                    "<th>보낸 사람</th>"+
+                      "<th>제목</th>"+
+                      "<th>받은 날짜</th></tr></thead><tbody>";
+                $.each(result,function(index,msg){
+                  // console.log(msg);
+                  var time = new Date(msg.messageDate);
+                  var year = time.getFullYear();
+                  var month = time.getMonth() + 1;
+                  var day = time.getDate();
+                  if(month < 10){
+                    month = "0" + month;
+                  }
+                  if(day < 10){
+                    day = "0" + day;
+                  }
+
+                  opr += "<tr><td>"+msg.smemberId+
+                  "</td><td style='text-align:left'>"+msg.messageTitle+
+                  "</td><td>"+ year + "." + month + "." + day +
+                  "</td></tr>";
+                 
+                });
+                $('#msgtable').empty();
+                $('#msgtable').append(opr);
+              },
+              error: function (err) {
+                console.log("에러");
+                console.log(err);
+              }
+            })
+    }
+    $(document).ready(function(){
+      getFirstMsgList();
+    })
 	 $('.list-group-item').click(function (e) {
          e.preventDefault();
          var menu = $(this).text().trim(); //선택한 카테고리 메뉴 값 가져옴
@@ -211,10 +227,55 @@
 
 
          $('#mptitle').text(menu) //content title 선택 메뉴로 바꿔줌
+
+         if(menu == '받은 쪽지'){
+          //ajax로 받은 쪽지 리스트 불러옴
+           getFirstMsgList()
+         }
+         else if(menu == '보낸 쪽지'){
+          $.ajax({
+              type: "GET",
+              url: "/message/getSend",
+              success: function (result) {
+                // console.log("성공")
+                // console.log(result);
+                
+                var opr="<thead><tr>"+
+                    "<th>받는 사람</th>"+
+                      "<th>제목</th>"+
+                      "<th>보낸 날짜</th></tr></thead><tbody>";
+                $.each(result,function(index,msg){
+                  // console.log(msg);
+                  var time = new Date(msg.messageDate);
+                  var year = time.getFullYear();
+                  var month = time.getMonth() + 1;
+                  var day = time.getDate();
+                  if(month < 10){
+                    month = "0" + month;
+                  }
+                  if(day < 10){
+                    day = "0" + day;
+                  }
+
+                  opr += "<tr><td>"+msg.rmemberId+
+                  "</td><td style='text-align:left'>"+msg.messageTitle+
+                  "</td><td>"+ year + "." + month + "." + day +
+                  "</td></tr>";
+                  
+                });
+                $('#msgtable').empty();
+                $('#msgtable').append(opr);
+              },
+              error: function (err) {
+                console.log("에러");
+                console.log(err);
+              }
+            })
+          //ajax로 보낸 쪽지 리스트 불러옴
+         }
 	 })
 
    $('#writing').on("click", function(){
-    console.log("쪽지쓰기 누름")
     location.href = "/message/writing"
    })
 	</script>

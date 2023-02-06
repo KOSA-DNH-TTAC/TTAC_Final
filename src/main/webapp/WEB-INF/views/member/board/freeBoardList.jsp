@@ -17,8 +17,7 @@
 
 <!-- Favicons -->
 <link href="resources/assets/img/favicon.png" rel="icon">
-<link href="resources/assets/img/apple-touch-icon.png"
-	rel="apple-touch-icon">
+<link href="resources/assets/img/apple-touch-icon.png" rel="apple-touch-icon">
 
 <!-- Google Fonts -->
 <link
@@ -48,13 +47,7 @@
   * Author: BootstrapMade.com
   * License: https://bootstrapmade.com/license/
   ======================================================== -->
-<style>
-img {
-	width: 100px;
-	height: 100px;
-	margin-left: 5%;
-}
-</style>
+ <link href="resources/assets/css/nightOver.css" rel="stylesheet">
 </head>
 
 <body>
@@ -92,18 +85,18 @@ img {
 
 								<div>
 									<!-- <a onclick='boardContent(event)' id="idx" href='javascript:void(0)'> -->
-									<BUTTON class="boardIdxButton" id="freebutton"
+									<button class="boardIdxButton" id="freebutton"
 										onclick="boardContent(this)" name="${freeBoard.idx}">
 										<c:choose>
-											<c:when
-												test="${freeBoard.title != null && fn:length(freeBoard.title) > 80}">
+											<c:when	test="${freeBoard.title != null && fn:length(freeBoard.title) > 80}">
 															${fn:substring(freeBoard.title,0,80)}...
-														</c:when>
+											</c:when>
 											<c:otherwise>
-															${freeBoard.title}  ${freeBoard.idx}
-														</c:otherwise>
-													</c:choose>
-											</div>
+												${freeBoard.title}  ${freeBoard.idx}
+											</c:otherwise>
+										</c:choose>
+									</button>
+								</div>
 
 								<div class="entry-meta">
 									<ul>
@@ -249,36 +242,37 @@ img {
 					success : function(data) {
 						$('#contentsDiv').empty();
 						$('#contentsDiv')
-								.append(
-										'<div class="container" data-aos="fade-up"><div class="row"><div class="col-lg-8 entries"><article class="entry"><h2 class="entry-title">'
-												+ '<a href="blog-single.html">'
-												+ data[0].title
-												+ '</a>'
-												+ '</h2>'
-												+
+								.append( '<div class="container" data-aos="fade-up"><div class="row"><div class="col-lg-12 entries"><article class="entry"><h2 class="entry-title">'
+	                                    + '<a href="blog-single.html">'
+	                                    + data[0].title
+	                                    + '</a>'
+	                                    + '</h2>'
+	                                    +
 
-												'<div class="entry-meta">'
-												+ '<ul>'
-												+ '<li class="d-flex align-items-center"><i class="bi bi-person"></i><a href="blog-single.html">'
-												+ data[0].memberId
-												+ '</a></li>'
-												+ '<li class="d-flex align-items-center"><i class="bi bi-clock"></i><a href="blog-single.html">'
-												+ data[0].writeDate
-												+ '</a></li>'
-												+ '<li class="d-flex align-items-center"><i class="bi bi-chat-dots"></i> <a href="blog-single.html">아이고!!!!!!!!!!</a></li>'
-												+ '<li class="d-flex align-items-center"><i class="bi bi-chat-dots" />'
-												+ data[0].likeNum
-												+ '</li>'
-												+ '</ul>'
-												+ '</div>'
-												+ '<div class="entry-content">'
-												+ '<p>'
-												+ data[0].content
-												+ '</p>'
-												+ '</div>'
-												+ '</article>'
-												+ '</div>'
-												+ '</div>' + '</div>');
+	                                    '<div class="entry-meta">'
+	                                    + '<ul>'
+	                                    + '<li class="d-flex align-items-center"><i class="bi bi-person"></i><a href="blog-single.html">'
+	                                    + data[0].memberId
+	                                    + '</a></li>'
+	                                    + '<li class="d-flex align-items-center"><i class="bi bi-clock"></i><a href="blog-single.html">'
+	                                    + data[0].writeDate
+	                                    + '</a></li>'
+	                                    + '<li class="d-flex align-items-center"><i class="bi-hand-thumbs-up"></i>'
+	                                    + data[0].likeNum
+	                                    + '</li>'
+	                                    + '</ul>'
+	                                    + '</div>'
+	                                    + '<div class="entry-content" style="margin-bottom:50px;">'
+	                                    + '<p style="margin-top: 40px;">'
+	                                    + data[0].content
+	                                    + '</p>'
+	                                    + '</div>'
+	                                    + '</article>'
+	                                    + '</div>'
+	                                    + '</div>' + '</div>'+
+	                                    '<b>&nbsp 댓글 수  <i class="bi bi-chat-dots"></i> 482</b>'+
+	                                    '<hr>'+
+	                                    '<div class="box"><ul><li><b>박예빈</b> <br> 정말 좋은 글인걸요? 잘 읽었습니다^^</li></ul></div>');
 					}
 				})
 	}
