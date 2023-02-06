@@ -92,7 +92,7 @@
 															${fn:substring(freeBoard.title,0,80)}...
 											</c:when>
 											<c:otherwise>
-												${freeBoard.title}  ${freeBoard.idx}
+												${freeBoard.title}
 											</c:otherwise>
 										</c:choose>
 									</button>
@@ -242,8 +242,10 @@
  				    + '</h2>'
                     + '<div class="entry-meta">'
                     + '<ul>'
-                    + '<li class="d-flex align-items-center"><i class="bi bi-person"></i><a href="blog-single.html">'
-                    + data.boardContent[0].memberId
+                    + '<li class="d-flex align-items-center"><i class="bi bi-person"></i><a href="blog-single.html" value="'
+                    + data.boardContent[0].memberId 
+                    + '">'
+                    + '익명'
                     + '</a></li>'
                     + '<li class="d-flex align-items-center"><i class="bi bi-clock"></i><a href="blog-single.html">'
                     + data.boardContent[0].writeDate
@@ -286,7 +288,6 @@
 				})
 
 	}
-	//)
-	//	});
+	
 </script>
 </html>
