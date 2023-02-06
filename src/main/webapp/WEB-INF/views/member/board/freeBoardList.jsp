@@ -101,11 +101,13 @@
 								<div class="entry-meta">
 									<ul>
 										<li class="d-flex align-items-center"><i
-											class="bi bi-person"></i><a href="blog-single.html">${freeBoard.memberId}</a></li>
+											class="bi bi-person"></i><a href="blog-single.html">익명</a></li>
 										<li class="d-flex align-items-center"><i
 											class="bi bi-clock"></i> <a href="blog-single.html">${freeBoard.writeDate}</a></li>
 										<li class="d-flex align-items-center"><i
 											class="bi-hand-thumbs-up"></i>${freeBoard.likeNum}</li>
+										<li class="d-flex align-items-center"><i
+											class="bi-chat-dots"></i>${freeBoard.replyCount}</li>
 									</ul>
 								</div>
 

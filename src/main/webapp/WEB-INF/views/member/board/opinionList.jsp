@@ -84,6 +84,7 @@
 													<li class="d-flex align-items-center"><i class="bi bi-clock"></i> <a
 															href="blog-single.html">${opinion.writeDate}</a></li>
 													<li class="d-flex align-items-center"><i class="bi-hand-thumbs-up"></i>${opinion.likeNum}</li>
+													<li class="d-flex align-items-center"><i class="bi-chat-dots"></i>${opinion.replyCount}</li>
 												</ul>
 											</div>
 

@@ -66,7 +66,7 @@
 									var boardName = "";
 										boardName = $(this).attr('seq');
 										
-										location.href= "${pageContext.request.contextPath}/board/" + customBoardList;
+										location.href= "${pageContext.request.contextPath}/board/" + boardName;
 								})
 									
 
