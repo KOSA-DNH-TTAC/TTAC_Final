@@ -8,8 +8,8 @@ import lombok.Data;
 public class Message {
 
 	private int messageIdx;
-	private String sMemberId;
-	private String rMemberId;
+	private String smemberId;
+	private String rmemberId;
 	private String messageTitle;
 	private String messageContent;
 	private Date messageDate;
