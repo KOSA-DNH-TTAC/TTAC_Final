@@ -41,26 +41,30 @@ public class BoardController {
 	// 기본 제공 게시판
 	@GetMapping("{allBoard}")
 	public String allBoardView(Model model, @PathVariable String allBoard) {
-		List<Post> allBoardList = boardService.allBoardList(allBoard); // 글목록
+
+		String param = "";
+		
+		if (allBoard.equals("noticeList")) {
+			param = "공지사항";
+		} else if (allBoard.equals("opinionList")) {
+			param += "건의사항";
+		} else if (allBoard.equals("freeBoardList")) {
+			param += "자유게시판";
+		} else if (allBoard.equals("productBoardList")) {
+			param += "거래게시판";
+		}
+
+		String viewPage = "member/board/" + allBoard;
+
+		List<Post> allBoardList = boardService.allBoardList(param); // 글목록
 		System.out.println("POST: " + allBoardList);
 		model.addAttribute("allBoardList", allBoardList);
-		String viewPage = "member/board/";
-		if (allBoard.equals("공지사항")) {
-			viewPage += "noticeList";
-		} else if (allBoard.equals("건의사항")) {
-			viewPage += "opinionList";
-		} else if (allBoard.equals("자유게시판")) {
-			viewPage += "freeBoardList";
-		} else if (allBoard.equals("거래게시판")) {
-			viewPage += "productBoardList";
-		}
 
 		return viewPage;
 	}
 
 	// 커스텀 생성 게시판
-
-	@GetMapping("board/{boardName}")
+	@GetMapping("board/customBoardList")
 	public String boardList(Model model, @PathVariable String boardName) {
 
 		List<Post> boardList = boardService.customBoardList(boardName);// 글목록
