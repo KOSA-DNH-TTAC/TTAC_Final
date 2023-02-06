@@ -58,6 +58,13 @@ PUBLIC "-//mybatis.org//DTD Mapper 3.0//EN"
 	FROM POST p LEFT JOIN BOARD b ON p.boardidx = b.boardidx WHERE p.memberid=#{memberid}
 	</select>
 	
+	<!-- 정보 수정 -->
+	<update id="updateMember" parameterType="kr.or.kosa.dto.Member">
+		UPDATE MEMBER
+		SET password=#{password}, phone=#{phone}, parentsPhone=#{parentsPhone}
+		WHERE memberid=#{memberId}
+	</update>
+	
 </mapper>
 
 
