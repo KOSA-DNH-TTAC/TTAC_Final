@@ -98,31 +98,35 @@
 										<tbody>
                       <tr>
                          <th scope="row">학번</th>
-                         <td class="infoTd">2017109210</td>
+                         <td class="infoTd" id="memberid"></td>
                       </tr>
                       <tr>
                         <th scope="row">학과</th>
-                        <td class="infoTd">컴퓨터과학과</td>
+                        <td class="infoTd" id="major"></td>
                       </tr>
                       <tr>
                         <th scope="row">기숙사</th>
-                        <td class="infoTd">KOSA관 703호</td>
+                        <td class="infoTd" id="room"></td>
+                      </tr>
+                      <tr>
+                        <th scope="row">비밀번호</th>
+                        <td class="infoTd"><input class="form-control" id="password" name="password" type="password" value=""></td>
                       </tr>
                       <tr>
                         <th scope="row">이메일</th>
-                        <td class="infoTd"><input class="form-control col-sm-4" type="email" value="201710921@smu.ac.kr" ></td>
+                        <td class="infoTd"><input class="form-control col-sm-4" id="email" name="email" type="email" value="" ></td>
                       </tr>
                       <tr>
                         <th scope="row">연락처</th>
-                        <td class="infoTd"><input class="form-control" type="number" value="01021118965"></td>
+                        <td class="infoTd"><input class="form-control" id="phone" name="phone" type="number" value="01021118965"></td>
                       </tr>
                       <tr>
                         <th scope="row">보호자연락처</th>
-                        <td class="infoTd"><input class="form-control" type="number" value="01012345678"></td>
+                        <td class="infoTd"><input class="form-control" id="parentsPhone" name="parentsPhone" type="number" value="01012345678"></td>
                       </tr>
                       <tr>
                         <th scope="row">벌점</th>
-                        <td class="infoTd">18점</td>
+                        <td class="infoTd" id="demerit"></td>
                       </tr>
                     </tbody>
 									</table>
@@ -161,6 +165,43 @@
   <script src="../resources/assets/js/main.js"></script>
 
 <script type="text/javascript">
-
+	$(document).ready(function(){
+		var member;
+		$.ajax({
+		  type: "GET",
+		  url: "/mypage/myinfo",
+		  success: function (result) {
+		    console.log("성공")
+		    console.log(result);
+		    member = {
+		      "memberid": result.memberId,
+		      "name": result.name,
+		      "major": result.major,
+		      "password" : result.password,
+		      "room": result.room,
+		      "email": result.email,
+		      "phone": result.phone,
+		      "parentsPhone": result.parentsPhone,
+		      "demerit": result.demerit
+		    }
+		    console.log("test...")
+		    console.log(member);
+		    console.log(member.name)
+		    $('#memberid').append(member.memberid);
+		    $('#major').append(member.major);
+		    $('#room').append(member.room);
+		    //$('#password').val(member.password);
+		    $('#email').val(member.email);
+		    $('#phone').val(member.phone);
+		    $('#parentsPhone').val(member.parentsPhone);
+		    $('#demerit').append(member.demerit + "점");
+		    
+      },
+      error : function(err){
+    	  console.log("에러")
+      }
+	})
+})
+	
 </script>
 </html>
