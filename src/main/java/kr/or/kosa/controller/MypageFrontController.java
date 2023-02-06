@@ -69,15 +69,19 @@ public class MypageFrontController {
 			
 			String msg = "";
 			String url = "";
+			String icon = "";
 			if (result > 0) {
+				icon = "success";
 				msg = "정보 수정 완료";
 				url = "/mypage";
 			} else {
+				icon = "error";
 				msg = "문제가 발생했어요";
 				url = "/mypage/modify";
 			}
 			model.addAttribute("msg", msg);
 			model.addAttribute("url", url);
+			model.addAttribute("icon", icon);
 			return "/common/redirect";
 		}
 }
