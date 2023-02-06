@@ -19,7 +19,7 @@ PUBLIC "-//mybatis.org//DTD Mapper 3.0//EN"
 	</select>
 	 
 	<!-- getMessage (특정메시지조회 : 인덱스) -->
-	<select id="getMessage" parameterType="String" resultType="kr.or.kosa.dto.Message">
+	<select id="getMessage" parameterType="int" resultType="kr.or.kosa.dto.Message">
 	  SELECT MESSAGEIDX, sMEMBERID, rMEMBERID, MESSAGETITLE, MESSAGECONTENT, MESSAGEDATE,
 	  STATUS FROM MESSAGE WHERE MESSAGEIDX = #{index}
 	</select>
@@ -27,7 +27,7 @@ PUBLIC "-//mybatis.org//DTD Mapper 3.0//EN"
 	<!-- sendMessage(쪽지 보내기) -->
 	<insert id="sendMessage" parameterType="kr.or.kosa.dto.Message">
 		INSERT INTO MESSAGE(sMEMBERID, rMEMBERID, MESSAGETITLE, MESSAGECONTENT, MESSAGEDATE)
-		VALUES(#{sMemberId}, #{rMemberId}, #{messageTitle}, #{messageContent}, now())
+		VALUES(#{smemberId}, #{rmemberId}, #{messageTitle}, #{messageContent}, now())
 	</insert>
 	
 </mapper>
