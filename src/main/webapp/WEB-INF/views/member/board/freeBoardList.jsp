@@ -261,18 +261,18 @@
                     + '</article>'
                     + '</div>'
                     + '</div>' + '</div>'
-                    + '<b>&nbsp 댓글 수  <i class="bi bi-chat-dots"></i>'
+                    + '<b><i class="bi bi-chat-dots"></i>&nbsp'
                     + data.boardContent[0].replyCount
                     + '</b>'
                     + '<hr>'
- 	                + '<div class="box"><ul style=" list-style-type: none;">'
+ 	                + '<div class="box"><ul class="ybreply" style=" list-style-type: none;">'
                     
                 $.each(data.replyContent, function(index) {
                 boardAndReply +=
  	                
- 	                '<li style="margin-bottom:20px;"><b value="' 
+ 	                '<li class="ybreply2"><b value="' 
  	                + data.replyContent[index].memberId 
- 	                + '">익명</b><br>'
+ 	                + '">익명</b></li><li>'
  	                + data.replyContent[index].replyContent 
  	                + '</li>' + '<hr>'
                     })
