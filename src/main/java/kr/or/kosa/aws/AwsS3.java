@@ -1,11 +1,13 @@
 package kr.or.kosa.aws;
 
 import java.io.File;
+import java.io.FileOutputStream;
+import java.io.IOException;
 import java.io.InputStream;
+import java.util.Optional;
 
-import org.springframework.beans.factory.annotation.Value;
 import org.springframework.context.annotation.Configuration;
-import org.springframework.context.annotation.PropertySource;
+import org.springframework.web.multipart.MultipartFile;
 
 import com.amazonaws.AmazonServiceException;
 import com.amazonaws.SdkClientException;
@@ -25,12 +27,10 @@ public class AwsS3 {
     //Amazon-s3-sdk 
     private AmazonS3 s3Client;
     
-    @Value("#{s3['aws.accessKey']}")
-    private String accessKey;
-    @Value("${aws.secretKey}")
-    private String secretKey;
+    private String accessKey = "1";
+    private String secretKey = "1";
     private Regions clientRegion = Regions.AP_NORTHEAST_2;
-    private String bucket = "";
+    private String bucket = "kosa-s3-bucket";
 
     private AwsS3() {
     	System.out.println("accessKey: "+accessKey);
@@ -61,8 +61,21 @@ public class AwsS3 {
                 .build();
     }
     
-    public void upload(File file, String key) {
-        uploadToS3(new PutObjectRequest(this.bucket, key, file));
+    private Optional<File> convert(MultipartFile file) throws  IOException {
+        File convertFile = new File(file.getOriginalFilename());
+        if(convertFile.createNewFile()) {
+            try (FileOutputStream fos = new FileOutputStream(convertFile)) {
+                fos.write(file.getBytes());
+            }
+            return Optional.of(convertFile);
+        }
+        return Optional.empty();
+    }
+    
+    public void upload(MultipartFile multipartfile, String key) throws IOException {
+    	File uploadFile = convert(multipartfile)
+    			.orElseThrow(() -> new IllegalArgumentException("MultipartFile -> File 전환 실패"));
+        uploadToS3(new PutObjectRequest(this.bucket, key, uploadFile));
     }
 
     public void upload(InputStream is, String key, String contentType, long contentLength) {

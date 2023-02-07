@@ -1,10 +1,8 @@
 package kr.or.kosa.controller;
 
+import java.io.IOException;
 import java.security.Principal;
 import java.util.List;
-
-import javax.servlet.http.HttpServletRequest;
-import javax.servlet.http.HttpSession;
 
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Controller;
@@ -15,6 +13,7 @@ import org.springframework.web.bind.annotation.PostMapping;
 import org.springframework.web.bind.annotation.RequestParam;
 import org.springframework.web.multipart.MultipartFile;
 
+import kr.or.kosa.aws.AwsS3;
 import kr.or.kosa.dto.File;
 import kr.or.kosa.dto.Member;
 import kr.or.kosa.dto.Post;
@@ -130,23 +129,17 @@ public class BoardController {
 
 	// 공지사항 글쓰기
 	@PostMapping("/noticeList/noticeWrite")
-	public String noticeWriteOk(Principal principal, Model model,@RequestParam("file") MultipartFile[] file,
+	public String noticeWriteOk(Principal principal, Model model,@RequestParam("file") MultipartFile file,
 															 	 @RequestParam("title") String title,
-															     @RequestParam("content") String content) {
+															     @RequestParam("content") String content) throws IOException  {
 
+		int boardIDX = 1;
+		String route = "";
 		String msg = "";
 		String url = "";
+		String icon = "";
 		int result = 0;
-
-			for(MultipartFile multipartFile : file) {
-				System.out.println("--------------------------------------");
-				System.out.println("Upload File Name : " + multipartFile.getOriginalFilename());
-				System.out.println("Upload File Size : " + multipartFile.getSize());
-			}
-		
-		
-		
-		
+		String fileName = file.getOriginalFilename();
 		
 		if (principal == null) {
 
@@ -158,21 +151,53 @@ public class BoardController {
 			Member member = null;
 			String memberid = principal.getName();
 			member = memberService.getMemberById(memberid);
-
-			String uploadFolder = "D:\\A_TeachingMaterial\\6.JspSpring\\workspace\\springProj2\\src\\main\\webapp\\resources\\upload";
-			File FFF = new File();
-
+			
+			Post postDTO = new Post();
+			
+			postDTO.setBoardIdx(boardIDX);
+			postDTO.setBoardName("공지사항");
+			postDTO.setUniversityCode(member.getUniversityCode());
+			postDTO.setMemberId(member.getMemberId());
+			postDTO.setTitle(title);
+			postDTO.setContent(content);
+			
+			result = boardService.freeBoardWrite(postDTO);
+			
+			if (file.getSize() != 0) {
+				File fileDTO = new File();
+				fileDTO.setFileName(fileName);
+				fileDTO.setFileSize(file.getSize());
+				
+				result = boardService.fileWrite(fileDTO);
+				
+				try {
+					AwsS3 awsS3 = AwsS3.getInstance();
+					route = member.getUniversityCode()+"/"+ 1 +"/"+fileName;
+					System.out.println(route);
+					awsS3.upload(file, route);
+					
+				} catch (IOException e) {
+					e.printStackTrace();
+				}
+				
+			}
+			
+			
 			if (result < 1) {
+				icon = "error";
 				msg = "글 작성이 실패했습니다.";
-				url = "/자유게시판/freeBoardWrite";
+				url = "/noticeList/noticeWrite";
 			} else {
+				icon = "success";
 				msg = "글 작성이 완료되었습니다!";
-				url = "/자유게시판";
+				url = "/noticeList";
+				
 			}
 		}
 
 		model.addAttribute("msg", msg);
 		model.addAttribute("url", url);
+		model.addAttribute("icon", icon);
 
 		return "/common/redirect";
 	}
@@ -218,6 +243,7 @@ public class BoardController {
 			Post post = new Post();
 
 			post.setBoardIdx(3);
+			post.setBoardName("자유게시판");
 			post.setUniversityCode(member.getUniversityCode());
 			post.setMemberId(member.getMemberId());
 			post.setTitle(title);

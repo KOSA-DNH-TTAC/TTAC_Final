@@ -48,9 +48,19 @@ ORDER BY replydate ASC;
 
 <!-- 글 작성 (파일첨부 x) -->
 <insert id="boardInsert" parameterType="kr.or.kosa.dto.Post">
-INSERT INTO POST (BOARDIDX,MEMBERID,UNIVERSITYCODE,TITLE,CONTENT,WRITEDATE)
-VALUES(#{boardIdx},#{memberId},#{universityCode},#{title},#{content},NOW())
+INSERT INTO POST (BOARDIDX,BOARDNAME,MEMBERID,UNIVERSITYCODE,TITLE,CONTENT,WRITEDATE)
+VALUES(#{boardIdx},#{boardName},#{memberId},#{universityCode},#{title},#{content},NOW())
 </insert>
+
+<insert id="fileInsert" parameterType="kr.or.kosa.dto.File">
+	<selectKey keyProperty="idx" resultType="int" order="BEFORE">
+		SELECT IDX from POST ORDER BY IDX DESC LIMIT 1
+	</selectKey>
+INSERT INTO FILE (idx, FILENAME,FILESIZE)
+VALUES(#{idx},#{fileName},#{fileSize})
+</insert>
+
+
 </mapper>
 
 
