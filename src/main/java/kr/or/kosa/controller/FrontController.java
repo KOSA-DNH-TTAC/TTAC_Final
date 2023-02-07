@@ -12,6 +12,7 @@ import org.springframework.security.core.context.SecurityContextHolder;
 import org.springframework.stereotype.Controller;
 import org.springframework.ui.Model;
 import org.springframework.web.bind.annotation.GetMapping;
+import org.springframework.web.bind.annotation.PathVariable;
 import org.springframework.web.bind.annotation.PostMapping;
 import org.springframework.web.servlet.ModelAndView;
 
@@ -72,23 +73,41 @@ public class FrontController {
 		return "member/message/notebox";
 	}
 	
-	
 	@GetMapping("/message/writing")
-	public String messageWriting() {
+	public ModelAndView messageWriting() {
 		//쪽지쓰기 뷰
-		return "member/message/writing";
+		ModelAndView mv = new ModelAndView();
+		mv.setViewName("member/message/writing");
+		mv.addObject("reiceiver", "");
+		
+		return mv;
+	}
+	@GetMapping("/message/writing/{receiver}")
+	public ModelAndView replyMessage(@PathVariable("receiver") String receiver) {
+		//쪽지쓰기 뷰
+		ModelAndView mv = new ModelAndView();
+		mv.setViewName("member/message/writing");
+		if(receiver!=null) {
+			mv.addObject("receiver", receiver);
+		}else {
+			mv.addObject("reiceiver", "");
+		}
+		
+		return mv;
 	}
 	
 	@PostMapping("/message/writing")
 	public String messageSend(Message message, Model model) {
 		//쪽지 보내기
 		System.out.println(message);
-		msgservice.sendMsg(message);
 		int result = 0;
+		String contents = message.getMessageContent().replace("\r\n","<br>");
+		message.setMessageContent(contents);
+		result = msgservice.sendMsg(message);
 		String msg = "";
 		String url = "";
 		String icon = "";
-		if (result < 1) {
+		if (result > 0) {
 			icon = "success";
 			msg = "쪽지 전송 성공";
 			url = "/message";

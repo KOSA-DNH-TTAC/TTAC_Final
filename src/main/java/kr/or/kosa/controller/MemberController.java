@@ -9,18 +9,26 @@ import org.slf4j.LoggerFactory;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.security.core.annotation.AuthenticationPrincipal;
 import org.springframework.stereotype.Controller;
+import org.springframework.ui.Model;
 import org.springframework.web.bind.annotation.GetMapping;
+import org.springframework.web.bind.annotation.PathVariable;
+import org.springframework.web.bind.annotation.RequestMapping;
+import org.springframework.web.bind.annotation.RequestParam;
 
 import kr.or.kosa.dto.Member;
 import kr.or.kosa.security.CustomUser;
 import kr.or.kosa.service.MemberService;
+import kr.or.kosa.service.PaymentService;
 
 @Controller
 public class MemberController {
 	
 	@Autowired
-	MemberService service;
-
+	MemberService memberservice;
+	
+	@Autowired
+	PaymentService paymentService;
+	
 	private static final Logger logger = LoggerFactory.getLogger(FrontController.class);
 	
 	@GetMapping("/nightOver")
@@ -35,13 +43,41 @@ public class MemberController {
 		return "member/mealticket";
 	}
 	
+	@RequestMapping("/payments")
+	public String mealticketPayment(@RequestParam("memberid") String memberid, @RequestParam("amount")String amount, Model model) {
+		System.out.println("파라미터로 들어온 ... : " + memberid + " " + amount);
+		String kind = "충전";
+		//페이먼트 서비스?
+		//결제완료하고 포인트 올리고
+		//리다이렉트
+		int result = 0;
+		result = paymentService.insertPayment(memberid, amount, kind);
+		
+		String msg = "";
+		String url = "";
+		String icon = "";
+		if (result > 0) {
+			icon = "success";
+			msg = "포인트 충전 완료!";
+			url = "/";
+		} else {
+			icon = "error";
+			msg = "문제가 발생했어요";
+			url = "/";
+		}
+		model.addAttribute("msg", msg);
+		model.addAttribute("url", url);
+		model.addAttribute("icon", icon);
+		return "/common/redirect";
+	}
+	
 	
 	
 	//테스트용....
 	@GetMapping("/testmember")
 	public String test() {
 		List<Member> list = new ArrayList<Member>();
-		list = service.getAllMember("kosa");
+		list = memberservice.getAllMember("kosa");
 		for(Member m : list) {
 			System.out.println(m);
 		}
@@ -58,10 +94,10 @@ public class MemberController {
 	}
 	@GetMapping("/testgetmember")
 	public String testSearchByName(Principal principal) {
-		Member member = service.getMemberById(principal.getName());
+		Member member = memberservice.getMemberById(principal.getName());
 		List<Member> list = new ArrayList<Member>();
 //		list = service.getMemberByName("도현정", "kosa");
-		list = service.getMemberByName(member.getName(), member.getUniversityCode());
+		list = memberservice.getMemberByName(member.getName(), member.getUniversityCode());
 		System.out.println(list);
 		return null;
 	}

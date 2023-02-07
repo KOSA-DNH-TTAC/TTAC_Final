@@ -45,7 +45,7 @@ public class BoardController {
 	public String allBoardView(Model model, @PathVariable String allBoard) {
 
 		String param = "";
-		
+
 		if (allBoard.equals("noticeList")) {
 			param = "공지사항";
 		} else if (allBoard.equals("opinionList")) {
@@ -58,7 +58,7 @@ public class BoardController {
 
 		String viewPage = "member/board/" + allBoard;
 
-		List<Post> allBoardList = boardService.allBoardList(param); // 글목록
+		List<Post> allBoardList = boardService.allBoardList(param);
 		model.addAttribute("allBoardList", allBoardList);
 
 		return viewPage;
@@ -67,15 +67,50 @@ public class BoardController {
 	// 커스텀 생성 게시판
 	@GetMapping("board/{boardName}")
 	public String boardList(Model model, @PathVariable String boardName) {
-		
-		List<Post> boardList = boardService.customBoardList(boardName);// 글목록
+		List<Post> boardList = boardService.customBoardList(boardName);
 		model.addAttribute("boardList", boardList);
 		model.addAttribute("boardName", boardName);
 
 		return "member/board/customBoardList";
 	}
 
-	// 게시판 글쓰기 이것도 게시판마다 달라야함
+	// 게시글 보기
+	@GetMapping("/{boardName}/{idx}")
+	public String boardContent(Model model, @PathVariable("idx") String idx,
+			@PathVariable("boardName") String boardName) {
+		
+		System.out.println("컨트롤러야!!!!!!!!!!!!!!!!!!!");
+
+		String param = "";
+		String path = "";
+
+		if (boardName.equals("noticeList")) {
+			param = "공지사항";
+			path = "noticeContent";
+		} else if (boardName.equals("opinionList")) {
+			param += "건의사항";
+			path = "opinionContent";
+		} else if (boardName.equals("freeBoardList")) {
+			param += "자유게시판";
+			path = "freeBoardContent";
+		} else if (boardName.equals("productBoardList")) {
+			param += "거래게시판";
+			path = "productBoardContent";
+		}
+
+		List<Post> boardContent = boardService.boardContent(idx);
+		model.addAttribute("boardContent", boardContent);
+		
+		System.out.println("boardContent: " + boardContent);
+
+		String viewPage = "member/board/" + path;
+		
+		System.out.println("return path: " + viewPage);
+		
+		return viewPage;
+	}
+
+	// 게시판 글쓰기
 
 	@GetMapping("/{boardName}/boardWrite")
 	public String BoardWrite() {
@@ -95,28 +130,26 @@ public class BoardController {
 
 	// 공지사항 글쓰기
 	@PostMapping("/noticeList/noticeWrite")
-	public String noticeWriteOk(Principal principal, Model model,MultipartFile file, @PathVariable("title") String title,
-																							 @PathVariable("content") String content) {
+	public String noticeWriteOk(Principal principal, Model model, MultipartFile file,
+			@PathVariable("title") String title, @PathVariable("content") String content) {
 
 		String msg = "";
 		String url = "";
 		int result = 0;
-		
-		
+
 		if (principal == null) {
-			
+
 			msg = "세션이 만료되었습니다.";
 			url = "/";
-			
+
 		} else {
-			
+
 			Member member = null;
 			String memberid = principal.getName();
 			member = memberService.getMemberById(memberid);
-			
+
 			String uploadFolder = "D:\\A_TeachingMaterial\\6.JspSpring\\workspace\\springProj2\\src\\main\\webapp\\resources\\upload";
 			File FFF = new File();
-		
 
 			if (result < 1) {
 				msg = "글 작성이 실패했습니다.";
@@ -126,10 +159,10 @@ public class BoardController {
 				url = "/자유게시판";
 			}
 		}
-		
+
 		model.addAttribute("msg", msg);
 		model.addAttribute("url", url);
-		
+
 		return "/common/redirect";
 	}
 
@@ -154,20 +187,19 @@ public class BoardController {
 	// 자유게시판 글쓰기
 	@PostMapping("/freeBoardList/freeBoardWrite")
 	public String freeBoardWriteOk(Principal principal, Model model, @RequestParam("title") String title,
-																	 @RequestParam("content") String content) {
-		
+			@RequestParam("content") String content) {
+
 		String msg = "";
 		String url = "";
 		int result = 0;
-		
-		
+
 		if (principal == null) {
-			
+
 			msg = "세션이 만료되었습니다.";
 			url = "/";
-			
+
 		} else {
-			
+
 			Member member = null;
 			String memberid = principal.getName();
 			member = memberService.getMemberById(memberid);
@@ -189,10 +221,10 @@ public class BoardController {
 				url = "/자유게시판";
 			}
 		}
-		
+
 		model.addAttribute("msg", msg);
 		model.addAttribute("url", url);
-		
+
 		return "/common/redirect";
 	}
 
