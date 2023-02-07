@@ -1,0 +1,20 @@
+<?xml version="1.0" encoding="UTF-8" ?>
+<!DOCTYPE mapper
+PUBLIC "-//mybatis.org//DTD Mapper 3.0//EN"
+"http://mybatis.org/dtd/mybatis-3-mapper.dtd">
+
+<mapper namespace="kr.or.kosa.dao.BoardDao">
+
+<!-- 기숙사 위치값 가져오기 -->
+<select id="eveningCall" resultType="kr.or.kosa.dto.Domitory">
+<!-- SELECT universitycode, domitiryname, domitiryfloor, ROUND(domitorylatitude,3), ROUND(domitorylogitude,3) -->
+SELECT UNIVERSITYCODE,DOMITORYIDX,DOMITORYNAME,DOMITORYFLOOR,DOMITORYLATITUDE,DOMITORYLOGITUDE
+ FROM DOMITORY
+</select>
+
+</mapper>
+
+
+
+
+

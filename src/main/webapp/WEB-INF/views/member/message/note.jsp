@@ -72,6 +72,10 @@
           table {
             font-size: 18px;
           }
+          
+          #reading{
+          	text-align : left;
+          }
 
           .infoTd {
             text-align: left;
@@ -83,6 +87,12 @@
           .table>:not(caption)>*>*{
           	background-color: #F8F9FA;
           	border:none;
+          }
+          
+          #hjbtn:hover{
+          	background-color: #ff7600 ;
+            border-color: #ff7600 ;
+            transition: 0.3s;
           }
         </style>
       </head>
@@ -101,39 +111,38 @@
                 <ol>
                   <li><a href="/">Home</a></li>
                   <li><a href="/message">쪽지함</a></li>
-                  <li>쪽지쓰기</li>
                 </ol>
-                <h2>쪽지쓰기</h2>
+                <h2>쪽지</h2>
 
                 <div class="row no-gutters" style="margin-top:10px; margin-bottom : 25px; ">
-                  <div id="contentBox" class="col-lg-6" style="margin: auto; background: #F8F9FA; box-shadow: 0 4px 16px rgb(0 0 0 / 10%); border-radius: 9px;">
-                    <h2 id="mptitle" style="margin :15px 0 20px 0">쪽지 작성</h2>
+                  <div id="contentBox" class="col-lg-6" style="min-height:600px; margin: auto; padding: 50px; padding-bottom : 15px; background: #F8F9FA; box-shadow: 0 4px 16px rgb(0 0 0 / 10%); border-radius: 9px;">
+                    <h2 id="mptitle" style="margin :15px 0 20px 0"><i class="bi bi-envelope"></i></h2>
 
                     <!-- content start -->
                     <div id="content">
-                    <form action="/message/writing" method="POST">
-                    <table class="table table-warning" id='writingTable'>
+                    <table class="table table-warning" id='reading'>
                     <tbody>
+                     <tr>
+                        	<td colspan="2" style="text-align:center"><h2>${msg.messageTitle}</h2></td>
+                        </tr>
                       <tr>
-                        <td><b>받는 사람 ID</b></td>
-                        <div class="col-lg-4">
-                        	<td><input type="text" name="rmemberId" class="form-control g-3" value="${receiver}"></td>
-                        </div>
+                        <td><b>보낸 사람 ID</b>&nbsp;&nbsp;<span id="smember">${msg.smemberId}</span></td>
+                        <td><b>받는 사람 ID</b>&nbsp;&nbsp;${msg.rmemberId}</td>
+                       
                       </tr>
                       <tr>
-                        <td colspan="3">
-                        	<input class="form-control" name="messageTitle" maxlength='30' placeholder='제목을 입력하세요' exampleFormControlTextarea1" rows="1">
-                        </td>
-                      </tr>
-                      <tr>
+                      <hr>
                         <td colspan="2">
-                        	<textarea class="form-control" name="messageContent" placeholder="내용을 입력하세요" id="exampleFormControlTextarea1" rows="3"></textarea>
+                        <hr>
+                        	${msg.messageContent}<br>
+                        	<hr>
                         </td>
+                      </tr>
+                      <tr>
+                      	<td colspan="2" style="text-align : right"><button id="hjbtn" class="btn btn-dark">답장하기</button></td>
                       </tr>
                     </tbody>
                   </table>
-                  <button type="submit" id="writing" style="width:130px; height:20; border-radius: 50px; padding:5px; border: none; background-color:#E96B56; color:white; margin-top:0px; margin-bottom:15px; font-size: large;">쪽지 보내기</button>
-                  </form>
                   
                       
                     </div>
@@ -179,6 +188,10 @@
         crossorigin="anonymous"></script>
 
 	<script>
-
+        var receiver = $('#smember').html().trim();
+        console.log(receiver);
+        $('#hjbtn').click(function(){
+            location.href = "/message/writing/" + receiver;
+        })
 	</script>
  </html>

@@ -1,9 +1,7 @@
 package kr.or.kosa.controller;
 
 import java.util.ArrayList;
-import java.util.HashMap;
 import java.util.List;
-import java.util.Map;
 
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.http.HttpStatus;
@@ -11,10 +9,12 @@ import org.springframework.http.ResponseEntity;
 import org.springframework.web.bind.annotation.GetMapping;
 import org.springframework.web.bind.annotation.PathVariable;
 import org.springframework.web.bind.annotation.RequestMapping;
+import org.springframework.web.bind.annotation.RequestMethod;
+import org.springframework.web.bind.annotation.RequestParam;
 import org.springframework.web.bind.annotation.RestController;
 
 import kr.or.kosa.dto.Board;
-import kr.or.kosa.dto.Post;
+import kr.or.kosa.dto.Reply;
 import kr.or.kosa.service.BoardService;
 
 @RestController
@@ -51,7 +51,7 @@ public class BoardController_Rest {
 			return new ResponseEntity<List<Post>>(boardContent, HttpStatus.BAD_REQUEST);
 		}
 	}
-	*/
+	
 	
 	// 게시판 상세보기
 		@GetMapping("{allBoard}/{boardIdx}")
@@ -69,9 +69,10 @@ public class BoardController_Rest {
 			}
 		}
 	
-	/*
+	*/
+	
 	// 게시판 댓글 보기
-	@GetMapping("{allBoard}/{idx}")
+	@GetMapping("/{allBoard}/{idx}/{idx}")
 	public ResponseEntity<List<Reply>> replyContent(@PathVariable("idx") String idx) {
 		
 		System.out.println("도는겨마는겨");
@@ -86,6 +87,34 @@ public class BoardController_Rest {
 			return new ResponseEntity<List<Reply>>(replyContent, HttpStatus.BAD_REQUEST);
 		}
 	}
-	*/
+	
 
+		// 게시판 상세보기
+		//@GetMapping("/eveningCall/{arr}")
+//		public ResponseEntity<String> boardContent(@PathVariable double[] arr) {
+//			System.out.println("lat : "+ arr);
+//			double lat = arr[0]; //latitude
+//			double lon = arr[1]; //logitude
+//			
+//			String success = "점호가 완료되었습니다.";
+//			String fail = "점호가 불가능한 지역입니다.";
+//			String result;
+//			try {
+//				result = boardService.eveningCall(lat, lon);
+//				return new ResponseEntity<String>(success, HttpStatus.OK);
+//			} catch (Exception e) {
+//				return new ResponseEntity<String>(fail, HttpStatus.BAD_REQUEST);
+//			}
+//		}
+		
+		 @RequestMapping(value = "/eveningCall", method = RequestMethod.POST)
+		   public String eveningCall(@RequestParam(value = "report[]") double[] report) {
+			 System.out.println("lat : "+ report);
+			 double lat = report[0];
+			 System.out.println("lat : "+ lat);
+			 double lon = report[1];
+			 System.out.println("lon : "+ lon);
+			 String result = boardService.eveningCall(lat, lon);
+			 return result;
+		 }
 }
