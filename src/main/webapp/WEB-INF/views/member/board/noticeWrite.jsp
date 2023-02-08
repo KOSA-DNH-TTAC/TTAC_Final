@@ -71,15 +71,15 @@
           <div class="col-lg-12 entries">
 
             <article class="entry">
-				<form action="#" method="POST" enctype="multipart/form-data">
+				<form action="/noticeList/noticeWrite" method="POST" enctype="multipart/form-data">
 					<div class="mb-3">
 					  <label for="title" class="form-label">게시글 제목</label>
-					  <input type="text" class="form-control" id="title" placeholder="제목을 작성해주세요." autofocus required>
+					  <input type="text" class="form-control" name="title" id="title" placeholder="제목을 작성해주세요." autofocus required>
 					</div>
 					
 					<div class="mb-3">
 					<label for="file" class="form-label">파일</label>
-					<input type="file" class="form-control" id="file" name="file">
+					<input type="file" class="form-control" id="file" name="file" Multiple>
 					</div>
 					
 					<div class="mb-3">
