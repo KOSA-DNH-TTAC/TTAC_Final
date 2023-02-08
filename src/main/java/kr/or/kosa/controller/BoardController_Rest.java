@@ -115,6 +115,8 @@ public class BoardController_Rest {
 			 double lon = report[1];
 			 System.out.println("lon : "+ lon);
 			 String result = boardService.eveningCall(lat, lon);
+			 //점호한 인원 정보 데이터 인서트
+			 //boardService.eveningCall(lat, lon);
 			 return result;
 		 }
 }

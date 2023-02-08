@@ -100,15 +100,14 @@ public class FrontController {
 	public String messageSend(Message message, Model model) {
 		//쪽지 보내기
 		System.out.println(message);
-		
+		int result = 0;
 		String contents = message.getMessageContent().replace("\r\n","<br>");
 		message.setMessageContent(contents);
-		msgservice.sendMsg(message);
-		int result = 0;
+		result = msgservice.sendMsg(message);
 		String msg = "";
 		String url = "";
 		String icon = "";
-		if (result < 1) {
+		if (result > 0) {
 			icon = "success";
 			msg = "쪽지 전송 성공";
 			url = "/message";
@@ -187,6 +186,12 @@ public class FrontController {
 	public String facility() {
 		
 		return "member/facilityReport";
+	}
+	
+	@GetMapping("/GPT")
+	public String GPT() {
+		
+		return "member/GPT";
 	}
 	
 }
