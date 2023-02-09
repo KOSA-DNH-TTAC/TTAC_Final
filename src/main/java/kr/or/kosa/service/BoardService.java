@@ -12,6 +12,7 @@ import org.springframework.stereotype.Service;
 import kr.or.kosa.dao.BoardDao;
 import kr.or.kosa.dto.Board;
 import kr.or.kosa.dto.Domitory;
+import kr.or.kosa.dto.File;
 import kr.or.kosa.dto.Post;
 import kr.or.kosa.dto.Reply;
 
@@ -111,6 +112,24 @@ public class BoardService {
 		return result;
 	}
 	
+	// 파일첨부 글쓰기
+	public int fileWrite(File file) {
+
+		int result = 0;
+
+		try {
+			BoardDao boardDao = sqlSession.getMapper(BoardDao.class);
+			result = boardDao.fileInsert(file);
+
+		} catch (ClassNotFoundException e) {
+			e.printStackTrace();
+		} catch (SQLException e) {
+			e.printStackTrace();
+		}
+
+		return result;
+	}
+
 	// 점호 위치값 비교하기
 	public String eveningCall(double lat, double lon) {
 		BoardDao boardDao = sqlSession.getMapper(BoardDao.class);

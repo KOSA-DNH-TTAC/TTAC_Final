@@ -188,4 +188,10 @@ public class FrontController {
 		return "member/facilityReport";
 	}
 	
+	@GetMapping("/GPT")
+	public String GPT() {
+		
+		return "member/GPT";
+	}
+	
 }
