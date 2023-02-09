@@ -74,7 +74,7 @@
 										<article class="entry">
 
 											<div class="entry-title">
-												<a href="blog-single.html">${productList.title}</a>
+												<a href="/productBoardList/${productList.idx}">${productList.title}</a>
 											</div>
 
 											<div class="entry-meta">
