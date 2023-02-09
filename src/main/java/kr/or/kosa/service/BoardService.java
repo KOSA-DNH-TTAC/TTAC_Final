@@ -15,6 +15,7 @@ import kr.or.kosa.dto.Domitory;
 import kr.or.kosa.dto.File;
 import kr.or.kosa.dto.Post;
 import kr.or.kosa.dto.Reply;
+import kr.or.kosa.dto.RollCall;
 
 @Service
 public class BoardService {
@@ -161,5 +162,19 @@ public class BoardService {
 		
 		return alert;
 	}
+	
+	// 점호완료시 DB에 회원 점호데이터 인서트
+		public String eveningCallInsert(String memberid, String universitycode) {
+			BoardDao boardDao = sqlSession.getMapper(BoardDao.class);
+			System.out.println("memberid 서비스 옴?");
+			int  rollcall = boardDao.eveningCallInsert(memberid, universitycode);
+			
+			if( rollcall >=1) {
+				System.out.println("성공");
+			}
+			System.out.println("rollcall : " + rollcall);
+			
+			return null;
+		}
 
 }

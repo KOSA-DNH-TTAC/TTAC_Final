@@ -6,6 +6,7 @@ import java.util.List;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.http.HttpStatus;
 import org.springframework.http.ResponseEntity;
+import org.springframework.security.core.context.SecurityContextHolder;
 import org.springframework.web.bind.annotation.GetMapping;
 import org.springframework.web.bind.annotation.PathVariable;
 import org.springframework.web.bind.annotation.RequestMapping;
@@ -15,6 +16,7 @@ import org.springframework.web.bind.annotation.RestController;
 
 import kr.or.kosa.dto.Board;
 import kr.or.kosa.dto.Reply;
+import kr.or.kosa.security.User;
 import kr.or.kosa.service.BoardService;
 
 @RestController
@@ -110,13 +112,18 @@ public class BoardController_Rest {
 		 @RequestMapping(value = "/eveningCall", method = RequestMethod.POST)
 		   public String eveningCall(@RequestParam(value = "report[]") double[] report) {
 			 System.out.println("lat : "+ report);
+			 User user = (User) SecurityContextHolder.getContext().getAuthentication().getPrincipal();
+			 String memberId = user.getMemberId();
+			 String unicode = user.getUniversityCode();
+			 System.out.println("memberid : "+memberId);
 			 double lat = report[0];
 			 System.out.println("lat : "+ lat);
 			 double lon = report[1];
 			 System.out.println("lon : "+ lon);
 			 String result = boardService.eveningCall(lat, lon);
+			 boardService.eveningCall(lat, lon);
 			 //점호한 인원 정보 데이터 인서트
-			 //boardService.eveningCall(lat, lon);
+			 boardService.eveningCallInsert(memberId, unicode);
 			 return result;
 		 }
 }

@@ -27,6 +27,7 @@
 	<!-- <security:intercept-url pattern="/nightOver" access="permitAll" />
 	<security:intercept-url pattern="/mealticket" access="hasRole('ROLE_MEMBER')" />-->
 	<security:intercept-url pattern="/mypage" access="isAuthenticated()" /> 
+	<security:intercept-url pattern="/eveningCall" access="isAuthenticated()" /> 
 	
 	<!-- 로그인
 	<security:form-login login-page="/userlogin" login-processing-url="/userlogin" default-target-url="/"/>
