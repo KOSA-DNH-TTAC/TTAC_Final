@@ -12,7 +12,7 @@ public class Reply {
 	private int idx;
 	private String memberId;
 	private String replyContent;
-	private Date replyDate;
+	private String replyDate;
 	private int status;
 
 }

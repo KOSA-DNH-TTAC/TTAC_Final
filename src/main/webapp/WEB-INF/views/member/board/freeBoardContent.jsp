@@ -30,6 +30,7 @@
 <link href="/resources/assets/vendor/boxicons/css/boxicons.min.css" rel="stylesheet">
 <link href="/resources/assets/vendor/glightbox/css/glightbox.min.css" rel="stylesheet">
 <link href="/resources/assets/vendor/swiper/swiper-bundle.min.css" rel="stylesheet">
+<script src="https://kit.fontawesome.com/2a013a2563.js" crossorigin="anonymous"></script>
 <link href="/resources/assets/css/yb.css" rel="stylesheet"> 
 <!-- Template Main CSS File -->
 <link href="/resources/assets/css/style.css" rel="stylesheet">
@@ -194,19 +195,42 @@
 					url : '/'+ param + '/' + idx + '/' + idx,
 					contentType : "application/json; charset=utf-8",
 					success : function(data) {
-						console.log(data);
+											
 						var replyContent = "";
 						$('#replyDiv').empty();
 		                  
 		                $.each(data, function(index) {
+		                	
+		                	if (data[index].parentReplyIdx == 0) {
+		                	
 		                	replyContent +=
 		 	                
-		 	                '<li class="ybreply2"><b value="' 
+		 	                '<li class="ybreply2"><button class="toMessage" seq="' 
 		 	                + data[index].memberId 
-		 	                + '">익명</b></li><li>'
+		 	                + '" data-replyIdx="'
+		 	                + data[index].replyIdx
+		 	                + '" data-parentReplyIdx="'
+		 	                + data[index].parentReplyIdx
+		 	                + '">익명&nbsp;</b></li><li class="replyDate">'
+		 	                + data[index].replyDate
+		 	                + '</li><li><br>'
 		 	                + data[index].replyContent 
-		 	                + '</li>' + '<hr>'
-		                    })
+		 	                + '</li> <button class="rere">댓글 더보기&nbsp;'
+		 	                + '<i class="fa-solid fa-caret-down"></i></button>' + '<hr>'
+		 	                /* + 대댓글append'<div></div>' */
+		                	}
+		                
+		                // parentsIdx가 있을 경우 대댓글 추가
+		                // function parentReply() {
+		 	                
+		 	                var replyIdx = $(this).attr('data-replyIdx');
+							var parentReplyIdx = $(this).attr('data-parentReplyIdx');
+
+		                    
+						}
+		                
+		                
+		                )
 
 						$('#replyDiv')
 							.append(replyContent);
@@ -214,6 +238,19 @@
 						})
 
 			});
+		
+		// 클릭시 익명 회원의 memberId값 받아오기
+		$(document).on(					
+			"click",
+			".toMessage", function toMessage() {
+				var toMessage = $(this).attr('seq');
+				console.log("memberId: " + toMessage);
+				var replyIdx = $(this).attr('data-replyIdx');
+				console.log("replyIdx: " + replyIdx);
+				var parentReplyIdx = $(this).attr('data-parentReplyIdx');
+				console.log("parentReplyIdx: " + parentReplyIdx);
+		})
+		
 			
 			</script>
 
