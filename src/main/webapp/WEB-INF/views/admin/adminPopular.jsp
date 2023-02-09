@@ -75,6 +75,7 @@
 				<ul class="sub ">
 					<li ><a href="/adminAnalyze">시설관리</a></li>
 					<li ><a href="/adminEnroll">시설등록</a></li>
+					<li ><a href="/adminDomitory">기숙사(동) 등록</a></li>
 				</ul>	
 			</li>
 			<li class="smenu"><a href="adminCalendar" >일정관리</a></li>

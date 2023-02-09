@@ -88,8 +88,8 @@
 $(document).ready(function(){
 	var tabledata = "";
 	$.ajax({
-		type : "POST",
-		url : "/itemPrint",
+		type : "GET",
+		url : "adminAnalyze/domitoryPrint",
 		/* contentType: "application/x-www-form-urlencoded; charset=UTF-8", */ 
 		success : function(data) {
 			console.log("data : "+data);
@@ -97,8 +97,9 @@ $(document).ready(function(){
 			 $.each(data, function(index) {
 	                tabledata +=
 	                	'<tr class="tar">'+
-	                	'<td class="tal" style="text-align:center;">'+data[index].facilityIdx+'</td>'+
-						'<td class="tal" style="text-align:center;">'+data[index].facilityName+'</td>'+
+	                	'<td class="tal" style="text-align:center;">'+data[index].domitoryIdx+'</td>'+
+						'<td class="tal" style="text-align:center;">'+data[index].domitoryName+'</td>'+
+						'<td class="tal" style="text-align:center;">'+data[index].domitoryFloor+'</td>'+
 						'</tr>'
 	                    })
 			$('#table').empty();
@@ -111,25 +112,28 @@ $(document).ready(function(){
 });
 
 function mySpaceReport(){
-	var item = $('#item').val();
 	var tabledata = "";
+	var item = $('#item').val();
+	var item2 = $('#item2').val();
+	var domitory=[item, item2];
 	console.log(item);
 	$.ajax({
 		type : "POST",
-		url : "/insertItem",
+		url : "/adminAnalyze/insertDomitory",
 		/* contentType: "application/x-www-form-urlencoded; charset=UTF-8", */
 		data : {
-			"item" : item,
+			"domitory" : domitory,
 		}, 
 		success : function(data) {
 			console.log("data : "+data);
-			alert("시설물 등록성공");
 			$('#item').val('');
+			$('#item2').val('');
 			 $.each(data, function(index) {
-	                tabledata +=
+				 tabledata +=
 	                	'<tr class="tar">'+
-	                	'<td class="tal" style="text-align:center;">'+data[index].facilityIdx+'</td>'+
-						'<td class="tal" style="text-align:center;">'+data[index].facilityName+'</td>'+
+	                	'<td class="tal" style="text-align:center;">'+data[index].domitoryIdx+'</td>'+
+						'<td class="tal" style="text-align:center;">'+data[index].domitoryName+'</td>'+
+						'<td class="tal" style="text-align:center;">'+data[index].domitoryFloor+'</td>'+
 						'</tr>'
 	                    })
 			$('#table').empty();
@@ -139,16 +143,15 @@ function mySpaceReport(){
 			alert(data+": 등록실패");
 		}
 	});
- }	   
-
+ }	     
 </script>
 
 </div>	<div class="con">
-		<h3 class="sub_h3">시설관리 <span>시설등록</span></h3>	
+		<h3 class="sub_h3">시설관리 <span>기숙사(동) 등록</span></h3>	
 
 <div class="bmb">
 	<div class="bgtab">
-		<h3 class="txtin"> 건물 정보 / 시설물 등록</h3>	
+		<h3 class="txtin"> 건물(동) 정보 등록</h3>	
 	</div>
 	<table class="srch_table mb20">	
 		<colgroup>
@@ -161,8 +164,11 @@ function mySpaceReport(){
 		</colgroup>
 		<tr>
 
-			<th>시설물</th>
-			<td><input type="text" id="item" class="w40"/>
+			<th>기숙사(동) 명</th>
+			<td><input type="text" id="item" class="w40"/>	
+			</td>
+			<th>층 수</th>
+			<td><input type="text" id="item2" class="w40"/>
 				<span><button type="button" class="btn_sumit2" onclick="mySpaceReport();">등록</button></span>	
 			</td>
 		</tr>
@@ -173,7 +179,7 @@ function mySpaceReport(){
 <div><!--날짜지정검색시-->
 	<div class="bgtab bgtab2 ofh">
 		<div class="w50 fl">			
-			<p class="txtin wtTxt fsbb">등록 시설물 정보</p>
+			<p class="txtin wtTxt fsbb">등록 건물(동) 정보</p>
 		</div>
 	</div>
 </div><!--날짜지정검색시 e-->
@@ -182,8 +188,9 @@ function mySpaceReport(){
 <table class="comm_table mb">
 	<thead>
 		<tr>
-			<th>순번</th>	
-			<th>등록 시설물</th>				
+			<th>순번</th>
+			<th>등록 건물(동) 정보</th>		
+			<th>층 수</th>			
 		</tr>
 	</thead>
 	<tbody id="table">

@@ -36,6 +36,12 @@ public interface BoardDao {
 	//점호하기
 	public Domitory eveningCall(double lat, double lon);
 	
-	//점호하기
+	//점호데이터 넣기
 	public int eveningCallInsert(String memberId, String universitycode);
+	
+	//점호 데이터 중복 체킹
+	public RollCall eveningCallCompare(String memberId, String universitycode);
+	
+	//건물(동) 리스트 가져오기
+	public List<Domitory> selectDomitory();
 }
