@@ -74,7 +74,8 @@
 										<article class="entry">
 
 											<div class="entry-title">
-												<a href="/productBoardList/${productList.idx}">${productList.title}</a>
+											<span id="sold">판매중</span><h2 class="entry-title">              
+                     						&nbsp;<a href="/productBoardList/${productList.idx}">${productList.title}</a></h2>
 											</div>
 
 											<div class="entry-meta">
