@@ -1,14 +1,11 @@
 package kr.or.kosa.controller;
 
-import java.security.Principal;
 import java.util.Locale;
 
 import org.slf4j.Logger;
 import org.slf4j.LoggerFactory;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.security.access.prepost.PreAuthorize;
-import org.springframework.security.core.annotation.AuthenticationPrincipal;
-import org.springframework.security.core.context.SecurityContextHolder;
 import org.springframework.stereotype.Controller;
 import org.springframework.ui.Model;
 import org.springframework.web.bind.annotation.GetMapping;
@@ -16,9 +13,7 @@ import org.springframework.web.bind.annotation.PathVariable;
 import org.springframework.web.bind.annotation.PostMapping;
 import org.springframework.web.servlet.ModelAndView;
 
-import kr.or.kosa.dto.Member;
 import kr.or.kosa.dto.Message;
-import kr.or.kosa.security.User;
 import kr.or.kosa.service.MemberService;
 import kr.or.kosa.service.MessageService;
 
@@ -152,6 +147,7 @@ public class FrontController {
 		return "admin/adminMealCoupon";
 	}
 	
+	@PreAuthorize("isAuthenticated()")
 	@GetMapping("/adminMember")
 	public String adminMember() {
 		
@@ -180,6 +176,13 @@ public class FrontController {
 	public String calendar() {
 		
 		return "member/memberCalendar";
+	}
+	
+	@PreAuthorize("isAuthenticated()")
+	@GetMapping("/adminDomitory")
+	public String adminDomitory() {
+		
+		return "admin/adminDomitory";
 	}
 	
 	@GetMapping("/facility")
