@@ -8,6 +8,7 @@ import java.util.List;
 import org.slf4j.Logger;
 import org.slf4j.LoggerFactory;
 import org.springframework.beans.factory.annotation.Autowired;
+import org.springframework.security.access.prepost.PreAuthorize;
 import org.springframework.security.core.annotation.AuthenticationPrincipal;
 import org.springframework.stereotype.Controller;
 import org.springframework.ui.Model;
@@ -39,6 +40,8 @@ public class MemberController {
 	
 	private static final Logger logger = LoggerFactory.getLogger(FrontController.class);
 	
+	
+	@PreAuthorize("isAuthenticated()")
 	@GetMapping("/nightOver")
 	public String application() {
 		
@@ -46,17 +49,31 @@ public class MemberController {
 	}
 	
 	@PostMapping("/nightOver")
-	public String nightOver(SleepOver over, MultipartFile file) {
-		System.out.println("외박신청 들어옴");
-		System.out.println(over);
-		System.out.println(file);
+	public String nightOver(SleepOver over, MultipartFile file, Model model) {
+		int result = 0;
 		try {
-			sleepoverService.insertSleepOver(over, file);
+			result = sleepoverService.insertSleepOver(over, file);
 		} catch (ParseException e) {
-			// TODO Auto-generated catch block
 			e.printStackTrace();
 		}
-		return "/";
+		
+		String msg = "";
+		String url = "/";
+		String icon = "";
+		if(result == 400) {
+			icon = "error";
+			msg = "외박 신청 가능 시간이 아닙니다.";
+		} else if (result == 1) {
+			icon = "success";
+			msg = "외박 신청 완료!";
+		} else{
+			icon = "error";
+			msg = "문제가 발생했어요";
+		}
+		model.addAttribute("msg", msg);
+		model.addAttribute("url", url);
+		model.addAttribute("icon", icon);
+		return "/common/redirect";
 	}
 	
 	@GetMapping("/mealticket")

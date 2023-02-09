@@ -1,5 +1,6 @@
 package kr.or.kosa.service;
 
+import java.io.IOException;
 import java.text.ParseException;
 import java.text.SimpleDateFormat;
 import java.util.Calendar;
@@ -12,6 +13,7 @@ import org.springframework.stereotype.Service;
 import org.springframework.web.multipart.MultipartFile;
 import org.springframework.web.multipart.commons.CommonsMultipartFile;
 
+import kr.or.kosa.aws.AwsS3;
 import kr.or.kosa.dao.SleepOverDao;
 import kr.or.kosa.dto.SleepOver;
 import kr.or.kosa.dto.SleepOverTime;
@@ -43,24 +45,33 @@ public class SleepOverService {
         //유저가 속한 학교의 sleepOverTime을 가져옴
         SleepOverTime overtime = overdao.getSleepOverTime(user.getUniversityCode());
         
-		//외박 신청 시간이 아니면 reject...?
+		//외박 신청 시간이 아니면 reject할것임
 //        String started = formatter.parse(overtime.getStartTime());
         if(!now.after(overtime.getStartTime()) && !now.before(overtime.getEndTime())){
-            System.out.println("시간 범위 안에 있음");
-            
-            
-        }else {
         	System.out.println("시간 범위 밖임");
-        	result = 404;
+        	result = 400;
         	return result;
         }
-		
+        
 		over.setUniversityCode(user.getUniversityCode());
 		over.setMemberId(user.getMemberId());
-		if(file.getSize() != 0) {
+
+		//파일 업로드
+		if (file.getSize() != 0) {
 			over.setSleepOverFileName(file.getOriginalFilename());
 			over.setSleepOverFileSize((int)file.getSize());
+			
+			try {
+				AwsS3 awsS3 = AwsS3.getInstance();
+				String route = user.getUniversityCode()+"/sleepOver/" + user.getMemberId() + "/" +file.getOriginalFilename();
+				System.out.println(route);
+				awsS3.upload(file, route);
+				
+			} catch (IOException e) {
+				e.printStackTrace();
+			}
 		}
+		result = overdao.insertSleepOver(over);
 		
 		return result;
 	}
