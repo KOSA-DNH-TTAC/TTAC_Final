@@ -87,10 +87,21 @@ public class BoardService {
 	// 댓글 목록 보기
 	public List<Reply> replyContent(String idx) {
 		BoardDao boardDao = sqlSession.getMapper(BoardDao.class);
-		System.out.println("t서비스??");
 		List<Reply> replyContent = boardDao.replyContent(idx);
-		System.out.println("replyContent: " + replyContent);
 		
+		Date nowDate = new Date();
+
+		SimpleDateFormat simpleDateFormat = new SimpleDateFormat("YYYY-MM-dd");
+		String formatNowDate = simpleDateFormat.format(nowDate);
+
+		for (Reply r : replyContent) {
+			String replyDate = r.getReplyDate().substring(0, 10);
+			if (formatNowDate.equals(replyDate)) {
+				r.setReplyDate(r.getReplyDate().substring(11, 16));
+			} else {
+				r.setReplyDate(replyDate.substring(5));
+			}
+		}
 		return replyContent;
 	}
 

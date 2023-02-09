@@ -99,7 +99,6 @@ div.divider {
 
 div.wrap {
     box-sizing: border-box;
-    /* font-size: 0; */
     text-align: center;
     white-space: nowrap;
     overflow: hidden;
@@ -111,8 +110,16 @@ div.wrap {
 }
 
 .ybreply2 {
+	display: inline-flex;
+	float: left;
 	padding: 0;
 	margin-bottom: 10px;
+}
+
+.ybreply3 {
+	display: inline-flex;
+	float: left;
+	padding: 0;
 }
 
 #sold {
@@ -121,8 +128,33 @@ div.wrap {
 	border-collapse: collapse;
 	border: 1px solid #e96b56;
 	color: #e96b56;
-	font-size: 13px;
+	font-size: 12px;
 	border-radius: 20px;
-	padding: 3px;
+	padding: 4px 6px 4px 6px;
 	
+}
+
+.replyDate {
+	vertical-align: middle;
+	color: #BABABA;
+	font-size: 13px;
+  	top: 50%;
+  	/* transform: translateY(-50%); */	
+}
+
+.toMessage {
+	padding: 0; 
+	list-style: none;
+	background-color: rgba(0, 0, 0, 0);
+	border: none;
+	font-weight: bold;
+}
+
+.rere {
+	font-size: 12px;
+	color: #e96b56;
+	padding: 0; 
+	list-style: none;
+	background-color: rgba(0, 0, 0, 0);
+	border: none;
 }
