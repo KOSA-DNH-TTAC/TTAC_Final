@@ -79,8 +79,6 @@ public class BoardController {
 	public String boardContent(Model model, @PathVariable("idx") String idx,
 			@PathVariable("boardName") String boardName) {
 		
-		System.out.println("컨트롤러야!!!!!!!!!!!!!!!!!!!");
-
 		String param = "";
 		String path = "";
 
@@ -100,13 +98,9 @@ public class BoardController {
 
 		List<Post> boardContent = boardService.boardContent(idx);
 		model.addAttribute("boardContent", boardContent);
-		
-		System.out.println("boardContent: " + boardContent);
 
 		String viewPage = "member/board/" + path;
-		
-		System.out.println("return path: " + viewPage);
-		
+			
 		return viewPage;
 	}
 

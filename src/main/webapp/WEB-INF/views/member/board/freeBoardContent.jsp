@@ -172,7 +172,7 @@
 	<!-- Template Main JS File -->
 	<script src="/resources/assets/js/main.js"></script>
 
-<script type="text/javascript">
+	<script type="text/javascript">
 			
 		$(document).ready(			
 			function replyContent(dd) {
@@ -190,9 +190,6 @@
 					param = "productBoardList";
 				}
 				
-				console.log("올보드..: " + param);
-				console.log("인덱스..: " + idx)
-
 				$.ajax({
 					type : "get",
 					url : '/'+ param + '/' + idx + '/' + idx,
@@ -211,9 +208,7 @@
 		 	                + data[index].replyContent 
 		 	                + '</li>' + '<hr>'
 		                    })
-		                
-		                
-		                
+
 						$('#replyDiv')
 							.append(replyContent);
 							}
