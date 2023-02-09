@@ -9,9 +9,9 @@ public class SleepOver {
 
 	private String universityCode;
 	private String memberId;
-	private Date startDate;
-	private Date endDate;
-	private int status;
+	private String startDate;
+	private String endDate;
+	private String status;
 	private String sleepOverReason;
 	private String sleepOverConfirm;
 	private int sleepOverFileIdx;
