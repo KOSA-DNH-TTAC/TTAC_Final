@@ -1,7 +1,9 @@
 package kr.or.kosa.controller;
 
 import java.util.ArrayList;
+import java.util.HashMap;
 import java.util.List;
+import java.util.Map;
 
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.http.HttpStatus;
@@ -41,58 +43,36 @@ public class BoardController_Rest {
 		}
 	}
 
-	/*
-	// 게시판 상세보기
-	@GetMapping("{allBoard}/{boardIdx}")
-	public ResponseEntity<List<Post>> boardContent(@PathVariable("boardIdx") String boardIdx) {
-		List<Post> boardContent = new ArrayList<Post>();
-		try {
-			boardContent = boardService.boardContent(boardIdx);
-			return new ResponseEntity<List<Post>>(boardContent, HttpStatus.OK);
-		} catch (Exception e) {
-			return new ResponseEntity<List<Post>>(boardContent, HttpStatus.BAD_REQUEST);
-		}
-	}
-	
-	
-	// 게시판 상세보기
-		@GetMapping("{allBoard}/{boardIdx}")
-		public ResponseEntity<Map<String, Object>> boardAndReply(@PathVariable("boardIdx") String boardIdx) {
-			Map<String, Object> map = new HashMap<>();
-			
-			try {
-				map.put("boardContent", boardService.boardContent(boardIdx));
-				map.put("replyContent", boardService.replyContent(boardIdx));
-				return new ResponseEntity<>(map, HttpStatus.OK);
-			} catch (Exception e) {
-				map.put("boardContent", boardService.boardContent(boardIdx));
-				map.put("replyContent", boardService.replyContent(boardIdx));
-				return new ResponseEntity<>(map, HttpStatus.BAD_REQUEST);
-			}
-		}
-	
-	*/
-	
+
 	// 게시판 댓글 보기
-	@GetMapping("/{allBoard}/{idx}/{idx}")
+	@GetMapping("/{allBoard}/board/{idx}")
 	public ResponseEntity<List<Reply>> replyContent(@PathVariable("idx") String idx) {
-		
-		System.out.println("도는겨마는겨");
-		
 		List<Reply> replyContent = new ArrayList<Reply>();
 		try {
-			System.out.println("asdf");
 			replyContent = boardService.replyContent(idx);
-			System.out.println("replyContent: " + replyContent);
 			return new ResponseEntity<List<Reply>>(replyContent, HttpStatus.OK);
 		} catch (Exception e) {
 			return new ResponseEntity<List<Reply>>(replyContent, HttpStatus.BAD_REQUEST);
 		}
 	}
 	
+	
+	// 게시판 대댓글 보기
+	@GetMapping("/{allBoard}/{idx}/reply/{replyIdx}")
+	public ResponseEntity<List<Reply>> reReplyContent(@PathVariable("idx") String idx,
+			@PathVariable("replyIdx") String replyIdx) {
+		List<Reply> reReplyContent = new ArrayList<Reply>();
+		try {
+			reReplyContent = boardService.reReplyContent(replyIdx);
+			return new ResponseEntity<List<Reply>>(reReplyContent, HttpStatus.OK);
+		} catch (Exception e) {
+			return new ResponseEntity<List<Reply>>(reReplyContent, HttpStatus.BAD_REQUEST);
+		}
+	}
+	
 
-		// 게시판 상세보기
-		//@GetMapping("/eveningCall/{arr}")
+	// 게시판 상세보기
+	// @GetMapping("/eveningCall/{arr}")
 //		public ResponseEntity<String> boardContent(@PathVariable double[] arr) {
 //			System.out.println("lat : "+ arr);
 //			double lat = arr[0]; //latitude
@@ -108,22 +88,22 @@ public class BoardController_Rest {
 //				return new ResponseEntity<String>(fail, HttpStatus.BAD_REQUEST);
 //			}
 //		}
-		
-		 @RequestMapping(value = "/eveningCall", method = RequestMethod.POST)
-		   public String eveningCall(@RequestParam(value = "report[]") double[] report) {
-			 System.out.println("lat : "+ report);
-			 User user = (User) SecurityContextHolder.getContext().getAuthentication().getPrincipal();
-			 String memberId = user.getMemberId();
-			 String unicode = user.getUniversityCode();
-			 System.out.println("memberid : "+memberId);
-			 double lat = report[0];
-			 System.out.println("lat : "+ lat);
-			 double lon = report[1];
-			 System.out.println("lon : "+ lon);
-			 String result = boardService.eveningCall(lat, lon);
-			 boardService.eveningCall(lat, lon);
-			 //점호한 인원 정보 데이터 인서트
-			 boardService.eveningCallInsert(memberId, unicode);
-			 return result;
-		 }
+
+	@RequestMapping(value = "/eveningCall", method = RequestMethod.POST)
+	public String eveningCall(@RequestParam(value = "report[]") double[] report) {
+		System.out.println("lat : " + report);
+		User user = (User) SecurityContextHolder.getContext().getAuthentication().getPrincipal();
+		String memberId = user.getMemberId();
+		String unicode = user.getUniversityCode();
+		System.out.println("memberid : " + memberId);
+		double lat = report[0];
+		System.out.println("lat : " + lat);
+		double lon = report[1];
+		System.out.println("lon : " + lon);
+		String result = boardService.eveningCall(lat, lon);
+		boardService.eveningCall(lat, lon);
+		// 점호한 인원 정보 데이터 인서트
+		boardService.eveningCallInsert(memberId, unicode);
+		return result;
+	}
 }
