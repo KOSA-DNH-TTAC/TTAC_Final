@@ -1,0 +1,24 @@
+<?xml version="1.0" encoding="UTF-8" ?>
+<!DOCTYPE mapper
+PUBLIC "-//mybatis.org//DTD Mapper 3.0//EN"
+"http://mybatis.org/dtd/mybatis-3-mapper.dtd">
+
+<mapper namespace="kr.or.kosa.dao.SleepOverDao">
+		 
+	<!-- 외박신청 -->
+	<insert id="insertSleepOver" parameterType="kr.or.kosa.dto.SleepOver">
+		INSERT INTO SLEEPOVER(memberid, universitycode, startdate, enddate, STATUS, SLEEPOVERREASON, sleepoverfilename, sleepoverfilesize)
+	VALUES(#{memberId}, #{universityCode}, #{startDate}, #{endDate}, #{status}, #{sleepOverReason}, #{sleepOverFileName}, #{sleepOverFileSize})
+	</insert>
+	
+	<!-- 외박 수정(update) : 사감이 승인을 했을 경우 -->
+	<update id="updateSleepOver" parameterType="kr.or.kosa.dto.SleepOver">
+	
+	</update>
+	
+	<!-- 외박 신청 가능 시간 -->
+	<select id="getSleepOverTime" parameterType="String" resultType="kr.or.kosa.dto.SleepOverTime">
+		SELECT universitycode, startTime, endTime FROM SLEEPOVERTIME WHERE universitycode = #{universitycode};	
+	</select>
+	
+</mapper>
