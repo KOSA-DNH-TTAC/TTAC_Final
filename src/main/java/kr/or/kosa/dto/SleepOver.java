@@ -11,7 +11,7 @@ public class SleepOver {
 	private String memberId;
 	private String startDate;
 	private String endDate;
-	private String status;
+	private int status;
 	private String sleepOverReason;
 	private String sleepOverConfirm;
 	private int sleepOverFileIdx;

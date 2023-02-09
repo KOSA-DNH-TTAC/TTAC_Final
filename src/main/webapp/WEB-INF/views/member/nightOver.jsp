@@ -66,7 +66,7 @@
     </section>
   
   	<div id="box">
-      <form action="" method="POST">
+      <form action="" method="POST" enctype="multipart/form-data">
         <div id="date">
           <label class="label" for="start">시작 날짜</label>
           <label class="label" for="end">종료 날짜</label>
@@ -77,12 +77,11 @@
         <input class="form-select1 datepick" type="date" id="start" name="startDate" value="2000-10-04">
         <input class="form-select1 datepick" type="date" id="end" name="endDate" value="2000-10-04">
         <select class="form-select1" aria-label="Default select example" name="status">
-          <option selected>외박</option>
-          <option value="1">외박</option>
-          <option value="2">장기외박</option>
+          <option value="11" selected>외박</option>
+          <option value="12">장기외박</option>
         </select>
         <label class="form-select1" for="file" style="background-color:#FFC107; border-radius: 9px; cursor: pointer; justify-content: center;">파일 업로드</label>
-        <input class="file" id="file" name="sleepOverFileName" type="file" style="display:none;">
+        <input class="file" id="file" name="file" type="file" style="display:none;">
         </div>
         <div id="reason">
           <div class="form-floating">

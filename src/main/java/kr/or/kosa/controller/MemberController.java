@@ -1,6 +1,7 @@
 package kr.or.kosa.controller;
 
 import java.security.Principal;
+import java.text.ParseException;
 import java.util.ArrayList;
 import java.util.List;
 
@@ -15,12 +16,14 @@ import org.springframework.web.bind.annotation.PathVariable;
 import org.springframework.web.bind.annotation.PostMapping;
 import org.springframework.web.bind.annotation.RequestMapping;
 import org.springframework.web.bind.annotation.RequestParam;
+import org.springframework.web.multipart.MultipartFile;
 
 import kr.or.kosa.dto.Member;
 import kr.or.kosa.dto.SleepOver;
 import kr.or.kosa.security.CustomUser;
 import kr.or.kosa.service.MemberService;
 import kr.or.kosa.service.PaymentService;
+import kr.or.kosa.service.SleepOverService;
 
 @Controller
 public class MemberController {
@@ -31,6 +34,9 @@ public class MemberController {
 	@Autowired
 	PaymentService paymentService;
 	
+	@Autowired
+	SleepOverService sleepoverService;
+	
 	private static final Logger logger = LoggerFactory.getLogger(FrontController.class);
 	
 	@GetMapping("/nightOver")
@@ -40,9 +46,16 @@ public class MemberController {
 	}
 	
 	@PostMapping("/nightOver")
-	public String nightOver(SleepOver over) {
+	public String nightOver(SleepOver over, MultipartFile file) {
 		System.out.println("외박신청 들어옴");
 		System.out.println(over);
+		System.out.println(file);
+		try {
+			sleepoverService.insertSleepOver(over, file);
+		} catch (ParseException e) {
+			// TODO Auto-generated catch block
+			e.printStackTrace();
+		}
 		return "/";
 	}
 	
