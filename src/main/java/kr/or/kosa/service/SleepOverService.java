@@ -5,6 +5,7 @@ import java.text.ParseException;
 import java.text.SimpleDateFormat;
 import java.util.Calendar;
 import java.util.Date;
+import java.util.List;
 
 import org.apache.ibatis.session.SqlSession;
 import org.springframework.beans.factory.annotation.Autowired;
@@ -14,7 +15,9 @@ import org.springframework.web.multipart.MultipartFile;
 import org.springframework.web.multipart.commons.CommonsMultipartFile;
 
 import kr.or.kosa.aws.AwsS3;
+import kr.or.kosa.dao.MemberDao;
 import kr.or.kosa.dao.SleepOverDao;
+import kr.or.kosa.dto.Member;
 import kr.or.kosa.dto.SleepOver;
 import kr.or.kosa.dto.SleepOverTime;
 import kr.or.kosa.security.User;
@@ -76,9 +79,31 @@ public class SleepOverService {
 		return result;
 	}
 	
+	
+	//외박 신청 조회
+	public List<SleepOver> getTodaysList(){
+		User user = (User) SecurityContextHolder.getContext().getAuthentication().getPrincipal();
+		String universitycode = user.getUniversityCode();
+		SleepOverDao overdao = sqlsession.getMapper(SleepOverDao.class);
+		MemberDao memberdao = sqlsession.getMapper(MemberDao.class);
+		
+		List<SleepOver> list = overdao.getTodaysSleepOver(universitycode);
+		
+		for(SleepOver over : list) {
+			Member member = memberdao.getMember(over.getMemberId());
+			String username = member.getName();
+			over.setUsername(username);
+		}
+		
+		return list;
+	}
+	
 	//외박 수정(update) : 사감이 승인을 했을 경우
-	public int updateSleepOver(SleepOver over) {
+	public int confirm(int idx) {
 		int result = 0;
+		
+		SleepOverDao overdao = sqlsession.getMapper(SleepOverDao.class);
+		result = overdao.confirmSleepOver(idx);
 		
 		return result;
 	}
