@@ -8,6 +8,7 @@ import kr.or.kosa.dto.Domitory;
 import kr.or.kosa.dto.File;
 import kr.or.kosa.dto.Post;
 import kr.or.kosa.dto.Reply;
+import kr.or.kosa.dto.RollCall;
 
 public interface BoardDao {
 	
@@ -34,4 +35,7 @@ public interface BoardDao {
 	
 	//점호하기
 	public Domitory eveningCall(double lat, double lon);
+	
+	//점호하기
+	public int eveningCallInsert(String memberId, String universitycode);
 }

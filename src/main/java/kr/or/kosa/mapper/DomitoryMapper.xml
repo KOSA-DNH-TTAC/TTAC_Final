@@ -12,6 +12,11 @@ SELECT UNIVERSITYCODE,DOMITORYIDX,DOMITORYNAME,DOMITORYFLOOR,DOMITORYLATITUDE,DO
  FROM DOMITORY
 </select>
 
+<insert id="eveningCallInsert" parameterType="kr.or.kosa.dto.RollCall">
+INSERT INTO ROLLCALL (MEMBERID,UNIVERSITYCODE,ROLLCALLDATE)
+ VALUES(#{param1},#{param2},NOW());
+</insert>
+
 </mapper>
 
 
