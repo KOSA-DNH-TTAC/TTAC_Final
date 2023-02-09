@@ -10,6 +10,7 @@ import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Service;
 
 import kr.or.kosa.dao.BoardDao;
+import kr.or.kosa.dao.FacilityDao;
 import kr.or.kosa.dto.Board;
 import kr.or.kosa.dto.Domitory;
 import kr.or.kosa.dto.File;
@@ -79,17 +80,17 @@ public class BoardService {
 	public List<Post> boardContent(String idx) {
 		BoardDao boardDao = sqlSession.getMapper(BoardDao.class);
 		List<Post> boardContent = boardDao.boardContent(idx);
-		
+
 		boardContent.get(0).setWriteDate(boardContent.get(0).getWriteDate().substring(2, 16));
-				
+
 		return boardContent;
 	}
-	
+
 	// 댓글 목록 보기
 	public List<Reply> replyContent(String idx) {
 		BoardDao boardDao = sqlSession.getMapper(BoardDao.class);
 		List<Reply> replyContent = boardDao.replyContent(idx);
-		
+
 		Date nowDate = new Date();
 
 		SimpleDateFormat simpleDateFormat = new SimpleDateFormat("YYYY-MM-dd");
@@ -104,6 +105,27 @@ public class BoardService {
 			}
 		}
 		return replyContent;
+	}
+
+	// 대댓글 목록 보기
+	public List<Reply> reReplyContent(String replyIdx) {
+		BoardDao boardDao = sqlSession.getMapper(BoardDao.class);
+		List<Reply> reReplyContent = boardDao.reReplyContent(replyIdx);
+
+		Date nowDate = new Date();
+
+		SimpleDateFormat simpleDateFormat = new SimpleDateFormat("YYYY-MM-dd");
+		String formatNowDate = simpleDateFormat.format(nowDate);
+
+		for (Reply r : reReplyContent) {
+			String replyDate = r.getReplyDate().substring(0, 10);
+			if (formatNowDate.equals(replyDate)) {
+				r.setReplyDate(r.getReplyDate().substring(11, 16));
+			} else {
+				r.setReplyDate(replyDate.substring(5));
+			}
+		}
+		return reReplyContent;
 	}
 
 	// 자유게시판 글쓰기
@@ -123,7 +145,7 @@ public class BoardService {
 
 		return result;
 	}
-	
+
 	// 파일첨부 글쓰기
 	public int fileWrite(File file) {
 
@@ -150,31 +172,53 @@ public class BoardService {
 		System.out.println("replyContent: " + domitory);
 		double domitoryLat = domitory.getDomitoryLatitude();
 		double domitoryLon = domitory.getDomitoryLogitude();
-		
+
 		String alert = "SUCCESS";
-		if(!((domitoryLat - lat)<0.005)) {
+		if (!((domitoryLat - lat) < 0.005)) {
 			alert = "FAIL";
 		}
-		if(!((domitoryLon - lon)<0.005)) {
+		if (!((domitoryLon - lon) < 0.005)) {
 			alert = "FAIL";
 		}
-		
-		
+
 		return alert;
 	}
-	
+
 	// 점호완료시 DB에 회원 점호데이터 인서트
-		public String eveningCallInsert(String memberid, String universitycode) {
-			BoardDao boardDao = sqlSession.getMapper(BoardDao.class);
-			System.out.println("memberid 서비스 옴?");
-			int  rollcall = boardDao.eveningCallInsert(memberid, universitycode);
-			
-			if( rollcall >=1) {
-				System.out.println("성공");
-			}
-			System.out.println("rollcall : " + rollcall);
-			
-			return null;
+	public String eveningCallInsert(String memberid, String universitycode) {
+		BoardDao boardDao = sqlSession.getMapper(BoardDao.class);
+		System.out.println("memberid 서비스 옴?");
+		int rollcall = boardDao.eveningCallInsert(memberid, universitycode);
+
+		if (rollcall >= 1) {
+			System.out.println("성공");
 		}
+		
+	// 점호완료시 DB에 회원 점호데이터 인서트
+		public String eveningCallCompare(String memberid, String universitycode) {
+			BoardDao boardDao = sqlSession.getMapper(BoardDao.class);
+			System.out.println("Camopare 서비스 옴?");
+			RollCall  rollcall = boardDao.eveningCallCompare(memberid, universitycode);
+			String unicode = rollcall.getUniversityCode();
+			String date = rollcall.getRollCallDate();
+			String dbmemberid = rollcall.getMemberId();
+			
+			System.out.println("date : "+date);
+			System.out.println("unicode : "+unicode);
+			System.out.println("dbmemberid : "+ dbmemberid);
+			
+			String result = "SUCCESS"; 
+			System.out.println("점호한 회원데이터 : "+memberid+"/"+universitycode +"===="+ "DB에서 가져온 비교데이터 : "+ dbmemberid+"/"+unicode);
+			if(memberid.equals(dbmemberid) && unicode.equals(universitycode)) {
+				System.out.println("이미 DB에 "+memberid+" 회원의 데이터 있음");
+				result = "FAIL";
+			}
+			System.out.println("DB에서 받아온 점호 데이터 : " + rollcall);
+			
+			return result;
+		}
+
+		return null;
+	}
 
 }

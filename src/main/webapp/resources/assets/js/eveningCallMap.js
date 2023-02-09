@@ -95,12 +95,12 @@
 				$.ajax({
 					type : "POST",
 					url : "/eveningCall",
+					contentType: "application/x-www-form-urlencoded; charset=UTF-8",
 					data : {
 						"report" : report,
 					}, 
 					success : function(data) {
-						alert(data+": 점호 완료되었습니다.");
-						//alert("인증번호가 발송되었습니다.");
+						alert(data);
 						$('#location').empty();
 						$('#location').append("<b>위도 : </b>"+lat+"  <b>경도 : </b>"+lon);
 					},
