@@ -5,9 +5,8 @@ PUBLIC "-//mybatis.org//DTD Mapper 3.0//EN"
 
 <mapper namespace="kr.or.kosa.dao.BoardDao">
 
-<!-- 기숙사 위치값 가져오기 -->
-<select id="eveningCall" resultType="kr.or.kosa.dto.Domitory">
-<!-- SELECT universitycode, domitiryname, domitiryfloor, ROUND(domitorylatitude,3), ROUND(domitorylogitude,3) -->
+<!-- 건물(동) 정보 가져오기 -->
+<select id="selectDomitory" resultType="kr.or.kosa.dto.Domitory">
 SELECT UNIVERSITYCODE,DOMITORYIDX,DOMITORYNAME,DOMITORYFLOOR,DOMITORYLATITUDE,DOMITORYLOGITUDE
  FROM DOMITORY
 </select>
@@ -16,6 +15,14 @@ SELECT UNIVERSITYCODE,DOMITORYIDX,DOMITORYNAME,DOMITORYFLOOR,DOMITORYLATITUDE,DO
 INSERT INTO ROLLCALL (MEMBERID,UNIVERSITYCODE,ROLLCALLDATE)
  VALUES(#{param1},#{param2},NOW());
 </insert>
+
+<!-- 회원 점호 이력 읽어오기 -->
+<select id="eveningCallCompare" resultType="kr.or.kosa.dto.RollCall">
+SELECT  ROLLCALLIDX,MEMBERID,UNIVERSITYCODE,ROLLCALLDATE 
+FROM ROLLCALL
+WHERE MEMBERID = #{param1} AND UNIVERSITYCODE = #{param2}
+ORDER BY ROLLCALLIDX DESC LIMIT 1;
+</select>
 
 </mapper>
 

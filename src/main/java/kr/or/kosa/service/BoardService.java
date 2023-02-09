@@ -10,6 +10,7 @@ import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Service;
 
 import kr.or.kosa.dao.BoardDao;
+import kr.or.kosa.dao.FacilityDao;
 import kr.or.kosa.dto.Board;
 import kr.or.kosa.dto.Domitory;
 import kr.or.kosa.dto.File;
@@ -164,6 +165,30 @@ public class BoardService {
 			System.out.println("rollcall : " + rollcall);
 			
 			return null;
+		}
+		
+	// 점호완료시 DB에 회원 점호데이터 인서트
+		public String eveningCallCompare(String memberid, String universitycode) {
+			BoardDao boardDao = sqlSession.getMapper(BoardDao.class);
+			System.out.println("Camopare 서비스 옴?");
+			RollCall  rollcall = boardDao.eveningCallCompare(memberid, universitycode);
+			String unicode = rollcall.getUniversityCode();
+			String date = rollcall.getRollCallDate();
+			String dbmemberid = rollcall.getMemberId();
+			
+			System.out.println("date : "+date);
+			System.out.println("unicode : "+unicode);
+			System.out.println("dbmemberid : "+ dbmemberid);
+			
+			String result = "SUCCESS"; 
+			System.out.println("점호한 회원데이터 : "+memberid+"/"+universitycode +"===="+ "DB에서 가져온 비교데이터 : "+ dbmemberid+"/"+unicode);
+			if(memberid.equals(dbmemberid) && unicode.equals(universitycode)) {
+				System.out.println("이미 DB에 "+memberid+" 회원의 데이터 있음");
+				result = "FAIL";
+			}
+			System.out.println("DB에서 받아온 점호 데이터 : " + rollcall);
+			
+			return result;
 		}
 
 }
