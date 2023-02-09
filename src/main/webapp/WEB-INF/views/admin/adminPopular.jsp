@@ -424,7 +424,7 @@
 							+ "<td>" + over.username + "</td>"
 							+ "<td>" + over.sleepOverReason + "</td>"
 							+ "<td><button onclick='confirm(this)'>승인</button></td>"
-							+ "<input type='hidden' value='" + over.idx + "' >"
+							+ "<input type='hidden' value='" + over.idx + "' ></tr>"
 					})
 
 					$('#nightoverN').append(Ncontents);
@@ -436,7 +436,7 @@
 							+ "<td>" + over.endDate.slice(0, 11) + "</td>"
 							+ "<td>" + over.username + "</td>"
 							+ "<td>" + over.sleepOverReason + "</td>"
-							+ "<td>승인<td>"
+							+ "<td>승인완료</td></tr>"
 					})
 
 					$('#nightoverY').append(Ycontents);
