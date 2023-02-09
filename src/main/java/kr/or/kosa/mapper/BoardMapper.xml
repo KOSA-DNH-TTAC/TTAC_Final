@@ -43,7 +43,14 @@ WHERE p.IDX=#{idx}
 <select id="replyContent" parameterType="String" resultType="kr.or.kosa.dto.Reply">
 SELECT replyidx, parentreplyidx, idx, memberid, replycontent, replydate FROM REPLY
 WHERE idx=#{idx} AND STATUS='21'
-ORDER BY replydate ASC;
+ORDER BY replydate ASC
+</select>
+
+<!-- 대댓글 목록 -->
+<select id="reReplyContent" parameterType="String" resultType="kr.or.kosa.dto.Reply">
+SELECT replyidx, parentreplyidx, idx, memberid, replycontent, replydate FROM REPLY
+WHERE parentreplyidx = #{replyidx}
+ORDER BY replydate ASC
 </select>
 
 <!-- 글 작성 (파일첨부 x) -->
