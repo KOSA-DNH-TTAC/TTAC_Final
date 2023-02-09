@@ -16,8 +16,8 @@
 <script src="http://code.jquery.com/jquery-1.9.1.js"></script>
 
 <!-- Favicons -->
-<link href="resources/assets/img/favicon.png" rel="icon">
-<link href="resources/assets/img/apple-touch-icon.png" rel="apple-touch-icon">
+<link href="/resources/assets/img/favicon.png" rel="icon">
+<link href="/resources/assets/img/apple-touch-icon.png" rel="apple-touch-icon">
 
 <!-- Google Fonts -->
 <link
@@ -30,6 +30,7 @@
 <link href="/resources/assets/vendor/boxicons/css/boxicons.min.css" rel="stylesheet">
 <link href="/resources/assets/vendor/glightbox/css/glightbox.min.css" rel="stylesheet">
 <link href="/resources/assets/vendor/swiper/swiper-bundle.min.css" rel="stylesheet">
+<script src="https://kit.fontawesome.com/2a013a2563.js" crossorigin="anonymous"></script>
 <link href="/resources/assets/css/yb.css" rel="stylesheet"> 
 <!-- Template Main CSS File -->
 <link href="/resources/assets/css/style.css" rel="stylesheet">
@@ -189,31 +190,126 @@
 					param = "productBoardList";
 				}
 				
+				// 댓글 Ajax
 				$.ajax({
 					type : "get",
-					url : '/'+ param + '/' + idx + '/' + idx,
+					url : '/'+ param + '/board/' + idx,
 					contentType : "application/json; charset=utf-8",
 					success : function(data) {
-						console.log(data);
+											
 						var replyContent = "";
 						$('#replyDiv').empty();
 		                  
 		                $.each(data, function(index) {
+		                	
+		                	if (data[index].parentReplyIdx == 0) {
+		                	
 		                	replyContent +=
 		 	                
-		 	                '<li class="ybreply2"><b value="' 
+		 	                '<li class="ybreply2"><button class="toMessage" seq="' 
 		 	                + data[index].memberId 
-		 	                + '">익명</b></li><li>'
+		 	                + '" data-replyIdx="'
+		 	                + data[index].replyIdx
+		 	                + '" data-parentReplyIdx="'
+		 	                + data[index].parentReplyIdx
+		 	                + '">익명&ensp;</b></div></li><span class="replyDate">'
+		 	                + data[index].replyDate
+		 	                + '</span><div style="clear:both"><li class="replyContent">'
 		 	                + data[index].replyContent 
-		 	                + '</li>' + '<hr>'
-		                    })
+		 	                + '</li><br><div class="replyDown"><button class="rere" data-replyIdx2="'
+		 	                + data[index].replyIdx
+		 	                + '">댓글 더보기&nbsp;'
+		 	                + '<i class="fa-solid fa-caret-down"></i></button></div>'
+		 	                + '<div id="replyIdx2" style="display:none">$"'
+		 	                + data[index].replyIdx
+		 	                + '"}</div>'
+		 	                + '<div class="rereply"></div><hr>'
+		                	}
+		                
+		                // parentsIdx가 있을 경우 대댓글 추가
+		                // function parentReply() {
+		 	                
+		 	                var replyIdx = $(this).attr('data-replyIdx');
+							var parentReplyIdx = $(this).attr('data-parentReplyIdx');
 
-						$('#replyDiv')
-							.append(replyContent);
-							}
 						})
 
-			});
+						$('#replyDiv').append(replyContent);
+							}
+						})
+						
+					
+				
+	});
+		
+		// 클릭시 익명 회원의 memberId값 받아오기
+		$(document).on(					
+			"click",
+			".toMessage", function toMessage() {
+				var toMessage = $(this).attr('seq');
+				var replyIdx = $(this).attr('data-replyIdx');
+				var parentReplyIdx = $(this).attr('data-parentReplyIdx');
+		})
+		
+		// 더보기 클릭시 대댓글 토글
+		$(document).on(					
+			"click",
+			".rere", function rere() {
+ 				 
+ 				var boardName = $('#boardName').text();
+				var idx = $('#idx').text();
+				var myReplyIdx = $(this).attr('data-replyIdx2');
+				console.log("replyIdx: " + myReplyIdx);
+				var reReplyContent = "";
+				
+				// 대댓글 Ajax
+				$.ajax({
+					type : "get",
+					url : '/'+ param + '/' + idx + '/reply/' + myReplyIdx,
+					contentType : "application/json; charset=utf-8",
+					success : function(data) {
+						
+						$('.rereply').empty();
+						
+		                $.each(data, function(index) {
+		                	if (myReplyIdx == data[index].parentReplyIdx) {
+		                	
+		                		
+		                	reReplyContent +=
+		 	                '<div class="rere5"><hr><li class="ybreply2"><i class="bi bi-arrow-return-right">&nbsp;</i><button class="toMessage2" seq="' 
+		 	                + data[index].memberId 
+		 	                + '" data-replyIdx="'
+		 	                + data[index].replyIdx
+		 	                + '" data-parentReplyIdx="'
+		 	                + data[index].parentReplyIdx
+		 	                + '">익명&nbsp;</b></div></li><span class="replyDate">'
+		 	                + data[index].replyDate
+		 	                + '</span><div style="clear:both"><li class="replyContent">'
+		 	                + data[index].replyContent
+		 	                + '</li></div>'
+		                	}
+		                
+		             	})
+		             	
+		             	console.log("태그: " + reReplyContent);
+		                $('.rereply').append(reReplyContent);
+		                
+		                $('.replyDown').empty;
+		                $('.replyDown').append(
+		                		
+		                		'<button class="rere" data-replyIdx2="'
+				 	            
+				 	            + '">댓글 접기&nbsp;'
+				 	            + '<i class="fa-solid fa-caret-up"></i></button>'
+		                		
+		                );
+					}
+		})
+    			
+ 				 
+ 				 /* $(".rereply").toggle(); */
+  			});
+		
 			
 			</script>
 

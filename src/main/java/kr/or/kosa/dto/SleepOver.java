@@ -7,14 +7,15 @@ import lombok.Data;
 @Data
 public class SleepOver {
 
+	private int idx;
 	private String universityCode;
 	private String memberId;
-	private Date startDate;
-	private Date endDate;
+	private String startDate;
+	private String endDate;
 	private int status;
 	private String sleepOverReason;
 	private String sleepOverConfirm;
-	private int sleepOverFileIdx;
+//	private int sleepOverFileIdx;
 	private String sleepOverFileName;
 	private int sleepOverFileSize;
 }

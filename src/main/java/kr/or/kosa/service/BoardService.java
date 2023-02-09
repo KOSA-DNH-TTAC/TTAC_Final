@@ -80,20 +80,52 @@ public class BoardService {
 	public List<Post> boardContent(String idx) {
 		BoardDao boardDao = sqlSession.getMapper(BoardDao.class);
 		List<Post> boardContent = boardDao.boardContent(idx);
-		
+
 		boardContent.get(0).setWriteDate(boardContent.get(0).getWriteDate().substring(2, 16));
-				
+
 		return boardContent;
 	}
-	
+
 	// 댓글 목록 보기
 	public List<Reply> replyContent(String idx) {
 		BoardDao boardDao = sqlSession.getMapper(BoardDao.class);
-		System.out.println("t서비스??");
 		List<Reply> replyContent = boardDao.replyContent(idx);
-		System.out.println("replyContent: " + replyContent);
-		
+
+		Date nowDate = new Date();
+
+		SimpleDateFormat simpleDateFormat = new SimpleDateFormat("YYYY-MM-dd");
+		String formatNowDate = simpleDateFormat.format(nowDate);
+
+		for (Reply r : replyContent) {
+			String replyDate = r.getReplyDate().substring(0, 10);
+			if (formatNowDate.equals(replyDate)) {
+				r.setReplyDate(r.getReplyDate().substring(11, 16));
+			} else {
+				r.setReplyDate(replyDate.substring(5));
+			}
+		}
 		return replyContent;
+	}
+
+	// 대댓글 목록 보기
+	public List<Reply> reReplyContent(String replyIdx) {
+		BoardDao boardDao = sqlSession.getMapper(BoardDao.class);
+		List<Reply> reReplyContent = boardDao.reReplyContent(replyIdx);
+
+		Date nowDate = new Date();
+
+		SimpleDateFormat simpleDateFormat = new SimpleDateFormat("YYYY-MM-dd");
+		String formatNowDate = simpleDateFormat.format(nowDate);
+
+		for (Reply r : reReplyContent) {
+			String replyDate = r.getReplyDate().substring(0, 10);
+			if (formatNowDate.equals(replyDate)) {
+				r.setReplyDate(r.getReplyDate().substring(11, 16));
+			} else {
+				r.setReplyDate(replyDate.substring(5));
+			}
+		}
+		return reReplyContent;
 	}
 
 	// 자유게시판 글쓰기
@@ -113,7 +145,7 @@ public class BoardService {
 
 		return result;
 	}
-	
+
 	// 파일첨부 글쓰기
 	public int fileWrite(File file) {
 
@@ -140,31 +172,26 @@ public class BoardService {
 		System.out.println("replyContent: " + domitory);
 		double domitoryLat = domitory.getDomitoryLatitude();
 		double domitoryLon = domitory.getDomitoryLogitude();
-		
+
 		String alert = "SUCCESS";
-		if(!((domitoryLat - lat)<0.005)) {
+		if (!((domitoryLat - lat) < 0.005)) {
 			alert = "FAIL";
 		}
-		if(!((domitoryLon - lon)<0.005)) {
+		if (!((domitoryLon - lon) < 0.005)) {
 			alert = "FAIL";
 		}
-		
-		
+
 		return alert;
 	}
-	
+
 	// 점호완료시 DB에 회원 점호데이터 인서트
-		public String eveningCallInsert(String memberid, String universitycode) {
-			BoardDao boardDao = sqlSession.getMapper(BoardDao.class);
-			System.out.println("memberid 서비스 옴?");
-			int  rollcall = boardDao.eveningCallInsert(memberid, universitycode);
-			
-			if( rollcall >=1) {
-				System.out.println("성공");
-			}
-			System.out.println("rollcall : " + rollcall);
-			
-			return null;
+	public String eveningCallInsert(String memberid, String universitycode) {
+		BoardDao boardDao = sqlSession.getMapper(BoardDao.class);
+		System.out.println("memberid 서비스 옴?");
+		int rollcall = boardDao.eveningCallInsert(memberid, universitycode);
+
+		if (rollcall >= 1) {
+			System.out.println("성공");
 		}
 		
 	// 점호완료시 DB에 회원 점호데이터 인서트
@@ -190,5 +217,8 @@ public class BoardService {
 			
 			return result;
 		}
+
+		return null;
+	}
 
 }

@@ -1,24 +1,30 @@
 package kr.or.kosa.controller;
 
 import java.security.Principal;
+import java.text.ParseException;
 import java.util.ArrayList;
 import java.util.List;
 
 import org.slf4j.Logger;
 import org.slf4j.LoggerFactory;
 import org.springframework.beans.factory.annotation.Autowired;
+import org.springframework.security.access.prepost.PreAuthorize;
 import org.springframework.security.core.annotation.AuthenticationPrincipal;
 import org.springframework.stereotype.Controller;
 import org.springframework.ui.Model;
 import org.springframework.web.bind.annotation.GetMapping;
 import org.springframework.web.bind.annotation.PathVariable;
+import org.springframework.web.bind.annotation.PostMapping;
 import org.springframework.web.bind.annotation.RequestMapping;
 import org.springframework.web.bind.annotation.RequestParam;
+import org.springframework.web.multipart.MultipartFile;
 
 import kr.or.kosa.dto.Member;
+import kr.or.kosa.dto.SleepOver;
 import kr.or.kosa.security.CustomUser;
 import kr.or.kosa.service.MemberService;
 import kr.or.kosa.service.PaymentService;
+import kr.or.kosa.service.SleepOverService;
 
 @Controller
 public class MemberController {
@@ -29,12 +35,45 @@ public class MemberController {
 	@Autowired
 	PaymentService paymentService;
 	
+	@Autowired
+	SleepOverService sleepoverService;
+	
 	private static final Logger logger = LoggerFactory.getLogger(FrontController.class);
 	
+	
+	@PreAuthorize("isAuthenticated()")
 	@GetMapping("/nightOver")
 	public String application() {
 		
 		return "member/nightOver";
+	}
+	
+	@PostMapping("/nightOver")
+	public String nightOver(SleepOver over, MultipartFile file, Model model) {
+		int result = 0;
+		try {
+			result = sleepoverService.insertSleepOver(over, file);
+		} catch (ParseException e) {
+			e.printStackTrace();
+		}
+		
+		String msg = "";
+		String url = "/";
+		String icon = "";
+		if(result == 400) {
+			icon = "error";
+			msg = "외박 신청 가능 시간이 아닙니다.";
+		} else if (result == 1) {
+			icon = "success";
+			msg = "외박 신청 완료!";
+		} else{
+			icon = "error";
+			msg = "문제가 발생했어요";
+		}
+		model.addAttribute("msg", msg);
+		model.addAttribute("url", url);
+		model.addAttribute("icon", icon);
+		return "/common/redirect";
 	}
 	
 	@GetMapping("/mealticket")
@@ -47,9 +86,6 @@ public class MemberController {
 	public String mealticketPayment(@RequestParam("memberid") String memberid, @RequestParam("amount")String amount, Model model) {
 		System.out.println("파라미터로 들어온 ... : " + memberid + " " + amount);
 		String kind = "충전";
-		//페이먼트 서비스?
-		//결제완료하고 포인트 올리고
-		//리다이렉트
 		int result = 0;
 		result = paymentService.insertPayment(memberid, amount, kind);
 		

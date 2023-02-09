@@ -26,9 +26,8 @@ import com.amazonaws.services.s3.model.PutObjectRequest;
 public class AwsS3 {
     //Amazon-s3-sdk 
     private AmazonS3 s3Client;
-    
-    private String accessKey = "1";
-    private String secretKey = "1";
+    private String accessKey = "";
+    private String secretKey = "";
     private Regions clientRegion = Regions.AP_NORTHEAST_2;
     private String bucket = "kosa-s3-bucket";
 
