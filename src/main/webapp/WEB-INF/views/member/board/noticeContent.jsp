@@ -9,7 +9,7 @@
 <meta charset="utf-8">
 <meta content="width=device-width, initial-scale=1.0" name="viewport">
 
-<title>DOTO: 자유게시판</title>
+<title>DOTO: 공지사항</title>
 <meta content="" name="description">
 <meta content="" name="keywords">
 
@@ -57,9 +57,9 @@
 
 				<ol>
 					<li><a href="index.html">Home</a></li>
-					<li>자유게시판</li>
+					<li>공지사항</li>
 				</ol>
-				<h2>자유게시판</h2>
+				<h2>공지사항</h2>
 
 			</div>
 		</section>
@@ -101,25 +101,14 @@
                     </div> 
                     
                     </div>
-                    <b><i class="bi bi-chat-dots"></i>&nbsp
-                     ${boardContent.replyCount}</b>
-                    <hr> 
+                  
                     </c:forEach>
- 	                <div class="box">
- 	                <ul class="ybreply" style=" list-style-type: none;">
-						<div id="replyDiv"></div>
-						
-						<li>
-							<textarea class="form-control" name="messageContent" placeholder="댓글을 입력하세요." id="exampleFormControlTextarea1">
-							</textarea>
-						</li>
-		 	            
-		 	            </ul>
-		 	            
-		 	            </div>
+ 	             
 					</div>
 					<!-- End blog entries list -->
 
+				
+				
 				
 				<div class="col-lg-4">
 
@@ -142,9 +131,11 @@
 
 						</div>
 						<!-- End sidebar -->
+
 					</div>
 					</div>
-				</div>
+					</div>
+
 		</section>
 		<!-- End Blog Section -->
 
@@ -171,51 +162,6 @@
 	<!-- Template Main JS File -->
 	<script src="/resources/assets/js/main.js"></script>
 
-	<script type="text/javascript">
-			
-		$(document).ready(			
-			function replyContent(dd) {
-				
-				var boardName = $('#boardName').text();
-				var idx = $('#idx').text();
-				
-				if (boardName=="공지사항") {
-					param = "noticeList";
-				} else if (boardName=="건의사항") {
-					param = "opinionList";
-				} else if (boardName=="자유게시판") {
-					param = "freeBoardList";
-				} else if (boardName=="거래게시판") {
-					param = "productBoardList";
-				}
-				
-				$.ajax({
-					type : "get",
-					url : '/'+ param + '/' + idx + '/' + idx,
-					contentType : "application/json; charset=utf-8",
-					success : function(data) {
-						console.log(data);
-						var replyContent = "";
-						$('#replyDiv').empty();
-		                  
-		                $.each(data, function(index) {
-		                	replyContent +=
-		 	                
-		 	                '<li class="ybreply2"><b value="' 
-		 	                + data[index].memberId 
-		 	                + '">익명</b></li><li>'
-		 	                + data[index].replyContent 
-		 	                + '</li>' + '<hr>'
-		                    })
-
-						$('#replyDiv')
-							.append(replyContent);
-							}
-						})
-
-			});
-			
-			</script>
 
 </body>
 </html>

@@ -9,7 +9,7 @@
 <meta charset="utf-8">
 <meta content="width=device-width, initial-scale=1.0" name="viewport">
 
-<title>DOTO: 자유게시판</title>
+<title>DOTO: 건의사항</title>
 <meta content="" name="description">
 <meta content="" name="keywords">
 
@@ -57,9 +57,9 @@
 
 				<ol>
 					<li><a href="index.html">Home</a></li>
-					<li>자유게시판</li>
+					<li>건의사항</li>
 				</ol>
-				<h2>자유게시판</h2>
+				<h2>건의사항</h2>
 
 			</div>
 		</section>
@@ -142,9 +142,11 @@
 
 						</div>
 						<!-- End sidebar -->
-					</div>
+
 					</div>
 				</div>
+				</div>
+			
 		</section>
 		<!-- End Blog Section -->
 

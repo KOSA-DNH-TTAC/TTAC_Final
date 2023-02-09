@@ -9,7 +9,7 @@
 <meta charset="utf-8">
 <meta content="width=device-width, initial-scale=1.0" name="viewport">
 
-<title>DOTO: 자유게시판</title>
+<title>DOTO: 거래게시판</title>
 <meta content="" name="description">
 <meta content="" name="keywords">
 
@@ -57,9 +57,9 @@
 
 				<ol>
 					<li><a href="index.html">Home</a></li>
-					<li>자유게시판</li>
+					<li>거래게시판</li>
 				</ol>
-				<h2>자유게시판</h2>
+				<h2>거래게시판</h2>
 
 			</div>
 		</section>
@@ -79,8 +79,8 @@
 						<div class="col-lg-12 entries">
 					
 					<article class="entry">
-					<h2 class="entry-title">              
-                     ${boardContent.title}
+					<span id="sold">판매중</span><h2 class="entry-title">              
+                     &nbsp;${boardContent.title}
                     </h2>
                     <div class="entry-meta">
                     <div id="boardName" style="display:none">${boardContent.boardName}</div>
@@ -142,9 +142,11 @@
 
 						</div>
 						<!-- End sidebar -->
-					</div>
+
 					</div>
 				</div>
+				</div>
+			
 		</section>
 		<!-- End Blog Section -->
 

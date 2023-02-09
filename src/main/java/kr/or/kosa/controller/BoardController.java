@@ -84,6 +84,7 @@ public class BoardController {
 		if (boardName.equals("noticeList")) {
 			param = "공지사항";
 			path = "noticeContent";
+			System.out.println("공지돌고잇니?");
 		} else if (boardName.equals("opinionList")) {
 			param += "건의사항";
 			path = "opinionContent";

@@ -74,7 +74,7 @@
 										<article class="entry">
 
 											<div class="entry-title">
-												<a href="blog-single.html">${opinion.title}</a>
+												<a href="/opinionList/${opinion.idx}">${opinion.title}</a>
 											</div>
 
 											<div class="entry-meta">
