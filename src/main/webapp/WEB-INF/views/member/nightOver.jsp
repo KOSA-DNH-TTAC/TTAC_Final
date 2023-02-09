@@ -31,6 +31,10 @@
   <!-- Template Main CSS File -->
   <link href="resources/assets/css/style.css" rel="stylesheet">
   
+  <!-- Jquery -->
+  <script src="http://code.jquery.com/jquery-latest.min.js"></script>
+
+
   <link href="resources/assets/css/nightOver.css" rel="stylesheet">
 
   <!-- =======================================================
@@ -62,31 +66,33 @@
     </section>
   
   	<div id="box">
-  	<div id="date">
-  		<label class="label" for="start">시작 날짜</label>
-  		<label class="label" for="end">종료 날짜</label>
-  		<label class="label" for="end">신청 구분</label>
-  		<label class="label" for="end">증빙 첨부</label>
-  	</div>
-  	<div id="select">
-		<input class="form-select1" type="date" id="start" name="trip-start" value="2000-10-04">
-		<input class="form-select1" type="date" id="end" name="trip-start" value="2000-10-04">
-		<select class="form-select1" aria-label="Default select example">
-		  <option selected>외박</option>
-		  <option value="1">외박</option>
-		  <option value="2">장기외박</option>
-		</select>
-		<label class="form-select1" for="file" style="background-color:#FFC107; border-radius: 9px; cursor: pointer; justify-content: center;">파일 업로드</label>
-		<input class="file" id="file" type="file" style="display:none;">
-  	</div>
-  	<div id="reason">
-  		<div class="form-floating">
-		  <textarea class="form-control" placeholder="외박 사유를 적어주세요." id="floatingTextarea2" style="height: 100px"></textarea>
-		  <label for="floatingTextarea2">외박 사유를 적어주세요.</label>
-		</div>
-  	</div>
-  	<button type="submit" class="btn btn-warning">신청하기</button>
-  	</div>
+      <form action="" method="POST">
+        <div id="date">
+          <label class="label" for="start">시작 날짜</label>
+          <label class="label" for="end">종료 날짜</label>
+          <label class="label" for="end">신청 구분</label>
+          <label class="label" for="end">증빙 첨부</label>
+        </div>
+        <div id="select">
+        <input class="form-select1 datepick" type="date" id="start" name="startDate" value="2000-10-04">
+        <input class="form-select1 datepick" type="date" id="end" name="endDate" value="2000-10-04">
+        <select class="form-select1" aria-label="Default select example" name="status">
+          <option selected>외박</option>
+          <option value="1">외박</option>
+          <option value="2">장기외박</option>
+        </select>
+        <label class="form-select1" for="file" style="background-color:#FFC107; border-radius: 9px; cursor: pointer; justify-content: center;">파일 업로드</label>
+        <input class="file" id="file" name="sleepOverFileName" type="file" style="display:none;">
+        </div>
+        <div id="reason">
+          <div class="form-floating">
+          <textarea class="form-control" name="sleepOverReason" placeholder="외박 사유를 적어주세요." id="floatingTextarea2" style="height: 100px"></textarea>
+          <label for="floatingTextarea2">외박 사유를 적어주세요.</label>
+        </div>
+        </div>
+        <button type="submit" class="btn btn-warning">신청하기</button>
+        </div>
+      </form>
   </div>
   
   </main>
@@ -113,5 +119,31 @@
   <!-- bootstrap5 -->
 <script src="https://cdn.jsdelivr.net/npm/bootstrap@5.2.3/dist/js/bootstrap.bundle.min.js" integrity="sha384-kenU1KFdBIe4zVF0s0G1M5b4hcpxyD9F7jL+jjXkk+Q2h455rYXK/7HAuoJl+0I4" crossorigin="anonymous"></script>
   
+<script>
+  $(document).ready(function(){
+    setDate();
+  })
+  
+  function setDate(){
+    let today = new Date();
+    // 년도 getFullYear()
+    let year = today.getFullYear(); 
+    // 월 getMonth() (0~11로 1월이 0으로 표현되기 때문에 + 1을 해주어야 원하는 월을 구할 수 있다.)
+    let month = today.getMonth() + 1
+    // 일 getDate()
+    let date = today.getDate(); // 일
+
+    if(month<10){
+      month = "0" + month;
+    }
+    if(date<10){
+      date = "0" + date;
+    }
+
+    let todayFormat = year + "-" + month + "-" + date;
+    console.log(todayFormat);
+    $(".datepick").val(todayFormat);
+  }
+</script>
 
 </html>

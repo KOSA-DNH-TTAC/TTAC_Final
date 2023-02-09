@@ -58,7 +58,6 @@ public class MemberService {
 		MemberDao dao = sqlsession.getMapper(MemberDao.class);
 		List<Post> list = new ArrayList<Post>();
 		list = dao.getPosts(memberid);
-		System.out.println(list);
 		return list;
 	}
 	
@@ -67,7 +66,6 @@ public class MemberService {
 		String rawpwd = member.getPassword();
 		String encodedpwd = bCryptPasswordEncoder.encode(rawpwd);
 		member.setPassword(encodedpwd);
-		System.out.println("서비스에서 암호화 후 : " + member);
 		MemberDao dao = sqlsession.getMapper(MemberDao.class);
 		int result = 0;
 		result = dao.updateMember(member);

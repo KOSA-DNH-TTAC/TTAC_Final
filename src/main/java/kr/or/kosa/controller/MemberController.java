@@ -12,10 +12,12 @@ import org.springframework.stereotype.Controller;
 import org.springframework.ui.Model;
 import org.springframework.web.bind.annotation.GetMapping;
 import org.springframework.web.bind.annotation.PathVariable;
+import org.springframework.web.bind.annotation.PostMapping;
 import org.springframework.web.bind.annotation.RequestMapping;
 import org.springframework.web.bind.annotation.RequestParam;
 
 import kr.or.kosa.dto.Member;
+import kr.or.kosa.dto.SleepOver;
 import kr.or.kosa.security.CustomUser;
 import kr.or.kosa.service.MemberService;
 import kr.or.kosa.service.PaymentService;
@@ -37,6 +39,13 @@ public class MemberController {
 		return "member/nightOver";
 	}
 	
+	@PostMapping("/nightOver")
+	public String nightOver(SleepOver over) {
+		System.out.println("외박신청 들어옴");
+		System.out.println(over);
+		return "/";
+	}
+	
 	@GetMapping("/mealticket")
 	public String mealticket() {
 		
@@ -47,9 +56,6 @@ public class MemberController {
 	public String mealticketPayment(@RequestParam("memberid") String memberid, @RequestParam("amount")String amount, Model model) {
 		System.out.println("파라미터로 들어온 ... : " + memberid + " " + amount);
 		String kind = "충전";
-		//페이먼트 서비스?
-		//결제완료하고 포인트 올리고
-		//리다이렉트
 		int result = 0;
 		result = paymentService.insertPayment(memberid, amount, kind);
 		
