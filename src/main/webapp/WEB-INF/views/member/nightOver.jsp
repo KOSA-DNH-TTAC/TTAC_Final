@@ -90,8 +90,8 @@
         </div>
         </div>
         <button type="submit" class="btn btn-warning">신청하기</button>
-        </div>
       </form>
+      </div>
   </div>
   
   </main>

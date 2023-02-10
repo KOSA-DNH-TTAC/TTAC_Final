@@ -137,12 +137,6 @@ public class FrontController {
 	}
 
 	
-	@GetMapping("/facility")
-	public String facility() {
-		
-		return "member/facilityReport";
-	}
-	
 	@GetMapping("/GPT")
 	public String GPT() {
 		

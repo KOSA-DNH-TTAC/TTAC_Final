@@ -191,31 +191,91 @@
 					param = "productBoardList";
 				}
 				
+				// 댓글 Ajax
 				$.ajax({
 					type : "get",
-					url : '/'+ param + '/' + idx + '/' + idx,
+					url : '/board/'+ param + '/' + idx + '/reply', 
 					contentType : "application/json; charset=utf-8",
 					success : function(data) {
-						console.log(data);
+						
 						var replyContent = "";
+					
 						$('#replyDiv').empty();
-		                  
-		                $.each(data, function(index) {
-		                	replyContent +=
-		 	                
-		 	                '<li class="ybreply2"><b value="' 
-		 	                + data[index].memberId 
-		 	                + '">익명</b></li><li>'
-		 	                + data[index].replyContent 
-		 	                + '</li>' + '<hr>'
-		                    })
+					      
+		                $.each(data.replyContent, function(index, reply) {
+		                	console.log(replyContent)
+		                	if (reply.parentReplyIdx == '0') {
+			                		
+			                	var pIdx = reply.replyIdx;
+			                	
+			                	replyContent +=
+			 	                
+			 	                '<li class="ybreply2"><button class="toMessage" seq="' 
+			 	                + reply.memberId 
+			 	                + '" data-replyIdx="'
+			 	                + reply.replyIdx
+			 	                + '" data-parentReplyIdx="'
+			 	                + reply.parentReplyIdx
+			 	                + '">익명&ensp;</button></li><span class="replyDate">'
+			 	                + reply.replyDate
+			 	                + '</span><div style="clear:both"></div><li class="replyContent">'
+			 	                + reply.replyContent 
+			 	                + '</li><button class="reSubmit">댓글 쓰기</button><br>'
+			 	                + '<div id="replyIdx2" style="display:none">'
+			 	                + reply.replyIdx
+			 	                + '"</div>'
+			 	                + '<hr><div class="rereply">';
+			 	               
+			 	                // 대댓글 출력 시작
+								if(data.reReplyContent[index]!=null){
+									if (data.reReplyContent[index].parentReplyIdx == pIdx) {
+										
+						 	            $.each(data.reReplyContent, function(index, rereply){
+						 	            if(rereply.parentReplyIdx == pIdx){
+						 	               	
+						 	            	replyContent +=
+								 	    
+						 	            	'<li class="ybreply3"><i class="bi bi-arrow-return-right">&ensp;</i><button class="toMessage" seq"'
+								 	        + data.reReplyContent[index].memberId
+								 	        + '" data=replyIdx="'
+								 	        + data.reReplyContent[index].replyIdx
+								 	        + '" data=parentReplyIdx"'
+								 	        + data.reReplyContent[index].parentReplyIdx
+								 	        + '">익명&ensp;</button></li><span class="replyDate">'
+									 	    + data.reReplyContent[index].replyDate
+									 	    + '</span><div style="clear:both"></div><li class="replyContent">&emsp;&ensp;'
+									 	    + data.reReplyContent[index].replyContent 
+									 	    + '</li><br><div class="replyDown">'
+									 	    + '<div id="replyIdx3" style="display:none">'
+									 	    + data.reReplyContent[index].replyIdx
+									 	    + '"</div></div><hr>'
+						 	            }
+					 	                })
+	
+										}								
+								}
+	
+			 	               
+			               }
 
-						$('#replyDiv')
-							.append(replyContent);
-							}
-						})
-
-			});
+					})
+						
+						$('#replyDiv').append(replyContent);
+					}
+				})		
+	});
+		
+		// 클릭시 익명 회원의 memberId값 받아오기
+		$(document).on(					
+			"click",
+			".toMessage", function toMessage() {
+				var toMessage = $(this).attr('seq');
+				var replyIdx = $(this).attr('data-replyIdx');
+				var parentReplyIdx = $(this).attr('data-parentReplyIdx');
+		})
+		
+		
+		
 			
 			</script>
 
