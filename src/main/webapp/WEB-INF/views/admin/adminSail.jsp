@@ -21,19 +21,22 @@
 <link href="/resources/assets/css/category.css" rel="stylesheet">
 <link href="/resources/assets/css/graph.css" rel="stylesheet">
 
-<script type="text/javascript" src="resources/assets/js/pg_script.js"></script>
-<script type="text/javascript" src="resources/assets/js/jquery-2.1.4.js"></script>
+		<!-- <script type="text/javascript" src="resources/assets/js/pg_script.js"></script> -->
+		<!-- <script type="text/javascript" src="resources/assets/js/jquery-2.1.4.js"></script> -->
 
-<script type="text/javascript" src="resources/assets/js/jquery-ui-1.7.2.custom.min.js"></script>
-<!--<script type="text/javascript" src="../js/jquery.menu-aim.js"></script>-->
-<script type="text/javascript" src="resources/assets/js/jquery.tablednd.js"></script>
+		<!-- <script type="text/javascript" src="resources/assets/js/jquery-ui-1.7.2.custom.min.js"></script> -->
+		<!--<script type="text/javascript" src="../js/jquery.menu-aim.js"></script>-->
+		<!-- <script type="text/javascript" src="resources/assets/js/jquery.tablednd.js"></script> -->
 
-<script type="text/javascript" src="resources/assets/js/tytabs.jquery.min.js"></script>
-<script type="text/javascript" src="resources/assets/js/tableDnDblog.js"></script>
+		<!-- <script type="text/javascript" src="resources/assets/js/tytabs.jquery.min.js"></script> -->
+		<!-- <script type="text/javascript" src="resources/assets/js/tableDnDblog.js"></script> -->
 
-<script type="text/javascript" src="resources/assets/js/menu.js"></script> <!-- Resource jQuery -->
-<script type="text/javascript" src="resources/assets/js/modernizr.js"></script> <!-- Modernizr -->
-<script type="text/javascript" src="resources/assets/js/jquery.flot.min.js"></script> <!--gap-->
+		<!--<script type="text/javascript" src="resources/assets/js/menu.js"></script>  Resource jQuery -->
+		<!-- <script type="text/javascript" src="resources/assets/js/modernizr.js"></script> Modernizr -->
+		<!--<script type="text/javascript" src="resources/assets/js/jquery.flot.min.js"></script> gap-->
+
+		<!-- Jquery -->
+		<script src="http://code.jquery.com/jquery-latest.min.js"></script>
 
 
 <body class="">
@@ -266,23 +269,17 @@ $(document).ready(function(){
 
 
 </body>
-<!-- litebox -->
-      <script type="text/javascript" src="resources/assets/js/hs_draggable.js"></script>
-      <script type="text/javascript" src="resources/assets/js/jquery-ui.min.js"></script>
-      <link rel="stylesheet" media="all" href="resources/assets/css/litebox.css" />
-      <script type="text/javascript" src="resources/assets/js/litebox.js"></script>
-      <script type="text/javascript" src="resources/assets/js/backbone.js"></script>
-      <script type="text/javascript" src="resources/assets/js/images-loaded.min.js"></script>
-      <script type="text/javascript">
-         $('.litebox').liteBox();
-      </script>
-<!-- litebox -->
-
-
-
-   <script type="text/javascript">
-      $("#pageup").pageup();
-   </script>
+<!-- litebox 
+		<script type="text/javascript" src="resources/assets/js/hs_draggable.js"></script>
+		<script type="text/javascript" src="resources/assets/js/jquery-ui.min.js"></script>
+		<link rel="stylesheet" media="all" href="/resources/assets/css/litebox.css" />
+		<script type="text/javascript" src="resources/assets/js/litebox.js"></script>
+		<script type="text/javascript" src="resources/assets/js/backbone.js"></script>
+		<script type="text/javascript" src="resources/assets/js/images-loaded.min.js"></script>
+		<script type="text/javascript">
+			$('.litebox').liteBox();
+		</script>
+ litebox -->
    
    
 
