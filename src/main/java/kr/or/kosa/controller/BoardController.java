@@ -5,6 +5,8 @@ import java.security.Principal;
 import java.util.List;
 
 import org.springframework.beans.factory.annotation.Autowired;
+import org.springframework.http.ResponseEntity;
+import org.springframework.security.core.context.SecurityContextHolder;
 import org.springframework.stereotype.Controller;
 import org.springframework.ui.Model;
 import org.springframework.web.bind.annotation.GetMapping;
@@ -17,6 +19,7 @@ import kr.or.kosa.aws.AwsS3;
 import kr.or.kosa.dto.File;
 import kr.or.kosa.dto.Member;
 import kr.or.kosa.dto.Post;
+import kr.or.kosa.security.User;
 import kr.or.kosa.service.BoardService;
 import kr.or.kosa.service.MemberService;
 
@@ -97,7 +100,17 @@ public class BoardController {
 		}
 
 		List<Post> boardContent = boardService.boardContent(idx);
+		List<File> fileContent = boardService.fileContent(idx);
+		
+		if (fileContent.isEmpty()) {
+			System.out.println("파일 ㅇ럾써용");
+		} else {
+			model.addAttribute("fileContent", fileContent);
+		}
+		
+		
 		model.addAttribute("boardContent", boardContent);
+		
 
 		String viewPage = "member/board/" + path;
 			
@@ -133,8 +146,8 @@ public class BoardController {
 		String msg = "";
 		String url = "";
 		String icon = "";
+		String fileName = "";
 		int result = 0;
-		String fileName = file.getOriginalFilename();
 		
 		if (principal == null) {
 
@@ -160,14 +173,16 @@ public class BoardController {
 			
 			if (file.getSize() != 0) {
 				File fileDTO = new File();
+				fileName = file.getOriginalFilename();
 				fileDTO.setFileName(fileName);
 				fileDTO.setFileSize(file.getSize());
 				
 				result = boardService.fileWrite(fileDTO);
+				int idx = boardService.recentFileIdx();
 				
 				try {
 					AwsS3 awsS3 = AwsS3.getInstance();
-					route = member.getUniversityCode()+"/"+ 1 +"/"+fileName;
+					route = member.getUniversityCode()+"/"+ "board" + "/" + idx + "/" +fileName;
 					System.out.println(route);
 					awsS3.upload(file, route);
 					
@@ -214,7 +229,25 @@ public class BoardController {
 	public String freeBoardWrite() {
 		return "member/board/freeBoardWrite";
 	}
-
+	
+	//파일 다운로드
+	@GetMapping("/download/{idx}/{fileName}")
+	public ResponseEntity<byte[]> download(@PathVariable("idx") String idx,
+										   @PathVariable("fileName") String fileName) throws IOException {
+		String url = "";
+		
+		User user = (User) SecurityContextHolder.getContext().getAuthentication().getPrincipal();
+		String university = user.getUniversityCode();
+		
+		url = university +"/"+ "board" + "/" + idx + "/" + fileName;
+		System.out.println("파일다운 url" + url);
+		AwsS3 awsS3 = AwsS3.getInstance();
+        return awsS3.getObject(url);
+    }
+	
+	
+	
+	
 	// 자유게시판 글쓰기
 	@PostMapping("/freeBoardList/freeBoardWrite")
 	public String freeBoardWriteOk(Principal principal, Model model, @RequestParam("title") String title,

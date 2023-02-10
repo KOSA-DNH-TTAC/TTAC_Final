@@ -48,4 +48,10 @@ public interface BoardDao {
 	
 	//건물(동) 리스트 가져오기
 	public List<Domitory> selectDomitory();
+	
+	//최근file 올린 idx 가져오기
+	public int recentFileIdx();
+	
+	// 게시글 상세보기
+	public List<File> fileContent(String idx);
 }
