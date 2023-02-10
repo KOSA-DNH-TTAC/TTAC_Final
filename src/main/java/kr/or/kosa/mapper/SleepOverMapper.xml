@@ -29,4 +29,19 @@ PUBLIC "-//mybatis.org//DTD Mapper 3.0//EN"
 		UPDATE SLEEPOVER SET Sleepoverconfirm='Y' WHERE idx=#{idx}
 	</update>
 	
+	<!-- 외박신청이력 조회 -->
+	<select id="getSleepOverHistory" parameterType="String" resultType="kr.or.kosa.dto.SleepOverHistory">
+		SELECT SLEEPOVERIDX, MEMBERID, UNIVERSITYCODE, STARTDATE, ENDDATE, STATUS, SLEEPOVERREASON, SLEEPOVERCONFIRM
+		FROM SLEEPOVERHISTORY
+		WHERE UNIVERSITYCODE=#{universitycode}
+	</select>
+	
+	<!-- 오늘자 외박 현황 조회(승인된 외박) -->
+	<select id="getTodayHistory" parameterType="String" resultType="kr.or.kosa.dto.SleepOverHistory">
+		SELECT SLEEPOVERIDX, MEMBERID, UNIVERSITYCODE, STARTDATE, ENDDATE, STATUS, SLEEPOVERREASON, SLEEPOVERCONFIRM
+		FROM SLEEPOVERHISTORY
+		WHERE UNIVERSITYCODE=#{universitycode}
+		AND DATE_FORMAT(STARTDATE, '%Y-%m-%d') <![CDATA[>=]]> DATE_FORMAT(now(), '%Y-%m-%d')
+	</select>
+	
 </mapper>
