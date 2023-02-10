@@ -170,19 +170,22 @@ public class BoardService {
 	public String eveningCall(double lat, double lon) {
 		BoardDao boardDao = sqlSession.getMapper(BoardDao.class);
 		System.out.println("서비스 옴?");
-		Domitory domitory = boardDao.eveningCall(lat, lon);
 		User user = (User) SecurityContextHolder.getContext().getAuthentication().getPrincipal();
-		//String unicode = user.getDomitoryName;
-		System.out.println("domitory: " + domitory);
+		String domitoryname = user.getDomitoryName();
+		System.out.println("회원의 domitoryname : "+domitoryname);
+		Domitory domitory = boardDao.eveningCall(domitoryname);
+		System.out.println("셀렉트받아온 domitory: " + domitory);
 		double domitoryLat = domitory.getDomitoryLatitude();
 		double domitoryLon = domitory.getDomitoryLogitude();
 
 		String alert = "SUCCESS";
 		if (!((domitoryLat - lat) < 0.005)) {
 			alert = "FAIL";
+			System.out.println("결과 : "+alert+"lat 계산 : "+(domitoryLat - lat));
 		}
 		if (!((domitoryLon - lon) < 0.005)) {
 			alert = "FAIL";
+			System.out.println("결과 : "+alert+"lon 계산 : "+(domitoryLon - lon));
 		}
 
 		return alert;
@@ -210,18 +213,17 @@ public class BoardService {
 			String unicode = rollcall.getUniversityCode();
 			String date = rollcall.getRollCallDate();
 			String dbmemberid = rollcall.getMemberId();
+			int count = rollcall.getCounting();
 			
 			System.out.println("date : "+date);
 			System.out.println("unicode : "+unicode);
 			System.out.println("dbmemberid : "+ dbmemberid);
+			System.out.println("count : "+ count);
 			
 			String result = "SUCCESS"; 
-			System.out.println("점호한 회원데이터 : "+memberid+"/"+universitycode +"===="+ "DB에서 가져온 비교데이터 : "+ dbmemberid+"/"+unicode);
+			System.out.println("점호한 회원데이터 : "+memberid+"/"+universitycode+"/"+rollcalldate +"===="+ "DB에서 가져온 비교데이터 : "+ dbmemberid+"/"+unicode+"/"+date);
 			//조회된데이터 없으면
-//			if(rollcall == null) {
-//				result = "SUCCESS";
-//			}
-			if(memberid.equals(dbmemberid) && unicode.equals(universitycode) && date.equals(rollcalldate)) {
+			if(count >= 1) {
 				System.out.println("이미 DB에 "+memberid+" 회원의 데이터 있음");
 				result = "FAIL";
 			}
