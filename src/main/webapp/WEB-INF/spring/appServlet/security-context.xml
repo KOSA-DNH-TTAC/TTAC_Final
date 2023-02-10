@@ -38,7 +38,7 @@
 	<!-- 자동로그인 -->
 	<security:remember-me data-source-ref="driverManagerDataSource" token-validity-seconds="604800"/>
 	<!-- 로그아웃 -->
-	<security:logout invalidate-session="true" delete-cookies="remember-me, JSESSION_ID, JSESSIONID"/>
+	<security:logout logout-url="/logout" logout-success-url="/userlogin"  invalidate-session="true" delete-cookies="remember-me, JSESSION_ID, JSESSIONID"/>
 	
 	<!-- access-denied-handler -->
 	<security:access-denied-handler error-page="/error"/>
