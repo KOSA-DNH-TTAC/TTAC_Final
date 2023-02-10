@@ -2,6 +2,8 @@ package kr.or.kosa.dao;
 
 import java.util.List;
 
+import org.apache.ibatis.annotations.Param;
+
 import kr.or.kosa.dto.SleepOver;
 import kr.or.kosa.dto.SleepOverHistory;
 import kr.or.kosa.dto.SleepOverTime;
@@ -25,4 +27,8 @@ public interface SleepOverDao {
 	
 	//외박신청이력 조회
 	public List<SleepOverHistory> getSleepOverHistory(String universitycode);
+	
+	//외박 기간별 검색
+	public List<SleepOverHistory> searchHistoryWithDate(@Param("startdate")String startdate, @Param("enddate")String enddate, @Param("universitycode")String universitycode);
+	
 }

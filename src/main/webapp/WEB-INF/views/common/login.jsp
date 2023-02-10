@@ -36,7 +36,9 @@
   <!-- Jquery -->
   <script  src="http://code.jquery.com/jquery-latest.min.js"></script>
 
-  
+  <style>
+
+  </style>
 </head>
 
 <body>
@@ -66,6 +68,10 @@
                       <div class="form-group mt-2">
                         <input type="password" name="password" class="form-style" placeholder="Password" id="logpass" autocomplete="off">
                         <i class="input-icon uil uil-lock-alt"></i>
+                      </div>
+                      <div class="form-check">
+                        <input class="form-check-input" type="checkbox" name='remember-me'/>
+                        <label>Remember me on this computer.</label>
                       </div>
                       <a type="submit" class="btn mt-4">로그인</a>
                       <input name="submit" type="submit" value="Login"/>

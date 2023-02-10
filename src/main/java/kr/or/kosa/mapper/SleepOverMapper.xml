@@ -44,4 +44,17 @@ PUBLIC "-//mybatis.org//DTD Mapper 3.0//EN"
 		AND DATE_FORMAT(STARTDATE, '%Y-%m-%d') <![CDATA[>=]]> DATE_FORMAT(now(), '%Y-%m-%d')
 	</select>
 	
+	<!-- 기간별 외박 검색 -->
+	<select id="searchHistoryWithDate" resultType="kr.or.kosa.dto.SleepOverHistory">
+		SELECT SLEEPOVERIDX, MEMBERID, UNIVERSITYCODE, STARTDATE, ENDDATE, STATUS, SLEEPOVERREASON, SLEEPOVERCONFIRM
+		from SLEEPOVERHISTORY
+		WHERE (DATE(startdate) <![CDATA[<=]]> STR_TO_DATE(#{startdate},'%Y-%m-%d') AND
+		DATE(enddate) <![CDATA[>=]]> STR_TO_DATE(#{startdate},'%Y-%m-%d'))
+		OR
+		(DATE(startdate) <![CDATA[<=]]> STR_TO_DATE(#{enddate},'%Y-%m-%d') AND
+		DATE(enddate)<![CDATA[>=]]> STR_TO_DATE(#{enddate},'%Y-%m-%d'))
+		AND universitycode=#{universitycode};
+
+
+	</select>
 </mapper>

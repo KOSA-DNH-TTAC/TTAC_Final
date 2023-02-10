@@ -137,4 +137,20 @@ public class SleepOverService {
 		}
 		return list;
 	}
+	
+	//외박 기간별 검색
+	public List<SleepOverHistory> searchIntervalHistory(String startdate, String enddate){
+		User user = (User) SecurityContextHolder.getContext().getAuthentication().getPrincipal();
+		SleepOverDao overdao = sqlsession.getMapper(SleepOverDao.class);
+		MemberDao memberdao = sqlsession.getMapper(MemberDao.class);
+		
+		List<SleepOverHistory> list = overdao.searchHistoryWithDate(startdate, enddate, user.getUniversityCode());
+		System.out.println(list);
+		for(SleepOverHistory over : list) {
+			Member member = memberdao.getMember(over.getMemberId());
+			String username = member.getName();
+			over.setUsername(username);
+		}
+		return list;
+	}
 }
