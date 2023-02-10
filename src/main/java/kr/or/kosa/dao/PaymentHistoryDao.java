@@ -10,7 +10,7 @@ public interface PaymentHistoryDao {
 	int insertPayment(PaymentHistory payment);
 	
 	//결제 전체 조회
-	List<PaymentHistory> getAllPaymentHistory();
+	List<PaymentHistory> getAllPaymentHistory(String universitycode);
 	
 	//특정 회원 결제 조회
 	List<PaymentHistory> getPaymentHistoryById(String memberid);

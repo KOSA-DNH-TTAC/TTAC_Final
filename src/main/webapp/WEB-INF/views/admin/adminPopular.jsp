@@ -78,7 +78,12 @@
 								</ul>
 							</li>
 							<li class="smenu"><a href="/adminCoupon">식권관리</a></li>
-							<li class="smenu"><a href="/adminPopular" class="msub on">외박관리</a></li>
+							<li class="smenu"><a href="/adminPopular" class="msub on">외박관리</a>
+								<ul class="sub ">
+									<li><a href="/adminAnalyze">외박신청</a></li>
+									<li><a href="/adminEnroll">외박이력</a></li>
+								</ul>
+							</li>
 							<li class="smenu"><a href="/adminAnalyze">시설관리</a>
 								<ul class="sub ">
 									<li><a href="/adminAnalyze">시설관리</a></li>
@@ -157,7 +162,7 @@
 
 					<div class="ofh">
 						<div class="halfcon mr">
-							<h4 class="bgtab bgtab2">외박</h4>
+							<h4 class="bgtab bgtab2">외박 신청</h4>
 							<table id="nightoverN" class="comm_table tac bmb">
 								<tbody>
 									<tr>
@@ -243,7 +248,7 @@
 
 						</div>
 						<div class="halfcon">
-							<h4 class="bgtab bgtab2">외박</h4>
+							<h4 class="bgtab bgtab2">승인 완료</h4>
 							<table id="nightoverY" class="comm_table tac bmb">
 								<tbody>
 									<tr>
