@@ -71,7 +71,7 @@
           <div class="col-lg-12 entries">
 
             <article class="entry">
-				<form action="/freeBoardList/freeBoardWrite" method="POST" enctype="form-data">
+				<form action="/board/freeBoardWrite" method="POST" enctype="form-data">
 					<div class="mb-3">
 					  <label for="title" class="form-label">게시글 제목</label>
 					  <input type="text" class="form-control" name="title" id="title" placeholder="제목을 작성해주세요." autofocus required>
