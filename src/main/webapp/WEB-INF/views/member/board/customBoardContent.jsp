@@ -8,7 +8,7 @@
 				<meta charset="utf-8">
 				<meta content="width=device-width, initial-scale=1.0" name="viewport">
 
-				<title>DOTO: ${boardName}</title>
+				<title>DOTO: 커스텀게시판!!!!</title>
 				<meta content="" name="description">
 				<meta content="" name="keywords">
 				
@@ -76,7 +76,6 @@
 										<article class="entry">
 
 											<div class="entry-title">
-											<a href="/board/custom/${boardList.boardName}/${boardList.idx}">
 												<a href="blog-single.html">${boardList.title}</a>
 											</div>
 
