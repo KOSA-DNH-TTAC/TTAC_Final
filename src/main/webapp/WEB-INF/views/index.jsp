@@ -49,7 +49,7 @@
    
 
     <div class="section-title">
-      <h2 style="margin-top:100px;">명륜학사</h2>
+      <h2 style="margin-top:100px;">혜화관</h2>
       <!-- <p>Quisquam quos quisquam cupiditate. Et nemo qui impedit suscipit alias ea. Quia fugiat sit in iste officiis commodi quidem hic quas.</p> -->
     </div>
 

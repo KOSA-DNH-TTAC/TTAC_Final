@@ -1,7 +1,5 @@
 package kr.or.kosa.dto;
 
-import java.util.Date;
-
 import lombok.Data;
 
 @Data
@@ -11,4 +9,5 @@ public class RollCall {
 	private String universityCode;
 	private String memberId;
 	private String rollCallDate;
+	private int counting;
 }

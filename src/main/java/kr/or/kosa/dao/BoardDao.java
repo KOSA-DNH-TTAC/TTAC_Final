@@ -38,7 +38,7 @@ public interface BoardDao {
 	public int fileInsert(File file) throws ClassNotFoundException, SQLException;
 
 	// 점호하기
-	public Domitory eveningCall(double lat, double lon);
+	public Domitory eveningCall(String domitoryname);
 	
 	//점호데이터 넣기
 	public int eveningCallInsert(String memberId, String universitycode);

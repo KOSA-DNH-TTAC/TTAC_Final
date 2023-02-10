@@ -31,29 +31,9 @@
   <!-- Template Main CSS File -->
   <link href="resources/assets/css/style.css" rel="stylesheet">
   <script src="http://code.jquery.com/jquery-1.9.1.js"></script>
-  <script type="text/javascript" src="//dapi.kakao.com/v2/maps/sdk.js?appkey=ae20ffc78d270b6473f02625716b04d5"></script>
+  <script type="text/javascript" src="http://dapi.kakao.com/v2/maps/sdk.js?appkey=172587aec5c5b7b4462a7f174770edd8"></script>
   <script src="resources/assets/js/eveningCallMap.js"></script>
-<!--   <script>
-	  function mySpaceReport(){
-		//버튼 클릭시 함수 실행
-			$.ajax(
-				{
-					 cache : false,
-			            url : "/eveningCall", 
-			            type:"POST", 
-			            dataType:"html",	
-			            success : function(data) {
-			                $('#hotboardtable').empty(data);
-			                $('#hotboardtable').append(data);
-			            }, // success 
-			    
-			            error : function(request,status,error) {
-			            	alert("code:" +request.status+"\n" + "message:"+request.responseText+"\n"+"error:"+error);
-							console.log(error);
-			            }
-			        }); // $.ajax 
-	 }	   
-  </script> -->
+
 </head>
 
 <body>
