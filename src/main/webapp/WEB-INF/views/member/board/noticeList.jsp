@@ -74,7 +74,7 @@
 										<article class="entry">
 
 											<div class="entry-title">
-												<a href="/noticeList/${notice.idx}">${notice.title}</a>
+												<a href="/board/noticeList/${notice.idx}">${notice.title}</a>
 											</div>
 
 											<div class="entry-meta">

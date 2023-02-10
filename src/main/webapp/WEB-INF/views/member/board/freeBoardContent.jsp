@@ -193,11 +193,12 @@
 				// 댓글 Ajax
 				$.ajax({
 					type : "get",
-					url : '/'+ param + '/board/' + idx,
+					url : '/board/'+ param + '/' + idx + '/reply', 
 					contentType : "application/json; charset=utf-8",
 					success : function(data) {
 											
 						var replyContent = "";
+						/* var rereply = 1; */
 						$('#replyDiv').empty();
 		                  
 		                $.each(data, function(index) {
@@ -225,6 +226,8 @@
 		 	                + '"}</div>'
 		 	                + '<div class="rereply"></div><hr>'
 		                	}
+		                
+		                
 		                
 		                // parentsIdx가 있을 경우 대댓글 추가
 		                // function parentReply() {
@@ -265,7 +268,7 @@
 				// 대댓글 Ajax
 				$.ajax({
 					type : "get",
-					url : '/'+ param + '/' + idx + '/reply/' + myReplyIdx,
+					url : '/board/'+ param + '/' + idx + '/reply/' + myReplyIdx,
 					contentType : "application/json; charset=utf-8",
 					success : function(data) {
 						
@@ -274,7 +277,6 @@
 		                $.each(data, function(index) {
 		                	if (myReplyIdx == data[index].parentReplyIdx) {
 		                	
-		                		
 		                	reReplyContent +=
 		 	                '<div class="rere5"><hr><li class="ybreply2"><i class="bi bi-arrow-return-right">&nbsp;</i><button class="toMessage2" seq="' 
 		 	                + data[index].memberId 
@@ -291,23 +293,22 @@
 		                
 		             	})
 		             	
-		             	console.log("태그: " + reReplyContent);
+		             	
 		                $('.rereply').append(reReplyContent);
-		                
+		             	
+		             	
 		                $('.replyDown').empty;
 		                $('.replyDown').append(
-		                		
+		             			
 		                		'<button class="rere" data-replyIdx2="'
 				 	            
 				 	            + '">댓글 접기&nbsp;'
 				 	            + '<i class="fa-solid fa-caret-up"></i></button>'
 		                		
 		                );
-					}
+			}
 		})
     			
- 				 
- 				 /* $(".rereply").toggle(); */
   			});
 		
 			

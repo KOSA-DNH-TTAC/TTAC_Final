@@ -45,7 +45,7 @@ public class BoardController_Rest {
 
 
 	// 게시판 댓글 보기
-	@GetMapping("/{allBoard}/board/{idx}")
+	@GetMapping("/board/{allBoard}/{idx}/reply")
 	public ResponseEntity<List<Reply>> replyContent(@PathVariable("idx") String idx) {
 		List<Reply> replyContent = new ArrayList<Reply>();
 		try {
@@ -58,7 +58,7 @@ public class BoardController_Rest {
 	
 	
 	// 게시판 대댓글 보기
-	@GetMapping("/{allBoard}/{idx}/reply/{replyIdx}")
+	@GetMapping("/board/{allBoard}/{idx}/reply/{replyIdx}")
 	public ResponseEntity<List<Reply>> reReplyContent(@PathVariable("idx") String idx,
 			@PathVariable("replyIdx") String replyIdx) {
 		List<Reply> reReplyContent = new ArrayList<Reply>();

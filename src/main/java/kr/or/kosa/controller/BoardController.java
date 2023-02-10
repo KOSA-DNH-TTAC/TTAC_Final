@@ -40,7 +40,7 @@ public class BoardController {
 //////////////////////////////////////////////////////////////////////////////////////////////////////////////
 
 	// 기본 제공 게시판
-	@GetMapping("{allBoard}")
+	@GetMapping("board/{allBoard}")
 	public String allBoardView(Model model, @PathVariable String allBoard) {
 
 		String param = "";
@@ -64,7 +64,7 @@ public class BoardController {
 	}
 
 	// 커스텀 생성 게시판
-	@GetMapping("board/{boardName}")
+	@GetMapping("board/custom/{boardName}")
 	public String boardList(Model model, @PathVariable String boardName) {
 		List<Post> boardList = boardService.customBoardList(boardName);
 		model.addAttribute("boardList", boardList);
@@ -74,7 +74,7 @@ public class BoardController {
 	}
 
 	// 게시글 보기
-	@GetMapping("/{boardName}/{idx}")
+	@GetMapping("board/{boardName}/{idx}")
 	public String boardContent(Model model, @PathVariable("idx") String idx,
 			@PathVariable("boardName") String boardName) {
 		

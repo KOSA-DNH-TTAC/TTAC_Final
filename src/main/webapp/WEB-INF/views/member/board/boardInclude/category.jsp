@@ -66,7 +66,7 @@
 									var boardName = "";
 										boardName = $(this).attr('seq');
 										
-										location.href= "${pageContext.request.contextPath}/board/" + boardName;
+										location.href= "${pageContext.request.contextPath}/board/custom/" + boardName;
 								})
 									
 
@@ -76,10 +76,10 @@
 
 			<div class="sidebar-item categories">
 				<ul>
-					<li><a class="allBoard"  href='${pageContext.request.contextPath}/noticeList'>공지사항</a></li>
-					<li><a class="allBoard"  href='${pageContext.request.contextPath}/opinionList'>건의사항</a></li>
-					<li><a class="allBoard"  href='${pageContext.request.contextPath}/freeBoardList'>자유게시판</a></li>
-					<li><a class="allBoard"  href='${pageContext.request.contextPath}/productBoardList'>거래게시판</a></li>
+					<li><a class="allBoard"  href='${pageContext.request.contextPath}/board/noticeList'>공지사항</a></li>
+					<li><a class="allBoard"  href='${pageContext.request.contextPath}/board/opinionList'>건의사항</a></li>
+					<li><a class="allBoard"  href='${pageContext.request.contextPath}/board/freeBoardList'>자유게시판</a></li>
+					<li><a class="allBoard"  href='${pageContext.request.contextPath}/board/productBoardList'>거래게시판</a></li>
 				</ul>
 				<ul id="list">
 				</ul>
