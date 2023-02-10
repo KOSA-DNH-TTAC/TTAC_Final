@@ -1,6 +1,7 @@
 package kr.or.kosa.dao;
 
 import java.sql.SQLException;
+import java.util.Date;
 import java.util.List;
 
 import kr.or.kosa.dto.Board;
@@ -38,7 +39,19 @@ public interface BoardDao {
 
 	// 점호하기
 	public Domitory eveningCall(double lat, double lon);
-
-	// 점호하기
+	
+	//점호데이터 넣기
 	public int eveningCallInsert(String memberId, String universitycode);
+	
+	//점호 데이터 중복 체킹
+	public RollCall eveningCallCompare(String memberId, String universitycode, String date);
+	
+	//건물(동) 리스트 가져오기
+	public List<Domitory> selectDomitory();
+	
+	//최근file 올린 idx 가져오기
+	public int recentFileIdx();
+	
+	// 게시글 상세보기
+	public List<File> fileContent(String idx);
 }

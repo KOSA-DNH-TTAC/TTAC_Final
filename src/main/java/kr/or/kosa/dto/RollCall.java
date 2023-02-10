@@ -10,5 +10,5 @@ public class RollCall {
 	private int rollCallIdx;
 	private String universityCode;
 	private String memberId;
-	private Date rollCallDate;
+	private String rollCallDate;
 }

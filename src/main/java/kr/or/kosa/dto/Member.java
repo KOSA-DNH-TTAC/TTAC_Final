@@ -17,6 +17,7 @@ public class Member {
 	private String gender;
 	private String phone;
 	private String parentsPhone;
+	private String domitoryName;
 	private String room;
 	private int memberPoint;
 	private int demerit;
@@ -36,6 +37,7 @@ public class Member {
 		gender = user.getGender();
 		phone = user.getPhone();
 		parentsPhone = user.getParentsPhone();
+		domitoryName = user.getDomitoryName();
 		room = user.getRoom();
 		memberPoint = user.getMemberPoint();
 		demerit = user.getDemerit();

@@ -33,7 +33,7 @@
   <script src="http://code.jquery.com/jquery-1.9.1.js"></script>
   <script type="text/javascript" src="//dapi.kakao.com/v2/maps/sdk.js?appkey=ae20ffc78d270b6473f02625716b04d5"></script>
   <script src="resources/assets/js/eveningCallMap.js"></script>
-  <script>
+<!--   <script>
 	  function mySpaceReport(){
 		//버튼 클릭시 함수 실행
 			$.ajax(
@@ -53,7 +53,7 @@
 			            }
 			        }); // $.ajax 
 	 }	   
-  </script>
+  </script> -->
 </head>
 
 <body>
@@ -88,7 +88,9 @@
               <i class="bx bx-map"></i>
               <h3>나의 현재위치</h3>
               <p id="location"></p>
-              	<div><button id="report" onclick="mySpaceReport()"; style="width:130px; height:20; border-radius: 50px; padding:5px; border: none; background-color:#E96B56; color:white; margin-top:10px; font-size: large;">점호하기</button></div>
+              	<div style="display:flex; justify-content:center; align-items:center; margin: auto; width:280px; height:5px; border-radius: 50px; border: none; background-color:#E96B56; color:white; margin-top:10px;">
+              		<!-- <button id="report" onclick="mySpaceReport()"; style="width:130px; height:20; border-radius: 50px; padding:5px; border: none; background-color:#E96B56; color:white; margin-top:10px; font-size: large;">점호하기</button> -->
+              	</div>
             </div>
           </div>
         </div>

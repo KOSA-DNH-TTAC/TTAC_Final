@@ -95,6 +95,16 @@
                     <p style="margin-top: 40px;">
                      ${boardContent.content}
                     </p>
+                    <p>
+	                    <article class="entry">
+	                    	<li class="d-flex align-items-center">
+		                    <c:forEach items="${fileContent}" var="fileContent">
+		                    	<a href="/download/${boardContent.idx}/${fileContent.fileName}">${fileContent.fileName}</a> 
+		                    	
+		                   	</c:forEach>
+		                   	</li>
+	                   	</article>
+                    </p>
                     </div>
                     </article>
                     </div>
