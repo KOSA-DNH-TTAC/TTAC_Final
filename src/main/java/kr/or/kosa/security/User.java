@@ -25,6 +25,7 @@ public class User implements UserDetails {
 	private String gender;
 	private String phone;
 	private String parentsPhone;
+	private String domitoryName;
 	private String room;
 	private int memberPoint;
 	private int demerit;
@@ -204,6 +205,14 @@ public class User implements UserDetails {
 		return authorities;
 	}
 
+	public String getDomitoryName() {
+		return domitoryName;
+	}
+
+	public void setDomitoryName(String domitory) {
+		this.domitoryName = domitory;
+	}
+
 	public void setAuthorities(Collection<? extends GrantedAuthority> authorities) {
 		this.authorities = authorities;
 	}
@@ -220,6 +229,7 @@ public class User implements UserDetails {
 		gender = vo.getGender();
 		phone = vo.getPhone();
 		parentsPhone = vo.getParentsPhone();
+		domitoryName = vo.getDomitoryName();
 		room = vo.getRoom();
 		memberPoint = vo.getMemberPoint();
 		demerit = vo.getDemerit();
@@ -238,7 +248,7 @@ public class User implements UserDetails {
 	public String toString() {
 		return "CustomUserDetails [username=" + username + ", universityCode=" + universityCode + ", memberId="
 				+ memberId + ", password=" + password + ", name=" + name + ", major=" + major + ", email=" + email
-				+ ", gender=" + gender + ", phone=" + phone + ", parentsPhone=" + parentsPhone + ", room=" + room
+				+ ", gender=" + gender + ", phone=" + phone + ", parentsPhone=" + parentsPhone + ", domitoryName=" + domitoryName + ", room=" + room
 				+ ", memberPoint=" + memberPoint + ", demerit=" + demerit + ", status=" + status + ", enabled="
 				+ enabled + ", isEnabled=" + isEnabled + ", isAccountNonExpired=" + isAccountNonExpired
 				+ ", isAccountNonLocked=" + isAccountNonLocked + ", isCredentialsNonExpired=" + isCredentialsNonExpired

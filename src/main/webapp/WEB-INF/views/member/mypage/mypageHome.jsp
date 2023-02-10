@@ -247,6 +247,7 @@
                   "memberid": result.memberId,
                   "name": result.name,
                   "major": result.major,
+                  "domitory": result.domitory,
                   "room": result.room,
                   "email": result.email,
                   "phone": result.phone,
@@ -287,7 +288,7 @@
 						    </tr>
 						    <tr>
 						    	<th scope="row">기숙사</th>
-						    	<td class="infoTd">` + member.room + `</td>
+						    	<td class="infoTd">` + member.domitory + " " + member.room + `호</td>
 						    </tr>
 						    <tr>
 						    	<th scope="row">이메일</th>
