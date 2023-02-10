@@ -118,13 +118,13 @@
 
 				</div>
 				<div class="con">
-					<h3 class="sub_h3">외박관리 <span>외박현황</span></h3>
+					<h3 class="sub_h3">외박관리 <span>외박 내역</span></h3>
 
 
 					<div class="bmb">
 						<div class="bgtab">
 							<div class="w50 fl">
-								<h3 class="txtin">일자별 외박 조회</h3>
+								<h3 class="txtin">기간별 외박 조회</h3>
 							</div>
 							<div class="w50 fl tar">
 								<a class="btn_sumit2">엑셀다운로드</a>
@@ -140,7 +140,7 @@
 							<tr>
 								<th>조회</th>
 								<td colspan="3">
-									<li><a href="#" class="btn_sumit">현 시각 외박현황 보기</a></li>
+									<li><a href="#" id="todayHistory"  onclick="getTodaysHistory()" class="btn_sumit">현 시각 외박현황 보기</a></li>
 								</td>
 							</tr>
 							<tr>
@@ -162,7 +162,7 @@
 
 					<div class="ofh">
 						<div class="halfcon mr">
-							<h4 class="bgtab bgtab2">외박 신청</h4>
+							<h4 class="bgtab bgtab2">외박이력</h4>
 							<table id="nightoverN" class="comm_table tac bmb">
 								<tbody>
 									<tr>
@@ -172,83 +172,13 @@
 										<th>이름</th>
 										<th>사유</th>
 									</tr>
-									<tr>
-										<td>1</td>
-										<td>2023.01.24</td>
-										<td>2023.01.30</td>
-										<td>도현정</td>
-										<td>네일아트</td>
-									</tr>
-									<tr>
-										<td>2</td>
-										<td>2023.01.24</td>
-										<td>2023.01.30</td>
-										<td>도현정</td>
-										<td>네일아트</td>
-									</tr>
-									<tr>
-										<td>3</td>
-										<td>2023.01.24</td>
-										<td>2023.01.30</td>
-										<td>도현정</td>
-										<td>네일아트</td>
-									</tr>
-									<tr>
-										<td>4</td>
-										<td>2023.01.24</td>
-										<td>2023.01.30</td>
-										<td>도현정</td>
-										<td>네일아트</td>
-									</tr>
-									<tr>
-										<td>5</td>
-										<td>2023.01.24</td>
-										<td>2023.01.30</td>
-										<td>도현정</td>
-										<td>네일아트</td>
-									</tr>
-									<tr>
-										<td>6</td>
-										<td>2023.01.24</td>
-										<td>2023.01.30</td>
-										<td>도현정</td>
-										<td>네일아트</td>
-									</tr>
-									<tr>
-										<td>7</td>
-										<td>2023.01.24</td>
-										<td>2023.01.30</td>
-										<td>도현정</td>
-										<td>네일아트</td>
-									</tr>
-									<tr>
-										<td>8</td>
-										<td>2023.01.24</td>
-										<td>2023.01.30</td>
-										<td>도현정</td>
-										<td>네일아트</td>
-									</tr>
-									<tr>
-										<td>9</td>
-										<td>2023.01.24</td>
-										<td>2023.01.30</td>
-										<td>도현정</td>
-										<td>네일아트</td>
-									</tr>
-									<tr>
-										<td>10</td>
-										<td>2023.01.24</td>
-										<td>2023.01.30</td>
-										<td>도현정</td>
-										<td>네일아트</td>
-									</tr>
 								</tbody>
 							</table>
 
 
 						</div>
 						<div class="halfcon">
-							<h4 class="bgtab bgtab2">승인 완료</h4>
+							<h4 class="bgtab bgtab2">무단 외박</h4>
 							<table id="nightoverY" class="comm_table tac bmb">
 								<tbody>
 									<tr>
@@ -257,76 +187,6 @@
 										<th>복귀일</th>
 										<th>이름</th>
 										<th>사유</th>
-									</tr>
-									<tr>
-										<td>1</td>
-										<td>2023.01.24</td>
-										<td>2023.01.30</td>
-										<td>도현정</td>
-										<td>네일아트</td>
-									</tr>
-									<tr>
-										<td>2</td>
-										<td>2023.01.24</td>
-										<td>2023.01.30</td>
-										<td>도현정</td>
-										<td>네일아트</td>
-									</tr>
-									<tr>
-										<td>3</td>
-										<td>2023.01.24</td>
-										<td>2023.01.30</td>
-										<td>도현정</td>
-										<td>네일아트</td>
-									</tr>
-									<tr>
-										<td>4</td>
-										<td>2023.01.24</td>
-										<td>2023.01.30</td>
-										<td>도현정</td>
-										<td>네일아트</td>
-									</tr>
-									<tr>
-										<td>5</td>
-										<td>2023.01.24</td>
-										<td>2023.01.30</td>
-										<td>도현정</td>
-										<td>네일아트</td>
-									</tr>
-									<tr>
-										<td>6</td>
-										<td>2023.01.24</td>
-										<td>2023.01.30</td>
-										<td>도현정</td>
-										<td>네일아트</td>
-									</tr>
-									<tr>
-										<td>7</td>
-										<td>2023.01.24</td>
-										<td>2023.01.30</td>
-										<td>도현정</td>
-										<td>네일아트</td>
-									</tr>
-									<tr>
-										<td>8</td>
-										<td>2023.01.24</td>
-										<td>2023.01.30</td>
-										<td>도현정</td>
-										<td>네일아트</td>
-									</tr>
-									<tr>
-										<td>9</td>
-										<td>2023.01.24</td>
-										<td>2023.01.30</td>
-										<td>도현정</td>
-										<td>네일아트</td>
-									</tr>
-									<tr>
-										<td>10</td>
-										<td>2023.01.24</td>
-										<td>2023.01.30</td>
-										<td>도현정</td>
-										<td>네일아트</td>
 									</tr>
 								</tbody>
 							</table>
@@ -367,41 +227,14 @@
 
 	<script type="text/javascript">
 		$(document).ready(function () {
-			console.log("테스트")
-			
-			getTodays();
+			getAllHistory();
 		})
 
-		function confirm(over) {
-			var tr = $(over).closest('tr')
-			// var datas = { idx: tr.children().html() };
-			let index = tr.find('input[type=hidden]').val();
-			let datas = {"idx" : index};
-			console.log(datas);
 
-			//ajax로 업데이트 함 (confirm N->Y)
-			$.ajax({
-				type:"get",
-				url:"/adminPopular/update",
-				dataType: "json",
-				data: datas	,
-				success: function(result){
-					console.log(result);
-					getTodays();
-				},
-				error: function (request, status, error) {
-					console.log("에러")
-					console.log("code:" + request.status + "\n" + "message:" + request.responseText + "\n" + "error:" + error);
-				}
-			})
-
-			//테이블에 append 해줌 (getTodays)
-		}
-
-		function getTodays() {
+		function getAllHistory() {
 			$.ajax({
 				type: "GET",
-				url: "/adminPopular/getTodays",
+				url: "/adminPopular/getHistory",
 				success: function (result) {
 					console.log("성공");
 					console.log(result);
@@ -415,37 +248,70 @@
 										<th>복귀일</th>
 										<th>이름</th>
 										<th>사유</th>
-										<th>처리</th>
 									</tr>`
 					let Ycontents = Ncontents;
 
 					//아직 처리되지 않은 외박 신청
-					let ncount = 1;
-					let ycount = 1;
-					$.each(result.nlist, function (index, over) {
+					$.each(result.list, function (index, over) {
+						// console.log(index)
+						// console.log(over)
+						let startdate = new Date(over.startDate);
+						let enddate = new Date(over.endDate);
+                  		let localeStart = startdate.toLocaleString("ko-KR");
+						let localeEnd = enddate.toLocaleString("ko-KR");
 						Ncontents += "<tr><td>" + (++index) + "</td>"
-							+ "<td>" + over.startDate.slice(0, 11) + "</td>"
-							+ "<td>" + over.endDate.slice(0, 11) + "</td>"
+							+ "<td>" + localeStart.slice(0,11) + "</td>"
+							+ "<td>" + localeEnd.slice(0,11) + "</td>"
 							+ "<td>" + over.username + "</td>"
 							+ "<td>" + over.sleepOverReason + "</td>"
-							+ "<td><button onclick='confirm(this)'>승인</button></td>"
-							+ "<input type='hidden' value='" + over.idx + "' ></tr>"
+							+ "<input type='hidden' value='" + over.sleepOverIdx + "' ></tr>"
 					})
 
 					$('#nightoverN').append(Ncontents);
 
-					//처리된 외박 신청
-					$.each(result.ylist, function (index, over) {
-						Ycontents += "<tr><td>" + (++index) + "</td>"
-							+ "<td>" + over.startDate.slice(0, 11) + "</td>"
-							+ "<td>" + over.endDate.slice(0, 11) + "</td>"
+				},
+				error: function (request, status, error) {
+					console.log("에러")
+					console.log("code:" + request.status + "\n" + "message:" + request.responseText + "\n" + "error:" + error);
+				}
+			})
+		}
+
+		function getTodaysHistory(){
+			$.ajax({
+				type:"GET",
+				url:"/adminPopular/getTodayHistory",
+				success:function(result){
+					console.log(result);
+					$('#nightoverN').empty();
+					$('#nightoverY').empty();
+					let Ncontents = `<tbody>
+									<tr>
+										<th>번호</th>
+										<th>외박일</th>
+										<th>복귀일</th>
+										<th>이름</th>
+										<th>사유</th>
+									</tr>`
+					let Ycontents = Ncontents;
+
+					//아직 처리되지 않은 외박 신청
+					$.each(result.list, function (index, over) {
+						// console.log(index)
+						// console.log(over)
+						let startdate = new Date(over.startDate);
+						let enddate = new Date(over.endDate);
+                  		let localeStart = startdate.toLocaleString("ko-KR");
+						let localeEnd = enddate.toLocaleString("ko-KR");
+						Ncontents += "<tr><td>" + (++index) + "</td>"
+							+ "<td>" + localeStart.slice(0,11) + "</td>"
+							+ "<td>" + localeEnd.slice(0,11) + "</td>"
 							+ "<td>" + over.username + "</td>"
 							+ "<td>" + over.sleepOverReason + "</td>"
-							+ "<td>승인완료</td></tr>"
+							+ "<input type='hidden' value='" + over.sleepOverIdx + "' ></tr>"
 					})
 
-					$('#nightoverY').append(Ycontents);
-					// $('#content').append(contents)
+					$('#nightoverN').append(Ncontents);
 
 				},
 				error: function (request, status, error) {

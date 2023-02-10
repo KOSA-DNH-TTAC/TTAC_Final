@@ -387,15 +387,14 @@
 				data: datas	,
 				success: function(result){
 					console.log(result);
+					//테이블에 append 해줌 (getTodays)
 					getTodays();
 				},
 				error: function (request, status, error) {
 					console.log("에러")
 					console.log("code:" + request.status + "\n" + "message:" + request.responseText + "\n" + "error:" + error);
 				}
-			})
-
-			//테이블에 append 해줌 (getTodays)
+			})	
 		}
 
 		function getTodays() {

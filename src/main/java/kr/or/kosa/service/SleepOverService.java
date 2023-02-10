@@ -19,6 +19,7 @@ import kr.or.kosa.dao.MemberDao;
 import kr.or.kosa.dao.SleepOverDao;
 import kr.or.kosa.dto.Member;
 import kr.or.kosa.dto.SleepOver;
+import kr.or.kosa.dto.SleepOverHistory;
 import kr.or.kosa.dto.SleepOverTime;
 import kr.or.kosa.security.User;
 
@@ -106,5 +107,34 @@ public class SleepOverService {
 		result = overdao.confirmSleepOver(idx);
 		
 		return result;
+	}
+	
+	//외박이력 조회
+	public List<SleepOverHistory> getHistory(){
+		User user = (User) SecurityContextHolder.getContext().getAuthentication().getPrincipal();
+		SleepOverDao overdao = sqlsession.getMapper(SleepOverDao.class);
+		MemberDao memberdao = sqlsession.getMapper(MemberDao.class);
+		List<SleepOverHistory> list = overdao.getSleepOverHistory(user.getUniversityCode());
+		for(SleepOverHistory over : list) {
+			Member member = memberdao.getMember(over.getMemberId());
+			String username = member.getName();
+			over.setUsername(username);
+		}
+		return list;
+	}
+	
+	//현 시각 외박 조회
+	public List<SleepOverHistory> getTodaysHistory(){
+		User user = (User) SecurityContextHolder.getContext().getAuthentication().getPrincipal();
+		SleepOverDao overdao = sqlsession.getMapper(SleepOverDao.class);
+		MemberDao memberdao = sqlsession.getMapper(MemberDao.class);
+		
+		List<SleepOverHistory> list = overdao.getTodayHistory(user.getUniversityCode());
+		for(SleepOverHistory over : list) {
+			Member member = memberdao.getMember(over.getMemberId());
+			String username = member.getName();
+			over.setUsername(username);
+		}
+		return list;
 	}
 }
