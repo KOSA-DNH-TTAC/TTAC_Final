@@ -209,9 +209,9 @@ function mySpaceReport(){
 
 
 </body>
-<!-- litebox -->
+<!-- litebox 
 		<script type="text/javascript" src="resources/assets/js/hs_draggable.js"></script>
-		<!-- <script type="text/javascript" src="resources/assets/js/jquery-ui.min.js"></script> -->
+		<script type="text/javascript" src="resources/assets/js/jquery-ui.min.js"></script>
 		<link rel="stylesheet" media="all" href="/resources/assets/css/litebox.css" />
 		<script type="text/javascript" src="resources/assets/js/litebox.js"></script>
 		<script type="text/javascript" src="resources/assets/js/backbone.js"></script>
@@ -219,7 +219,7 @@ function mySpaceReport(){
 		<script type="text/javascript">
 			$('.litebox').liteBox();
 		</script>
-<!-- litebox -->
+ litebox -->
 
 
 
