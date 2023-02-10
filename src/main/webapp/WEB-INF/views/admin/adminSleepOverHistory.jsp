@@ -81,7 +81,7 @@
 							<li class="smenu"><a href="/adminPopular" class="msub on">외박관리</a>
 								<ul class="sub ">
 									<li><a href="/adminPopular">외박신청</a></li>
-									<li><a href="/adminSleepOverHistory">외박이력</a></li>
+									<li><a href="/adminEnroll">외박이력</a></li>
 								</ul>
 							</li>
 							<li class="smenu"><a href="/adminAnalyze">시설관리</a>
@@ -250,85 +250,7 @@
 						<div class="halfcon">
 							<h4 class="bgtab bgtab2">승인 완료</h4>
 							<table id="nightoverY" class="comm_table tac bmb">
-								<tbody>
-									<tr>
-										<th>순번</th>
-										<th>외박일</th>
-										<th>복귀일</th>
-										<th>이름</th>
-										<th>사유</th>
-									</tr>
-									<tr>
-										<td>1</td>
-										<td>2023.01.24</td>
-										<td>2023.01.30</td>
-										<td>도현정</td>
-										<td>네일아트</td>
-									</tr>
-									<tr>
-										<td>2</td>
-										<td>2023.01.24</td>
-										<td>2023.01.30</td>
-										<td>도현정</td>
-										<td>네일아트</td>
-									</tr>
-									<tr>
-										<td>3</td>
-										<td>2023.01.24</td>
-										<td>2023.01.30</td>
-										<td>도현정</td>
-										<td>네일아트</td>
-									</tr>
-									<tr>
-										<td>4</td>
-										<td>2023.01.24</td>
-										<td>2023.01.30</td>
-										<td>도현정</td>
-										<td>네일아트</td>
-									</tr>
-									<tr>
-										<td>5</td>
-										<td>2023.01.24</td>
-										<td>2023.01.30</td>
-										<td>도현정</td>
-										<td>네일아트</td>
-									</tr>
-									<tr>
-										<td>6</td>
-										<td>2023.01.24</td>
-										<td>2023.01.30</td>
-										<td>도현정</td>
-										<td>네일아트</td>
-									</tr>
-									<tr>
-										<td>7</td>
-										<td>2023.01.24</td>
-										<td>2023.01.30</td>
-										<td>도현정</td>
-										<td>네일아트</td>
-									</tr>
-									<tr>
-										<td>8</td>
-										<td>2023.01.24</td>
-										<td>2023.01.30</td>
-										<td>도현정</td>
-										<td>네일아트</td>
-									</tr>
-									<tr>
-										<td>9</td>
-										<td>2023.01.24</td>
-										<td>2023.01.30</td>
-										<td>도현정</td>
-										<td>네일아트</td>
-									</tr>
-									<tr>
-										<td>10</td>
-										<td>2023.01.24</td>
-										<td>2023.01.30</td>
-										<td>도현정</td>
-										<td>네일아트</td>
-									</tr>
-								</tbody>
+								
 							</table>
 						</div>
 					</div>

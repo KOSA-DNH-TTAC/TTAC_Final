@@ -20,7 +20,8 @@ PUBLIC "-//mybatis.org//DTD Mapper 3.0//EN"
 	<select id="getTodaysSleepOver" parameterType="String" resultType="kr.or.kosa.dto.SleepOver">
 		SELECT idx, memberId, universityCode, startDate, endDate, status, sleepOverReason, sleepOverConfirm, sleepOverFileName
 		FROM SLEEPOVER
-		WHERE universityCode = #{universitycode} 
+		WHERE universityCode = #{universitycode}
+		ORDER BY idx DESC
 	</select>
 	
 	<!-- 외박 수정(update) : 사감이 승인을 했을 경우 -->

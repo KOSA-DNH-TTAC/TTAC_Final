@@ -128,6 +128,11 @@ public class FrontController {
 		
 		return "admin/adminPopular";
 	}
+	@GetMapping("/adminSleepOverHistory")
+	public String adminSleepOverHistory() {
+		
+		return "admin/adminSleepOverHistory";
+	}
 	
 	@GetMapping("/adminAnalyze")
 	public String adminAnalyze() {

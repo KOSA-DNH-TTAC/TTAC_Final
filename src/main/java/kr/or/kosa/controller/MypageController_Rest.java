@@ -15,20 +15,27 @@ import org.springframework.web.bind.annotation.RequestMapping;
 import org.springframework.web.bind.annotation.RestController;
 
 import kr.or.kosa.dto.Member;
+import kr.or.kosa.dto.PaymentHistory;
 import kr.or.kosa.dto.Post;
 import kr.or.kosa.security.User;
 import kr.or.kosa.service.BoardService;
 import kr.or.kosa.service.MemberService;
+import kr.or.kosa.service.PaymentService;
 
 @RestController
 @RequestMapping("/mypage")
 public class MypageController_Rest {
 	
 	private MemberService memberservice;
+	private PaymentService paymentservice;
 	
 	@Autowired
     public void setMemberService(MemberService memberservice) {
         this.memberservice = memberservice;
+    }
+	@Autowired
+    public void setPaymentService(PaymentService paymentservice){
+        this.paymentservice = paymentservice;
     }
 	
 	//비동기를 위한 RestController임
@@ -69,6 +76,17 @@ public class MypageController_Rest {
 	//내 외박 내역 조회
 	
 	//내 벌점 조회
+	
+	//내 결제내역 조회
+	@GetMapping("/payments")
+	public ResponseEntity<List<PaymentHistory>> mypayments(){
+		User user = (User) SecurityContextHolder.getContext().getAuthentication().getPrincipal();
+
+		String memberid = user.getMemberId();
+		List<PaymentHistory> list = paymentservice.getPaymentHistoryById("2017109210");
+		System.out.println(list);
+		return new ResponseEntity<List<PaymentHistory>>(list, HttpStatus.OK);
+	}
 	
 	//내 커뮤니티 조회
 	@GetMapping("/myboard")

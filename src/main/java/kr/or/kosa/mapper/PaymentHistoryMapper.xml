@@ -7,15 +7,23 @@ PUBLIC "-//mybatis.org//DTD Mapper 3.0//EN"
 		 
 
 	<!-- insertPayment(결제 생성) -->
-	<insert id="insertPayment" parameterType="kr.or.kosa.dto.Message">
+	<insert id="insertPayment" parameterType="kr.or.kosa.dto.PaymentHistory">
 		INSERT INTO PAYMENTHISTORY(MEMBERID, PAYDATE, PAYAMOUNT, PAYKINDS)
 		VALUES(#{memberId},now(),#{payAmount},#{payKinds})
 		
 	</insert>
 	<!-- getAllPaymentHistory(전체 조회) -->
-	<select id="getReceivedMessage" parameterType="string" resultType="kr.or.kosa.dto.Message">             
-	  SELECT MESSAGEIDX, sMEMBERID, rMEMBERID, MESSAGETITLE, MESSAGECONTENT, MESSAGEDATE,
-	  STATUS FROM MESSAGE WHERE rMEMBERID = #{memberid} ORDER BY messagedate desc
+	<select id="getAllPaymentHistory" parameterType="String" resultType="kr.or.kosa.dto.PaymentHistory">             
+		SELECT p.payidx, p.memberid, p.paydate, p.payamount, p.paykinds
+		from PAYMENTHISTORY p left JOIN MEMBER m ON p.memberid=m.memberid
+		WHERE m.universitycode=#{universitycode}
+		ORDER BY payidx DESC
+	</select>
+	
+	<!-- getPaymentHistoryById(특정 회원) -->
+	<select id="getPaymentHistoryById" parameterType="String" resultType="kr.or.kosa.dto.PaymentHistory">
+		SELECT payIdx, memberId, payDate, payAmount, payKinds from PAYMENTHISTORY WHERE memberId=#{memberId}
+		ORDER BY payidx DESC;
 	</select>
 
 	
