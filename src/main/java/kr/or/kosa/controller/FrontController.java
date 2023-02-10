@@ -123,53 +123,6 @@ public class FrontController {
 		return "common/errorPage";
 	}
 	
-	@GetMapping("/adminPopular")
-	public String admin() {
-		
-		return "admin/adminPopular";
-	}
-	@GetMapping("/adminSleepOverHistory")
-	public String adminSleepOverHistory() {
-		
-		return "admin/adminSleepOverHistory";
-	}
-	
-	@GetMapping("/adminAnalyze")
-	public String adminAnalyze() {
-		
-		return "admin/adminAnalyze";
-	}
-	
-	@GetMapping("/adminSail")
-	public String adminSail() {
-		
-		return "admin/adminSail";
-	}
-	
-	@GetMapping("/adminCoupon")
-	public String adminCoupon() {
-		
-		return "admin/adminMealCoupon";
-	}
-	
-	@PreAuthorize("isAuthenticated()")
-	@GetMapping("/adminMember")
-	public String adminMember() {
-		
-		return "admin/adminMemberList";
-	}
-	
-	@GetMapping("/adminCalendar")
-	public String adminCalendar() {
-		
-		return "admin/adminCalendar";
-	}
-	
-	@GetMapping("/adminEnroll")
-	public String adminEnroll() {
-		
-		return "admin/adminEnroll";
-	}
 	
 	@GetMapping("/eveningCall")
 	public String eveningCall() {
@@ -182,13 +135,7 @@ public class FrontController {
 		
 		return "member/memberCalendar";
 	}
-	
-	@PreAuthorize("isAuthenticated()")
-	@GetMapping("/adminDomitory")
-	public String adminDomitory() {
-		
-		return "admin/adminDomitory";
-	}
+
 	
 	@GetMapping("/facility")
 	public String facility() {
