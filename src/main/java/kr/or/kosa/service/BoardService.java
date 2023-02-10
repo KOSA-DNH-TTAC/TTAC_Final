@@ -85,6 +85,14 @@ public class BoardService {
 		return boardContent;
 	}
 	
+	// 파일 상세보기
+	public List<File> fileContent(String idx) {
+		BoardDao boardDao = sqlSession.getMapper(BoardDao.class);
+		List<File> fileContent = boardDao.fileContent(idx);
+		
+		return fileContent;
+	}
+	
 	// 댓글 목록 보기
 	public List<Reply> replyContent(String idx) {
 		BoardDao boardDao = sqlSession.getMapper(BoardDao.class);
@@ -165,5 +173,12 @@ public class BoardService {
 			
 			return null;
 		}
+		
+	public int recentFileIdx() {
+		BoardDao boardDao = sqlSession.getMapper(BoardDao.class);
+		int  result = boardDao.recentFileIdx();
+		System.out.println("recentFileIdx: " + result);
+		return result;
+	}
 
 }

@@ -52,6 +52,7 @@ INSERT INTO POST (BOARDIDX,BOARDNAME,MEMBERID,UNIVERSITYCODE,TITLE,CONTENT,WRITE
 VALUES(#{boardIdx},#{boardName},#{memberId},#{universityCode},#{title},#{content},NOW())
 </insert>
 
+<!-- 파일 업로드  -->
 <insert id="fileInsert" parameterType="kr.or.kosa.dto.File">
 	<selectKey keyProperty="idx" resultType="int" order="BEFORE">
 		SELECT IDX from POST ORDER BY IDX DESC LIMIT 1
@@ -59,6 +60,15 @@ VALUES(#{boardIdx},#{boardName},#{memberId},#{universityCode},#{title},#{content
 INSERT INTO FILE (idx, FILENAME,FILESIZE)
 VALUES(#{idx},#{fileName},#{fileSize})
 </insert>
+
+<!-- 가장 최근 파일업로드한 idx 가져오기 -->
+<select id="recentFileIdx" resultType="int">
+SELECT IDX from FILE ORDER BY IDX DESC LIMIT 1
+</select>
+
+<select id="fileContent" parameterType="String" resultType="kr.or.kosa.dto.File">
+SELECT FILENUM, IDX, FILENAME, FILESIZE FROM FILE WHERE IDX = #{idx}
+</select>
 
 
 </mapper>

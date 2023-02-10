@@ -38,4 +38,10 @@ public interface BoardDao {
 	
 	//점호하기
 	public int eveningCallInsert(String memberId, String universitycode);
+	
+	//최근file 올린 idx 가져오기
+	public int recentFileIdx();
+	
+	// 게시글 상세보기
+	public List<File> fileContent(String idx);
 }

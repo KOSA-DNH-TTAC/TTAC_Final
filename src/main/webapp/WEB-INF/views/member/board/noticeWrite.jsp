@@ -71,7 +71,7 @@
           <div class="col-lg-12 entries">
 
             <article class="entry">
-				<form action="/noticeList/noticeWrite" method="POST" enctype="multipart/form-data">
+				<form action="/noticeList/noticeWrite" method="POST" enctype="multipart/form-data" accept-charset="UTF-8">
 					<div class="mb-3">
 					  <label for="title" class="form-label">게시글 제목</label>
 					  <input type="text" class="form-control" name="title" id="title" placeholder="제목을 작성해주세요." autofocus required>

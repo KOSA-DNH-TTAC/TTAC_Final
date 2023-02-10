@@ -1,12 +1,21 @@
 package kr.or.kosa.aws;
 
+import java.io.BufferedOutputStream;
+import java.io.BufferedReader;
 import java.io.File;
 import java.io.FileOutputStream;
 import java.io.IOException;
 import java.io.InputStream;
+import java.io.InputStreamReader;
+import java.io.OutputStream;
+import java.net.URLEncoder;
 import java.util.Optional;
 
+import org.apache.http.HttpStatus;
 import org.springframework.context.annotation.Configuration;
+import org.springframework.http.HttpHeaders;
+import org.springframework.http.MediaType;
+import org.springframework.http.ResponseEntity;
 import org.springframework.web.multipart.MultipartFile;
 
 import com.amazonaws.AmazonServiceException;
@@ -17,18 +26,24 @@ import com.amazonaws.auth.BasicAWSCredentials;
 import com.amazonaws.regions.Regions;
 import com.amazonaws.services.s3.AmazonS3;
 import com.amazonaws.services.s3.AmazonS3ClientBuilder;
+import com.amazonaws.services.s3.model.AmazonS3Exception;
 import com.amazonaws.services.s3.model.CopyObjectRequest;
 import com.amazonaws.services.s3.model.DeleteObjectRequest;
+import com.amazonaws.services.s3.model.GetObjectRequest;
 import com.amazonaws.services.s3.model.ObjectMetadata;
 import com.amazonaws.services.s3.model.PutObjectRequest;
+import com.amazonaws.services.s3.model.ResponseHeaderOverrides;
+import com.amazonaws.services.s3.model.S3Object;
+import com.amazonaws.services.s3.model.S3ObjectInputStream;
+import com.amazonaws.util.IOUtils;
 
 @Configuration
 public class AwsS3 {
     //Amazon-s3-sdk 
     private AmazonS3 s3Client;
     
-    private String accessKey = "1";
-    private String secretKey = "1";
+    private String accessKey = "AKIAZ2SL6XKK6DVMZTK3";
+    private String secretKey = "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";
     private Regions clientRegion = Regions.AP_NORTHEAST_2;
     private String bucket = "kosa-s3-bucket";
 
@@ -63,6 +78,7 @@ public class AwsS3 {
     
     private Optional<File> convert(MultipartFile file) throws  IOException {
         File convertFile = new File(file.getOriginalFilename());
+        
         if(convertFile.createNewFile()) {
             try (FileOutputStream fos = new FileOutputStream(convertFile)) {
                 fos.write(file.getBytes());
@@ -91,6 +107,7 @@ public class AwsS3 {
 
         try {
             this.s3Client.putObject(putObjectRequest);
+            System.out.println("세상사람들 이거 꼭 보세요!!" +putObjectRequest.getBucketName());
             System.out.println(String.format("[%s] upload complete", putObjectRequest.getKey()));
 
         } catch (AmazonServiceException e) {
@@ -136,6 +153,23 @@ public class AwsS3 {
         } catch (SdkClientException e) {
             e.printStackTrace();
         }
+    }
+    
+    public ResponseEntity<byte[]> getObject(String storedFileName) throws IOException {
+    	System.out.println(this.bucket);
+    	System.out.println(storedFileName);
+        S3Object o = s3Client.getObject(this.bucket, storedFileName);
+        S3ObjectInputStream objectInputStream = o.getObjectContent();
+        byte[] bytes = IOUtils.toByteArray(objectInputStream);
+ 
+        String fileName = URLEncoder.encode(storedFileName, "UTF-8").replaceAll("\\+", "%20");
+        HttpHeaders httpHeaders = new HttpHeaders();
+        httpHeaders.setContentType(MediaType.APPLICATION_OCTET_STREAM);
+        httpHeaders.setContentLength(bytes.length);
+        httpHeaders.setContentDispositionFormData("attachment", fileName);
+ 
+        return new ResponseEntity<>(bytes, httpHeaders, HttpStatus.SC_OK);
+ 
     }
     
 }
