@@ -105,7 +105,7 @@
 						$('#location').append("<b>위도 : </b>"+lat+"  <b>경도 : </b>"+lon);
 					},
 					error : function(data) {
-						alert(data+": 점호 가능한 지역이 아닙니다.");
+						alert(data+": 에러, 또는 점호 가능한 지역이 아닙니다.");
 					}
 				});
 			});
