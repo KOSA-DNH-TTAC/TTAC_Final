@@ -42,15 +42,15 @@ WHERE p.IDX=#{idx}
 <!-- 댓글 목록 -->
 <select id="replyContent" parameterType="String" resultType="kr.or.kosa.dto.Reply">
 SELECT replyidx, parentreplyidx, idx, memberid, replycontent, replydate FROM REPLY
-WHERE idx=#{idx} AND STATUS='21'
+WHERE idx=#{idx} AND STATUS='21' AND parentreplyidx is null
 ORDER BY replydate ASC
 </select>
 
 <!-- 대댓글 목록 -->
 <select id="reReplyContent" parameterType="String" resultType="kr.or.kosa.dto.Reply">
-SELECT replyidx, parentreplyidx, idx, memberid, replycontent, replydate FROM REPLY
-WHERE parentreplyidx = #{replyidx}
-ORDER BY replydate ASC
+SELECT r2.replyidx, r2.parentreplyidx, r2.idx, r2.memberid, r2.replycontent, r2.replydate FROM REPLY r1, REPLY r2
+WHERE r1.REPLYIDX = r2.PARENTREPLYIDX
+ORDER BY r1.REPLYDATE ASC, r2.REPLYDATE ASC;
 </select>
 
 <!-- 글 작성 (파일첨부 x) -->

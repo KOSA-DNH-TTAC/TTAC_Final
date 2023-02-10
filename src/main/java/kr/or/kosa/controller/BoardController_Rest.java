@@ -43,7 +43,22 @@ public class BoardController_Rest {
 		}
 	}
 
-
+	// 댓글, 대댓글 Map Return
+	@GetMapping("/board/{allBoard}/{idx}/reply")
+	public ResponseEntity<Map<String, Object>> allReply(@PathVariable("idx") String idx) {
+		Map<String, Object> map = new HashMap<>();
+		try {
+			map.put("replyContent", boardService.replyContent(idx));
+			map.put("reReplyContent", boardService.reReplyContent(idx));
+			return new ResponseEntity<>(map, HttpStatus.OK);
+		} catch (Exception e) {
+			map.put("replyContent", boardService.replyContent(idx));
+			map.put("reReplyContent", boardService.reReplyContent(idx));
+			return new ResponseEntity<>(map, HttpStatus.BAD_REQUEST);
+			}
+		}
+	
+	/*
 	// 게시판 댓글 보기
 	@GetMapping("/board/{allBoard}/{idx}/reply")
 	public ResponseEntity<List<Reply>> replyContent(@PathVariable("idx") String idx) {
@@ -69,7 +84,7 @@ public class BoardController_Rest {
 			return new ResponseEntity<List<Reply>>(reReplyContent, HttpStatus.BAD_REQUEST);
 		}
 	}
-	
+	*/
 
 	// 게시판 상세보기
 	// @GetMapping("/eveningCall/{arr}")
