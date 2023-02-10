@@ -193,50 +193,79 @@
 				// 댓글 Ajax
 				$.ajax({
 					type : "get",
-					url : '/'+ param + '/board/' + idx,
+					url : '/board/'+ param + '/' + idx + '/reply', 
 					contentType : "application/json; charset=utf-8",
 					success : function(data) {
 											
 						var replyContent = "";
+						/* var rereply = 1; */
 						$('#replyDiv').empty();
-		                  
-		                $.each(data, function(index) {
-		                	
-		                	if (data[index].parentReplyIdx == 0) {
+					      
+		                $.each(data.replyContent, function(index) {
+		                
+		                	if (data.replyContent[index].parentReplyIdx == '0') {
+		                		
+		                	var pIdx = data.replyContent[index].replyIdx;
 		                	
 		                	replyContent +=
 		 	                
 		 	                '<li class="ybreply2"><button class="toMessage" seq="' 
-		 	                + data[index].memberId 
+		 	                + data.replyContent[index].memberId 
 		 	                + '" data-replyIdx="'
-		 	                + data[index].replyIdx
+		 	                + data.replyContent[index].replyIdx
 		 	                + '" data-parentReplyIdx="'
-		 	                + data[index].parentReplyIdx
-		 	                + '">익명&ensp;</b></div></li><span class="replyDate">'
-		 	                + data[index].replyDate
-		 	                + '</span><div style="clear:both"><li class="replyContent">'
-		 	                + data[index].replyContent 
-		 	                + '</li><br><div class="replyDown"><button class="rere" data-replyIdx2="'
-		 	                + data[index].replyIdx
-		 	                + '">댓글 더보기&nbsp;'
-		 	                + '<i class="fa-solid fa-caret-down"></i></button></div>'
-		 	                + '<div id="replyIdx2" style="display:none">$"'
-		 	                + data[index].replyIdx
+		 	                + data.replyContent[index].parentReplyIdx
+		 	                + '">익명&ensp;</button></li><span class="replyDate">'
+		 	                + data.replyContent[index].replyDate
+		 	                + '</span><div style="clear:both"></div><li class="replyContent">'
+		 	                + data.replyContent[index].replyContent 
+		 	                + '</li><br>'
+		 	                + '<div id="replyIdx2" style="display:none">'
+		 	                + data.replyContent[index].replyIdx
 		 	                + '"}</div>'
-		 	                + '<div class="rereply"></div><hr>'
-		                	}
-		                
-		                // parentsIdx가 있을 경우 대댓글 추가
-		                // function parentReply() {
+		 	                + '<hr><div class="rereply">';
+		 	              
+							// 대댓글 출력 시작
+							if (data.reReplyContent[index].parentReplyIdx == pIdx) {
+								
+			 	                $.each(data.reReplyContent, function(index, rereply){
+			 	                		
+			 	                	if(rereply.parentReplyIdx == pIdx){
+			 	                	
+			 	                		replyContent +=
+					 	                	'<li class="ybreply3"><i class="bi bi-arrow-return-right">&ensp;</i><button class="toMessage" seq"'
+					 	                	+ data.reReplyContent[index].memberId
+					 	                	+ '" data=replyIdx="'
+					 	                	+ data.reReplyContent[index].replyIdx
+					 	                	+ '" data=parentReplyIdx"'
+					 	                	+ data.reReplyContent[index].parentReplyIdx
+					 	                	+ '">익명&ensp;</button></li><span class="replyDate">'
+						 	                + data.reReplyContent[index].replyDate
+						 	                + '</span><div style="clear:both"></div><li class="replyContent">&ensp;'
+						 	                + data.reReplyContent[index].replyContent 
+						 	                + '</li><br><div class="replyDown">'
+						 	                + '<div id="replyIdx3" style="display:none">'
+						 	                + data.reReplyContent[index].replyIdx
+						 	                + '"</div></div><hr>'
+			 	                	}
+		 	                	
+								
+										})
+
+									}
 		 	                
-		 	                var replyIdx = $(this).attr('data-replyIdx');
-							var parentReplyIdx = $(this).attr('data-parentReplyIdx');
 
+		                	}
+
+		            //  var replyIdx = $(this).attr('data-replyIdx');
+					//  var parentReplyIdx = $(this).attr('data-parentReplyIdx');
+							
 						})
-
-						$('#replyDiv').append(replyContent);
+												$('#replyDiv').append(replyContent);
 							}
 						})
+
+						
 						
 					
 				
@@ -251,10 +280,10 @@
 				var parentReplyIdx = $(this).attr('data-parentReplyIdx');
 		})
 		
+		/*
 		// 더보기 클릭시 대댓글 토글
-		$(document).on(					
-			"click",
-			".rere", function rere() {
+		$(document).ready(	
+				function rere() {
  				 
  				var boardName = $('#boardName').text();
 				var idx = $('#idx').text();
@@ -265,7 +294,7 @@
 				// 대댓글 Ajax
 				$.ajax({
 					type : "get",
-					url : '/'+ param + '/' + idx + '/reply/' + myReplyIdx,
+					url : '/board/'+ param + '/' + idx + '/reply/' + myReplyIdx,
 					contentType : "application/json; charset=utf-8",
 					success : function(data) {
 						
@@ -274,7 +303,6 @@
 		                $.each(data, function(index) {
 		                	if (myReplyIdx == data[index].parentReplyIdx) {
 		                	
-		                		
 		                	reReplyContent +=
 		 	                '<div class="rere5"><hr><li class="ybreply2"><i class="bi bi-arrow-return-right">&nbsp;</i><button class="toMessage2" seq="' 
 		 	                + data[index].memberId 
@@ -291,24 +319,23 @@
 		                
 		             	})
 		             	
-		             	console.log("태그: " + reReplyContent);
+		             	
 		                $('.rereply').append(reReplyContent);
-		                
+		             	
+		             	/* 
 		                $('.replyDown').empty;
 		                $('.replyDown').append(
-		                		
+		             			
 		                		'<button class="rere" data-replyIdx2="'
 				 	            
 				 	            + '">댓글 접기&nbsp;'
 				 	            + '<i class="fa-solid fa-caret-up"></i></button>'
 		                		
-		                );
-					}
+		                ); 
+			}
 		})
     			
- 				 
- 				 /* $(".rereply").toggle(); */
-  			});
+  			});*/
 		
 			
 			</script>

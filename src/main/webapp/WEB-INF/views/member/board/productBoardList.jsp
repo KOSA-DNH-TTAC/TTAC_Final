@@ -75,7 +75,7 @@
 
 											<div class="entry-title">
 											<span id="sold">판매중</span><h2 class="entry-title">              
-                     						&nbsp;<a href="/productBoardList/${productList.idx}">${productList.title}</a></h2>
+                     						&nbsp;<a href="/board/productBoardList/${productList.idx}">${productList.title}</a></h2>
 											</div>
 
 											<div class="entry-meta">
