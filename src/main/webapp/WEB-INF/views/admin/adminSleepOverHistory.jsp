@@ -90,7 +90,7 @@
 									<li><a href="/admin/enroll">시설등록</a></li>
 								</ul>
 							</li>
-							<li class="smenu"><a href="admin/calendar">일정관리</a></li>
+							<li class="smenu"><a href="/admin/calendar">일정관리</a></li>
 							<li class="smenu"><a href="/admin/sail">통계관리</a></li>
 						</ul>
 

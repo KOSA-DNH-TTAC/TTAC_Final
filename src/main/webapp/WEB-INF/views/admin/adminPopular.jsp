@@ -71,7 +71,7 @@
 							<li class="smenu" style="background-color:#4D6794; color:white;"><a href="/admin/coupon">
 									<h1>기숙사 통합관리 솔루션</h1>
 								</a></li>
-							<li class="smenu"><a href="/admin/adminMember" class="msub ">회원관리</a>
+							<li class="smenu"><a href="/admin/adminMember">회원관리</a>
 								<ul class="sub ">
 									<li><a href="/admin/adminMember">회원현황</a></li>
 									<li><a href="../sub01/sub01_02.php">벌점관리</a></li>

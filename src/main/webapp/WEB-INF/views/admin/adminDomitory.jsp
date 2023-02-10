@@ -53,33 +53,34 @@
 		<div class="subcon">
 	<div class="leftcon">
 	<nav id="sidemenu">
-		<ul class="submenu">
-			<li class="smenu" style="background-color:#4D6794; color:white;"><a href="/admin/coupon" ><h1>기숙사 통합관리 솔루션</h1></a></li>
-			<li class="smenu"><a href="/admin/adminMember">회원관리</a>
-				<ul class="sub ">
-					<li ><a href="/admin/adminMember">회원현황</a></li>
-					<li ><a href="../sub01/sub01_02.php">벌점관리</a></li>
-				</ul>	
-			</li>
-			<li class="smenu"><a href="/admin/coupon" >식권관리</a></li>
-			<li class="smenu"><a href="/admin/popular" >외박관리</a>
-				<ul class="sub ">
-					<li><a href="/admin/popular">외박신청</a></li>
-					<li><a href="/admin/sleepOverHistory">외박이력</a></li>
-				</ul>
-			</li>
-			<li class="smenu"><a href="/admin/analyze" class="msub on">시설관리</a>
-				<ul class="sub ">
-					<li ><a href="/admin/analyze">시설관리</a></li>
-					<li ><a href="/admin/enroll">시설등록</a></li>
-					<li ><a href="/admin/domitory">기숙사(동) 등록</a></li>
-				</ul>	
-			</li>
-			<li class="smenu"><a href="admin/calendar" >일정관리</a></li>
-			<li class="smenu"><a href="/admin/sail" >통계관리</a></li>
-		</ul>
+						<ul class="submenu">
+							<li class="smenu" style="background-color:#4D6794; color:white;"><a href="/admin/coupon">
+									<h1>기숙사 통합관리 솔루션</h1>
+								</a></li>
+							<li class="smenu"><a href="/admin/adminMember" class="msub ">회원관리</a>
+								<ul class="sub ">
+									<li><a href="/admin/adminMember">회원현황</a></li>
+									<li><a href="../sub01/sub01_02.php">벌점관리</a></li>
+								</ul>
+							</li>
+							<li class="smenu"><a href="/admin/coupon">식권관리</a></li>
+							<li class="smenu"><a href="/admin/popular" class="msub on">외박관리</a>
+								<ul class="sub ">
+									<li><a href="/admin/popular">외박신청</a></li>
+									<li><a href="/admin/sleepOverHistory">외박이력</a></li>
+								</ul>
+							</li>
+							<li class="smenu"><a href="/admin/analyze">시설관리</a>
+								<ul class="sub ">
+									<li><a href="/admin/analyze">시설관리</a></li>
+									<li><a href="/admin/enroll">시설등록</a></li>
+								</ul>
+							</li>
+							<li class="smenu"><a href="/admin/calendar">일정관리</a></li>
+							<li class="smenu"><a href="/admin/sail">통계관리</a></li>
+						</ul>
 
-    </nav>
+					</nav>
 
 
 </div>	<div class="con">

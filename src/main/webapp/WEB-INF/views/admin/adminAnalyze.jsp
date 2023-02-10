@@ -68,7 +68,7 @@
 	<div class="leftcon">
 	<nav id="sidemenu">
 		<ul class="submenu">
-			<li class="smenu" style="background-color:#4D6794; color:white;"><a href="/adminCoupon" ><h1>기숙사 통합관리 솔루션</h1></a></li>
+			<li class="smenu" style="background-color:#4D6794; color:white;"><a href="/admin/coupon" ><h1>기숙사 통합관리 솔루션</h1></a></li>
 			<li class="smenu"><a href="/admin/adminMember">회원관리</a>
 				<ul class="sub ">
 					<li ><a href="/admin/adminMember">회원현황</a></li>
@@ -80,7 +80,7 @@
 			</li>
 			<li class="smenu"><a href="#" class="msub on">시설관리</a>
 				<ul class="sub ">
-				   <li ><a href="/admin/analyze">시설관리</a></li>
+				   <li ><a href="/admin/analyze" class="msub on">시설관리</a></li>
 				   <li ><a href="/admin/enroll">시설등록</a></li>
 				   <li ><a href="/admin/domitory">기숙사(동) 등록</a></li>
 				</ul>   
