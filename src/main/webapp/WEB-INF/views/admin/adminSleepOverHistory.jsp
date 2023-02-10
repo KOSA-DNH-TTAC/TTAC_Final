@@ -146,16 +146,14 @@
 							<tr>
 								<th>기간</th>
 								<td colspan="3">
-									<input class="form-select1" type="date" id="start" name="trip-start"
-										value="2000-네일아트-04">
-									- <input class="form-select1" type="date" id="end" name="trip-start"
-										value="2000-네일아트-04">&nbsp;&nbsp;
+									<input class="form-select1" type="date" id="start" name="trip-start">
+									- <input class="form-select1" type="date" id="end" name="trip-end">&nbsp;&nbsp;
 								</td>
 							</tr>
 						</table>
 						<div class="ok_btn">
 							<ul>
-								<li><button type="button" class="btn_sumit2" onclick="">검색</button></li>
+								<li><button type="button" class="btn_sumit2" onclick="getIntervalHistory()">검색</button></li>
 							</ul>
 						</div>
 					</div>
@@ -319,6 +317,69 @@
 					console.log("code:" + request.status + "\n" + "message:" + request.responseText + "\n" + "error:" + error);
 				}
 			})
+		}
+
+		function getIntervalHistory(){
+			// <th>기간</th>
+			// <td colspan="3">
+			// 	<input class="form-select1" type="date" id="start" name="trip-start">
+			// 	- <input class="form-select1" type="date" id="end" name="trip-end">&nbsp;&nbsp;
+			// </td>
+			let startString = $('#start').val();
+			let endString = $('#end').val();
+
+			// let startdate = new Date($('#start').val());
+			// let enddate = new Date($('#end').val())
+				//이 짓을 할 필요가 없었음...
+			// let interval = enddate - startdate;
+			// if(interval<0){
+			// 	interval *= -1;
+			// }
+			// interval /= ( 1000 * 60 * 60 * 24 ) //밀리초를 '일'로 나눔
+
+			$.ajax({
+				type:"GET",
+				url:"/adminPopular/getIntervalHistory",
+				data:{
+						"startdate" : startString,
+						"enddate" : endString
+					},
+				contentType: "application/json; charset=UTF-8",
+				success:function(result){
+					console.log(result);
+
+					$('#nightoverN').empty();
+					$('#nightoverY').empty();
+					let Ncontents = `<tbody>
+									<tr>
+										<th>번호</th>
+										<th>외박일</th>
+										<th>복귀일</th>
+										<th>이름</th>
+										<th>사유</th>
+									</tr>`
+					let Ycontents = Ncontents;
+
+					//아직 처리되지 않은 외박 신청
+					$.each(result.list, function (index, over) {
+						// console.log(index)
+						// console.log(over)
+						let startdate = new Date(over.startDate);
+						let enddate = new Date(over.endDate);
+                  		let localeStart = startdate.toLocaleString("ko-KR");
+						let localeEnd = enddate.toLocaleString("ko-KR");
+						Ncontents += "<tr><td>" + (++index) + "</td>"
+							+ "<td>" + localeStart.slice(0,11) + "</td>"
+							+ "<td>" + localeEnd.slice(0,11) + "</td>"
+							+ "<td>" + over.username + "</td>"
+							+ "<td>" + over.sleepOverReason + "</td>"
+							+ "<input type='hidden' value='" + over.sleepOverIdx + "' ></tr>"
+					})
+
+					$('#nightoverN').append(Ncontents);
+				}
+			}
+			)
 		}
 	</script>
 
