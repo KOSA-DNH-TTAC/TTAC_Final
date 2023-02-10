@@ -101,7 +101,7 @@
 										</ul>
 									</div>
 									<div class="d-grid gap-2 d-md-flex justify-content-md-end">
-									  <button type="submit" onclick="location.href='/noticeList/noticeWrite'" style="width:130px; height:20; border-radius: 50px; padding:5px; border: none; background-color:#E96B56; color:white; margin-top:10px; font-size: large;">글쓰기</button>
+									  <button type="submit" onclick="location.href='/board/noticeWrite'" style="width:130px; height:20; border-radius: 50px; padding:5px; border: none; background-color:#E96B56; color:white; margin-top:10px; font-size: large;">글쓰기</button>
 									</div>
 
 									<div>

@@ -139,13 +139,13 @@ public class BoardController {
 	}
 
 	// 공지사항 글쓰기
-	@GetMapping("/noticeList/noticeWrite")
+	@GetMapping("/board/noticeWrite")
 	public String noticeWrite() {
 		return "member/board/noticeWrite";
 	}
 
 	// 공지사항 글쓰기
-	@PostMapping("/noticeList/noticeWrite")
+	@PostMapping("/board/noticeWrite")
 	public String noticeWriteOk(Principal principal, Model model,@RequestParam("file") MultipartFile file,
 															 	 @RequestParam("title") String title,
 															     @RequestParam("content") String content) throws IOException  {
@@ -205,11 +205,11 @@ public class BoardController {
 			if (result < 1) {
 				icon = "error";
 				msg = "글 작성이 실패했습니다.";
-				url = "/noticeList/noticeWrite";
+				url = "/board/noticeList/noticeWrite";
 			} else {
 				icon = "success";
 				msg = "글 작성이 완료되었습니다!";
-				url = "/noticeList";
+				url = "/board/noticeList";
 				
 			}
 		}
@@ -234,31 +234,13 @@ public class BoardController {
 	}
 
 	// 자유게시판 글쓰기
-	@GetMapping("/freeBoardList/freeBoardWrite")
+	@GetMapping("/board/freeBoardWrite")
 	public String freeBoardWrite() {
 		return "member/board/freeBoardWrite";
 	}
 	
-	//파일 다운로드
-	@GetMapping("/download/{idx}/{fileName}")
-	public ResponseEntity<byte[]> download(@PathVariable("idx") String idx,
-										   @PathVariable("fileName") String fileName) throws IOException {
-		String url = "";
-		
-		User user = (User) SecurityContextHolder.getContext().getAuthentication().getPrincipal();
-		String university = user.getUniversityCode();
-		
-		url = university +"/"+ "board" + "/" + idx + "/" + fileName;
-		System.out.println("파일다운 url" + url);
-		AwsS3 awsS3 = AwsS3.getInstance();
-        return awsS3.getObject(url);
-    }
-	
-	
-	
-	
 	// 자유게시판 글쓰기
-	@PostMapping("/freeBoardList/freeBoardWrite")
+	@PostMapping("/board/freeBoardWrite")
 	public String freeBoardWriteOk(Principal principal, Model model, @RequestParam("title") String title,
 			@RequestParam("content") String content) {
 
@@ -291,11 +273,11 @@ public class BoardController {
 			if (result < 1) {
 				icon = "error";
 				msg = "글 작성이 실패했습니다.";
-				url = "/freeBoardList/freeBoardWrite";
+				url = "/board/freeBoardWrite";
 			} else {
 				icon = "success";
 				msg = "글 작성이 완료되었습니다!";
-				url = "/freeBoardList";
+				url = "/board/freeBoardList";
 			}
 		}
 
@@ -305,5 +287,20 @@ public class BoardController {
 		
 		return "/common/redirect";
 	}
+	
+	//파일 다운로드
+		@GetMapping("/download/{idx}/{fileName}")
+		public ResponseEntity<byte[]> download(@PathVariable("idx") String idx,
+											   @PathVariable("fileName") String fileName) throws IOException {
+			String url = "";
+			
+			User user = (User) SecurityContextHolder.getContext().getAuthentication().getPrincipal();
+			String university = user.getUniversityCode();
+			
+			url = university +"/"+ "board" + "/" + idx + "/" + fileName;
+			System.out.println("파일다운 url" + url);
+			AwsS3 awsS3 = AwsS3.getInstance();
+	        return awsS3.getObject(url);
+	    }
 
 }
