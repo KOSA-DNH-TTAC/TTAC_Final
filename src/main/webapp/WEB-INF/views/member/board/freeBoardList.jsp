@@ -16,22 +16,22 @@
 <script src="http://code.jquery.com/jquery-1.9.1.js"></script>
 
 <!-- Favicons -->
-<link href="resources/assets/img/favicon.png" rel="icon">
-<link href="resources/assets/img/apple-touch-icon.png" rel="apple-touch-icon">
+<link href="/resources/assets/img/favicon.png" rel="icon">
+<link href="/resources/assets/img/apple-touch-icon.png" rel="apple-touch-icon">
 
 <!-- Google Fonts -->
 <link href="https://fonts.googleapis.com/css?family=Open+Sans:300,300i,400,400i,600,600i,700,700i|Raleway:300,300i,400,400i,500,500i,600,600i,700,700i|Poppins:300,300i,400,400i,500,500i,600,600i,700,700i" rel="stylesheet">
 <!-- Vendor CSS Files -->
-<link href="resources/assets/vendor/animate.css/animate.min.css" rel="stylesheet">
-<link href="resources/assets/vendor/bootstrap/css/bootstrap.min.css" rel="stylesheet">
-<link href="resources/assets/vendor/bootstrap-icons/bootstrap-icons.css" rel="stylesheet">
-<link href="resources/assets/vendor/boxicons/css/boxicons.min.css" rel="stylesheet">
-<link href="resources/assets/vendor/glightbox/css/glightbox.min.css" rel="stylesheet">
-<link href="resources/assets/vendor/swiper/swiper-bundle.min.css" rel="stylesheet">
+<link href="/resources/assets/vendor/animate.css/animate.min.css" rel="stylesheet">
+<link href="/resources/assets/vendor/bootstrap/css/bootstrap.min.css" rel="stylesheet">
+<link href="/resources/assets/vendor/bootstrap-icons/bootstrap-icons.css" rel="stylesheet">
+<link href="/resources/assets/vendor/boxicons/css/boxicons.min.css" rel="stylesheet">
+<link href="/resources/assets/vendor/glightbox/css/glightbox.min.css" rel="stylesheet">
+<link href="/resources/assets/vendor/swiper/swiper-bundle.min.css" rel="stylesheet">
 <link href="/resources/assets/css/yb.css" rel="stylesheet">
 
 <!-- Template Main CSS File -->
-<link href="resources/assets/css/style.css" rel="stylesheet">
+<link href="/resources/assets/css/style.css" rel="stylesheet">
 
 <!-- =======================================================
   * Template Name: Eterna - v4.10.0
@@ -39,7 +39,7 @@
   * Author: BootstrapMade.com
   * License: https://bootstrapmade.com/license/
   ======================================================== -->
- <link href="resources/assets/css/nightOver.css" rel="stylesheet">
+ <link href="/resources/assets/css/nightOver.css" rel="stylesheet">
 </head>
 
 <body>
@@ -76,7 +76,7 @@
 							<article class="entry">
 
 								<div class="entry-title">									
-									<a href="/freeBoardList/${freeBoard.idx}">
+									<a href="/board/freeBoardList/${freeBoard.idx}">
 										<c:choose>
 											<c:when	test="${freeBoard.title != null && fn:length(freeBoard.title) > 80}">
 															${fn:substring(freeBoard.title,0,80)}...
@@ -194,19 +194,19 @@
 
 	<!-- Vendor JS Files -->
 	<script
-		src="resources/assets/vendor/purecounter/purecounter_vanilla.js"></script>
+		src="/resources/assets/vendor/purecounter/purecounter_vanilla.js"></script>
 	<script
-		src="resources/assets/vendor/bootstrap/js/bootstrap.bundle.min.js"></script>
-	<script src="resources/assets/vendor/glightbox/js/glightbox.min.js"></script>
+		src="/resources/assets/vendor/bootstrap/js/bootstrap.bundle.min.js"></script>
+	<script src="/resources/assets/vendor/glightbox/js/glightbox.min.js"></script>
 	<script
-		src="resources/assets/vendor/isotope-layout/isotope.pkgd.min.js"></script>
-	<script src="resources/assets/vendor/swiper/swiper-bundle.min.js"></script>
+		src="/resources/assets/vendor/isotope-layout/isotope.pkgd.min.js"></script>
+	<script src="/resources/assets/vendor/swiper/swiper-bundle.min.js"></script>
 	<script
-		src="resources/assets/vendor/waypoints/noframework.waypoints.js"></script>
-	<script src="resources/assets/vendor/php-email-form/validate.js"></script>
+		src="/resources/assets/vendor/waypoints/noframework.waypoints.js"></script>
+	<script src="/resources/assets/vendor/php-email-form/validate.js"></script>
 
 	<!-- Template Main JS File -->
-	<script src="resources/assets/js/main.js"></script>
+	<script src="/resources/assets/js/main.js"></script>
 
 
 </body>
@@ -218,7 +218,7 @@
 
 		$.ajax({
 			type : "get",
-			url : '${allBoard}' + '/' + boardIdx,
+			url : 'board/'+ '${allBoard}' + '/' + boardIdx,
 			contentType : "application/json; charset=utf-8",
 			success : function(data) {
 				console.log(data);

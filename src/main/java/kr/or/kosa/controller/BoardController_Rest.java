@@ -54,9 +54,24 @@ public class BoardController_Rest {
 		}
 	}
 
-
+	// 댓글, 대댓글 Map Return
+	@GetMapping("/board/{allBoard}/{idx}/reply")
+	public ResponseEntity<Map<String, Object>> allReply(@PathVariable("idx") String idx) {
+		Map<String, Object> map = new HashMap<>();
+		try {
+			map.put("replyContent", boardService.replyContent(idx));
+			map.put("reReplyContent", boardService.reReplyContent(idx));
+			return new ResponseEntity<>(map, HttpStatus.OK);
+		} catch (Exception e) {
+			map.put("replyContent", boardService.replyContent(idx));
+			map.put("reReplyContent", boardService.reReplyContent(idx));
+			return new ResponseEntity<>(map, HttpStatus.BAD_REQUEST);
+			}
+		}
+	
+	/*
 	// 게시판 댓글 보기
-	@GetMapping("/{allBoard}/board/{idx}")
+	@GetMapping("/board/{allBoard}/{idx}/reply")
 	public ResponseEntity<List<Reply>> replyContent(@PathVariable("idx") String idx) {
 		List<Reply> replyContent = new ArrayList<Reply>();
 		try {
@@ -69,7 +84,7 @@ public class BoardController_Rest {
 	
 	
 	// 게시판 대댓글 보기
-	@GetMapping("/{allBoard}/{idx}/reply/{replyIdx}")
+	@GetMapping("/board/{allBoard}/{idx}/reply/{replyIdx}")
 	public ResponseEntity<List<Reply>> reReplyContent(@PathVariable("idx") String idx,
 			@PathVariable("replyIdx") String replyIdx) {
 		List<Reply> reReplyContent = new ArrayList<Reply>();
@@ -80,7 +95,7 @@ public class BoardController_Rest {
 			return new ResponseEntity<List<Reply>>(reReplyContent, HttpStatus.BAD_REQUEST);
 		}
 	}
-	
+	*/
 
 
 		

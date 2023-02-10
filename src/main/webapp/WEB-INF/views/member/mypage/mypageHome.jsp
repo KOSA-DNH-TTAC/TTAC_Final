@@ -87,8 +87,8 @@
             border-color: #ff7600 !important;
           }
 
-          #hjreply{
-            color : #bababa;
+          #hjreply {
+            color: #bababa;
           }
         </style>
       </head>
@@ -159,7 +159,7 @@
                               </tr>
                               <tr>
                                 <th scope="row">기숙사</th>
-                                <td class="infoTd">${member.room}</td>
+                                <td class="infoTd">${member.domitoryName} ${member.room}호</td>
                               </tr>
                               <tr>
                                 <th scope="row">이메일</th>
@@ -247,7 +247,7 @@
                   "memberid": result.memberId,
                   "name": result.name,
                   "major": result.major,
-                  "domitory": result.domitory,
+                  "domitory": result.domitoryName,
                   "room": result.room,
                   "email": result.email,
                   "phone": result.phone,
@@ -394,44 +394,65 @@
             //ajax로 결제내역 가져옴
             $.ajax({
               type: "GET",
-              url: "/mypage/myinfo",
+              url: "/mypage/payments",
               success: function (result) {
                 console.log("성공")
                 console.log(result);
+                let contents = `<table class="table" id='nightoverTable'>
+                            <thead>
+                            <tr>
+                              <th scope="col">결제일자</th>
+                              <th scope="col">결제금액</th>
+                            </tr>
+                          </thead>
+                          <tbody>`;
+                //forEach 안에서 tr 생성
+                $.each(result, function(index, payment){
+                  console.log(payment)
+                  var time = new Date(payment.payDate);
+                  var localetime = time.toLocaleString("ko-KR");
+                  contents += `<tr>
+                                  <td>`+localetime +`</td>
+                                  <td>` + payment.payAmount + `</td>
+                                </tr>`
+                })
+                //포이치 끝나면 tbody 닫아줌...
+                contents += `</tbody></table>`
+                $('#content').empty()
+                $('#content').append(contents)
               },
-              error: function (err) {
-                console.log("에러");
-                console.log(err);
+              error: function (request, status, error) {
+                console.log("에러")
+                console.log("code:" + request.status + "\n" + "message:" + request.responseText + "\n" + "error:" + error);
               }
             })
-            var contents = `<table class="table" id='nightoverTable'>
-            <thead>
-            <tr>
-              <th scope="col">결제일자</th>
-              <th scope="col">결제금액</th>
-            </tr>
-          </thead>
-          <tbody>
-            <tr>
-              <td>2023.01.30</td>
-              <td>15000원</td>
-            </tr>
-            <tr>
-              <td>2023.01.30</td>
-              <td>15000원</td>
-            </tr>
-            <tr>
-              <td>2023.01.30</td>
-              <td>15000원</td>
-            </tr>
-            <tr>
-              <td>2023.01.30</td>
-              <td>15000원</td>
-            </tr>
-          </tbody>
-        </table>`
-            $('#content').empty()
-            $('#content').append(contents)
+        //     var contents = `<table class="table" id='nightoverTable'>
+        //     <thead>
+        //     <tr>
+        //       <th scope="col">결제일자</th>
+        //       <th scope="col">결제금액</th>
+        //     </tr>
+        //   </thead>
+        //   <tbody>
+        //     <tr>
+        //       <td>2023.01.30</td>
+        //       <td>15000원</td>
+        //     </tr>
+        //     <tr>
+        //       <td>2023.01.30</td>
+        //       <td>15000원</td>
+        //     </tr>
+        //     <tr>
+        //       <td>2023.01.30</td>
+        //       <td>15000원</td>
+        //     </tr>
+        //     <tr>
+        //       <td>2023.01.30</td>
+        //       <td>15000원</td>
+        //     </tr>
+        //   </tbody>
+        // </table>`
+           
 
 
           }

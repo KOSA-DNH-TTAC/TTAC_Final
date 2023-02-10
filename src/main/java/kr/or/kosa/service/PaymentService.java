@@ -5,10 +5,12 @@ import java.util.List;
 
 import org.apache.ibatis.session.SqlSession;
 import org.springframework.beans.factory.annotation.Autowired;
+import org.springframework.security.core.context.SecurityContextHolder;
 import org.springframework.stereotype.Service;
 
 import kr.or.kosa.dao.PaymentHistoryDao;
 import kr.or.kosa.dto.PaymentHistory;
+import kr.or.kosa.security.User;
 
 @Service
 public class PaymentService {
@@ -40,21 +42,23 @@ public class PaymentService {
 	//결제 전체 조회
 	public List<PaymentHistory> getAllPaymentHistory(){
 		List<PaymentHistory> list = new ArrayList<PaymentHistory>();
-		
+		User user = (User) SecurityContextHolder.getContext().getAuthentication().getPrincipal();
+		String universitycode = user.getUniversityCode();
 		//dao에서 리스트 가져옴
 		PaymentHistoryDao dao = sqlsession.getMapper(PaymentHistoryDao.class);
+		list = dao.getAllPaymentHistory(universitycode);
 		
 		return list;
 	}
 		
 		
 	//특정 회원 결제 조회
-	List<PaymentHistory> getPaymentHistoryById(String memberid){
+	public List<PaymentHistory> getPaymentHistoryById(String memberid){
 		List<PaymentHistory> list = new ArrayList<PaymentHistory>();
 		
 		//dao에서 리스트 가져옴
 		PaymentHistoryDao dao = sqlsession.getMapper(PaymentHistoryDao.class);
-		
+		list = dao.getPaymentHistoryById(memberid);
 		return list;
 	}
 }

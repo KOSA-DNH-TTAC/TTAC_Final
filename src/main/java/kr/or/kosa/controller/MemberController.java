@@ -20,6 +20,7 @@ import org.springframework.web.bind.annotation.RequestParam;
 import org.springframework.web.multipart.MultipartFile;
 
 import kr.or.kosa.dto.Member;
+import kr.or.kosa.dto.PaymentHistory;
 import kr.or.kosa.dto.SleepOver;
 import kr.or.kosa.security.CustomUser;
 import kr.or.kosa.service.MemberService;
@@ -136,5 +137,12 @@ public class MemberController {
 		list = memberservice.getMemberByName(member.getName(), member.getUniversityCode());
 		System.out.println(list);
 		return null;
+	}
+	
+	@GetMapping("/testpayments")
+	public List<PaymentHistory> testpay() {
+		List<PaymentHistory> list = paymentService.getPaymentHistoryById("2017109210");
+		System.out.println(list);
+		return list;
 	}
 }

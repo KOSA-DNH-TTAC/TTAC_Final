@@ -42,15 +42,15 @@ WHERE p.IDX=#{idx}
 <!-- 댓글 목록 -->
 <select id="replyContent" parameterType="String" resultType="kr.or.kosa.dto.Reply">
 SELECT replyidx, parentreplyidx, idx, memberid, replycontent, replydate FROM REPLY
-WHERE idx=#{idx} AND STATUS='21'
+WHERE idx=#{idx} AND STATUS='21' AND parentreplyidx is null
 ORDER BY replydate ASC
 </select>
 
 <!-- 대댓글 목록 -->
 <select id="reReplyContent" parameterType="String" resultType="kr.or.kosa.dto.Reply">
-SELECT replyidx, parentreplyidx, idx, memberid, replycontent, replydate FROM REPLY
-WHERE parentreplyidx = #{replyidx}
-ORDER BY replydate ASC
+SELECT r2.replyidx, r2.parentreplyidx, r2.idx, r2.memberid, r2.replycontent, r2.replydate FROM REPLY r1, REPLY r2
+WHERE r1.REPLYIDX = r2.PARENTREPLYIDX
+ORDER BY r1.REPLYDATE ASC, r2.REPLYDATE ASC;
 </select>
 
 <!-- 글 작성 (파일첨부 x) -->
@@ -59,6 +59,7 @@ INSERT INTO POST (BOARDIDX,BOARDNAME,MEMBERID,UNIVERSITYCODE,TITLE,CONTENT,WRITE
 VALUES(#{boardIdx},#{boardName},#{memberId},#{universityCode},#{title},#{content},NOW())
 </insert>
 
+<!-- 파일 업로드  -->
 <insert id="fileInsert" parameterType="kr.or.kosa.dto.File">
 	<selectKey keyProperty="idx" resultType="int" order="BEFORE">
 		SELECT IDX from POST ORDER BY IDX DESC LIMIT 1
@@ -66,6 +67,15 @@ VALUES(#{boardIdx},#{boardName},#{memberId},#{universityCode},#{title},#{content
 INSERT INTO FILE (idx, FILENAME,FILESIZE)
 VALUES(#{idx},#{fileName},#{fileSize})
 </insert>
+
+<!-- 가장 최근 파일업로드한 idx 가져오기 -->
+<select id="recentFileIdx" resultType="int">
+SELECT IDX from FILE ORDER BY IDX DESC LIMIT 1
+</select>
+
+<select id="fileContent" parameterType="String" resultType="kr.or.kosa.dto.File">
+SELECT FILENUM, IDX, FILENAME, FILESIZE FROM FILE WHERE IDX = #{idx}
+</select>
 
 
 </mapper>
