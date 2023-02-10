@@ -1616,6 +1616,16 @@ section {
   font-size: 15px;
 }
 
+.entry-content{
+	width: 100%;
+}
+
+.entry-content > p > img {
+	width: 100%;
+	height: 100%;
+	
+}
+
 .blog .entry .entry-content .read-more {
   -moz-text-align-last: right;
   text-align-last: right;

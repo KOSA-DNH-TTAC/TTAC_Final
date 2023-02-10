@@ -1,5 +1,6 @@
 <%@ page language="java" contentType="text/html; charset=UTF-8"
     pageEncoding="UTF-8"%>
+<%@ taglib uri="http://www.springframework.org/security/tags" prefix="sec" %>
 <!DOCTYPE html>
 <html>
 <head>
@@ -33,7 +34,14 @@
               <li><a href="/message">쪽지함</a></li>
               <li><a href="/GPT">내 식권보기</a></li>
               <li><a href="/eveningCall"><b style="color:black">점호하기</b></a></li> <!-- #E96B56 -->
-              <li><a href="/userlogin">로그인</a></li>
+
+              <sec:authorize access="isAnonymous()">
+                <a href="/userlogin">로그인</a>
+              </sec:authorize>
+              <sec:authorize access="isAuthenticated()">
+                <a href="/logout">로그아웃</a>
+              </sec:authorize>
+              <!-- <li><a href="/userlogin">로그인</a></li> -->
             </ul>
           </li>
           <!-- <li><a href="contact.html">Contact</a></li> -->
