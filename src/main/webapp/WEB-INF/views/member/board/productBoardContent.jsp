@@ -203,7 +203,7 @@
 						$('#replyDiv').empty();
 					      
 		                $.each(data.replyContent, function(index, reply) {
-		                	console.log(replyContent)
+		                	
 		                	if (reply.parentReplyIdx == '0') {
 			                		
 			                	var pIdx = reply.replyIdx;
@@ -225,37 +225,29 @@
 			 	                + reply.replyIdx
 			 	                + '"</div>'
 			 	                + '<hr><div class="rereply">';
-			 	               
-			 	                // 대댓글 출력 시작
-								if(data.reReplyContent[index]!=null){
-									if (data.reReplyContent[index].parentReplyIdx == pIdx) {
-										
-						 	            $.each(data.reReplyContent, function(index, rereply){
-						 	            if(rereply.parentReplyIdx == pIdx){
-						 	               	
-						 	            	replyContent +=
-								 	    
-						 	            	'<li class="ybreply3"><i class="bi bi-arrow-return-right">&ensp;</i><button class="toMessage" seq"'
-								 	        + data.reReplyContent[index].memberId
-								 	        + '" data=replyIdx="'
-								 	        + data.reReplyContent[index].replyIdx
-								 	        + '" data=parentReplyIdx"'
-								 	        + data.reReplyContent[index].parentReplyIdx
-								 	        + '">익명&ensp;</button></li><span class="replyDate">'
-									 	    + data.reReplyContent[index].replyDate
-									 	    + '</span><div style="clear:both"></div><li class="replyContent">&emsp;&ensp;'
-									 	    + data.reReplyContent[index].replyContent 
-									 	    + '</li><br><div class="replyDown">'
-									 	    + '<div id="replyIdx3" style="display:none">'
-									 	    + data.reReplyContent[index].replyIdx
-									 	    + '"</div></div><hr>'
-						 	            }
-					 	                })
-	
-										}								
-								}
-	
-			 	               
+
+													
+								$.each(data.reReplyContent, function(index, rere){
+								if(rere.parentReplyIdx == pIdx){
+								replyContent +=
+					 	    
+								'<li class="ybreply3"><i class="bi bi-arrow-return-right">&ensp;</i><button class="toMessage" seq"'
+								+ data.reReplyContent[index].memberId
+								+ '" data=replyIdx="'
+								+ data.reReplyContent[index].replyIdx
+								+ '" data=parentReplyIdx"'
+								+ data.reReplyContent[index].parentReplyIdx
+								+ '">익명&ensp;</button></li><span class="replyDate">'
+								+ data.reReplyContent[index].replyDate
+								+ '</span><div style="clear:both"></div><li class="replyContent">&emsp;&ensp;'
+								+ data.reReplyContent[index].replyContent 
+								+ '</li><br><div class="replyDown">'
+								+ '<div id="replyIdx3" style="display:none">'
+								+ data.reReplyContent[index].replyIdx
+								+ '"</div></div><hr>'
+													}
+												})
+			 	              			 	               
 			               }
 
 					})

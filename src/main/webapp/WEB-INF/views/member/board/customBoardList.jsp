@@ -77,7 +77,7 @@
 
 											<div class="entry-title">
 											<a href="/board/custom/${boardList.boardName}/${boardList.idx}">
-												<a href="blog-single.html">${boardList.title}</a>
+												${boardList.title}</a>
 											</div>
 
 											<div class="entry-meta">
