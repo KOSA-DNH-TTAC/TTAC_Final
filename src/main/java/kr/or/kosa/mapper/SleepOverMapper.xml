@@ -11,14 +11,21 @@ PUBLIC "-//mybatis.org//DTD Mapper 3.0//EN"
 	VALUES(#{memberId}, #{universityCode}, #{startDate}, #{endDate}, #{status}, #{sleepOverReason}, #{sleepOverFileName}, #{sleepOverFileSize})
 	</insert>
 	
-	<!-- 외박 수정(update) : 사감이 승인을 했을 경우 -->
-	<update id="updateSleepOver" parameterType="kr.or.kosa.dto.SleepOver">
-	
-	</update>
-	
 	<!-- 외박 신청 가능 시간 -->
 	<select id="getSleepOverTime" parameterType="String" resultType="kr.or.kosa.dto.SleepOverTime">
 		SELECT universitycode, startTime, endTime FROM SLEEPOVERTIME WHERE universitycode = #{universitycode};	
 	</select>
+	
+	<!-- 오늘 외박신청 조회 -->
+	<select id="getTodaysSleepOver" parameterType="String" resultType="kr.or.kosa.dto.SleepOver">
+		SELECT idx, memberId, universityCode, startDate, endDate, status, sleepOverReason, sleepOverConfirm, sleepOverFileName
+		FROM SLEEPOVER
+		WHERE universityCode = #{universitycode} 
+	</select>
+	
+	<!-- 외박 수정(update) : 사감이 승인을 했을 경우 -->
+	<update id="confirmSleepOver" parameterType="kr.or.kosa.dto.SleepOver">
+		UPDATE SLEEPOVER SET Sleepoverconfirm='Y' WHERE idx=#{idx}
+	</update>
 	
 </mapper>

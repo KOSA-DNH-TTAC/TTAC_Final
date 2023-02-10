@@ -10,6 +10,7 @@ public class SleepOver {
 	private int idx;
 	private String universityCode;
 	private String memberId;
+	private String username;
 	private String startDate;
 	private String endDate;
 	private int status;

@@ -7,6 +7,7 @@ import java.util.List;
 
 import org.apache.ibatis.session.SqlSession;
 import org.springframework.beans.factory.annotation.Autowired;
+import org.springframework.security.core.context.SecurityContextHolder;
 import org.springframework.stereotype.Service;
 
 import kr.or.kosa.dao.BoardDao;
@@ -17,6 +18,7 @@ import kr.or.kosa.dto.File;
 import kr.or.kosa.dto.Post;
 import kr.or.kosa.dto.Reply;
 import kr.or.kosa.dto.RollCall;
+import kr.or.kosa.security.User;
 
 @Service
 public class BoardService {
@@ -169,7 +171,9 @@ public class BoardService {
 		BoardDao boardDao = sqlSession.getMapper(BoardDao.class);
 		System.out.println("서비스 옴?");
 		Domitory domitory = boardDao.eveningCall(lat, lon);
-		System.out.println("replyContent: " + domitory);
+		User user = (User) SecurityContextHolder.getContext().getAuthentication().getPrincipal();
+		//String unicode = user.getDomitoryName;
+		System.out.println("domitory: " + domitory);
 		double domitoryLat = domitory.getDomitoryLatitude();
 		double domitoryLon = domitory.getDomitoryLogitude();
 
@@ -185,20 +189,24 @@ public class BoardService {
 	}
 
 	// 점호완료시 DB에 회원 점호데이터 인서트
-	public String eveningCallInsert(String memberid, String universitycode) {
-		BoardDao boardDao = sqlSession.getMapper(BoardDao.class);
-		System.out.println("memberid 서비스 옴?");
-		int rollcall = boardDao.eveningCallInsert(memberid, universitycode);
+			public String eveningCallInsert(String memberid, String universitycode) {
+				BoardDao boardDao = sqlSession.getMapper(BoardDao.class);
+				System.out.println("memberid 서비스 옴?");
+				int  rollcall = boardDao.eveningCallInsert(memberid, universitycode);
 
-		if (rollcall >= 1) {
-			System.out.println("성공");
-		}
+				if( rollcall >=1) {
+					System.out.println("성공");
+				}
+				System.out.println("rollcall : " + rollcall);
+
+				return null;
+			}
 		
-	// 점호완료시 DB에 회원 점호데이터 인서트
-		public String eveningCallCompare(String memberid, String universitycode) {
+		// 점호완료시 DB에 회원 점호데이터 인서트
+		public String eveningCallCompare(String memberid, String universitycode, String rollcalldate) {
 			BoardDao boardDao = sqlSession.getMapper(BoardDao.class);
 			System.out.println("Camopare 서비스 옴?");
-			RollCall  rollcall = boardDao.eveningCallCompare(memberid, universitycode);
+			RollCall  rollcall = boardDao.eveningCallCompare(memberid, universitycode, rollcalldate);
 			String unicode = rollcall.getUniversityCode();
 			String date = rollcall.getRollCallDate();
 			String dbmemberid = rollcall.getMemberId();
@@ -209,7 +217,11 @@ public class BoardService {
 			
 			String result = "SUCCESS"; 
 			System.out.println("점호한 회원데이터 : "+memberid+"/"+universitycode +"===="+ "DB에서 가져온 비교데이터 : "+ dbmemberid+"/"+unicode);
-			if(memberid.equals(dbmemberid) && unicode.equals(universitycode)) {
+			//조회된데이터 없으면
+//			if(rollcall == null) {
+//				result = "SUCCESS";
+//			}
+			if(memberid.equals(dbmemberid) && unicode.equals(universitycode) && date.equals(rollcalldate)) {
 				System.out.println("이미 DB에 "+memberid+" 회원의 데이터 있음");
 				result = "FAIL";
 			}
@@ -217,8 +229,6 @@ public class BoardService {
 			
 			return result;
 		}
-
-		return null;
-	}
+	
 
 }
