@@ -1,6 +1,9 @@
 package kr.or.kosa.controller;
 
+import java.text.SimpleDateFormat;
+import java.time.LocalDate;
 import java.util.ArrayList;
+import java.util.Date;
 import java.util.HashMap;
 import java.util.List;
 import java.util.Map;
@@ -84,10 +87,11 @@ public class BoardController_Rest {
 		//저녁점호 위치비교 + 중복체크 + 데이터 인서트
 		 @RequestMapping(value = "/eveningCall", method = RequestMethod.POST, produces = "application/text; charset=utf8")
 		   public String eveningCall(@RequestParam(value = "report[]") double[] report) {
-			 System.out.println("lat : "+ report);
+			 System.out.println("lat : "+ report[0]);
 			 User user = (User) SecurityContextHolder.getContext().getAuthentication().getPrincipal();
 			 String memberId = user.getMemberId();
 			 String unicode = user.getUniversityCode();
+			
 			 System.out.println("memberid : "+memberId);
 			 double lat = report[0];
 			 System.out.println("lat : "+ lat);
@@ -95,8 +99,17 @@ public class BoardController_Rest {
 			 System.out.println("lon : "+ lon);
 			 String result = boardService.eveningCall(lat, lon);
 			 boardService.eveningCall(lat, lon);
+			 
+			 // 현재 날짜/시간
+			 Date now = new Date();
+		     // 포맷팅 정의
+		     SimpleDateFormat formatter = new SimpleDateFormat("yyyy-MM-dd");
+		     // 포맷팅 적용
+		     String date = formatter.format(now);
+		     System.out.println("포멧팅 현재시간 : "+date);
+		     
 			 //점호한 인원 정보 데이터 인서트
-			 String result2 = boardService.eveningCallCompare(memberId, unicode);
+			 String result2 = boardService.eveningCallCompare(memberId, unicode, date);
 			 System.out.println("중복 체크 결과 : "+result2);
 			 String result3 = result2+" : 이미 점호 완료한 회원입니다.";
 			 if(result2.equals("SUCCESS")) {
