@@ -121,44 +121,6 @@
 					<h3 class="sub_h3">외박관리 <span>외박현황</span></h3>
 
 
-					<div class="bmb">
-						<div class="bgtab">
-							<div class="w50 fl">
-								<h3 class="txtin">일자별 외박 조회</h3>
-							</div>
-							<div class="w50 fl tar">
-								<a class="btn_sumit2">엑셀다운로드</a>
-							</div>
-						</div>
-						<table class="srch_table mb20">
-							<colgroup>
-								<col width="네일아트%" />
-								<col width="20%" />
-								<col width="네일아트%" />
-								<col width="60%" />
-							</colgroup>
-							<tr>
-								<th>조회</th>
-								<td colspan="3">
-									<li><a href="#" class="btn_sumit">현 시각 외박현황 보기</a></li>
-								</td>
-							</tr>
-							<tr>
-								<th>기간</th>
-								<td colspan="3">
-									<input class="form-select1" type="date" id="start" name="trip-start"
-										value="2000-네일아트-04">
-									- <input class="form-select1" type="date" id="end" name="trip-start"
-										value="2000-네일아트-04">&nbsp;&nbsp;
-								</td>
-							</tr>
-						</table>
-						<div class="ok_btn">
-							<ul>
-								<li><button type="button" class="btn_sumit2" onclick="">검색</button></li>
-							</ul>
-						</div>
-					</div>
 
 					<div class="ofh">
 						<div class="halfcon mr">
@@ -387,15 +349,14 @@
 				data: datas	,
 				success: function(result){
 					console.log(result);
+					//테이블에 append 해줌 (getTodays)
 					getTodays();
 				},
 				error: function (request, status, error) {
 					console.log("에러")
 					console.log("code:" + request.status + "\n" + "message:" + request.responseText + "\n" + "error:" + error);
 				}
-			})
-
-			//테이블에 append 해줌 (getTodays)
+			})	
 		}
 
 		function getTodays() {

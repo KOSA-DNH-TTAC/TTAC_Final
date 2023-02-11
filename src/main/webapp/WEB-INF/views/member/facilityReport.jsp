@@ -32,7 +32,7 @@
   <link href="resources/assets/css/style.css" rel="stylesheet">
   
   <link href="resources/assets/css/nightOver.css" rel="stylesheet">
-
+			<script src="http://code.jquery.com/jquery-latest.min.js"></script>
   <!-- =======================================================
   * Template Name: Eterna - v4.10.0
   * Template URL: https://bootstrapmade.com/eterna-free-multipurpose-bootstrap-template/
@@ -73,9 +73,40 @@
 .blog-pagination li:hover a {
   color: #fff;
 }
+
+.breadcrumbs{
+	padding-bottom:10px;
+}
   </style>
 </head>
+<script>
+function report(){
+	/* 셀렉트 옵션 값 가져오기 */
+	var select1 = $('#select1').val();
+	var select2 = $('#select2').val();
+	var select3 = $('#reportreson').val();
+	var formdata=[select1, select2, select3];
+	console.log("formdata : "+formdata[0]);
+	console.log("formdata : "+formdata[1]);
+	console.log("formdata : "+formdata[2]);
+	
+	$.ajax({
+		type : "POST",
+		url : "/facility/report",
+		data : {
+			"formdata" : formdata,
+		}, 
+		success : function(data) {
+			alert(data);
 
+		},
+		error : function(data) {
+			alert(data+": 에러, 또는 점호 가능한 지역이 아닙니다.");
+		}
+	});
+}
+
+</script>
 <body>
 
   <!-- ======= Header ======= -->
@@ -98,39 +129,42 @@
     
     
   	<div style="display: flex; flex-direction: row; justify-content: center; align-items: center;">
-  	<div id="box" style="width: 275px; height: 553.44px; left: 61.27px; background: #FFFFFF;">
-  	<div id="select" style="display:flex; flex-direction:column; justify-content:center; width:100%;">
-		<select class="form-select3" aria-label="Default select example">
+ <div id="box" style="width: 275px; height: 553.44px; left: 61.27px; background: #FFFFFF; margin-right:30px; padding-top:50px;">
+  	<div id="select" style="display:flex; flex-direction:column; justify-content:center; width:100%; margin:0">
+<%-- 		<select id="select1" class="form-select3" aria-label="Default select example">
 		  <option selected>기숙사 건물(동)</option>
-		  <option value="1">명륜학사 A동</option>
-		  <option value="2">명륜학사 B동</option>
-		</select>
-		<select class="form-select3" aria-label="Default select example">
+		  <c:forEach items="${dolist}" var="dolist">
+		  	<option value="${dolist.domitoryName}">${dolist.domitoryName}</option>
+		  </c:forEach>
+		</select> --%>
+		<select id="select1" class="form-select3" aria-label="Default select example">
 		  <option selected>기숙사 층</option>
-		  <option value="1">1층</option>
-		  <option value="2">2층</option>
+		  <c:forEach items="${dolist}" var="dolist">
+		  	<option value="${dolist.domitoryFloor}">${dolist.domitoryFloor}</option>
+		  </c:forEach>
 		</select>
-		<select class="form-select3" aria-label="Default select example">
+		<select id="select2" class="form-select3" aria-label="Default select example">
 		  <option selected>시설물</option>
-		  <option value="1">세탁기</option>
-		  <option value="2">변기</option>
+		  <c:forEach items="${faclist}" var="faclist">
+		  	<option value="${faclist.facilityName}">${faclist.facilityName}</option>
+		  </c:forEach>
 		</select>
   	</div>
   	<div id="reason">
   		<div class="form-floating">
-		  <textarea class="form-control" placeholder="신고 상세 설명을 적어주세요." id="floatingTextarea2" style="height:200px;"></textarea>
+		  <textarea id="reportreson" class="form-control" placeholder="신고 상세 설명을 적어주세요." id="floatingTextarea2" style="height:200px;"></textarea>
 		  <label for="floatingTextarea2">신고 상세 설명</label>
 		</div>
   	</div>
-  	<button type="submit" class="btn btn-warning" style="width:130px; height:20; border-radius: 50px; padding:5px; border: none; background-color:#E96B56; color:white; margin-top:10px; font-size: large;">신청하기</button>
+  	<button class="btn btn-warning" onclick="report()" style="width:100%; height:20; border-radius: 50px; padding:5px; border: none; background-color:#E96B56; color:white; margin-top:10px; font-size: large;">제출하기</button>
+  	
   	</div>
   	
   	
   	
   	
   	
-  	
-  	<div id="box2" style="width: 835px; height: 553.44px; background: #FFFFFF;">
+  	<div id="box2" style="width: 835px; height: 553.44px; background: #FFFFFF; margin-left:30px;">
   	<div id="select" style="display:flex; flex-direction:row; width:100%;">
 		<select class="form-select2" aria-label="Default select example">
 		  <option selected>기숙사 건물(동)</option>
@@ -182,14 +216,15 @@
               <td>명륜학사 A동</td>
               <td>2층</td>
               <td>세면대</td>
-              <td>세면대 물이 나오지 않습니다.</td>
+              <td>세면대 물세면대 물이 나오지.</td>
             </tr>
           	<tr>
 	          <td>명륜학사 B동</td>
               <td>4층</td>
               <td>거울</td>
-              <td>화장실 거울이 깨져있습니다.</td>
+              <td>화장실 거화장실 거울이니깨져있습니다.<td>
 	        </tr>
+	  
 	        <tr>
               <td>명륜학사 A동</td>
               <td>2층</td>
@@ -201,15 +236,15 @@
               <td>4층</td>
               <td>거울</td>
               <td>화장실 거울이 깨져있습니다.</td>
-	        </tr>
-          </tbody>
+	        </tr>       
+	        </tbody>
         </table>
-        
-  	</div>
+   
+        </div>
   	
   	
-  	<!-- 페이징 -->
-  		<div class="blog-pagination">
+ 	<!-- 페이징 -->
+  <div class="blog-pagination">
         <ul class="justify-content-center">
            <li class="active"><a href="#">1</a></li>
            <li><a href="#">2</a></li>
@@ -238,8 +273,7 @@
 			<a
 				href="boardList.user?boardname=${boardname}&cp=${cpage+1}&ps=${pagesize}&boardname=${boardname}">다음</a>
 		</c:if>
-	</div>  	
-  	</div>
+	</div>  	</div>
   	</div>
   </div>
   
