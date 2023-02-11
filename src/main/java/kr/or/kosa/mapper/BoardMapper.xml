@@ -78,6 +78,14 @@ SELECT FILENUM, IDX, FILENAME, FILESIZE FROM FILE WHERE IDX = #{idx}
 </select>
 
 
+<!-- 게시글 추천 기능 -->
+<select id=likeCount" parameterType="String">
+SELECT COUNT(idx) result FROM POSTLIKE 
+WHERE memberid=#{param1} AND idx=#{param2}
+GROUP BY idx;
+</select>
+
+
 </mapper>
 
 
