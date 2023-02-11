@@ -44,7 +44,7 @@ public class BoardController {
 //////////////////////////////////////////////////////////////////////////////////////////////////////////////
 
 	// 기본 제공 게시판
-	@GetMapping("board/{allBoard}")
+	@GetMapping("/board/{allBoard}")
 	public String allBoardView(Model model, @PathVariable String allBoard) {
 
 		String param = "";
@@ -68,7 +68,7 @@ public class BoardController {
 	}
 
 	// 커스텀 생성 게시판
-	@GetMapping("board/custom/{boardName}")
+	@GetMapping("/board/custom/{boardName}")
 	public String boardList(Model model, @PathVariable String boardName) {
 		List<Post> boardList = boardService.customBoardList(boardName);
 		model.addAttribute("boardList", boardList);
@@ -78,7 +78,7 @@ public class BoardController {
 	}
 
 	// 게시글 보기
-	@GetMapping("board/{boardName}/{idx}")
+	@GetMapping("/board/{boardName}/{idx}")
 	public String boardContent(Model model, @PathVariable("idx") String idx,
 			@PathVariable("boardName") String boardName) {
 		
@@ -114,6 +114,17 @@ public class BoardController {
 		String viewPage = "member/board/" + path;
 			
 		return viewPage;
+	}
+	
+	// 커스텀 게시판 게시글 보기
+	@GetMapping("/board/custom/{boardName}/{idx}")
+	public String customBoardContent(Model model, @PathVariable("idx") String idx,
+			@PathVariable("boardName") String boardName) {
+		List<Post> customBoardContent = boardService.boardContent(idx);
+		
+		model.addAttribute("custom", customBoardContent);
+		model.addAttribute("boardName", boardName);
+		return "member/board/customBoardContent";
 	}
 	
 	// 게시글 삭제

@@ -29,4 +29,29 @@ PUBLIC "-//mybatis.org//DTD Mapper 3.0//EN"
 		UPDATE SLEEPOVER SET Sleepoverconfirm='Y' WHERE idx=#{idx}
 	</update>
 	
+	<!-- 외박신청이력 조회 -->
+	<select id="getSleepOverHistory" parameterType="String" resultType="kr.or.kosa.dto.SleepOverHistory">
+		SELECT SLEEPOVERIDX, MEMBERID, UNIVERSITYCODE, STARTDATE, ENDDATE, STATUS, SLEEPOVERREASON, SLEEPOVERCONFIRM
+		FROM SLEEPOVERHISTORY
+		WHERE UNIVERSITYCODE=#{universitycode}
+	</select>
+
+	<!-- 기간별 외박 검색 -->
+	<select id="searchHistoryWithDate" resultType="kr.or.kosa.dto.SleepOverHistory">
+		SELECT SLEEPOVERIDX, MEMBERID, UNIVERSITYCODE, STARTDATE, ENDDATE, STATUS, SLEEPOVERREASON, SLEEPOVERCONFIRM
+		from SLEEPOVERHISTORY
+		WHERE universitycode=#{universitycode}
+		<if test="memberid!=''">
+    	AND MEMBERID = #{memberid}
+  		</if>
+  		<if test="startdate != '' and enddate != ''">
+		AND ((DATE(startdate) <![CDATA[<=]]> STR_TO_DATE(#{startdate},'%Y-%m-%d') AND
+		DATE(enddate) <![CDATA[>=]]> STR_TO_DATE(#{startdate},'%Y-%m-%d'))
+		OR
+		(DATE(startdate) <![CDATA[<=]]> STR_TO_DATE(#{enddate},'%Y-%m-%d') AND
+		DATE(enddate)<![CDATA[>=]]> STR_TO_DATE(#{enddate},'%Y-%m-%d')))
+		</if>
+		
+
+	</select>
 </mapper>

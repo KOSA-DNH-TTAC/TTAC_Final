@@ -12,14 +12,15 @@
 		<meta http-equiv="Expires" content="-1" />
 
 		<link rel="shortcut icon" href="../img/favicon.png" type="image/x-icon" />
-		<link href="resources/assets/css/font.css" rel="stylesheet">
-		<link href="resources/assets/css/font-awesome.css" rel="stylesheet">
-		<link href="resources/assets/css/style2.css" rel="stylesheet">
-		<link href="resources/assets/css/program.css" rel="stylesheet">
-		<link href="resources/assets/css/layout.css" rel="stylesheet">
-		<link href="resources/assets/css/menu.css" rel="stylesheet">
-		<link href="resources/assets/css/category.css" rel="stylesheet">
-		<link href="resources/assets/css/graph.css" rel="stylesheet">
+		<link href="/resources/assets/css/font.css" rel="stylesheet">
+		<link href="/resources/assets/css/font-awesome.css" rel="stylesheet">
+		<!-- <link rel="stylesheet" href="https://kit.fontawesome.com/7da3227c91.css" crossorigin="anonymous"> -->
+		<link href="/resources/assets/css/style2.css" rel="stylesheet">
+		<link href="/resources/assets/css/program.css" rel="stylesheet">
+		<link href="/resources/assets/css/layout.css" rel="stylesheet">
+		<link href="/resources/assets/css/menu.css" rel="stylesheet">
+		<link href="/resources/assets/css/category.css" rel="stylesheet">
+		<link href="/resources/assets/css/graph.css" rel="stylesheet">
 
 		<!-- <script type="text/javascript" src="resources/assets/js/pg_script.js"></script> -->
 		<!-- <script type="text/javascript" src="resources/assets/js/jquery-2.1.4.js"></script> -->
@@ -44,7 +45,7 @@
 			<div id="header">
 				<div class="headerwrap">
 					<div id="headerin">
-						<h1><a href="../" class="logo"><img src="resources/assets/img/logoBLUE.png" alt="로고"
+						<h1><a href="../" class="logo"><img src="/resources/assets/img/logoBLUE.png" alt="로고"
 									style="height:60px;" /></a></h1>
 						<nav class="gnb">
 							<ul>
@@ -68,30 +69,30 @@
 				<div class="leftcon">
 					<nav id="sidemenu">
 						<ul class="submenu">
-							<li class="smenu" style="background-color:#4D6794; color:white;"><a href="/adminCoupon">
+							<li class="smenu" style="background-color:#4D6794; color:white;"><a href="/admin/coupon">
 									<h1>기숙사 통합관리 솔루션</h1>
 								</a></li>
-							<li class="smenu"><a href="/adminMember" class="msub ">회원관리</a>
+							<li class="smenu"><a href="/admin/adminMember">회원관리</a>
 								<ul class="sub ">
-									<li><a href="/adminMember">회원현황</a></li>
+									<li><a href="/admin/adminMember">회원현황</a></li>
 									<li><a href="../sub01/sub01_02.php">벌점관리</a></li>
 								</ul>
 							</li>
-							<li class="smenu"><a href="/adminCoupon">식권관리</a></li>
-							<li class="smenu"><a href="/adminPopular" class="msub on">외박관리</a>
+							<li class="smenu"><a href="/admin/coupon">식권관리</a></li>
+							<li class="smenu"><a href="/admin/popular" class="msub on">외박관리</a>
 								<ul class="sub ">
-									<li><a href="/adminPopular">외박신청</a></li>
-									<li><a href="/adminSleepOverHistory">외박이력</a></li>
+									<li><a href="/admin/popular">외박신청</a></li>
+									<li><a href="/admin/sleepOverHistory">외박이력</a></li>
 								</ul>
 							</li>
-							<li class="smenu"><a href="/adminAnalyze">시설관리</a>
+							<li class="smenu"><a href="/admin/analyze">시설관리</a>
 								<ul class="sub ">
-									<li><a href="/adminAnalyze">시설관리</a></li>
-									<li><a href="/adminEnroll">시설등록</a></li>
+									<li><a href="/admin/analyze">시설관리</a></li>
+									<li><a href="/admin/enroll">시설등록</a></li>
 								</ul>
 							</li>
-							<li class="smenu"><a href="adminCalendar">일정관리</a></li>
-							<li class="smenu"><a href="/adminSail">통계관리</a></li>
+							<li class="smenu"><a href="/admin/calendar">일정관리</a></li>
+							<li class="smenu"><a href="/admin/sail">통계관리</a></li>
 						</ul>
 
 					</nav>
@@ -121,44 +122,6 @@
 					<h3 class="sub_h3">외박관리 <span>외박현황</span></h3>
 
 
-					<div class="bmb">
-						<div class="bgtab">
-							<div class="w50 fl">
-								<h3 class="txtin">일자별 외박 조회</h3>
-							</div>
-							<div class="w50 fl tar">
-								<a class="btn_sumit2">엑셀다운로드</a>
-							</div>
-						</div>
-						<table class="srch_table mb20">
-							<colgroup>
-								<col width="네일아트%" />
-								<col width="20%" />
-								<col width="네일아트%" />
-								<col width="60%" />
-							</colgroup>
-							<tr>
-								<th>조회</th>
-								<td colspan="3">
-									<li><a href="#" class="btn_sumit">현 시각 외박현황 보기</a></li>
-								</td>
-							</tr>
-							<tr>
-								<th>기간</th>
-								<td colspan="3">
-									<input class="form-select1" type="date" id="start" name="trip-start"
-										value="2000-네일아트-04">
-									- <input class="form-select1" type="date" id="end" name="trip-start"
-										value="2000-네일아트-04">&nbsp;&nbsp;
-								</td>
-							</tr>
-						</table>
-						<div class="ok_btn">
-							<ul>
-								<li><button type="button" class="btn_sumit2" onclick="">검색</button></li>
-							</ul>
-						</div>
-					</div>
 
 					<div class="ofh">
 						<div class="halfcon mr">
@@ -358,7 +321,7 @@
 	<!-- litebox -->
 	<!-- <script type="text/javascript" src="resources/assets/js/hs_draggable.js"></script> -->
 	<!-- <script type="text/javascript" src="resources/assets/js/jquery-ui.min.js"></script> -->
-	<link rel="stylesheet" media="all" href="resources/assets/css/litebox.css" />
+	<link rel="stylesheet" media="all" href="/resources/assets/css/litebox.css" />
 	<!-- <script type="text/javascript" src="resources/assets/js/litebox.js"></script> -->
 	<!-- <script type="text/javascript" src="resources/assets/js/backbone.js"></script> -->
 	<!-- <script type="text/javascript" src="resources/assets/js/images-loaded.min.js"></script> -->
@@ -366,9 +329,27 @@
 
 
 	<script type="text/javascript">
+		function dateFormatter(date) {
+			var wantDate = new Date(date);
+			// 년도 getFullYear()
+			var year = wantDate.getFullYear();
+			// 월 getMonth() (0~11로 1월이 0으로 표현되기 때문에 + 1을 해주어야 원하는 월을 구할 수 있다.)
+			var month = wantDate.getMonth() + 1
+			// 일 getDate()
+			var date = wantDate.getDate(); // 일
+			if (month < 10) {
+				month = "0" + month;
+			}
+			if (date < 10) {
+				date = "0" + date;
+			}
+			var wantDateFormat = year + "-" + month + "-" + date;
+			return wantDateFormat;
+		}
+
 		$(document).ready(function () {
 			console.log("테스트")
-			
+
 			getTodays();
 		})
 
@@ -376,17 +357,18 @@
 			var tr = $(over).closest('tr')
 			// var datas = { idx: tr.children().html() };
 			let index = tr.find('input[type=hidden]').val();
-			let datas = {"idx" : index};
+			let datas = { "idx": index };
 			console.log(datas);
 
 			//ajax로 업데이트 함 (confirm N->Y)
 			$.ajax({
-				type:"get",
-				url:"/adminPopular/update",
+				type: "get",
+				url: "/adminPopular/update",
 				dataType: "json",
-				data: datas	,
-				success: function(result){
+				data: datas,
+				success: function (result) {
 					console.log(result);
+					//테이블에 append 해줌 (getTodays)
 					getTodays();
 				},
 				error: function (request, status, error) {
@@ -394,8 +376,6 @@
 					console.log("code:" + request.status + "\n" + "message:" + request.responseText + "\n" + "error:" + error);
 				}
 			})
-
-			//테이블에 append 해줌 (getTodays)
 		}
 
 		function getTodays() {
@@ -419,30 +399,43 @@
 									</tr>`
 					let Ycontents = Ncontents;
 
-					//아직 처리되지 않은 외박 신청
-					let ncount = 1;
-					let ycount = 1;
-					$.each(result.nlist, function (index, over) {
-						Ncontents += "<tr><td>" + (++index) + "</td>"
-							+ "<td>" + over.startDate.slice(0, 11) + "</td>"
-							+ "<td>" + over.endDate.slice(0, 11) + "</td>"
-							+ "<td>" + over.username + "</td>"
-							+ "<td>" + over.sleepOverReason + "</td>"
-							+ "<td><button onclick='confirm(this)'>승인</button></td>"
-							+ "<input type='hidden' value='" + over.idx + "' ></tr>"
-					})
+					//외박 신청이 없을 경우
+					if (result.nlist.length == 0) {
+						Ncontents = "<tr><td col-span='6'>들어온 외박 신청이 없습니다.</td></tr>"
+					} else {
+						//아직 처리되지 않은 외박 신청
+
+						$.each(result.nlist, function (index, over) {
+							let startdate = dateFormatter(over.startDate);
+							let enddate = dateFormatter(over.endDate);
+							Ncontents += "<tr><td>" + (++index) + "</td>"
+								+ "<td>" + startdate + "</td>"
+								+ "<td>" + enddate + "</td>"
+								+ "<td>" + over.username + "</td>"
+								+ "<td>" + over.sleepOverReason + "</td>"
+								+ "<td><button onclick='confirm(this)'>승인</button></td>"
+								+ "<input type='hidden' value='" + over.idx + "' ></tr>"
+						})
+					}
+
 
 					$('#nightoverN').append(Ncontents);
 
-					//처리된 외박 신청
-					$.each(result.ylist, function (index, over) {
-						Ycontents += "<tr><td>" + (++index) + "</td>"
-							+ "<td>" + over.startDate.slice(0, 11) + "</td>"
-							+ "<td>" + over.endDate.slice(0, 11) + "</td>"
-							+ "<td>" + over.username + "</td>"
-							+ "<td>" + over.sleepOverReason + "</td>"
-							+ "<td>승인완료</td></tr>"
-					})
+					if (result.ylist.length == 0) {
+						Ycontents = "<tr><td col-span='6'>승인된 외박신청이 없습니다.</td></tr>"
+					} else {
+						//처리된 외박 신청
+						$.each(result.ylist, function (index, over) {
+							let startdate = dateFormatter(over.startDate);
+							let enddate = dateFormatter(over.endDate);
+							Ycontents += "<tr><td>" + (++index) + "</td>"
+								+ "<td>" + startdate + "</td>"
+								+ "<td>" + enddate + "</td>"
+								+ "<td>" + over.username + "</td>"
+								+ "<td>" + over.sleepOverReason + "</td>"
+								+ "<td>승인완료</td></tr>"
+						})
+					}
 
 					$('#nightoverY').append(Ycontents);
 					// $('#content').append(contents)

@@ -87,7 +87,7 @@
                     <div id="boardName" style="display:none">${boardContent.boardName}</div>
 					<div id="idx" style="display:none">${boardContent.idx}</div>
                     <ul>
-                    	<li class="d-flex align-items-center"><i class="bi bi-person"></i><a href="blog-single.html" value="${boardContent.memberId}">익명</a></li>
+                    	<li class="d-flex align-items-center"><i class="bi bi-person"></i><a value="${boardContent.memberId}">익명</a></li>
                     	<li class="d-flex align-items-center"><i class="bi bi-clock"></i>${boardContent.writeDate}</li>
                     	<li class="d-flex align-items-center"><i class="bi-hand-thumbs-up"></i>${boardContent.likeNum}</li>
                     </ul>
@@ -123,8 +123,7 @@
 						<div id="replyDiv"></div>
 						
 						<li>
-							<textarea class="form-control" name="messageContent" placeholder="댓글을 입력하세요." id="exampleFormControlTextarea1">
-							</textarea>
+							<textarea class="form-control" name="messageContent" placeholder="댓글을 입력하세요." value="" id="exampleFormControlTextarea1"></textarea>
 						</li>
 		 	            
 		 	            </ul>
@@ -210,7 +209,7 @@
 					success : function(data) {
 											
 						var replyContent = "";
-						/* var rereply = 1; */
+						console.log(data);
 						$('#replyDiv').empty();
 					      
 		                $.each(data.replyContent, function(index) {
@@ -231,56 +230,66 @@
 		 	                + data.replyContent[index].replyDate
 		 	                + '</span><div style="clear:both"></div><li class="replyContent">'
 		 	                + data.replyContent[index].replyContent 
-		 	                + '</li><br>'
+		 	                + '</li><button class="reSubmit">댓글 쓰기</button><br>'
 		 	                + '<div id="replyIdx2" style="display:none">'
 		 	                + data.replyContent[index].replyIdx
-		 	                + '"}</div>'
+		 	                + '"</div>'
 		 	                + '<hr><div class="rereply">';
 		 	              
+												$.each(data.reReplyContent, function(index, rere){
+													if(rere.parentReplyIdx == pIdx){
+														replyContent +=
+					 	    
+														'<li class="ybreply3"><i class="bi bi-arrow-return-right">&ensp;</i><button class="toMessage" seq"'
+													+ data.reReplyContent[index].memberId
+													+ '" data=replyIdx="'
+													+ data.reReplyContent[index].replyIdx
+													+ '" data=parentReplyIdx"'
+													+ data.reReplyContent[index].parentReplyIdx
+													+ '">익명&ensp;</button></li><span class="replyDate">'
+												+ data.reReplyContent[index].replyDate
+												+ '</span><div style="clear:both"></div><li class="replyContent">&emsp;&ensp;'
+												+ data.reReplyContent[index].replyContent 
+												+ '</li><br><div class="replyDown">'
+												+ '<div id="replyIdx3" style="display:none">'
+												+ data.reReplyContent[index].replyIdx
+												+ '"</div></div><hr>'
+													}
+												})
 							// 대댓글 출력 시작
+							/*
 							if (data.reReplyContent[index].parentReplyIdx == pIdx) {
 								
-			 	                $.each(data.reReplyContent, function(index, rereply){
-			 	                		
-			 	                	if(rereply.parentReplyIdx == pIdx){
-			 	                	
-			 	                		replyContent +=
-					 	                	'<li class="ybreply3"><i class="bi bi-arrow-return-right">&ensp;</i><button class="toMessage" seq"'
-					 	                	+ data.reReplyContent[index].memberId
-					 	                	+ '" data=replyIdx="'
-					 	                	+ data.reReplyContent[index].replyIdx
-					 	                	+ '" data=parentReplyIdx"'
-					 	                	+ data.reReplyContent[index].parentReplyIdx
-					 	                	+ '">익명&ensp;</button></li><span class="replyDate">'
-						 	                + data.reReplyContent[index].replyDate
-						 	                + '</span><div style="clear:both"></div><li class="replyContent">&ensp;'
-						 	                + data.reReplyContent[index].replyContent 
-						 	                + '</li><br><div class="replyDown">'
-						 	                + '<div id="replyIdx3" style="display:none">'
-						 	                + data.reReplyContent[index].replyIdx
-						 	                + '"</div></div><hr>'
-			 	                	}
-		 	                	
-								
-										})
+			 	            $.each(data.reReplyContent, function(index, rereply){
+			 	            if(rereply.parentReplyIdx == pIdx){
+			 	               	
+			 	            	replyContent +=
+					 	    
+			 	            	'<li class="ybreply3"><i class="bi bi-arrow-return-right">&ensp;</i><button class="toMessage" seq"'
+					 	        + data.reReplyContent[index].memberId
+					 	        + '" data=replyIdx="'
+					 	        + data.reReplyContent[index].replyIdx
+					 	        + '" data=parentReplyIdx"'
+					 	        + data.reReplyContent[index].parentReplyIdx
+					 	        + '">익명&ensp;</button></li><span class="replyDate">'
+						 	    + data.reReplyContent[index].replyDate
+						 	    + '</span><div style="clear:both"></div><li class="replyContent">&emsp;&ensp;'
+						 	    + data.reReplyContent[index].replyContent 
+						 	    + '</li><br><div class="replyDown">'
+						 	    + '<div id="replyIdx3" style="display:none">'
+						 	    + data.reReplyContent[index].replyIdx
+						 	    + '"</div></div><hr>'
+			 	            }
+		 	                })
 
-									}
-		 	                
+							}*/
+		 	               
+		               }
 
-		                	}
-
-		            //  var replyIdx = $(this).attr('data-replyIdx');
-					//  var parentReplyIdx = $(this).attr('data-parentReplyIdx');
-							
-						})
-												$('#replyDiv').append(replyContent);
-							}
-						})
-
-						
-						
-					
-				
+					})
+						$('#replyDiv').append(replyContent);
+					}
+				})		
 	});
 		
 		// 클릭시 익명 회원의 memberId값 받아오기
@@ -292,62 +301,7 @@
 				var parentReplyIdx = $(this).attr('data-parentReplyIdx');
 		})
 		
-		/*
-		// 더보기 클릭시 대댓글 토글
-		$(document).ready(	
-				function rere() {
- 				 
- 				var boardName = $('#boardName').text();
-				var idx = $('#idx').text();
-				var myReplyIdx = $(this).attr('data-replyIdx2');
-				console.log("replyIdx: " + myReplyIdx);
-				var reReplyContent = "";
-				
-				// 대댓글 Ajax
-				$.ajax({
-					type : "get",
-					url : '/board/'+ param + '/' + idx + '/reply/' + myReplyIdx,
-					contentType : "application/json; charset=utf-8",
-					success : function(data) {
-						
-						$('.rereply').empty();
-						
-		                $.each(data, function(index) {
-		                	if (myReplyIdx == data[index].parentReplyIdx) {
-		                	
-		                	reReplyContent +=
-		 	                '<div class="rere5"><hr><li class="ybreply2"><i class="bi bi-arrow-return-right">&nbsp;</i><button class="toMessage2" seq="' 
-		 	                + data[index].memberId 
-		 	                + '" data-replyIdx="'
-		 	                + data[index].replyIdx
-		 	                + '" data-parentReplyIdx="'
-		 	                + data[index].parentReplyIdx
-		 	                + '">익명&nbsp;</b></div></li><span class="replyDate">'
-		 	                + data[index].replyDate
-		 	                + '</span><div style="clear:both"><li class="replyContent">'
-		 	                + data[index].replyContent
-		 	                + '</li></div>'
-		                	}
-		                
-		             	})
-		             	
-		             	
-		                $('.rereply').append(reReplyContent);
-		             	
-		             	/* 
-		                $('.replyDown').empty;
-		                $('.replyDown').append(
-		             			
-		                		'<button class="rere" data-replyIdx2="'
-				 	            
-				 	            + '">댓글 접기&nbsp;'
-				 	            + '<i class="fa-solid fa-caret-up"></i></button>'
-		                		
-		                ); 
-			}
-		})
-    			
-  			});*/
+		
 		
 			
 			</script>

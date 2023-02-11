@@ -2,18 +2,26 @@ package kr.or.kosa.controller;
 
 import java.util.Locale;
 
+import javax.servlet.http.HttpServletRequest;
+import javax.servlet.http.HttpServletResponse;
+
 import org.slf4j.Logger;
 import org.slf4j.LoggerFactory;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.security.access.prepost.PreAuthorize;
+import org.springframework.security.core.Authentication;
+import org.springframework.security.core.context.SecurityContextHolder;
+import org.springframework.security.web.authentication.logout.SecurityContextLogoutHandler;
 import org.springframework.stereotype.Controller;
 import org.springframework.ui.Model;
 import org.springframework.web.bind.annotation.GetMapping;
 import org.springframework.web.bind.annotation.PathVariable;
 import org.springframework.web.bind.annotation.PostMapping;
+import org.springframework.web.bind.annotation.RequestMapping;
 import org.springframework.web.servlet.ModelAndView;
 
 import kr.or.kosa.dto.Message;
+import kr.or.kosa.security.User;
 import kr.or.kosa.service.MemberService;
 import kr.or.kosa.service.MessageService;
 
@@ -53,6 +61,7 @@ public class FrontController {
 		
 		return "common/login";
 	}
+
 	/*
 	@PostMapping("/login")
 	public String mylogin() {
@@ -123,53 +132,6 @@ public class FrontController {
 		return "common/errorPage";
 	}
 	
-	@GetMapping("/adminPopular")
-	public String admin() {
-		
-		return "admin/adminPopular";
-	}
-	@GetMapping("/adminSleepOverHistory")
-	public String adminSleepOverHistory() {
-		
-		return "admin/adminSleepOverHistory";
-	}
-	
-	@GetMapping("/adminAnalyze")
-	public String adminAnalyze() {
-		
-		return "admin/adminAnalyze";
-	}
-	
-	@GetMapping("/adminSail")
-	public String adminSail() {
-		
-		return "admin/adminSail";
-	}
-	
-	@GetMapping("/adminCoupon")
-	public String adminCoupon() {
-		
-		return "admin/adminMealCoupon";
-	}
-	
-	@PreAuthorize("isAuthenticated()")
-	@GetMapping("/adminMember")
-	public String adminMember() {
-		
-		return "admin/adminMemberList";
-	}
-	
-	@GetMapping("/adminCalendar")
-	public String adminCalendar() {
-		
-		return "admin/adminCalendar";
-	}
-	
-	@GetMapping("/adminEnroll")
-	public String adminEnroll() {
-		
-		return "admin/adminEnroll";
-	}
 	
 	@GetMapping("/eveningCall")
 	public String eveningCall() {
@@ -182,19 +144,7 @@ public class FrontController {
 		
 		return "member/memberCalendar";
 	}
-	
-	@PreAuthorize("isAuthenticated()")
-	@GetMapping("/adminDomitory")
-	public String adminDomitory() {
-		
-		return "admin/adminDomitory";
-	}
-	
-	@GetMapping("/facility")
-	public String facility() {
-		
-		return "member/facilityReport";
-	}
+
 	
 	@GetMapping("/GPT")
 	public String GPT() {

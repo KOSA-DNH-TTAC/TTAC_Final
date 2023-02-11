@@ -9,15 +9,15 @@
 <meta charset="utf-8">
 <meta content="width=device-width, initial-scale=1.0" name="viewport">
 
-<title>DOTO: 거래게시판</title>
+<title>DOTO: ${boardName}</title>
 <meta content="" name="description">
 <meta content="" name="keywords">
 
 <script src="http://code.jquery.com/jquery-1.9.1.js"></script>
 
 <!-- Favicons -->
-<link href="resources/assets/img/favicon.png" rel="icon">
-<link href="resources/assets/img/apple-touch-icon.png" rel="apple-touch-icon">
+<link href="/resources/assets/img/favicon.png" rel="icon">
+<link href="/resources/assets/img/apple-touch-icon.png" rel="apple-touch-icon">
 
 <!-- Google Fonts -->
 <link
@@ -30,6 +30,7 @@
 <link href="/resources/assets/vendor/boxicons/css/boxicons.min.css" rel="stylesheet">
 <link href="/resources/assets/vendor/glightbox/css/glightbox.min.css" rel="stylesheet">
 <link href="/resources/assets/vendor/swiper/swiper-bundle.min.css" rel="stylesheet">
+<script src="https://kit.fontawesome.com/2a013a2563.js" crossorigin="anonymous"></script>
 <link href="/resources/assets/css/yb.css" rel="stylesheet"> 
 <!-- Template Main CSS File -->
 <link href="/resources/assets/css/style.css" rel="stylesheet">
@@ -57,9 +58,9 @@
 
 				<ol>
 					<li><a href="index.html">Home</a></li>
-					<li>거래게시판</li>
+					<li>${boardName}</li>
 				</ol>
-				<h2>거래게시판</h2>
+				<h2>${boardName}</h2>
 
 			</div>
 		</section>
@@ -73,27 +74,27 @@
 				
 				
 					<div id="contentsDiv" class="col-lg-8 entries">
-						<c:forEach items="${boardContent}" var="boardContent">
+						<c:forEach items="${custom}" var="custom">
 						<!--  -->
 						<div class="container" data-aos="fade-up"><div class="row">
 						<div class="col-lg-12 entries">
 					
 					<article class="entry">
-					<span id="sold">판매중</span><h2 class="entry-title">              
-                     &nbsp;${boardContent.title}
+					<h2 class="entry-title">              
+                     ${custom.title}
                     </h2>
                     <div class="entry-meta">
-                    <div id="boardName" style="display:none">${boardContent.boardName}</div>
-					<div id="idx" style="display:none">${boardContent.idx}</div>
+                    <div id="boardName" style="display:none">${custom.boardName}</div>
+					<div id="idx" style="display:none">${custom.idx}</div>
                     <ul>
-                    	<li class="d-flex align-items-center"><i class="bi bi-person"></i><a href="blog-single.html" value="${boardContent.memberId}">익명</a></li>
-                    	<li class="d-flex align-items-center"><i class="bi bi-clock"></i>${boardContent.writeDate}</li>
-                    	<li class="d-flex align-items-center"><i class="bi-hand-thumbs-up"></i>${boardContent.likeNum}</li>
+                    	<li class="d-flex align-items-center"><i class="bi bi-person"></i><a value="${custom.memberId}">익명</a></li>
+                    	<li class="d-flex align-items-center"><i class="bi bi-clock"></i>${custom.writeDate}</li>
+                    	<li class="d-flex align-items-center"><i class="bi-hand-thumbs-up"></i>${custom.likeNum}</li>
                     </ul>
                     </div>
                     <div class="entry-content" style="margin-bottom:50px;">
                     <p style="margin-top: 40px;">
-                     ${boardContent.content}
+                     ${custom.content}
                     </p>
                     </div>
                     </article>
@@ -102,7 +103,7 @@
                     
                     </div>
                     <b><i class="bi bi-chat-dots"></i>&nbsp
-                     ${boardContent.replyCount}</b>
+                     ${custom.replyCount}</b>
                     <hr> 
                     </c:forEach>
  	                <div class="box">
@@ -110,8 +111,7 @@
 						<div id="replyDiv"></div>
 						
 						<li>
-							<textarea class="form-control" name="messageContent" placeholder="댓글을 입력하세요." id="exampleFormControlTextarea1">
-							</textarea>
+							<textarea class="form-control" name="messageContent" placeholder="댓글을 입력하세요." id="exampleFormControlTextarea1"></textarea>
 						</li>
 		 	            
 		 	            </ul>
@@ -142,11 +142,9 @@
 
 						</div>
 						<!-- End sidebar -->
-
+					</div>
 					</div>
 				</div>
-				</div>
-			
 		</section>
 		<!-- End Blog Section -->
 
@@ -181,81 +179,75 @@
 				var boardName = $('#boardName').text();
 				var idx = $('#idx').text();
 				
-				if (boardName=="공지사항") {
-					param = "noticeList";
-				} else if (boardName=="건의사항") {
-					param = "opinionList";
-				} else if (boardName=="자유게시판") {
-					param = "freeBoardList";
-				} else if (boardName=="거래게시판") {
-					param = "productBoardList";
-				}
+				console.log(boardName);
+				console.log(idx);
 				
-				// 댓글 Ajax
-				$.ajax({
-					type : "get",
-					url : '/board/'+ param + '/' + idx + '/reply', 
-					contentType : "application/json; charset=utf-8",
-					success : function(data) {
-						
-						var replyContent = "";
+	// 댓글 Ajax
+	$.ajax({
+		type : "get",
+		url : '/board/'+ boardName + '/' + idx + '/reply', 
+		contentType : "application/json; charset=utf-8",
+		success : function(data) {
+			
+			console.log(data)
+			
+			var replyContent = "";
+		
+			$('#replyDiv').empty();
+		      
+            $.each(data.replyContent, function(index, reply) {
+            	
+            	if (reply.parentReplyIdx == '0') {
+                		
+                	var pIdx = reply.replyIdx;
+                	
+                	replyContent +=
+ 	                
+ 	                '<li class="ybreply2"><button class="toMessage" seq="' 
+ 	                + reply.memberId 
+ 	                + '" data-replyIdx="'
+ 	                + reply.replyIdx
+ 	                + '" data-parentReplyIdx="'
+ 	                + reply.parentReplyIdx
+ 	                + '">익명&ensp;</button></li><span class="replyDate">'
+ 	                + reply.replyDate
+ 	                + '</span><div style="clear:both"></div><li class="replyContent">'
+ 	                + reply.replyContent 
+ 	                + '</li><button class="reSubmit">댓글 쓰기</button><br>'
+ 	                + '<div id="replyIdx2" style="display:none">'
+ 	                + reply.replyIdx
+ 	                + '"</div>'
+ 	                + '<hr><div class="rereply">';
+
+					$.each(data.reReplyContent, function(index, rere){
 					
-						$('#replyDiv').empty();
-					      
-		                $.each(data.replyContent, function(index, reply) {
-		                	
-		                	if (reply.parentReplyIdx == '0') {
-			                		
-			                	var pIdx = reply.replyIdx;
-			                	
-			                	replyContent +=
-			 	                
-			 	                '<li class="ybreply2"><button class="toMessage" seq="' 
-			 	                + reply.memberId 
-			 	                + '" data-replyIdx="'
-			 	                + reply.replyIdx
-			 	                + '" data-parentReplyIdx="'
-			 	                + reply.parentReplyIdx
-			 	                + '">익명&ensp;</button></li><span class="replyDate">'
-			 	                + reply.replyDate
-			 	                + '</span><div style="clear:both"></div><li class="replyContent">'
-			 	                + reply.replyContent 
-			 	                + '</li><button class="reSubmit">댓글 쓰기</button><br>'
-			 	                + '<div id="replyIdx2" style="display:none">'
-			 	                + reply.replyIdx
-			 	                + '"</div>'
-			 	                + '<hr><div class="rereply">';
-
-													
-								$.each(data.reReplyContent, function(index, rere){
-								if(rere.parentReplyIdx == pIdx){
-								replyContent +=
-					 	    
-								'<li class="ybreply3"><i class="bi bi-arrow-return-right">&ensp;</i><button class="toMessage" seq"'
-								+ data.reReplyContent[index].memberId
-								+ '" data=replyIdx="'
-								+ data.reReplyContent[index].replyIdx
-								+ '" data=parentReplyIdx"'
-								+ data.reReplyContent[index].parentReplyIdx
-								+ '">익명&ensp;</button></li><span class="replyDate">'
-								+ data.reReplyContent[index].replyDate
-								+ '</span><div style="clear:both"></div><li class="replyContent">&emsp;&ensp;'
-								+ data.reReplyContent[index].replyContent 
-								+ '</li><br><div class="replyDown">'
-								+ '<div id="replyIdx3" style="display:none">'
-								+ data.reReplyContent[index].replyIdx
-								+ '"</div></div><hr>'
-													}
-												})
-			 	              			 	               
-			               }
-
-					})
-						
-						$('#replyDiv').append(replyContent);
+					if(rere.parentReplyIdx == pIdx){												  	
+					replyContent +=
+					'<li class="ybreply3"><i class="bi bi-arrow-return-right">&ensp;</i><button class="toMessage" seq"'
+					+ data.reReplyContent[index].memberId
+					+ '" data=replyIdx="'
+					+ data.reReplyContent[index].replyIdx
+					+ '" data=parentReplyIdx"'
+					+ data.reReplyContent[index].parentReplyIdx
+					+ '">익명&ensp;</button></li><span class="replyDate">'
+					+ data.reReplyContent[index].replyDate
+					+ '</span><div style="clear:both"></div><li class="replyContent">&emsp;&ensp;'
+					+ data.reReplyContent[index].replyContent 
+					+ '</li><br><div class="replyDown">'
+					+ '<div id="replyIdx3" style="display:none">'
+					+ data.reReplyContent[index].replyIdx
+					+ '"</div></div><hr>'
 					}
-				})		
-	});
+						})
+ 	             
+            	}
+
+		})
+			
+			$('#replyDiv').append(replyContent);
+		}
+	})		
+});
 		
 		// 클릭시 익명 회원의 memberId값 받아오기
 		$(document).on(					

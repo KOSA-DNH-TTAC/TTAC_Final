@@ -14,13 +14,13 @@ import kr.or.kosa.dto.RollCall;
 public interface BoardDao {
 
 	// 게시판 이름 (종류)
-	public List<Board> categoryList();
+	public List<Board> categoryList(String universitycode);
 
 	// 기본 제공 게시판 글 목록
-	public List<Post> allBoardList(String boardName);
+	public List<Post> allBoardList(String boardName, String universitycode);
 
 	// 커스텀 생성 게시판
-	public List<Post> customBoardList(String boardName);
+	public List<Post> customBoardList(String boardName, String universitycode);
 
 	// 게시글 상세보기
 	public List<Post> boardContent(String idx);
@@ -39,6 +39,10 @@ public interface BoardDao {
 
 	// 파일 글 작성
 	public int fileInsert(File file) throws ClassNotFoundException, SQLException;
+	
+	// 게시글 추천 여부 검사
+	public int likeCount(String memberId, String idx);
+	public void postLike(String memberId, String idx);
 
 	// 점호하기
 	public Domitory eveningCall(String domitoryname);

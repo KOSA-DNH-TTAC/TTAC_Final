@@ -174,50 +174,76 @@
 	<script src="/resources/assets/js/main.js"></script>
 
 	<script type="text/javascript">
+	
+	$(document).ready(			
+		function replyContent(dd) {
 			
-		$(document).ready(			
-			function replyContent(dd) {
+			var boardName = $('#boardName').text();
+			var idx = $('#idx').text();
+			
+			if (boardName=="공지사항") {
+				param = "noticeList";
+			} else if (boardName=="건의사항") {
+				param = "opinionList";
+			} else if (boardName=="자유게시판") {
+				param = "freeBoardList";
+			} else if (boardName=="거래게시판") {
+				param = "productBoardList";
+			}
+			
+			// 댓글 Ajax
+			$.ajax({
+				type : "get",
+				url : '/board/'+ param + '/' + idx + '/reply', 
+				contentType : "application/json; charset=utf-8",
+				success : function(data) {
+										
+					var replyContent = "";
 				
-				var boardName = $('#boardName').text();
-				var idx = $('#idx').text();
-				
-				if (boardName=="공지사항") {
-					param = "noticeList";
-				} else if (boardName=="건의사항") {
-					param = "opinionList";
-				} else if (boardName=="자유게시판") {
-					param = "freeBoardList";
-				} else if (boardName=="거래게시판") {
-					param = "productBoardList";
+					$('#replyDiv').empty();
+				      
+	                $.each(data.replyContent, function(index) {
+	                
+	                	if (data.replyContent[index].parentReplyIdx == '0') {
+	                		
+	                	var pIdx = data.replyContent[index].replyIdx;
+	                	
+	                	replyContent +=
+	 	                
+	 	                '<li class="ybreply2"><button class="toMessage" seq="' 
+	 	                + data.replyContent[index].memberId 
+	 	                + '" data-replyIdx="'
+	 	                + data.replyContent[index].replyIdx
+	 	                + '" data-parentReplyIdx="'
+	 	                + data.replyContent[index].parentReplyIdx
+	 	                + '">관리자&ensp;</button></li><span class="replyDate">'
+	 	                + data.replyContent[index].replyDate
+	 	                + '</span><div style="clear:both"></div><li class="replyContent">'
+	 	                + data.replyContent[index].replyContent 
+	 	                + '</li><button class="reSubmit">댓글 쓰기</button><br>'
+	 	                + '<div id="replyIdx2" style="display:none">'
+	 	                + data.replyContent[index].replyIdx
+	 	                + '"</div>'
+	 	                + '<hr><div class="rereply">';
+	 	               
+	               }
+
+				})
+					$('#replyDiv').append(replyContent);
 				}
-				
-				$.ajax({
-					type : "get",
-					url : '/'+ param + '/' + idx + '/' + idx,
-					contentType : "application/json; charset=utf-8",
-					success : function(data) {
-						console.log(data);
-						var replyContent = "";
-						$('#replyDiv').empty();
-		                  
-		                $.each(data, function(index) {
-		                	replyContent +=
-		 	                
-		 	                '<li class="ybreply2"><b value="' 
-		 	                + data[index].memberId 
-		 	                + '">익명</b></li><li>'
-		 	                + data[index].replyContent 
-		 	                + '</li>' + '<hr>'
-		                    })
-
-						$('#replyDiv')
-							.append(replyContent);
-							}
-						})
-
-			});
-			
-			</script>
+			})		
+});
+	
+	// 클릭시 익명 회원의 memberId값 받아오기
+	$(document).on(					
+		"click",
+		".toMessage", function toMessage() {
+			var toMessage = $(this).attr('seq');
+			var replyIdx = $(this).attr('data-replyIdx');
+			var parentReplyIdx = $(this).attr('data-parentReplyIdx');
+	})
+		
+		</script>
 
 </body>
 </html>

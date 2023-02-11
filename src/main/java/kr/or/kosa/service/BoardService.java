@@ -11,7 +11,6 @@ import org.springframework.security.core.context.SecurityContextHolder;
 import org.springframework.stereotype.Service;
 
 import kr.or.kosa.dao.BoardDao;
-import kr.or.kosa.dao.FacilityDao;
 import kr.or.kosa.dto.Board;
 import kr.or.kosa.dto.Domitory;
 import kr.or.kosa.dto.File;
@@ -32,15 +31,23 @@ public class BoardService {
 
 	// 게시판 리스트
 	public List<Board> categoryList() {
+		
+		User user = (User) SecurityContextHolder.getContext().getAuthentication().getPrincipal();
+		String universityCode = user.getUniversityCode();
+		
 		BoardDao boardDao = sqlSession.getMapper(BoardDao.class);
-		List<Board> categoryList = boardDao.categoryList();
+		List<Board> categoryList = boardDao.categoryList(universityCode);
 		return categoryList;
 	}
 
 	// 기본 제공 게시판 글 목록
 	public List<Post> allBoardList(String allBoard) {
 		BoardDao boardDao = sqlSession.getMapper(BoardDao.class);
-		List<Post> allBoardList = boardDao.allBoardList(allBoard);
+		
+		User user = (User) SecurityContextHolder.getContext().getAuthentication().getPrincipal();
+		String universityCode = user.getUniversityCode();
+		
+		List<Post> allBoardList = boardDao.allBoardList(allBoard, universityCode);
 		Date nowDate = new Date();
 
 		SimpleDateFormat simpleDateFormat = new SimpleDateFormat("YYYY-MM-dd");
@@ -60,7 +67,11 @@ public class BoardService {
 	// 커스텀 생성 게시판 목록
 	public List<Post> customBoardList(String boardName) {
 		BoardDao boardDao = sqlSession.getMapper(BoardDao.class);
-		List<Post> customBoardList = boardDao.customBoardList(boardName);
+		
+		User user = (User) SecurityContextHolder.getContext().getAuthentication().getPrincipal();
+		String universityCode = user.getUniversityCode();
+		
+		List<Post> customBoardList = boardDao.customBoardList(boardName, universityCode);
 
 		Date nowDate = new Date();
 
@@ -180,6 +191,8 @@ public class BoardService {
 
 		return result;
 	}
+	
+	// 
 
 	// 점호 위치값 비교하기
 	public String eveningCall(double lat, double lon) {

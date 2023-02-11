@@ -7,7 +7,7 @@ PUBLIC "-//mybatis.org//DTD Mapper 3.0//EN"
 
 <!-- 게시판 리스트 -->
 <select id="categoryList" resultType="kr.or.kosa.dto.Board">
-SELECT boardidx, boardname FROM BOARD WHERE universitycode='kosa'
+SELECT boardidx, boardname FROM BOARD WHERE universitycode=#{param1}
 AND boardname NOT IN('공지사항', '건의사항', '자유게시판', '거래게시판')
 </select>
 
@@ -16,7 +16,7 @@ AND boardname NOT IN('공지사항', '건의사항', '자유게시판', '거래�
 SELECT COUNT(replyidx) replyCount, p.idx, p.boardidx, p.universitycode, b.boardname, p.memberid, p.writedate, p.likenum, p.content, p.title
 FROM POST p LEFT OUTER JOIN BOARD b ON p.boardidx = b.boardidx
 LEFT OUTER JOIN REPLY r ON p.idx = r.idx
-WHERE b.boardname=#{param} and p.universitycode='kosa' AND p.status='21'
+WHERE b.boardname=#{param1} and p.universitycode=#{param2} AND p.status='21'
 GROUP BY idx
 ORDER BY p.writedate DESC;
 </select>
@@ -26,7 +26,7 @@ ORDER BY p.writedate DESC;
 SELECT COUNT(replyidx) replyCount, p.idx, p.boardidx, p.universitycode, b.boardname, p.memberid, p.writedate, p.likenum, p.content, p.title
 FROM POST p LEFT OUTER JOIN BOARD b ON p.boardidx = b.boardidx
 LEFT OUTER JOIN REPLY r ON p.idx = r.idx
-WHERE b.boardname=#{param} and p.universitycode='kosa' AND p.status='21'
+WHERE b.boardname=#{param1} and p.universitycode=#{param2} AND p.status='21'
 GROUP BY idx
 ORDER BY p.writedate DESC;
 </select>
@@ -54,9 +54,9 @@ ORDER BY replydate ASC
 
 <!-- 대댓글 목록 -->
 <select id="reReplyContent" parameterType="String" resultType="kr.or.kosa.dto.Reply">
-SELECT r2.replyidx, r2.parentreplyidx, r2.idx, r2.memberid, r2.replycontent, r2.replydate FROM REPLY r1, REPLY r2
-WHERE r1.REPLYIDX = r2.PARENTREPLYIDX
-ORDER BY r1.REPLYDATE ASC, r2.REPLYDATE ASC;
+SELECT replyidx, parentreplyidx, idx, memberid, replycontent, replydate FROM REPLY
+WHERE idx=#{idx} AND STATUS='21' AND parentreplyidx IS NOT NULL
+ORDER BY replydate ASC
 </select>
 
 <!-- 글 작성 (파일첨부 x) -->
@@ -82,6 +82,10 @@ SELECT IDX from FILE ORDER BY IDX DESC LIMIT 1
 <select id="fileContent" parameterType="String" resultType="kr.or.kosa.dto.File">
 SELECT FILENUM, IDX, FILENAME, FILESIZE FROM FILE WHERE IDX = #{idx}
 </select>
+
+
+<!-- 게시글 추천 기능 -->
+
 
 
 </mapper>
