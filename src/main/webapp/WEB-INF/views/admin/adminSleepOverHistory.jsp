@@ -144,10 +144,19 @@
 								</td>
 							</tr>
 							<tr>
-								<th>기간</th>
+								<th>기간별검색</th>
 								<td colspan="3">
 									<input class="form-select1" type="date" id="start" name="trip-start">
 									- <input class="form-select1" type="date" id="end" name="trip-end">&nbsp;&nbsp;
+								</td>
+							</tr>
+							<tr>
+								<th>회원 검색</th>
+								<td colspan="3">
+									<div class="form-group">
+										<label for="memberid">학번</label>
+										<input class="form-select1" type="text" id="memberid" name="memberid">
+									</div>
 								</td>
 							</tr>
 						</table>
@@ -327,22 +336,18 @@
 			// </td>
 			let startString = $('#start').val();
 			let endString = $('#end').val();
+			let memberid = $('#memberid').val();
 
-			// let startdate = new Date($('#start').val());
-			// let enddate = new Date($('#end').val())
-				//이 짓을 할 필요가 없었음...
-			// let interval = enddate - startdate;
-			// if(interval<0){
-			// 	interval *= -1;
-			// }
-			// interval /= ( 1000 * 60 * 60 * 24 ) //밀리초를 '일'로 나눔
+			//날짜가 null이면 회원 학번으로 검색
+			//회원 학번이 null이면 날짜로 검색
 
 			$.ajax({
 				type:"GET",
 				url:"/adminPopular/getIntervalHistory",
 				data:{
 						"startdate" : startString,
-						"enddate" : endString
+						"enddate" : endString,
+						"memberid" : memberid,
 					},
 				contentType: "application/json; charset=UTF-8",
 				success:function(result){

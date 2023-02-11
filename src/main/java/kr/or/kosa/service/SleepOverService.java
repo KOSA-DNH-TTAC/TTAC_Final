@@ -129,7 +129,11 @@ public class SleepOverService {
 		SleepOverDao overdao = sqlsession.getMapper(SleepOverDao.class);
 		MemberDao memberdao = sqlsession.getMapper(MemberDao.class);
 		
-		List<SleepOverHistory> list = overdao.searchHistoryWithDate("TODAY", "TODAY", user.getUniversityCode());
+		Date date = new Date();
+		SimpleDateFormat format = new SimpleDateFormat("yyyy-MM-dd");
+		String today = format.format(date);
+		
+		List<SleepOverHistory> list = overdao.searchHistoryWithDate(today, today, null, user.getUniversityCode());
 		for(SleepOverHistory over : list) {
 			Member member = memberdao.getMember(over.getMemberId());
 			String username = member.getName();
@@ -139,12 +143,15 @@ public class SleepOverService {
 	}
 	
 	//외박 기간별 검색
-	public List<SleepOverHistory> searchIntervalHistory(String startdate, String enddate){
+	public List<SleepOverHistory> searchIntervalHistory(String startdate, String enddate, String memberid){
 		User user = (User) SecurityContextHolder.getContext().getAuthentication().getPrincipal();
 		SleepOverDao overdao = sqlsession.getMapper(SleepOverDao.class);
 		MemberDao memberdao = sqlsession.getMapper(MemberDao.class);
-		
-		List<SleepOverHistory> list = overdao.searchHistoryWithDate(startdate, enddate, user.getUniversityCode());
+		System.out.println("===service===");
+		System.out.println(startdate);
+		System.out.println(enddate);
+		System.out.println(memberid);
+		List<SleepOverHistory> list = overdao.searchHistoryWithDate(startdate, enddate, memberid, user.getUniversityCode());
 		System.out.println(list);
 		for(SleepOverHistory over : list) {
 			Member member = memberdao.getMember(over.getMemberId());

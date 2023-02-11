@@ -29,6 +29,6 @@ public interface SleepOverDao {
 	
 	//외박 기간별 검색
 	//오늘자 외박 현황 조회(승인된 외박) : startdate = "TODAY"
-	public List<SleepOverHistory> searchHistoryWithDate(@Param("startdate")String startdate, @Param("enddate")String enddate, @Param("universitycode")String universitycode);
+	public List<SleepOverHistory> searchHistoryWithDate(@Param("startdate")String startdate, @Param("enddate")String enddate, @Param("memberid")String memberid, @Param("universitycode")String universitycode);
 	
 }
