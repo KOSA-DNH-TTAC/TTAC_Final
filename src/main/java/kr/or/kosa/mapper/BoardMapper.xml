@@ -70,8 +70,8 @@ VALUES(#{boardIdx},#{boardName},#{memberId},#{universityCode},#{title},#{content
 	<selectKey keyProperty="idx" resultType="int" order="BEFORE">
 		SELECT IDX from POST ORDER BY IDX DESC LIMIT 1
 	</selectKey>
-INSERT INTO FILE (idx, FILENAME,FILESIZE)
-VALUES(#{idx},#{fileName},#{fileSize})
+INSERT INTO FILE (idx, FILENAME,FILEREALNAME,FILESIZE)
+VALUES(#{idx},#{fileName},#{fileRealName},#{fileSize})
 </insert>
 
 <!-- 가장 최근 파일업로드한 idx 가져오기 -->
@@ -80,7 +80,7 @@ SELECT IDX from FILE ORDER BY IDX DESC LIMIT 1
 </select>
 
 <select id="fileContent" parameterType="String" resultType="kr.or.kosa.dto.File">
-SELECT FILENUM, IDX, FILENAME, FILESIZE FROM FILE WHERE IDX = #{idx}
+SELECT FILENUM, IDX, FILENAME,FILEREALNAME ,FILESIZE FROM FILE WHERE IDX = #{idx}
 </select>
 
 <update id="boardEdit" parameterType="kr.or.kosa.dto.Post">

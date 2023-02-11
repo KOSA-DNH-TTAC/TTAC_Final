@@ -1,15 +1,19 @@
 package kr.or.kosa.service;
 
+import java.io.IOException;
 import java.sql.SQLException;
 import java.text.SimpleDateFormat;
 import java.util.Date;
 import java.util.List;
+import java.util.UUID;
 
 import org.apache.ibatis.session.SqlSession;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.security.core.context.SecurityContextHolder;
 import org.springframework.stereotype.Service;
+import org.springframework.web.multipart.MultipartFile;
 
+import kr.or.kosa.aws.AwsS3;
 import kr.or.kosa.dao.BoardDao;
 import kr.or.kosa.dto.Board;
 import kr.or.kosa.dto.Domitory;
@@ -264,7 +268,6 @@ public class BoardService {
 	public int recentFileIdx() {
 		BoardDao boardDao = sqlSession.getMapper(BoardDao.class);
 		int  result = boardDao.recentFileIdx();
-		System.out.println("recentFileIdx: " + result);
 		return result;
 	}
 	
@@ -273,6 +276,34 @@ public class BoardService {
 		BoardDao boardDao = sqlSession.getMapper(BoardDao.class);
 		int result = boardDao.boardEdit(post);
 		
+		return result;
+	}
+	
+	//공지사항 글쓰기
+	public int noticeListInsert(Post post, File file, MultipartFile multipartfile) {
+		
+		int idx = 0;
+		int result = 0;
+		String route = "";
+		
+		result = this.freeBoardWrite(post);
+		
+		if(multipartfile.getSize() != 0) {
+			
+			result = this.fileWrite(file);
+			idx = this.recentFileIdx();
+			
+			try {
+				AwsS3 awsS3 = AwsS3.getInstance();
+				route = post.getUniversityCode()+"/"+ "board" + "/" + idx + "/" + file.getFileName();
+				System.out.println(route);
+				System.out.println(awsS3.searchIcon(route));
+				awsS3.upload(multipartfile, route);
+				
+			} catch (IOException e) {
+				e.printStackTrace();
+			}
+		}
 		return result;
 	}
 

@@ -99,8 +99,11 @@
                     	<c:if test="${fileContent != null}">
 	                    <article class="entry" style="padding-top: 10px">
 	                    	<li class="d-flex align-items-center">
-		                    	<i class="bi bi-archive" ></i> &nbsp<a href="/download/${boardContent.idx}/${fileContent.fileName}">${fileContent.fileName}</a>
+		                    	<i class="bi bi-archive" ></i> &nbsp<a href="/download/${boardContent.idx}">${fileContent.fileRealName}</a>
 		                   	</li>
+		                   	<div class="col-md-5">
+		                   		<img class="aws-img" src="${fileLink}" alt="">
+		                   	</div>
 	                   	</article>
 	                   	</c:if>
                     </p>
