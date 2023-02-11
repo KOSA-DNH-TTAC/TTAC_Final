@@ -14,6 +14,7 @@ import org.springframework.web.bind.annotation.GetMapping;
 import org.springframework.web.bind.annotation.PathVariable;
 import org.springframework.web.bind.annotation.PostMapping;
 import org.springframework.web.bind.annotation.RequestMapping;
+import org.springframework.web.bind.annotation.RequestParam;
 import org.springframework.web.bind.annotation.RestController;
 
 import kr.or.kosa.dto.Member;
@@ -92,6 +93,24 @@ public class MypageController_Rest {
 		Map<String, Object> map = new HashMap<String, Object>();
 		map.put("list", list);
 		return new ResponseEntity<Map<String,Object>>(map, HttpStatus.OK);
+	}
+	
+	//내 외박 기간별 조회
+	@GetMapping("/sleepoverInterval")
+	public ResponseEntity<Map<String, Object>> getIntervalSleepOverHistory(@RequestParam HashMap<String,Object> data){
+		System.out.println(data);
+		Map<String, Object> map = new HashMap<String, Object>();
+		User user = (User) SecurityContextHolder.getContext().getAuthentication().getPrincipal();
+		
+        String startdate = (String)data.get("startdate");
+        String enddate = (String)data.get("enddate");
+        String memberid = user.getMemberId();
+
+		List<SleepOverHistory> list = sleepoverservice.searchIntervalHistory(startdate, enddate, memberid);
+		map.put("list", list);
+		
+		return new ResponseEntity<Map<String, Object>>(map, HttpStatus.OK);
+		
 	}
 	
 	//내 벌점 조회
