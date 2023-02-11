@@ -129,7 +129,7 @@ public class SleepOverService {
 		SleepOverDao overdao = sqlsession.getMapper(SleepOverDao.class);
 		MemberDao memberdao = sqlsession.getMapper(MemberDao.class);
 		
-		List<SleepOverHistory> list = overdao.getTodayHistory(user.getUniversityCode());
+		List<SleepOverHistory> list = overdao.searchHistoryWithDate("TODAY", "TODAY", user.getUniversityCode());
 		for(SleepOverHistory over : list) {
 			Member member = memberdao.getMember(over.getMemberId());
 			String username = member.getName();
