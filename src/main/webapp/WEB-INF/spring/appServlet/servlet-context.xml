@@ -28,10 +28,7 @@
 		<beans:property name="prefix" value="/WEB-INF/views/" />
 		<beans:property name="suffix" value=".jsp" />
 	</beans:bean>
-	
-	
-	<resources mapping="/resources/**" location="/resources/" />
-	
+
 	<websocket:handlers>
 		<websocket:mapping handler="chattingHandler" path="/chat"/>
 		</websocket:handlers>

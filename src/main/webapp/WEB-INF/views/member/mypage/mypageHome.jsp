@@ -218,6 +218,10 @@
         src="${pageContext.request.contextPath}/resources/assets/vendor/waypoints/noframework.waypoints.js"></script>
       <script src="${pageContext.request.contextPath}/resources/assets/vendor/php-email-form/validate.js"></script>
 
+
+      <!--날짜변환-->
+      <!-- <script src="${pageContext.request.contextPath}/js/dateFormatter.js" type="application/js"></script> -->
+
       <!-- Template Main JS File -->
       <script src="${pageContext.request.contextPath}/resources/assets/js/main.js"></script>
 
@@ -268,6 +272,7 @@
         function sleepoverChart(){
           console.log("외박 통계 보기를 눌렀음")
         }
+
         $('.list-group-item').click(function (e) {
           e.preventDefault();
           var menu = $(this).text().trim(); //선택한 카테고리 메뉴 값 가져옴
@@ -447,9 +452,7 @@
                           <tbody>`;
                 //forEach 안에서 tr 생성
                 $.each(result, function (index, payment) {
-                  console.log(payment)
-                  var time = new Date(payment.payDate);
-                  var localetime = time.toLocaleString("ko-KR");
+                  var localetime = dateFormatter(payment.payDate);
                   contents += `<tr>
                                   <td>`+ localetime + `</td>
                                   <td>` + payment.payAmount + `</td>
@@ -486,6 +489,7 @@
                     </thead>
                     <tbody>`
                 $.each(result, function (index, post) {
+                  let writetime = dateFormatter(post.writeDate);
                   var time = new Date(post.writeDate);
                   var localetime = time.toLocaleString("ko-KR");
                   var year = time.getFullYear();
@@ -500,7 +504,7 @@
 
                   contents += "<tr><td>" + post.boardName +
                     "</td><td style='text-align:left'>" + post.title + "&nbsp;<span id='hjreply'> <i class='bi-chat-dots'>" + post.replyCount + "</span>" +
-                    "</td><td>" + localetime +
+                    "</td><td>" + writetime +
                     "</td></tr>";
 
                 })
