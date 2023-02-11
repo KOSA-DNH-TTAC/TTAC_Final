@@ -129,48 +129,59 @@ public class BoardController {
 	
 	// 게시글 삭제
 	@GetMapping("board/{boardName}/{idx}/delete")
-	public String boardDelete(Model model, @PathVariable("idx") String idx,
-			@PathVariable("boardName") String boardName) {
+	public String boardDelete(Model model, @PathVariable("idx") int idx,
+			 							   @PathVariable("boardName") String boardName) throws ClassNotFoundException, SQLException{
 		
 		User user = (User) SecurityContextHolder.getContext().getAuthentication().getPrincipal();
+		Post boardContent = boardService.boardContentDTO(idx);
 		
-		
+		int result= 0;
+		String icon= "";
 		String msg = "";
 		String url = "";
-		String icon = "";
-		
-		/*
-		 * if (principal == user.get) {
-		 * 
-		 * msg = "세션이 만료되었습니다."; url = "/";
-		 * 
-		 * }
-		 */
-		
-		
 
-		List<Post> boardContent = boardService.boardContent(idx);
-		File fileContent = boardService.fileContent(idx);
-		
-		if (fileContent != null) {
-			model.addAttribute("fileContent", fileContent);
+		// 로그인 오래되면 팅기도록
+		if (user == null) {
+
+			icon = "error";
+			msg = "세션이 만료되었습니다.";
+			url = "/";
+			
+		} else {
+			//게시글 status 22로 변경 (삭제)
+			boardContent.setStatus(22);
+			result = boardService.boardContentEdit(boardContent);
+			
+			//글 수정이 제대로 되었는지 확인
+			if (result < 1) {
+				icon = "error";
+				msg = "글 작성이 실패했습니다.";
+				url = "/board/"+boardName+"/"+idx+"/edit";
+			} else {
+				icon = "success";
+				msg = "글 삭제가 완료되었습니다!";
+				url = "/board/"+boardName;
+				
+			}
 		}
 		
-		model.addAttribute("boardContent", boardContent);
-		model.addAttribute("userId", user.getMemberId());
-
-			
-		return msg;
+		model.addAttribute("msg", msg);
+		model.addAttribute("url", url);
+		model.addAttribute("icon", icon);
+		
+		return "/common/redirect";
 	}
 	
-	// 게시글 수정(객체)
+	// 게시글 수정(GET)
 	@GetMapping("/board/{boardName}/{idx}/edit")
-	public String boardEdit(Model model, @PathVariable("idx") String idx,
-			@PathVariable("boardName") String boardName) throws ClassNotFoundException, SQLException {
+	public String boardEdit(Model model, @PathVariable("idx") int idx,
+										 @PathVariable("boardName") String boardName) throws ClassNotFoundException, SQLException{
 		
 		User user = (User) SecurityContextHolder.getContext().getAuthentication().getPrincipal();
 		Post boardContent = boardService.boardContentDTO(idx);
 
+		
+		// 글 쓴사람과 로그인한 사람이 같은지
 		if (!user.getMemberId().equals(boardContent.getMemberId())) {
 
 			String icon = "";
@@ -188,6 +199,55 @@ public class BoardController {
 		model.addAttribute("boardContent", boardContent);
 		
 		return "member/board/freeBoardEdit";
+	}
+	
+	// 게시글 수정(POST)
+	@PostMapping("/board/{boardName}/{idx}/edit")
+	public String boardEditOk(Model model, @PathVariable("idx") int idx,
+										   @PathVariable("boardName") String boardName,
+										   @RequestParam("title") String title,
+										   @RequestParam("content") String content) throws ClassNotFoundException, SQLException {
+		
+		User user = (User) SecurityContextHolder.getContext().getAuthentication().getPrincipal();
+		Post boardContent = boardService.boardContentDTO(idx);
+		
+		int result= 0;
+		String icon= "";
+		String msg = "";
+		String url = "";
+
+		// 로그인 오래되면 팅기도록
+		if (user == null) {
+
+			icon = "error";
+			msg = "세션이 만료되었습니다.";
+			url = "/";
+			
+		} else {
+			//글 제목, 내용 수정
+			boardContent.setTitle(title);
+			boardContent.setContent(content);
+			
+			result = boardService.boardContentEdit(boardContent);
+			
+			//글 수정이 제대로 되었는지 확인
+			if (result < 1) {
+				icon = "error";
+				msg = "글 작성이 실패했습니다.";
+				url = "/board/"+boardName+"/"+idx+"/edit";
+			} else {
+				icon = "success";
+				msg = "글 작성이 완료되었습니다!";
+				url = "/board/"+boardName+"/"+idx;
+				
+			}
+		}
+		
+		model.addAttribute("msg", msg);
+		model.addAttribute("url", url);
+		model.addAttribute("icon", icon);
+		
+		return "/common/redirect";
 	}
 	
 	
@@ -354,18 +414,18 @@ public class BoardController {
 	}
 	
 	//파일 다운로드
-		@GetMapping("/download/{idx}/{fileName}")
-		public ResponseEntity<byte[]> download(@PathVariable("idx") String idx,
-											   @PathVariable("fileName") String fileName) throws IOException {
-			String url = "";
-			
-			User user = (User) SecurityContextHolder.getContext().getAuthentication().getPrincipal();
-			String university = user.getUniversityCode();
-			
-			url = university +"/"+ "board" + "/" + idx + "/" + fileName;
-			System.out.println("파일다운 url" + url);
-			AwsS3 awsS3 = AwsS3.getInstance();
-	        return awsS3.getObject(url);
-	    }
+	@GetMapping("/download/{idx}/{fileName}")
+	public ResponseEntity<byte[]> download(@PathVariable("idx") String idx,
+										   @PathVariable("fileName") String fileName) throws IOException {
+		String url = "";
+		
+		User user = (User) SecurityContextHolder.getContext().getAuthentication().getPrincipal();
+		String university = user.getUniversityCode();
+		
+		url = university +"/"+ "board" + "/" + idx + "/" + fileName;
+		System.out.println("파일다운 url" + url);
+		AwsS3 awsS3 = AwsS3.getInstance();
+        return awsS3.getObject(url);
+    }
 
 }

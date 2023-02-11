@@ -100,7 +100,7 @@ public class BoardService {
 	}
 	
 	// 게시글 상세보기 (객체로)
-	public Post boardContentDTO(String idx) throws ClassNotFoundException, SQLException {
+	public Post boardContentDTO(int idx) throws ClassNotFoundException, SQLException {
 		BoardDao boardDao = sqlSession.getMapper(BoardDao.class);
 		Post post = boardDao.boardContentDTO(idx);
 		return post;
@@ -260,10 +260,19 @@ public class BoardService {
 			return result;
 		}
 		
+	//최근 파일  idx가져오기	
 	public int recentFileIdx() {
 		BoardDao boardDao = sqlSession.getMapper(BoardDao.class);
 		int  result = boardDao.recentFileIdx();
 		System.out.println("recentFileIdx: " + result);
+		return result;
+	}
+	
+	//게시글 수정 or 삭제
+	public int boardContentEdit(Post post) {
+		BoardDao boardDao = sqlSession.getMapper(BoardDao.class);
+		int result = boardDao.boardEdit(post);
+		
 		return result;
 	}
 

@@ -26,7 +26,7 @@ public interface BoardDao {
 	public List<Post> boardContent(String idx);
 	
 	// 게시글 상세보기 (객체로)
-	public Post boardContentDTO(String idx) throws ClassNotFoundException, SQLException;
+	public Post boardContentDTO(int idx) throws ClassNotFoundException, SQLException;
 
 	// 댓글 목록
 	public List<Reply> replyContent(String idx);
@@ -59,6 +59,9 @@ public interface BoardDao {
 	//최근file 올린 idx 가져오기
 	public int recentFileIdx();
 	
-	// 게시글 상세보기
+	// 파일 상세보기
 	public File fileContent(String idx);
+	
+	// 게시글 수정하기
+	public int boardEdit(Post post);
 }

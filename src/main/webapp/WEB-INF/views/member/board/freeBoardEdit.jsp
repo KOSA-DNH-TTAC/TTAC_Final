@@ -84,6 +84,7 @@
 					</div>
 					
 					<div class="d-grid gap-2 d-md-flex justify-content-md-end">
+					<button type="button" onclick="location.href='/board/${boardName}/${idx}/delete'" style="width:130px; height:20; border-radius: 50px; padding:5px; border: none; background-color:#fd2c08; color:white; margin-top:10px; font-size: large;">삭제</button>
 					<button type="button" onclick="history.back()" style="width:130px; height:20; border-radius: 50px; padding:5px; border: none; background-color:#000000; color:white; margin-top:10px; font-size: large;">취소</button>
 					<button type="submit" style="width:130px; height:20; border-radius: 50px; padding:5px; border: none; background-color:#E96B56; color:white; margin-top:10px; font-size: large;">확인</button>
 					</div>

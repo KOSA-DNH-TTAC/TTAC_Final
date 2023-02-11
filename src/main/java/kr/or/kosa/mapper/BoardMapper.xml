@@ -40,7 +40,7 @@ WHERE p.IDX=#{idx}
 </select>
 
 <!-- 게시글 상세보기(DTO에 맞는 형식으로) -->
-<select id="boardContentDTO" parameterType="String" resultType="kr.or.kosa.dto.Post">
+<select id="boardContentDTO" parameterType="int" resultType="kr.or.kosa.dto.Post">
 SELECT IDX, BOARDIDX, MEMBERID, BOARDNAME, UNIVERSITYCODE, TITLE, CONTENT, READNUM, WRITEDATE, LIKENUM, STATUS FROM POST
 WHERE IDX = #{idx}
 </select>
@@ -83,6 +83,11 @@ SELECT IDX from FILE ORDER BY IDX DESC LIMIT 1
 SELECT FILENUM, IDX, FILENAME, FILESIZE FROM FILE WHERE IDX = #{idx}
 </select>
 
+<update id="boardEdit" parameterType="kr.or.kosa.dto.Post">
+UPDATE POST
+SET TITLE = #{title}, CONTENT= #{content}, STATUS=#{status} ,WRITEDATE=NOW()
+WHERE IDX = #{idx};
+</update>
 
 <!-- 게시글 추천 기능 -->
 
