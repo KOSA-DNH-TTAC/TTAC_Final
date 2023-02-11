@@ -329,9 +329,27 @@
 
 
 	<script type="text/javascript">
+		function dateFormatter(date) {
+			var wantDate = new Date(date);
+			// 년도 getFullYear()
+			var year = wantDate.getFullYear();
+			// 월 getMonth() (0~11로 1월이 0으로 표현되기 때문에 + 1을 해주어야 원하는 월을 구할 수 있다.)
+			var month = wantDate.getMonth() + 1
+			// 일 getDate()
+			var date = wantDate.getDate(); // 일
+			if (month < 10) {
+				month = "0" + month;
+			}
+			if (date < 10) {
+				date = "0" + date;
+			}
+			var wantDateFormat = year + "-" + month + "-" + date;
+			return wantDateFormat;
+		}
+
 		$(document).ready(function () {
 			console.log("테스트")
-			
+
 			getTodays();
 		})
 
@@ -339,16 +357,16 @@
 			var tr = $(over).closest('tr')
 			// var datas = { idx: tr.children().html() };
 			let index = tr.find('input[type=hidden]').val();
-			let datas = {"idx" : index};
+			let datas = { "idx": index };
 			console.log(datas);
 
 			//ajax로 업데이트 함 (confirm N->Y)
 			$.ajax({
-				type:"get",
-				url:"/adminPopular/update",
+				type: "get",
+				url: "/adminPopular/update",
 				dataType: "json",
-				data: datas	,
-				success: function(result){
+				data: datas,
+				success: function (result) {
 					console.log(result);
 					//테이블에 append 해줌 (getTodays)
 					getTodays();
@@ -357,7 +375,7 @@
 					console.log("에러")
 					console.log("code:" + request.status + "\n" + "message:" + request.responseText + "\n" + "error:" + error);
 				}
-			})	
+			})
 		}
 
 		function getTodays() {
@@ -382,14 +400,17 @@
 					let Ycontents = Ncontents;
 
 					//외박 신청이 없을 경우
-					if(result.nlist.length == 0){
+					if (result.nlist.length == 0) {
 						Ncontents = "<tr><td col-span='6'>들어온 외박 신청이 없습니다.</td></tr>"
-					}else{
+					} else {
 						//아직 처리되지 않은 외박 신청
+
 						$.each(result.nlist, function (index, over) {
+							let startdate = dateFormatter(over.startDate);
+							let enddate = dateFormatter(over.endDate);
 							Ncontents += "<tr><td>" + (++index) + "</td>"
-								+ "<td>" + over.startDate.slice(0, 11) + "</td>"
-								+ "<td>" + over.endDate.slice(0, 11) + "</td>"
+								+ "<td>" + startdate + "</td>"
+								+ "<td>" + enddate + "</td>"
 								+ "<td>" + over.username + "</td>"
 								+ "<td>" + over.sleepOverReason + "</td>"
 								+ "<td><button onclick='confirm(this)'>승인</button></td>"
@@ -400,18 +421,20 @@
 
 					$('#nightoverN').append(Ncontents);
 
-					if(result.ylist.length == 0){
+					if (result.ylist.length == 0) {
 						Ycontents = "<tr><td col-span='6'>승인된 외박신청이 없습니다.</td></tr>"
-					}else{
+					} else {
 						//처리된 외박 신청
 						$.each(result.ylist, function (index, over) {
-												Ycontents += "<tr><td>" + (++index) + "</td>"
-													+ "<td>" + over.startDate.slice(0, 11) + "</td>"
-													+ "<td>" + over.endDate.slice(0, 11) + "</td>"
-													+ "<td>" + over.username + "</td>"
-													+ "<td>" + over.sleepOverReason + "</td>"
-													+ "<td>승인완료</td></tr>"
-											})
+							let startdate = dateFormatter(over.startDate);
+							let enddate = dateFormatter(over.endDate);
+							Ycontents += "<tr><td>" + (++index) + "</td>"
+								+ "<td>" + startdate + "</td>"
+								+ "<td>" + enddate + "</td>"
+								+ "<td>" + over.username + "</td>"
+								+ "<td>" + over.sleepOverReason + "</td>"
+								+ "<td>승인완료</td></tr>"
+						})
 					}
 
 					$('#nightoverY').append(Ycontents);
