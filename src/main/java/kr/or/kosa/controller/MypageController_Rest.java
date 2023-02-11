@@ -2,7 +2,9 @@ package kr.or.kosa.controller;
 
 import java.security.Principal;
 import java.util.ArrayList;
+import java.util.HashMap;
 import java.util.List;
+import java.util.Map;
 
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.http.HttpStatus;
@@ -17,10 +19,12 @@ import org.springframework.web.bind.annotation.RestController;
 import kr.or.kosa.dto.Member;
 import kr.or.kosa.dto.PaymentHistory;
 import kr.or.kosa.dto.Post;
+import kr.or.kosa.dto.SleepOverHistory;
 import kr.or.kosa.security.User;
 import kr.or.kosa.service.BoardService;
 import kr.or.kosa.service.MemberService;
 import kr.or.kosa.service.PaymentService;
+import kr.or.kosa.service.SleepOverService;
 
 @RestController
 @RequestMapping("/mypage")
@@ -28,6 +32,7 @@ public class MypageController_Rest {
 	
 	private MemberService memberservice;
 	private PaymentService paymentservice;
+	private SleepOverService sleepoverservice;
 	
 	@Autowired
     public void setMemberService(MemberService memberservice) {
@@ -37,6 +42,10 @@ public class MypageController_Rest {
     public void setPaymentService(PaymentService paymentservice){
         this.paymentservice = paymentservice;
     }
+	@Autowired
+	public void setSleepOverService(SleepOverService sleepoverservice) {
+		this.sleepoverservice = sleepoverservice;
+	}
 	
 	//비동기를 위한 RestController임
 	
@@ -74,6 +83,16 @@ public class MypageController_Rest {
 	//내 정보 수정(POST)
 	
 	//내 외박 내역 조회
+	@GetMapping("/sleepover")
+	public ResponseEntity<Map<String, Object>> mysleepover(){
+		User user = (User) SecurityContextHolder.getContext().getAuthentication().getPrincipal();
+		List<SleepOverHistory> list = new ArrayList<SleepOverHistory>();
+		list = sleepoverservice.searchIntervalHistory("", "", user.getMemberId());
+		
+		Map<String, Object> map = new HashMap<String, Object>();
+		map.put("list", list);
+		return new ResponseEntity<Map<String,Object>>(map, HttpStatus.OK);
+	}
 	
 	//내 벌점 조회
 	

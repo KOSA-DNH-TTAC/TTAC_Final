@@ -217,6 +217,11 @@
       <script src="${pageContext.request.contextPath}/resources/assets/js/main.js"></script>
 
       <script type="text/javascript">
+        
+        function testclick(){
+          console.log("찍힘")
+        }
+        
         $('.list-group-item').click(function (e) {
           e.preventDefault();
           var menu = $(this).text().trim(); //선택한 카테고리 메뉴 값 가져옴
@@ -319,75 +324,49 @@
               }
             })
 
-            $('#content').empty()
-
-            //ajax로 내 정보 가저옴
-            //td값과 사진값 바꿔줌
-
           }
           else if (menu == '외박내역') {
 
             //ajax로 외박내역 가져옴
             $.ajax({
               type: "GET",
-              url: "/mypage/myinfo",
+              url: "/mypage/sleepover",
               success: function (result) {
                 console.log("성공")
                 console.log(result);
+
+                var contents = `
+                              <input class="btn btn-warning" value="통계보기" id="testbtn" onclick="testclick()">
+                              <table class="table" id='nightoverTable'>
+                                <thead>
+                                <tr>
+                                  <th scope="col">순번</th>
+                                  <th scope="col">외박기간</th>
+                                  <th scope="col">외박사유</th>
+                                </tr>
+                              </thead>
+                              <tbody>
+                            `
+                $.each(result.list, function(index, over){
+                  var sdate = new Date(over.startDate);
+                  var edate = new Date(over.endDate);
+                  var start = sdate.toLocaleString("ko-KR");
+                  var end = edate.toLocaleString("ko-KR");
+                  contents += `<tr><td>` + (++index) + `</td>
+                          <td>`+ start.slice(0,11) + ` ~ ` + end.slice(0,11) +`</td>
+                          <td>` + over.sleepOverReason + `</td></tr>
+                          `;
+                })
+                contents += `</tbody></table>`
+
+                $('#content').empty();
+                $('#content').append(contents);
               },
               error: function (err) {
                 console.log("에러");
                 console.log(err);
               }
             })
-
-            var contents = `<table class="table" id='nightoverTable'>
-            <thead>
-            <tr>
-              <th scope="col">외박기간</th>
-              <th scope="col">외박사유</th>
-              <th scope="col">신청일자</th>
-              <th scope="col">승인여부</th>
-            </tr>
-          </thead>
-          <tbody>
-            <tr>
-              <td>2023.01.30 ~ 2023.01.31</td>
-              <td>병원</td>
-              <td>2023.01.29</td>
-              <td>승인</td>
-            </tr>
-            <tr>
-              <td>2023.01.30 ~ 2023.01.31</td>
-              <td>병원</td>
-              <td>2023.01.29</td>
-              <td>승인</td>
-            </tr>
-            <tr>
-              <td>2023.01.30 ~ 2023.01.31</td>
-              <td>코사를 탈주</td>
-              <td>2023.01.29</td>
-              <td>미승인</td>
-            </tr>   
-          	<tr>
-              <td>2023.01.30 ~ 2023.01.31</td>
-              <td>병원</td>
-              <td>2023.01.29</td>
-              <td>승인</td>
-            </tr>
-          	<tr>
-	            <td>2023.01.30 ~ 2023.01.31</td>
-	            <td>병원</td>
-	            <td>2023.01.29</td>
-	            <td>승인</td>
-	          </tr>
-          </tbody>
-        </table>`
-            $('#content').empty()
-            $('#content').append(contents)
-
-
-
           }
           else if (menu == '결제내역') {
 
@@ -426,35 +405,6 @@
                 console.log("code:" + request.status + "\n" + "message:" + request.responseText + "\n" + "error:" + error);
               }
             })
-        //     var contents = `<table class="table" id='nightoverTable'>
-        //     <thead>
-        //     <tr>
-        //       <th scope="col">결제일자</th>
-        //       <th scope="col">결제금액</th>
-        //     </tr>
-        //   </thead>
-        //   <tbody>
-        //     <tr>
-        //       <td>2023.01.30</td>
-        //       <td>15000원</td>
-        //     </tr>
-        //     <tr>
-        //       <td>2023.01.30</td>
-        //       <td>15000원</td>
-        //     </tr>
-        //     <tr>
-        //       <td>2023.01.30</td>
-        //       <td>15000원</td>
-        //     </tr>
-        //     <tr>
-        //       <td>2023.01.30</td>
-        //       <td>15000원</td>
-        //     </tr>
-        //   </tbody>
-        // </table>`
-           
-
-
           }
           else if (menu == '내 커뮤니티') {
             //ajax로 내가 쓴 글 가져옴
