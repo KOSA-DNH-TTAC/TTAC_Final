@@ -30,6 +30,8 @@
 	</beans:bean>
 	
 	
+	<resources mapping="/resources/**" location="/resources/" />
+	
 	<websocket:handlers>
 		<websocket:mapping handler="chattingHandler" path="/chat"/>
 		</websocket:handlers>

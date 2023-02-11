@@ -14,6 +14,7 @@
 		<link rel="shortcut icon" href="../img/favicon.png" type="image/x-icon" />
 		<link href="/resources/assets/css/font.css" rel="stylesheet">
 		<link href="/resources/assets/css/font-awesome.css" rel="stylesheet">
+		<!-- <link rel="stylesheet" href="https://kit.fontawesome.com/7da3227c91.css" crossorigin="anonymous"> -->
 		<link href="/resources/assets/css/style2.css" rel="stylesheet">
 		<link href="/resources/assets/css/program.css" rel="stylesheet">
 		<link href="/resources/assets/css/layout.css" rel="stylesheet">
@@ -380,30 +381,38 @@
 									</tr>`
 					let Ycontents = Ncontents;
 
-					//아직 처리되지 않은 외박 신청
-					let ncount = 1;
-					let ycount = 1;
-					$.each(result.nlist, function (index, over) {
-						Ncontents += "<tr><td>" + (++index) + "</td>"
-							+ "<td>" + over.startDate.slice(0, 11) + "</td>"
-							+ "<td>" + over.endDate.slice(0, 11) + "</td>"
-							+ "<td>" + over.username + "</td>"
-							+ "<td>" + over.sleepOverReason + "</td>"
-							+ "<td><button onclick='confirm(this)'>승인</button></td>"
-							+ "<input type='hidden' value='" + over.idx + "' ></tr>"
-					})
+					//외박 신청이 없을 경우
+					if(result.nlist.length == 0){
+						Ncontents = "<tr><td col-span='6'>들어온 외박 신청이 없습니다.</td></tr>"
+					}else{
+						//아직 처리되지 않은 외박 신청
+						$.each(result.nlist, function (index, over) {
+							Ncontents += "<tr><td>" + (++index) + "</td>"
+								+ "<td>" + over.startDate.slice(0, 11) + "</td>"
+								+ "<td>" + over.endDate.slice(0, 11) + "</td>"
+								+ "<td>" + over.username + "</td>"
+								+ "<td>" + over.sleepOverReason + "</td>"
+								+ "<td><button onclick='confirm(this)'>승인</button></td>"
+								+ "<input type='hidden' value='" + over.idx + "' ></tr>"
+						})
+					}
+
 
 					$('#nightoverN').append(Ncontents);
 
-					//처리된 외박 신청
-					$.each(result.ylist, function (index, over) {
-						Ycontents += "<tr><td>" + (++index) + "</td>"
-							+ "<td>" + over.startDate.slice(0, 11) + "</td>"
-							+ "<td>" + over.endDate.slice(0, 11) + "</td>"
-							+ "<td>" + over.username + "</td>"
-							+ "<td>" + over.sleepOverReason + "</td>"
-							+ "<td>승인완료</td></tr>"
-					})
+					if(result.ylist.length == 0){
+						Ycontents = "<tr><td col-span='6'>승인된 외박신청이 없습니다.</td></tr>"
+					}else{
+						//처리된 외박 신청
+						$.each(result.ylist, function (index, over) {
+												Ycontents += "<tr><td>" + (++index) + "</td>"
+													+ "<td>" + over.startDate.slice(0, 11) + "</td>"
+													+ "<td>" + over.endDate.slice(0, 11) + "</td>"
+													+ "<td>" + over.username + "</td>"
+													+ "<td>" + over.sleepOverReason + "</td>"
+													+ "<td>승인완료</td></tr>"
+											})
+					}
 
 					$('#nightoverY').append(Ycontents);
 					// $('#content').append(contents)
