@@ -101,7 +101,19 @@
                     </div>
                     </div> 
                     
+	                    <div class="d-grid gap-2 d-md-flex justify-content-md-end">
+	                    
+	                    	<c:if test="${userId == boardContent.memberId}">
+		                    	<button onclick="location.href='/board/${boardName}/${idx}/delete'" type="submit" style="width:130px; height:20; border-radius: 50px; padding:5px; border: none; background-color:#fd2c08; color:white; margin-top:10px; font-size: large;">삭제</button>
+			                    <button onclick="location.href='/board/${boardName}/${idx}/edit'" type="submit" style="width:130px; height:20; border-radius: 50px; padding:5px; border: none; background-color:#E96B56; color:white; margin-top:10px; font-size: large;">수정</button>
+	                    	
+	                    	</c:if>
+		                    
+							<button onclick="history.go(-1)" style="width:130px; height:20; border-radius: 50px; padding:5px; border: none; background-color:#000000; color:white; margin-top:10px; font-size: large;">목록</button>					
+	                    </div>
+                    
                     </div>
+                    
                     <b><i class="bi bi-chat-dots"></i>&nbsp
                      ${boardContent.replyCount}</b>
                     <hr> 

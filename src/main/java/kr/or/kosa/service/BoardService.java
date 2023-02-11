@@ -88,10 +88,17 @@ public class BoardService {
 		return boardContent;
 	}
 	
-	// 파일 상세보기
-	public List<File> fileContent(String idx) {
+	// 게시글 상세보기 (객체로)
+	public Post boardContentDTO(String idx) throws ClassNotFoundException, SQLException {
 		BoardDao boardDao = sqlSession.getMapper(BoardDao.class);
-		List<File> fileContent = boardDao.fileContent(idx);
+		Post post = boardDao.boardContentDTO(idx);
+		return post;
+	}
+	
+	// 파일 상세보기
+	public File fileContent(String idx) {
+		BoardDao boardDao = sqlSession.getMapper(BoardDao.class);
+		File fileContent = boardDao.fileContent(idx);
 		
 		return fileContent;
 	}

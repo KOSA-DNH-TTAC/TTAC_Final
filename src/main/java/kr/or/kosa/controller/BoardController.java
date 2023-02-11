@@ -2,6 +2,7 @@ package kr.or.kosa.controller;
 
 import java.io.IOException;
 import java.security.Principal;
+import java.sql.SQLException;
 import java.util.List;
 
 import org.springframework.beans.factory.annotation.Autowired;
@@ -81,6 +82,7 @@ public class BoardController {
 	public String boardContent(Model model, @PathVariable("idx") String idx,
 			@PathVariable("boardName") String boardName) {
 		
+		User user = (User) SecurityContextHolder.getContext().getAuthentication().getPrincipal();
 		String param = "";
 		String path = "";
 
@@ -100,25 +102,86 @@ public class BoardController {
 		}
 
 		List<Post> boardContent = boardService.boardContent(idx);
-		List<File> fileContent = boardService.fileContent(idx);
+		File fileContent = boardService.fileContent(idx);
 		
-		if (fileContent.isEmpty()) {
-			System.out.println("파일 ㅇ럾써용");
-		} else {
+		if (fileContent != null) {
 			model.addAttribute("fileContent", fileContent);
 		}
 		
-		
 		model.addAttribute("boardContent", boardContent);
-		
+		model.addAttribute("userId", user.getMemberId());
 
 		String viewPage = "member/board/" + path;
 			
 		return viewPage;
 	}
+	
+	// 게시글 삭제
+	@GetMapping("board/{boardName}/{idx}/delete")
+	public String boardDelete(Model model, @PathVariable("idx") String idx,
+			@PathVariable("boardName") String boardName) {
+		
+		User user = (User) SecurityContextHolder.getContext().getAuthentication().getPrincipal();
+		
+		
+		String msg = "";
+		String url = "";
+		String icon = "";
+		
+		/*
+		 * if (principal == user.get) {
+		 * 
+		 * msg = "세션이 만료되었습니다."; url = "/";
+		 * 
+		 * }
+		 */
+		
+		
+
+		List<Post> boardContent = boardService.boardContent(idx);
+		File fileContent = boardService.fileContent(idx);
+		
+		if (fileContent != null) {
+			model.addAttribute("fileContent", fileContent);
+		}
+		
+		model.addAttribute("boardContent", boardContent);
+		model.addAttribute("userId", user.getMemberId());
+
+			
+		return msg;
+	}
+	
+	// 게시글 수정(객체)
+	@GetMapping("/board/{boardName}/{idx}/edit")
+	public String boardEdit(Model model, @PathVariable("idx") String idx,
+			@PathVariable("boardName") String boardName) throws ClassNotFoundException, SQLException {
+		
+		User user = (User) SecurityContextHolder.getContext().getAuthentication().getPrincipal();
+		Post boardContent = boardService.boardContentDTO(idx);
+
+		if (!user.getMemberId().equals(boardContent.getMemberId())) {
+
+			String icon = "";
+			String msg = "세션이 만료되었습니다.";
+			String url = "/";
+			
+			model.addAttribute("msg", msg);
+			model.addAttribute("url", url);
+			model.addAttribute("icon", icon);
+			
+			return "/common/redirect";
+			
+		}
+		
+		model.addAttribute("boardContent", boardContent);
+		
+		return "member/board/freeBoardEdit";
+	}
+	
+	
 
 	// 게시판 글쓰기
-
 	@GetMapping("/{boardName}/boardWrite")
 	public String BoardWrite() {
 		return "member/board/boardWrite";

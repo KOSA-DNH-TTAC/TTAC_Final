@@ -96,14 +96,13 @@
                      ${boardContent.content}
                     </p>
                     <p>
+                    	<c:if test="${fileContent != null}">
 	                    <article class="entry">
 	                    	<li class="d-flex align-items-center">
-		                    <c:forEach items="${fileContent}" var="fileContent">
-		                    	<a href="/download/${boardContent.idx}/${fileContent.fileName}">${fileContent.fileName}</a> 
-		                    	
-		                   	</c:forEach>
+		                    	<a href="/download/${boardContent.idx}/${fileContent.fileName}">${fileContent.fileName}</a>
 		                   	</li>
 	                   	</article>
+	                   	</c:if>
                     </p>
                     </div>
                     </article>

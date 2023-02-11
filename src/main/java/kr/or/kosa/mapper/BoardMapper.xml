@@ -39,6 +39,12 @@ LEFT OUTER JOIN REPLY r ON p.IDX = r. IDX
 WHERE p.IDX=#{idx}
 </select>
 
+<!-- 게시글 상세보기(DTO에 맞는 형식으로) -->
+<select id="boardContentDTO" parameterType="String" resultType="kr.or.kosa.dto.Post">
+SELECT IDX, BOARDIDX, MEMBERID, BOARDNAME, UNIVERSITYCODE, TITLE, CONTENT, READNUM, WRITEDATE, LIKENUM, STATUS FROM POST
+WHERE IDX = #{idx}
+</select>
+
 <!-- 댓글 목록 -->
 <select id="replyContent" parameterType="String" resultType="kr.or.kosa.dto.Reply">
 SELECT replyidx, parentreplyidx, idx, memberid, replycontent, replydate FROM REPLY
