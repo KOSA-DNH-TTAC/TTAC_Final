@@ -10,6 +10,7 @@ import org.slf4j.LoggerFactory;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.security.access.prepost.PreAuthorize;
 import org.springframework.security.core.annotation.AuthenticationPrincipal;
+import org.springframework.security.core.context.SecurityContextHolder;
 import org.springframework.stereotype.Controller;
 import org.springframework.ui.Model;
 import org.springframework.web.bind.annotation.GetMapping;
@@ -23,6 +24,8 @@ import kr.or.kosa.dto.Member;
 import kr.or.kosa.dto.PaymentHistory;
 import kr.or.kosa.dto.SleepOver;
 import kr.or.kosa.security.CustomUser;
+import kr.or.kosa.security.CustomUserDetailService;
+import kr.or.kosa.security.User;
 import kr.or.kosa.service.MemberService;
 import kr.or.kosa.service.PaymentService;
 import kr.or.kosa.service.SleepOverService;
@@ -94,6 +97,11 @@ public class MemberController {
 		String url = "";
 		String icon = "";
 		if (result > 0) {
+			//로그인한 시큐리티 유저 정보 갱신
+			int newpoint = memberservice.getMemberById(memberid).getMemberPoint();
+			User user = (User) SecurityContextHolder.getContext().getAuthentication().getPrincipal();
+			user.setMemberPoint(newpoint);
+			
 			icon = "success";
 			msg = "포인트 충전 완료!";
 			url = "/";
