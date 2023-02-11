@@ -184,6 +184,8 @@ public class BoardService {
 
 		return result;
 	}
+	
+	// 
 
 	// 점호 위치값 비교하기
 	public String eveningCall(double lat, double lon) {

@@ -36,6 +36,10 @@ public interface BoardDao {
 
 	// 파일 글 작성
 	public int fileInsert(File file) throws ClassNotFoundException, SQLException;
+	
+	// 게시글 추천 여부 검사
+	public int likeCount(String memberId, String idx);
+	public void postLike(String memberId, String idx);
 
 	// 점호하기
 	public Domitory eveningCall(String domitoryname);
