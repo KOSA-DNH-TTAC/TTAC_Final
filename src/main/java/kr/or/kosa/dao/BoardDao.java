@@ -24,6 +24,9 @@ public interface BoardDao {
 
 	// 게시글 상세보기
 	public List<Post> boardContent(String idx);
+	
+	// 게시글 상세보기 (객체로)
+	public Post boardContentDTO(int idx) throws ClassNotFoundException, SQLException;
 
 	// 댓글 목록
 	public List<Reply> replyContent(String idx);
@@ -36,6 +39,10 @@ public interface BoardDao {
 
 	// 파일 글 작성
 	public int fileInsert(File file) throws ClassNotFoundException, SQLException;
+	
+	// 게시글 추천 여부 검사
+	public int likeCount(String memberId, String idx);
+	public void postLike(String memberId, String idx);
 
 	// 점호하기
 	public Domitory eveningCall(String domitoryname);
@@ -47,11 +54,17 @@ public interface BoardDao {
 	public RollCall eveningCallCompare(String memberId, String universitycode, String date);
 	
 	//건물(동) 리스트 가져오기
-	public List<Domitory> selectDomitory();
+	public List<Domitory> selectDomitory(String universityCode, String domitoryname);
+	
+	//전체 건물(동) 리스트 가져오기
+	public List<Domitory> selectAllDomitory();
 	
 	//최근file 올린 idx 가져오기
 	public int recentFileIdx();
 	
-	// 게시글 상세보기
-	public List<File> fileContent(String idx);
+	// 파일 상세보기
+	public File fileContent(String idx);
+	
+	// 게시글 수정하기
+	public int boardEdit(Post post);
 }

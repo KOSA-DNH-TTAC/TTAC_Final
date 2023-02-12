@@ -29,6 +29,7 @@
 	<security:intercept-url pattern="/mypage" access="isAuthenticated()" /> 
 	<security:intercept-url pattern="/eveningCall" access="isAuthenticated()" /> 
 	<security:intercept-url pattern="/community" access="isAuthenticated()" /> 
+	<security:intercept-url pattern="/facility" access="isAuthenticated()" /> 
 
 	
 	<!-- 로그인
@@ -44,6 +45,9 @@
 	<security:access-denied-handler error-page="/error"/>
 	
 	<security:csrf disabled="true"/>
+	
+	<!-- 정적 자원에 대한 시큐리티 해제 -->
+	<security:intercept-url pattern="/resources/**" access="permitAll" />
 
 </security:http>
 

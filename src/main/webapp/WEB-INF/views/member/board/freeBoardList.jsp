@@ -55,7 +55,7 @@
 			<div class="container">
 
 				<ol>
-					<li><a href="index.html">Home</a></li>
+					<li><a href="/">Home</a></li>
 					<li>자유게시판</li>
 				</ol>
 				<h2>자유게시판</h2>
@@ -71,7 +71,6 @@
 				<div class="row">
 
 					<div id="contentsDiv" class="col-lg-8 entries">
-
 						<c:forEach items="${allBoardList}" var="freeBoard">
 							<article class="entry">
 
@@ -117,12 +116,6 @@
 							</ul>
 						</div>
 
-						<div class="d-grid gap-2 d-md-flex justify-content-md-end">
-							<button type="submit"
-								onclick="location.href='/board/freeBoardWrite'"
-								style="width: 130px; height: 20; border-radius: 50px; padding: 5px; border: none; background-color: #E96B56; color: white; margin-top: 10px; font-size: large;">글쓰기</button>
-						</div>
-
 						<div>
 							<c:if test="${cpage > 1}">
 								<a
@@ -153,7 +146,14 @@
 					<div class="col-lg-4">
 
 						<div class="sidebar">
-
+							<div class="sidebar-item search-form">
+								<div class="d-flex justify-content-center align-self-center">
+									<button type="submit"
+									onclick="location.href='/board/freeBoardWrite'"
+									style="width: 100%; height: 20; border-radius: 50px; padding: 5px; border: none; background-color: #E96B56; color: white; margin-top: 10px; font-size: large;">글쓰기</button>
+								</div>
+							</div>
+								
 							<h3 class="sidebar-title">Search</h3>
 							<div class="sidebar-item search-form">
 								<form action="">
@@ -167,8 +167,6 @@
 
 							<jsp:include
 								page="/WEB-INF/views/member/board/boardInclude/category.jsp" />
-
-
 						</div>
 						<!-- End sidebar -->
 

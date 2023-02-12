@@ -39,6 +39,12 @@ LEFT OUTER JOIN REPLY r ON p.IDX = r. IDX
 WHERE p.IDX=#{idx}
 </select>
 
+<!-- 게시글 상세보기(DTO에 맞는 형식으로) -->
+<select id="boardContentDTO" parameterType="int" resultType="kr.or.kosa.dto.Post">
+SELECT IDX, BOARDIDX, MEMBERID, BOARDNAME, UNIVERSITYCODE, TITLE, CONTENT, READNUM, WRITEDATE, LIKENUM, STATUS FROM POST
+WHERE IDX = #{idx}
+</select>
+
 <!-- 댓글 목록 -->
 <select id="replyContent" parameterType="String" resultType="kr.or.kosa.dto.Reply">
 SELECT replyidx, parentreplyidx, idx, memberid, replycontent, replydate FROM REPLY
@@ -64,8 +70,8 @@ VALUES(#{boardIdx},#{boardName},#{memberId},#{universityCode},#{title},#{content
 	<selectKey keyProperty="idx" resultType="int" order="BEFORE">
 		SELECT IDX from POST ORDER BY IDX DESC LIMIT 1
 	</selectKey>
-INSERT INTO FILE (idx, FILENAME,FILESIZE)
-VALUES(#{idx},#{fileName},#{fileSize})
+INSERT INTO FILE (idx, FILENAME,FILEREALNAME,FILESIZE)
+VALUES(#{idx},#{fileName},#{fileRealName},#{fileSize})
 </insert>
 
 <!-- 가장 최근 파일업로드한 idx 가져오기 -->
@@ -74,8 +80,17 @@ SELECT IDX from FILE ORDER BY IDX DESC LIMIT 1
 </select>
 
 <select id="fileContent" parameterType="String" resultType="kr.or.kosa.dto.File">
-SELECT FILENUM, IDX, FILENAME, FILESIZE FROM FILE WHERE IDX = #{idx}
+SELECT FILENUM, IDX, FILENAME,FILEREALNAME ,FILESIZE FROM FILE WHERE IDX = #{idx}
 </select>
+
+<update id="boardEdit" parameterType="kr.or.kosa.dto.Post">
+UPDATE POST
+SET TITLE = #{title}, CONTENT= #{content}, STATUS=#{status} ,WRITEDATE=NOW()
+WHERE IDX = #{idx};
+</update>
+
+<!-- 게시글 추천 기능 -->
+
 
 
 </mapper>

@@ -101,8 +101,9 @@ public class SleepOverController_Rest {
 		
         String startdate = (String)data.get("startdate");
         String enddate = (String)data.get("enddate");
-		System.out.println(startdate + " ~ " + enddate);
-		List<SleepOverHistory> list = service.searchIntervalHistory(startdate, enddate);
+        String memberid = (String)data.get("memberid");
+
+		List<SleepOverHistory> list = service.searchIntervalHistory(startdate, enddate, memberid);
 		map.put("list", list);
 		
 		return new ResponseEntity<Map<String, Object>>(map, HttpStatus.OK);

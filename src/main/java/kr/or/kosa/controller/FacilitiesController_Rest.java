@@ -8,12 +8,11 @@ import org.springframework.http.HttpStatus;
 import org.springframework.http.ResponseEntity;
 import org.springframework.security.core.context.SecurityContextHolder;
 import org.springframework.web.bind.annotation.RequestMapping;
-import org.springframework.web.bind.annotation.RequestMethod;
 import org.springframework.web.bind.annotation.RequestParam;
 import org.springframework.web.bind.annotation.RestController;
 
-import kr.or.kosa.dto.Domitory;
 import kr.or.kosa.dto.Facility;
+import kr.or.kosa.dto.Report;
 import kr.or.kosa.security.User;
 import kr.or.kosa.service.FacilityService;
 
@@ -30,8 +29,8 @@ public class FacilitiesController_Rest {
 
 		 
 			//기숙사 건물  DB 인서트
-			@RequestMapping(value = "/report", method = RequestMethod.POST, produces = "application/text; charset=utf8")
-			public ResponseEntity<String> insertDomitory(@RequestParam(value = "formdata[]") String[] formdata) {
+			@RequestMapping(value = "/report")
+			public ResponseEntity<List<Report>> insertDomitory(@RequestParam(value = "formdata[]") String[] formdata) {
 				String floor = formdata[0];
 				String item = formdata[1];
 				String reason = formdata[2];
@@ -50,27 +49,53 @@ public class FacilitiesController_Rest {
 				 int result = facilityService.insertReport(facidx, domitoryname, floor, item, reason, memberid);
 				 //들어갔는지 row 수 반환
 				 System.out.println("인서트 결과 추가된 ROW : "+result);
-				 String result1 = "시설물 신고 데이터 입력 성공";
-				 String result2 = "시설물 신고 데이터 입력 실패";
+				 
+				 List<Report> reportlist = facilityService.selectReport(domitoryname);
 				try {
-					return new ResponseEntity<String>(result1, HttpStatus.OK);
+					return new ResponseEntity<List<Report>>(reportlist, HttpStatus.OK);
 				} catch (Exception e) {
-					return new ResponseEntity<String>(result2, HttpStatus.BAD_REQUEST);
+					return new ResponseEntity<List<Report>>(reportlist, HttpStatus.BAD_REQUEST);
 				}
 			}
 			
 			//건물(동) DB 테이블만 출력
 			@RequestMapping("/print")
-			public ResponseEntity<List<Domitory>> domitoryPrint() {
-				System.out.println("나오나?");
-				List<Domitory> dolist = new ArrayList<Domitory>();
-				System.out.println(dolist);
+			public ResponseEntity<List<Report>> reportPrint() {
+				List<Report> reportlist = new ArrayList<Report>();
+				System.out.println(reportlist);
+				 User user = (User) SecurityContextHolder.getContext().getAuthentication().getPrincipal();
+				 String domitoryname = user.getDomitoryName(); //회원의 기숙사 명
 				try {
-					dolist = facilityService.selectDomitory();
-					System.out.println("dolist : "+dolist);
-					return new ResponseEntity<List<Domitory>>(dolist, HttpStatus.OK);
+					reportlist = facilityService.selectReport(domitoryname);
+					System.out.println("reportlist : "+reportlist);
+					return new ResponseEntity<List<Report>>(reportlist, HttpStatus.OK);
 				} catch (Exception e) {
-					return new ResponseEntity<List<Domitory>>(dolist, HttpStatus.BAD_REQUEST);
+					return new ResponseEntity<List<Report>>(reportlist, HttpStatus.BAD_REQUEST);
+				}
+			}
+			
+			//층별 검색 데이터 출력
+			@RequestMapping("/search")
+			public ResponseEntity<List<Report>> search(@RequestParam(value = "searchData") String searchData) {
+				System.out.println(searchData);
+				 User user = (User) SecurityContextHolder.getContext().getAuthentication().getPrincipal();
+				 String domitoryname = user.getDomitoryName(); //회원의 기숙사 명
+				 //String unicode = user.getUniversityCode();	   //회원의 대학코드
+				 List<Report> reportlist = new ArrayList<Report>();
+				 
+				try {
+					//전체보기인지 층별보기인지 판별
+					if(searchData.equals("전체보기")) {
+						 reportlist = facilityService.selectReport(domitoryname);
+						 System.out.println("전체 reportlist : "+reportlist);
+					 } else if(!(searchData.equals("전체 보기"))) {
+						 reportlist = facilityService.search(domitoryname, searchData);
+						 System.out.println("층별 reportlist : "+reportlist);
+					 }
+					
+					return new ResponseEntity<List<Report>>(reportlist, HttpStatus.OK);
+				} catch (Exception e) {
+					return new ResponseEntity<List<Report>>(reportlist, HttpStatus.BAD_REQUEST);
 				}
 			}
 }
