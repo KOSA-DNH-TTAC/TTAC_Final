@@ -163,7 +163,7 @@ $(document).ready(function(){
 <div class="ofh">
 	<div class="halfcon mr">		
 		<h4 class="bgtab bgtab2">회원 목록</h4>
-		<table class="comm_table tac bmb">	
+		<table class="comm_table tac bmb" id="membertable">	
 			<tbody>
 				<tr>		
 					<th>순번</th>
@@ -258,8 +258,8 @@ $(document).ready(function(){
 
 	</div>
 	<div class="halfcon">
-		<h4 class="bgtab bgtab2">회원 목록</h4>
-		<table class="comm_table tac bmb">	
+		<h4 class="bgtab bgtab2">회원 정보 상세</h4>
+		<table class="comm_table tac bmb" id="memberinfotable">	
 			<tbody>
 				<tr>		
 					<th>순번</th>
@@ -385,5 +385,45 @@ $(document).ready(function(){
 			$('.litebox').liteBox();
 		</script>
  litebox -->
+<script>
 
+	$(document).ready(function(){
+		$.ajax({
+				type: "get",
+				url: "/admin/allmember",
+				success: function (result) {
+					console.log(result);
+					//테이블에 append 해줌 (getTodays)
+					$('#membertable').empty();
+					let contents = `<tbody>
+				<tr>		
+					<th>순번</th>
+					<th>학번</th>
+					<th>이름</th>
+					<th>전화번호</th>
+					<th>벌점</th>
+				</tr>`
+
+				$.each(result.list, function(index, member){
+
+					contents += `<tr>
+						<td><b>` + (++index) +`</b></td>
+						<td class="tal">` + member.memberId + `</td>
+						<td>` + member.name + `</td>	
+						<td>` + member.phone + `</td>
+						<td>` + member.demerit + `</td>					
+					</tr>`
+
+				})
+				contents += `</tbody></table>`;
+				$('#membertable').append(contents);
+				
+				},
+				error: function (request, status, error) {
+					console.log("에러")
+					console.log("code:" + request.status + "\n" + "message:" + request.responseText + "\n" + "error:" + error);
+				}
+			})
+	})
+</script>
 </html>
