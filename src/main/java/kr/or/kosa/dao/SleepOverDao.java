@@ -21,14 +21,14 @@ public interface SleepOverDao {
 	
 	//오늘자 외박 신청 조회
 	public List<SleepOver> getTodaysSleepOver(String universitycode);
-	
-	//오늘자 외박 현황 조회(승인된 외박)
+
 	public List<SleepOverHistory> getTodayHistory(String universitycode);
 	
 	//외박신청이력 조회
 	public List<SleepOverHistory> getSleepOverHistory(String universitycode);
 	
 	//외박 기간별 검색
-	public List<SleepOverHistory> searchHistoryWithDate(@Param("startdate")String startdate, @Param("enddate")String enddate, @Param("universitycode")String universitycode);
+	//오늘자 외박 현황 조회(승인된 외박) : startdate = "TODAY"
+	public List<SleepOverHistory> searchHistoryWithDate(@Param("startdate")String startdate, @Param("enddate")String enddate, @Param("memberid")String memberid, @Param("universitycode")String universitycode);
 	
 }

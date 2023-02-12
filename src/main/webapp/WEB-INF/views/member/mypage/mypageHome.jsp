@@ -90,6 +90,11 @@
           #hjreply {
             color: #bababa;
           }
+
+          #searchTable {
+            border-collapse: collapse;
+            border-spacing: 0;
+          }
         </style>
       </head>
 
@@ -213,10 +218,61 @@
         src="${pageContext.request.contextPath}/resources/assets/vendor/waypoints/noframework.waypoints.js"></script>
       <script src="${pageContext.request.contextPath}/resources/assets/vendor/php-email-form/validate.js"></script>
 
+
+      <!--날짜변환-->
+      <!-- <script src="${pageContext.request.contextPath}/js/dateFormatter.js" type="application/js"></script> -->
+
       <!-- Template Main JS File -->
       <script src="${pageContext.request.contextPath}/resources/assets/js/main.js"></script>
 
       <script type="text/javascript">
+
+        function intervalSearch() {
+          console.log("기간별 검색")
+          let startString = $('#start').val();
+          let endString = $('#end').val();
+
+          $.ajax({
+            type: "GET",
+            url: "/mypage/sleepoverInterval",
+            data: {
+              "startdate": startString,
+              "enddate": endString,
+            },
+            contentType: "application/json; charset=UTF-8",
+            success: function (result) {
+              console.log(result);
+
+              $('#nightoverTable').empty();
+              let Ncontents = `<tbody>
+									<tr>
+										<th>번호</th>
+										<th>외박일</th>
+										<th>복귀일</th>
+										<th>사유</th>
+									</tr>`
+              $.each(result.list, function (index, over) {
+                let startdate = dateFormatter(over.startDate);
+                let enddate = dateFormatter(over.endDate);
+                // let localeStart = startdate.toLocaleString("ko-KR");
+                // let localeEnd = enddate.toLocaleString("ko-KR");
+                Ncontents += "<tr><td>" + (++index) + "</td>"
+                  + "<td>" + startdate + "</td>"
+                  + "<td>" + enddate + "</td>"
+                  + "<td>" + over.sleepOverReason + "</td>"
+                  + "<input type='hidden' value='" + over.sleepOverIdx + "' ></tr>"
+              })
+
+              $('#nightoverTable').append(Ncontents);
+            }
+          }
+          )
+        }
+
+        function sleepoverChart(){
+          console.log("외박 통계 보기를 눌렀음")
+        }
+
         $('.list-group-item').click(function (e) {
           e.preventDefault();
           var menu = $(this).text().trim(); //선택한 카테고리 메뉴 값 가져옴
@@ -309,7 +365,7 @@
 						  </tbody>
 						</table>
 					`
-
+                $('#content').empty();
                 $('#content').append(contents)
 
               },
@@ -319,75 +375,63 @@
               }
             })
 
-            $('#content').empty()
-
-            //ajax로 내 정보 가저옴
-            //td값과 사진값 바꿔줌
-
           }
           else if (menu == '외박내역') {
+            var today = new Date();
 
+            var todayFormat = dateFormatter(today);
             //ajax로 외박내역 가져옴
             $.ajax({
               type: "GET",
-              url: "/mypage/myinfo",
+              url: "/mypage/sleepover",
               success: function (result) {
                 console.log("성공")
                 console.log(result);
+
+                var contents = `<table id="searchTable" class="table"><tr>
+                                <td>
+                                  <label for="trip-start">기간별 조회</label>
+                                  <input class="form-select1" type="date" id="start" name="trip-start" value="` + todayFormat + `">
+                                  - <input class="form-select1" type="date" id="end" name="trip-end" value="` + todayFormat + `">
+                                  <button type="button" class="btn btn-warning" onclick="intervalSearch()">검색</button>
+                                </td>
+                              </tr>
+                              <tr>선택 기간에 외박일자가 포함되는 경우를 검색합니다</tr>
+                              </table>
+                              
+                              <table class="table" id='nightoverTable'>
+                                <thead>
+                                <tr>
+                                  <th scope="col">순번</th>
+                                  <th>외박일</th>
+										              <th>복귀일</th>
+                                  <th>사유</th>
+                                </tr>
+                              </thead>
+                              <tbody>
+                            `
+                $.each(result.list, function (index, over) {
+                  // var sdate = new Date(over.startDate);
+                  // var edate = new Date(over.endDate);
+                  var startFormat = dateFormatter(over.startDate);
+                  var endFormat = dateFormatter(over.endDate);
+
+                  contents += `<tr><td>` + `<b>` + (++index) + `<b>` + `</td>
+                          <td>`+ startFormat + `</td>
+                          <td>` + endFormat + `</td>
+                          <td>` + over.sleepOverReason + `</td></tr>
+                          `;
+                })
+                contents += `</tbody></table><button type="button" class="btn btn-warning" onclick="sleepoverChart()">통계보기</button>`
+
+                $('#content').empty();
+                $('#content').append(contents);
               },
               error: function (err) {
                 console.log("에러");
                 console.log(err);
               }
             })
-
-            var contents = `<table class="table" id='nightoverTable'>
-            <thead>
-            <tr>
-              <th scope="col">외박기간</th>
-              <th scope="col">외박사유</th>
-              <th scope="col">신청일자</th>
-              <th scope="col">승인여부</th>
-            </tr>
-          </thead>
-          <tbody>
-            <tr>
-              <td>2023.01.30 ~ 2023.01.31</td>
-              <td>병원</td>
-              <td>2023.01.29</td>
-              <td>승인</td>
-            </tr>
-            <tr>
-              <td>2023.01.30 ~ 2023.01.31</td>
-              <td>병원</td>
-              <td>2023.01.29</td>
-              <td>승인</td>
-            </tr>
-            <tr>
-              <td>2023.01.30 ~ 2023.01.31</td>
-              <td>코사를 탈주</td>
-              <td>2023.01.29</td>
-              <td>미승인</td>
-            </tr>   
-          	<tr>
-              <td>2023.01.30 ~ 2023.01.31</td>
-              <td>병원</td>
-              <td>2023.01.29</td>
-              <td>승인</td>
-            </tr>
-          	<tr>
-	            <td>2023.01.30 ~ 2023.01.31</td>
-	            <td>병원</td>
-	            <td>2023.01.29</td>
-	            <td>승인</td>
-	          </tr>
-          </tbody>
-        </table>`
-            $('#content').empty()
-            $('#content').append(contents)
-
-
-
           }
           else if (menu == '결제내역') {
 
@@ -407,12 +451,10 @@
                           </thead>
                           <tbody>`;
                 //forEach 안에서 tr 생성
-                $.each(result, function(index, payment){
-                  console.log(payment)
-                  var time = new Date(payment.payDate);
-                  var localetime = time.toLocaleString("ko-KR");
+                $.each(result, function (index, payment) {
+                  var localetime = dateFormatter(payment.payDate);
                   contents += `<tr>
-                                  <td>`+localetime +`</td>
+                                  <td>`+ localetime + `</td>
                                   <td>` + payment.payAmount + `</td>
                                 </tr>`
                 })
@@ -426,35 +468,6 @@
                 console.log("code:" + request.status + "\n" + "message:" + request.responseText + "\n" + "error:" + error);
               }
             })
-        //     var contents = `<table class="table" id='nightoverTable'>
-        //     <thead>
-        //     <tr>
-        //       <th scope="col">결제일자</th>
-        //       <th scope="col">결제금액</th>
-        //     </tr>
-        //   </thead>
-        //   <tbody>
-        //     <tr>
-        //       <td>2023.01.30</td>
-        //       <td>15000원</td>
-        //     </tr>
-        //     <tr>
-        //       <td>2023.01.30</td>
-        //       <td>15000원</td>
-        //     </tr>
-        //     <tr>
-        //       <td>2023.01.30</td>
-        //       <td>15000원</td>
-        //     </tr>
-        //     <tr>
-        //       <td>2023.01.30</td>
-        //       <td>15000원</td>
-        //     </tr>
-        //   </tbody>
-        // </table>`
-           
-
-
           }
           else if (menu == '내 커뮤니티') {
             //ajax로 내가 쓴 글 가져옴
@@ -476,6 +489,7 @@
                     </thead>
                     <tbody>`
                 $.each(result, function (index, post) {
+                  let writetime = dateFormatter(post.writeDate);
                   var time = new Date(post.writeDate);
                   var localetime = time.toLocaleString("ko-KR");
                   var year = time.getFullYear();
@@ -490,7 +504,7 @@
 
                   contents += "<tr><td>" + post.boardName +
                     "</td><td style='text-align:left'>" + post.title + "&nbsp;<span id='hjreply'> <i class='bi-chat-dots'>" + post.replyCount + "</span>" +
-                    "</td><td>" + localetime +
+                    "</td><td>" + writetime +
                     "</td></tr>";
 
                 })
@@ -562,6 +576,25 @@
 
           }
         })
+
+
+        function dateFormatter(date){
+            var wantDate = new Date(date);
+            // 년도 getFullYear()
+            var year = wantDate.getFullYear();
+            // 월 getMonth() (0~11로 1월이 0으로 표현되기 때문에 + 1을 해주어야 원하는 월을 구할 수 있다.)
+            var month = wantDate.getMonth() + 1
+            // 일 getDate()
+            var date = wantDate.getDate(); // 일
+            if (month < 10) {
+              month = "0" + month;
+            }
+            if (date < 10) {
+              date = "0" + date;
+            }
+            var wantDateFormat = year + "-" + month + "-" + date;
+            return wantDateFormat;
+        }
       </script>
       <script src="https://cdn.jsdelivr.net/npm/bootstrap@5.2.3/dist/js/bootstrap.bundle.min.js"
         integrity="sha384-kenU1KFdBIe4zVF0s0G1M5b4hcpxyD9F7jL+jjXkk+Q2h455rYXK/7HAuoJl+0I4"

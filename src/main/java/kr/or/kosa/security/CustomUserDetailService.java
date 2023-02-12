@@ -33,7 +33,7 @@ public class CustomUserDetailService implements UserDetailsService {
 		}
 		
 //		System.out.println("queried by memberdao : " + dto);
-		System.out.println("로그인 된 아이디 : " + dto);
+		System.out.println("아이디 : " + dto);
 		 Set<GrantedAuthority> grantedAuthorities = new HashSet<>();
 		for(MemberAuth a : dto.getAuthList()) {
 			grantedAuthorities.add(new SimpleGrantedAuthority(a.getAuth()));

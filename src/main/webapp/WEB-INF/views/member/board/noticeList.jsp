@@ -53,7 +53,7 @@
 						<div class="container">
 
 							<ol>
-								<li><a href="index.html">Home</a></li>
+								<li><a href="/">Home</a></li>
 								<li>공지사항</li>
 							</ol>
 							<h2>공지사항</h2>
@@ -134,6 +134,13 @@
 								<div class="col-lg-4">
 
 									<div class="sidebar">
+										<div class="sidebar-item search-form">
+											<div class="d-flex justify-content-center align-self-center">
+												<button type="submit"
+												onclick="location.href='/board/noticeWrite'"
+												style="width: 100%; height: 20; border-radius: 50px; padding: 5px; border: none; background-color: #E96B56; color: white; margin-top: 10px; font-size: large;">글쓰기</button>
+											</div>
+										</div>
 
 										<h3 class="sidebar-title">Search</h3>
 										<div class="sidebar-item search-form">
@@ -181,7 +188,7 @@
 				<script src="/resources/assets/vendor/php-email-form/validate.js"></script>
 
 				<!-- Template Main JS File -->
-				<script src="resources/assets/js/main.js"></script>
+				<script src="/resources/assets/js/main.js"></script>
 
 			</body>
 			

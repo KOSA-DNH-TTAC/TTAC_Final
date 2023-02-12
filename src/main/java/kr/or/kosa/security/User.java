@@ -246,7 +246,7 @@ public class User implements UserDetails {
 
 	@Override
 	public String toString() {
-		return "CustomUserDetails [username=" + username + ", universityCode=" + universityCode + ", memberId="
+		return "시큐리티유저[username=" + username + ", universityCode=" + universityCode + ", memberId="
 				+ memberId + ", password=" + password + ", name=" + name + ", major=" + major + ", email=" + email
 				+ ", gender=" + gender + ", phone=" + phone + ", parentsPhone=" + parentsPhone + ", domitoryName=" + domitoryName + ", room=" + room
 				+ ", memberPoint=" + memberPoint + ", demerit=" + demerit + ", status=" + status + ", enabled="
