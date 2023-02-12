@@ -111,6 +111,8 @@ public class BoardController {
 
 		if (fileContent != null) {
 			extension = FilenameUtils.getExtension(fileContent.getFileRealName());
+			System.out.println(fileContent.getFileRealName());
+			System.out.println(extension);
 				if(extension.equals("png") || extension.equals("jpg")) {
 					AwsS3 awsS3 = AwsS3.getInstance();
 					url = user.getUniversityCode() +"/"+ "board" + "/" + idx + "/" + fileContent.getFileName();

@@ -90,8 +90,15 @@ WHERE IDX = #{idx};
 </update>
 
 <!-- 게시글 추천 기능 -->
+<!-- 추천 여부 검사 -->
+<select id="likeCount" parameterType="String" resultType="int">
+	SELECT COUNT(idx) result FROM POSTLIKE
+	WHERE memberid=#{param1} AND idx=#{param2}
+	GROUP BY idx
+</select>
 
-
+<!-- 추천 기능 -->
+	
 
 </mapper>
 
