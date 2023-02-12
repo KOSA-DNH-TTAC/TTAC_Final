@@ -60,7 +60,12 @@
 			<li class="smenu"><a href="/admin/coupon" >식권관리</a></li>
 			<li class="smenu"><a href="/admin/popular" >외박관리</a>
 			</li>
-			<li class="smenu"><a href="#">시설관리</a>
+			<li class="smenu"><a href="/admin/analyze">시설관리</a>
+				<ul class="sub ">
+					<li><a href="/admin/analyze">시설관리</a></li>
+					<li><a href="/admin/enroll">시설등록</a></li>
+				</ul>
+			</li>
 				<ul class="sub ">
 				   <li ><a href="/admin/analyze">시설관리</a></li>
 				   <li ><a href="/admin/enroll">시설등록</a></li>
