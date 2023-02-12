@@ -185,7 +185,8 @@ public class BoardService {
 		return result;
 	}
 	
-	// 
+	// 추천 여부 검사
+	// 추천 여부 카운트하기 > 개수에 따라 RUD하기 > 업데이트된 추천 개수 출력하기
 
 	// 점호 위치값 비교하기
 	public String eveningCall(double lat, double lon) {
