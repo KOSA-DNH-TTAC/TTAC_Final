@@ -1,3 +1,5 @@
+<%@page import="java.text.SimpleDateFormat"%>
+<%@page import="java.util.Date"%>
 <%@ page language="java" contentType="text/html; charset=UTF-8"
     pageEncoding="UTF-8"%>
 
@@ -40,7 +42,6 @@
 		<!-- Jquery -->
 		<script src="http://code.jquery.com/jquery-latest.min.js"></script>
 
-
 <body class="">
 <div class="wrap">
 			
@@ -80,7 +81,7 @@
 			</li>
 			<li class="smenu"><a href="#" class="msub on">시설관리</a>
 				<ul class="sub ">
-				   <li ><a href="/admin/analyze" class="msub on">시설관리</a></li>
+				   <li ><a href="/admin/analyze" class="msub on">시설물 신고내역</a></li>
 				   <li ><a href="/admin/enroll">시설등록</a></li>
 				   <li ><a href="/admin/domitory">기숙사(동) 등록</a></li>
 				</ul>   
@@ -93,15 +94,15 @@
     </nav>
 <script>
 //서브 left_menu
-$(document).ready(function(){		
-	$(".msub").click(function(){		
-		var tg = $(this).siblings(".sub");		
-		var dis = tg.css("display");		
-		if(dis == "block"){
+$(document).ready(function () {
+	$(".msub").click(function () {
+		var tg = $(this).siblings(".sub");
+		var dis = tg.css("display");
+		if (dis == "block") {
 			$(this).removeClass("on");
 			tg.slideUp(300);
-		}		
-		if(dis == "none"){
+		}
+		if (dis == "none") {
 			$(".msub").removeClass("on");
 			$(this).addClass("on");
 			$(".sub").slideUp(300);
@@ -110,10 +111,75 @@ $(document).ready(function(){
 		return false;
 	});
 });
+
+
+//화면 로딩시 신고 리스트 출력
+$(document).ready(function(){
+	var tabledata = "";
+	$.ajax({
+		type : "POST",
+		url : "/facility/print",
+		/* contentType: "application/x-www-form-urlencoded; charset=UTF-8", */ 
+		success : function(data) {
+			console.log("data : "+data);
+			 $.each(data, function(index) {
+	                tabledata +=
+	                	'<tr class="tar">'+
+			    			'<td class="tac bgc">'+data[index].facilityDate+'</td>'+
+			    			'<td style="text-align: center;">'+data[index].domitoryName+'</td>'+
+			    			'<td style="text-align: center;">'+data[index].domitoryFloor+'</td>'+
+			    			'<td style="text-align: center;">'+data[index].facilityName+'</td>'+
+			    			'<td style="text-align: center;">'+data[index].name+'</td>'+
+			    			'<td style="text-align: center;">'+data[index].facilityReport+' </td>'+
+			    		'</tr>'
+	                    })
+			$('#table').empty();
+			$('#table').append(tabledata);
+		},
+		error : function(data) {
+			alert(data+": 로드 실패");
+		}
+	});
+});
+
+//층별로 정렬하기
+function search(){
+	/* 선택한 날짜 값 가져오기 */
+	let start = $('#start').val();
+	let end = $('#end').val();
+	var data = [start,end]
+	var tabledata = "";
+	
+	$.ajax({
+		type : "POST",
+		url : "/adminAnalyze/searchDate",
+		contentType: "application/x-www-form-urlencoded; charset=UTF-8",
+		data : {
+			"data" : data,
+		}, 
+		success : function(data) {
+			 $.each(data, function(index) {
+	                tabledata +=
+	                	'<tr>'+
+			              '<td>'+data[index].domitoryName+'</td>'+
+			              '<td>'+data[index].domitoryFloor+'</td>'+
+			              '<td>'+data[index].facilityName+'</td>'+
+			              '<td>'+data[index].facilityReport+'</td>'+
+			            '</tr>'
+	                    })
+			$('#table').empty();
+			$('#table').append(tabledata);
+		},
+		error : function(data) {
+			alert("시설물 신고 데이터 불러오기 실패");
+		}
+	});
+}
 </script>
 
+
 </div>	<div class="con">
-		<h3 class="sub_h3">시설관리 <span>시설통계</span></h3>	
+		<h3 class="sub_h3">시설관리 <span>시설물 신고내역</span></h3>	
 
 <div class="info_detail list06 mb">
 	<dl>
@@ -151,7 +217,7 @@ $(document).ready(function(){
 
 <div class="bmb">
 	<div class="bgtab">
-		<h3 class="txtin">상품별 매출조회</h3>	
+		<h3 class="txtin">시설물 신고 내역 조회</h3>	
 	</div>
 	<table class="srch_table mb20">	
 		<colgroup>
@@ -164,9 +230,9 @@ $(document).ready(function(){
 			<th>검색어</th>
 			<td colspan="3">
 				<select name="search_type" class="fSelect">
-					<option value="name">상품명</option>
-					<option value="phone">브랜드코드</option>
-					<option value="mobile">제품코드</option>
+					<option value="name">시설물 명</option>
+					<!-- <option value="phone">브랜드코드</option>
+					<option value="mobile">제품코드</option> -->
 				</select>
 				<input type="text" class="w60"/>
 			</td>				
@@ -174,8 +240,8 @@ $(document).ready(function(){
 		<tr>
 			<th>기간</th>
 			<td colspan="3">
-				<input class="form-select1" type="date" id="start" name="trip-start" value="2000-10-04">
-				 - <input class="form-select1" type="date" id="end" name="trip-start" value="2000-10-04">&nbsp;&nbsp;
+				<input class="form-select1" type="date" id="start" name="trip-start" value="연도-월-일">
+				 - <input class="form-select1" type="date" id="end" name="trip-start" value="연도-월-일">&nbsp;&nbsp;
 				<ul class="dpi_li dpi">
 					<li><a href="#" class="btn_sumit">이번 달</a></li>
 					<li><a href="#" class="btn_sumit">이번 주</a></li>
@@ -193,40 +259,18 @@ $(document).ready(function(){
 
 <div><!--날짜지정검색시-->
 	<div class="bgtab bgtab2 ofh">
-		<div class="w50 fl">			
-			<p class="txtin wtTxt fsbb">[23-01-00] 신고 건</p>
-		</div>
 		<div class="w50 fl">
-			<ul class="dpi_li txtin tar">
-				<li><a href="#" class="btn_sumit2">엑셀다운로드</a></li>		
-			</ul>
+		<%
+		// 현재 날짜/시간
+		Date now = new Date();
+		// 포맷팅 정의
+		SimpleDateFormat formatter = new SimpleDateFormat("yyyy-MM-dd");
+		// 포맷팅 적용
+		String date = formatter.format(now);
+		%>			
+			<p class="txtin wtTxt fsbb">[<%=date%>] 신고 건</p>
 		</div>
-	</div>
-	<div class="info_detail list06 bdnone">
-		<dl>
-			<dt>TOP 1</dt>
-			<dd>세탁기 <span>12건</span></dd>
-		</dl>	
-		<dl>
-			<dt>TOP 2</dt>
-			<dd>변기 <span>8건</span></dd>
-		</dl>	
-		<dl>
-			<dt>TOP 3</dt>
-			<dd>에어컨 <span>3건</span></dd>
-		</dl>	
-		<dl>
-			<dt>-</dt>
-			<dd>220,000<span>원</span></dd>
-		</dl>	
-		<dl>
-			<dt>-</dt>
-			<dd>200,000<span>원</span></dd>
-		</dl>			
-		<dl>
-			<dt>-</dt>
-			<dd>180,000<span>원</span></dd>
-		</dl>		
+		
 	</div>
 </div><!--날짜지정검색시 e-->
 
@@ -252,21 +296,13 @@ $(document).ready(function(){
 			<th>기숙사 동</th>
 			<th>기숙사 층</th>
 			<th>시설물</th>
-			<th>신고자</th>
+			<th>신고자 (학번)</th>
 			
 			
 		</tr>
 	</thead>
-	<tbody>
-		<tr class="tar">
-			<td class="tac bgc">23-01-16(수) 22:10</td>
-			<td>A</td>
-			<td>2</td>
-			<td>세탁기</td>
-			<td class="tal">도현정</td>
-			<td class="tal">[50704444] 오휘 프라임 어드밴서 앰플 세럼 </td>
-		</tr>
-		<tr class="tar">
+	<tbody id="table">
+		<!-- <tr class="tar">
 			<td class="tac bgc">23-01-10(수) 23:00</td>
 			<td>B</td>
 			<td>7</td>
@@ -289,7 +325,7 @@ $(document).ready(function(){
 			<td>세탁기</td>
 			<td class="tal">박예빈</td>
 			<td class="tal">[50704444] 오휘 프라임 어드밴서 앰플 세럼 </td>
-		</tr>
+		</tr> -->
 	</tbody>
 	<!-- <tfoot class="tac">
 		<tr class="bgc tar fwb">
