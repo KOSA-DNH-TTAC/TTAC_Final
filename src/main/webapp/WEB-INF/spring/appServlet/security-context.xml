@@ -29,6 +29,7 @@
 	<security:intercept-url pattern="/mypage" access="isAuthenticated()" /> 
 	<security:intercept-url pattern="/eveningCall" access="isAuthenticated()" /> 
 	<security:intercept-url pattern="/community" access="isAuthenticated()" /> 
+	<security:intercept-url pattern="/facility" access="isAuthenticated()" /> 
 
 	
 	<!-- 로그인
