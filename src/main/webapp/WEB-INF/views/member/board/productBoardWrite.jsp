@@ -9,7 +9,7 @@
   <meta charset="utf-8">
   <meta content="width=device-width, initial-scale=1.0" name="viewport">
 
-  <title>DOTO:커뮤니티</title>
+  <title>DOTO:공지사항</title>
   <meta content="" name="description">
   <meta content="" name="keywords">
 
@@ -56,9 +56,9 @@
 
         <ol>
           <li><a href="/">Home</a></li>
-          <li>Community</li>
+          <li>글쓰기</li>
         </ol>
-        <h2>커뮤니티</h2>
+        <h2>글쓰기</h2>
       </div>
     </section><!-- End Breadcrumbs -->
 
@@ -71,14 +71,33 @@
           <div class="col-lg-12 entries">
 
             <article class="entry">
-				<form action="#" method="POST" enctype="form-data">
+				<form action="/board/noticeWrite" method="POST" enctype="multipart/form-data" accept-charset="UTF-8">
 					<div class="mb-3">
 					  <label for="title" class="form-label">게시글 제목</label>
-					  <input type="text" class="form-control" id="title" placeholder="제목을 작성해주세요." autofocus required>
+					  <input type="text" class="form-control" name="title" id="title" placeholder="제목을 작성해주세요." autofocus required>
 					</div>
+					
 					<div class="mb-3">
-					  <label for="content" class="form-label">내용</label>
-					  <textarea id="content" name="content" placeholder="작성해주세요"> </textarea>
+						<label for="file" class="form-label">대표이미지</label>
+						<input type="file" class="form-control" id="file" name="file" required>
+					</div>
+					
+					<div class="mb-3">
+						<label for="price" class="form-label">물품 가격</label>
+						<input type="number" class="form-control" name="price" id="price" min="0" step="1000" value="0" required>
+					</div>
+					
+					<div class="mb-3">
+						<label for="sold" class="form-label">판매 상태</label>
+						<select id="sold" name="sold" class="form-select">
+		                    <option value="판매중" selected>판매중</option>
+		                    <option value="거래완료">거래완료</option>
+		                    <option value="예약중">예약중</option>
+			            </select>
+					</div>
+					
+					<div class="mb-3">
+					  <textarea id="content" name="content" placeholder="글을 작성해주세요."> </textarea>
 					</div>
 					
 					<div class="d-grid gap-2 d-md-flex justify-content-md-end">
@@ -87,12 +106,8 @@
                     </div>
                     
                     
+                    
                     	
-                  		<!-- 숨길 데이터들 -->
-	                    <input name="refer" value="${refer}" type="hidden" />
-	              		<input name="b_code" value="${b_code}" type="hidden" />
-	              		<input name="depth" value="${depth}" type="hidden" />
-	              		<input name="step" value="${step}" type="hidden" />
 				</form>
             </article><!-- End blog entry -->
 
