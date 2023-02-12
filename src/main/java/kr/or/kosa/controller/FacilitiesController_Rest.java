@@ -98,4 +98,5 @@ public class FacilitiesController_Rest {
 					return new ResponseEntity<List<Report>>(reportlist, HttpStatus.BAD_REQUEST);
 				}
 			}
+			
 }

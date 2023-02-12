@@ -250,7 +250,7 @@ function search(){
 			</c:if>
 			</c:forEach>
 		</select>
-		<button class="form-select2" style="margin-left:30px;" onclick="search()">보기</button>
+		<button class="form-select2" style="margin-left:30px; background-color:#E96B56; color:white;" onclick="search()">보기</button>
   	</div>
   	<div id="reason1" style="border:none;">
   	<h3 style="margin-left: 10px; color:#4B4B4B;"><b>시설물 현황</b></h3>

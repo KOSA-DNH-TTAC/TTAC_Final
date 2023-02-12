@@ -16,6 +16,7 @@ import org.springframework.web.bind.annotation.RequestParam;
 import org.springframework.web.bind.annotation.RestController;
 
 import kr.or.kosa.dto.Domitory;
+import kr.or.kosa.dto.Report;
 import kr.or.kosa.security.User;
 import kr.or.kosa.service.BoardService;
 import kr.or.kosa.service.FacilityService;
@@ -76,6 +77,38 @@ public class AdminController_Rest {
 					return new ResponseEntity<List<Domitory>>(dolist, HttpStatus.BAD_REQUEST);
 				}
 			}
+			
+			//날짜별 검색 데이터 출력
+			@RequestMapping("/searchDate")
+			public ResponseEntity<List<Report>> searchDate(@RequestParam(value = "searchData") String searchData) {
+				System.out.println(searchData);
+				 User user = (User) SecurityContextHolder.getContext().getAuthentication().getPrincipal();
+				 String domitoryname = user.getDomitoryName(); //회원의 기숙사 명
+				 //String unicode = user.getUniversityCode();	   //회원의 대학코드
+				 List<Report> reportlist = new ArrayList<Report>();
+				 
+				try {
+					//전체보기인지 층별보기인지 판별
+					if(searchData.equals("전체보기")) {
+						 reportlist = facilityService.selectReport(domitoryname);
+						 System.out.println("전체 reportlist : "+reportlist);
+					 } else if(!(searchData.equals("전체 보기"))) {
+						 reportlist = facilityService.search(domitoryname, searchData);
+						 System.out.println("층별 reportlist : "+reportlist);
+					 }
+					
+					return new ResponseEntity<List<Report>>(reportlist, HttpStatus.OK);
+				} catch (Exception e) {
+					return new ResponseEntity<List<Report>>(reportlist, HttpStatus.BAD_REQUEST);
+				}
+			}
+			
+			
+			
+			
+			
+			
+			
 			
 			public int max(List<Domitory> dolist) {
 						    Iterator<Domitory> iterator = dolist.iterator();
