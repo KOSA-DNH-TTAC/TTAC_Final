@@ -69,6 +69,20 @@ public class BoardController_Rest {
 			return new ResponseEntity<>(map, HttpStatus.BAD_REQUEST);
 		}
 	}
+	
+	// 게시글 추천 개수 (출력)
+	@RequestMapping("/board/{allBoard}/{idx}/postlike")
+	public int likeCount(@PathVariable("idx") String idx) {	
+		int likecnt = boardService.likeCount(idx);
+		
+		return likecnt;
+	}
+	
+	// 게시글 추천 (클릭시 동작)
+	@RequestMapping("/board/{allBoard}/{idx}/postlike/my")
+	public void postLike(@PathVariable("idx") String idx) {
+		boardService.postLike(idx);
+	}
 
 	// 저녁점호 위치비교 + 중복체크 + 데이터 인서트
 	@RequestMapping(value = "/eveningCall", method = RequestMethod.POST, produces = "application/text; charset=utf8")

@@ -41,7 +41,7 @@ public interface BoardDao {
 	public int fileInsert(File file) throws ClassNotFoundException, SQLException;
 	
 	// 게시글 추천 여부 검사
-	public int likeCount(String memberId, String idx);
+	public int likeCount(String idx);
 	public void postLike(String memberId, String idx);
 
 	// 점호하기
