@@ -45,16 +45,6 @@ PUBLIC "-//mybatis.org//DTD Mapper 3.0//EN"
 		WHERE p.IDX=#{idx}
 	</select>
 
-<<<<<<< HEAD
-	<!-- 댓글 목록 -->
-	<select id="replyContent" parameterType="String"
-		resultType="kr.or.kosa.dto.Reply">
-		SELECT replyidx, parentreplyidx, idx, memberid, replycontent, replydate FROM
-		REPLY
-		WHERE idx=#{idx} AND STATUS='21' AND parentreplyidx is null
-		ORDER BY replydate ASC
-	</select>
-=======
 <!-- 게시글 상세보기(DTO에 맞는 형식으로) -->
 <select id="boardContentDTO" parameterType="int" resultType="kr.or.kosa.dto.Post">
 SELECT IDX, BOARDIDX, MEMBERID, BOARDNAME, UNIVERSITYCODE, TITLE, CONTENT, READNUM, WRITEDATE, LIKENUM, STATUS FROM POST
@@ -67,7 +57,6 @@ SELECT replyidx, parentreplyidx, idx, memberid, replycontent, replydate FROM REP
 WHERE idx=#{idx} AND STATUS='21' AND parentreplyidx is null
 ORDER BY replydate ASC
 </select>
->>>>>>> eee755e6a4f9ff7be049f018ee568e39681cf341
 
 	<!-- 대댓글 목록 -->
 	<select id="reReplyContent" parameterType="String"
@@ -85,41 +74,23 @@ ORDER BY replydate ASC
 		VALUES(#{boardIdx},#{boardName},#{memberId},#{universityCode},#{title},#{content},NOW())
 	</insert>
 
-<<<<<<< HEAD
-	<!-- 파일 업로드 -->
-	<insert id="fileInsert" parameterType="kr.or.kosa.dto.File">
-		<selectKey keyProperty="idx" resultType="int" order="BEFORE">
-			SELECT IDX from POST ORDER BY IDX DESC LIMIT 1
-		</selectKey>
-		INSERT INTO FILE (idx, FILENAME,FILESIZE)
-		VALUES(#{idx},#{fileName},#{fileSize})
-	</insert>
-=======
 <!-- 파일 업로드  -->
 <insert id="fileInsert" parameterType="kr.or.kosa.dto.File">
 	<selectKey keyProperty="idx" resultType="int" order="BEFORE">
 		SELECT IDX from POST ORDER BY IDX DESC LIMIT 1
 	</selectKey>
-INSERT INTO FILE (idx, FILENAME,FILEREALNAME,FILESIZE)
-VALUES(#{idx},#{fileName},#{fileRealName},#{fileSize})
+INSERT INTO FILE (idx, FILENAME,FILESIZE)
+VALUES(#{idx},#{fileName},#{fileSize})
 </insert>
->>>>>>> eee755e6a4f9ff7be049f018ee568e39681cf341
 
 	<!-- 가장 최근 파일업로드한 idx 가져오기 -->
 	<select id="recentFileIdx" resultType="int">
 		SELECT IDX from FILE ORDER BY IDX DESC LIMIT 1
 	</select>
 
-<<<<<<< HEAD
-	<select id="fileContent" parameterType="String"
-		resultType="kr.or.kosa.dto.File">
-		SELECT FILENUM, IDX, FILENAME, FILESIZE FROM FILE WHERE IDX = #{idx}
-	</select>
-=======
 <select id="fileContent" parameterType="String" resultType="kr.or.kosa.dto.File">
-SELECT FILENUM, IDX, FILENAME,FILEREALNAME ,FILESIZE FROM FILE WHERE IDX = #{idx}
+SELECT FILENUM, IDX, FILENAME, FILESIZE FROM FILE WHERE IDX = #{idx}
 </select>
->>>>>>> eee755e6a4f9ff7be049f018ee568e39681cf341
 
 <update id="boardEdit" parameterType="kr.or.kosa.dto.Post">
 UPDATE POST
