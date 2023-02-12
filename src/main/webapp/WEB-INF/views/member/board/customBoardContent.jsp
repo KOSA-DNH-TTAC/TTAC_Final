@@ -111,8 +111,7 @@
 						<div id="replyDiv"></div>
 						
 						<li>
-							<textarea class="form-control" name="messageContent" placeholder="댓글을 입력하세요." id="exampleFormControlTextarea1">
-							</textarea>
+							<textarea class="form-control" name="messageContent" placeholder="댓글을 입력하세요." id="exampleFormControlTextarea1"></textarea>
 						</li>
 		 	            
 		 	            </ul>

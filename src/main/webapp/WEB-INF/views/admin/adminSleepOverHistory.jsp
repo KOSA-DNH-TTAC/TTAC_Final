@@ -140,20 +140,31 @@
 							<tr>
 								<th>조회</th>
 								<td colspan="3">
-									<li><a href="#" id="todayHistory"  onclick="getTodaysHistory()" class="btn_sumit">현 시각 외박현황 보기</a></li>
+									<li><a href="#" id="todayHistory" onclick="getTodaysHistory()" class="btn_sumit">현
+											시각 외박현황 보기</a></li>
 								</td>
 							</tr>
 							<tr>
-								<th>기간</th>
+								<th>기간별검색</th>
 								<td colspan="3">
 									<input class="form-select1" type="date" id="start" name="trip-start">
 									- <input class="form-select1" type="date" id="end" name="trip-end">&nbsp;&nbsp;
 								</td>
 							</tr>
+							<tr>
+								<th>회원 검색</th>
+								<td colspan="3">
+									<div class="form-group">
+										<label for="memberid">학번</label>
+										<input class="form-select1" type="text" id="memberid" name="memberid">
+									</div>
+								</td>
+							</tr>
 						</table>
 						<div class="ok_btn">
 							<ul>
-								<li><button type="button" class="btn_sumit2" onclick="getIntervalHistory()">검색</button></li>
+								<li><button type="button" class="btn_sumit2" onclick="getIntervalHistory()">검색</button>
+								</li>
 							</ul>
 						</div>
 					</div>
@@ -224,6 +235,24 @@
 
 
 	<script type="text/javascript">
+
+		function dateFormatter(date) {
+			var wantDate = new Date(date);
+			// 년도 getFullYear()
+			var year = wantDate.getFullYear();
+			// 월 getMonth() (0~11로 1월이 0으로 표현되기 때문에 + 1을 해주어야 원하는 월을 구할 수 있다.)
+			var month = wantDate.getMonth() + 1
+			// 일 getDate()
+			var date = wantDate.getDate(); // 일
+			if (month < 10) {
+				month = "0" + month;
+			}
+			if (date < 10) {
+				date = "0" + date;
+			}
+			var wantDateFormat = year + "-" + month + "-" + date;
+			return wantDateFormat;
+		}
 		$(document).ready(function () {
 			getAllHistory();
 		})
@@ -251,15 +280,16 @@
 
 					//아직 처리되지 않은 외박 신청
 					$.each(result.list, function (index, over) {
-						// console.log(index)
-						// console.log(over)
-						let startdate = new Date(over.startDate);
-						let enddate = new Date(over.endDate);
-                  		let localeStart = startdate.toLocaleString("ko-KR");
-						let localeEnd = enddate.toLocaleString("ko-KR");
+
+						// let startdate = new Date(over.startDate);
+						// let enddate = new Date(over.endDate);
+						// let localeStart = startdate.toLocaleString("ko-KR");
+						// let localeEnd = enddate.toLocaleString("ko-KR");
+						let startdate = dateFormatter(over.startDate);
+						let enddate = dateFormatter(over.endDate);
 						Ncontents += "<tr><td>" + (++index) + "</td>"
-							+ "<td>" + localeStart.slice(0,11) + "</td>"
-							+ "<td>" + localeEnd.slice(0,11) + "</td>"
+							+ "<td>" + startdate + "</td>"
+							+ "<td>" + enddate + "</td>"
 							+ "<td>" + over.username + "</td>"
 							+ "<td>" + over.sleepOverReason + "</td>"
 							+ "<input type='hidden' value='" + over.sleepOverIdx + "' ></tr>"
@@ -275,11 +305,11 @@
 			})
 		}
 
-		function getTodaysHistory(){
+		function getTodaysHistory() {
 			$.ajax({
-				type:"GET",
-				url:"/adminPopular/getTodayHistory",
-				success:function(result){
+				type: "GET",
+				url: "/adminPopular/getTodayHistory",
+				success: function (result) {
 					console.log(result);
 					$('#nightoverN').empty();
 					$('#nightoverY').empty();
@@ -295,15 +325,15 @@
 
 					//아직 처리되지 않은 외박 신청
 					$.each(result.list, function (index, over) {
-						// console.log(index)
-						// console.log(over)
-						let startdate = new Date(over.startDate);
-						let enddate = new Date(over.endDate);
-                  		let localeStart = startdate.toLocaleString("ko-KR");
-						let localeEnd = enddate.toLocaleString("ko-KR");
+						// let startdate = new Date(over.startDate);
+						// let enddate = new Date(over.endDate);
+						// let localeStart = startdate.toLocaleString("ko-KR");
+						// let localeEnd = enddate.toLocaleString("ko-KR");
+						let startdate = dateFormatter(over.startDate);
+						let enddate = dateFormatter(over.endDate);
 						Ncontents += "<tr><td>" + (++index) + "</td>"
-							+ "<td>" + localeStart.slice(0,11) + "</td>"
-							+ "<td>" + localeEnd.slice(0,11) + "</td>"
+							+ "<td>" + startdate + "</td>"
+							+ "<td>" + enddate + "</td>"
 							+ "<td>" + over.username + "</td>"
 							+ "<td>" + over.sleepOverReason + "</td>"
 							+ "<input type='hidden' value='" + over.sleepOverIdx + "' ></tr>"
@@ -319,7 +349,7 @@
 			})
 		}
 
-		function getIntervalHistory(){
+		function getIntervalHistory() {
 			// <th>기간</th>
 			// <td colspan="3">
 			// 	<input class="form-select1" type="date" id="start" name="trip-start">
@@ -327,25 +357,21 @@
 			// </td>
 			let startString = $('#start').val();
 			let endString = $('#end').val();
+			let memberid = $('#memberid').val();
 
-			// let startdate = new Date($('#start').val());
-			// let enddate = new Date($('#end').val())
-				//이 짓을 할 필요가 없었음...
-			// let interval = enddate - startdate;
-			// if(interval<0){
-			// 	interval *= -1;
-			// }
-			// interval /= ( 1000 * 60 * 60 * 24 ) //밀리초를 '일'로 나눔
+			//날짜가 null이면 회원 학번으로 검색
+			//회원 학번이 null이면 날짜로 검색
 
 			$.ajax({
-				type:"GET",
-				url:"/adminPopular/getIntervalHistory",
-				data:{
-						"startdate" : startString,
-						"enddate" : endString
-					},
+				type: "GET",
+				url: "/adminPopular/getIntervalHistory",
+				data: {
+					"startdate": startString,
+					"enddate": endString,
+					"memberid": memberid,
+				},
 				contentType: "application/json; charset=UTF-8",
-				success:function(result){
+				success: function (result) {
 					console.log(result);
 
 					$('#nightoverN').empty();
@@ -362,15 +388,15 @@
 
 					//아직 처리되지 않은 외박 신청
 					$.each(result.list, function (index, over) {
-						// console.log(index)
-						// console.log(over)
-						let startdate = new Date(over.startDate);
-						let enddate = new Date(over.endDate);
-                  		let localeStart = startdate.toLocaleString("ko-KR");
-						let localeEnd = enddate.toLocaleString("ko-KR");
+						// let startdate = new Date(over.startDate);
+						// let enddate = new Date(over.endDate);
+						// let localeStart = startdate.toLocaleString("ko-KR");
+						// let localeEnd = enddate.toLocaleString("ko-KR");
+						let startdate = dateFormatter(over.startDate);
+						let enddate = dateFormatter(over.endDate);
 						Ncontents += "<tr><td>" + (++index) + "</td>"
-							+ "<td>" + localeStart.slice(0,11) + "</td>"
-							+ "<td>" + localeEnd.slice(0,11) + "</td>"
+							+ "<td>" + startdate + "</td>"
+							+ "<td>" + enddate + "</td>"
 							+ "<td>" + over.username + "</td>"
 							+ "<td>" + over.sleepOverReason + "</td>"
 							+ "<input type='hidden' value='" + over.sleepOverIdx + "' ></tr>"

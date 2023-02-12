@@ -53,7 +53,7 @@
 						<div class="container">
 
 							<ol>
-								<li><a href="index.html">Home</a></li>
+								<li><a href="/">Home</a></li>
 								<li>거래게시판</li>
 							</ol>
 							<h2>거래게시판</h2>
@@ -139,6 +139,14 @@
 
 									<div class="sidebar">
 
+
+										<div class="sidebar-item search-form">
+											<div class="d-flex justify-content-center align-self-center">
+												<button type="submit"
+												onclick="location.href='/board/productWrite.jsp'"
+												style="width: 100%; height: 20; border-radius: 50px; padding: 5px; border: none; background-color: #E96B56; color: white; margin-top: 10px; font-size: large;">글쓰기</button>
+											</div>
+										</div>
 										<h3 class="sidebar-title">Search</h3>
 										<div class="sidebar-item search-form">
 											<form action="">

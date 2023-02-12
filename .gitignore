@@ -16,7 +16,7 @@ local.properties
 
 # ignore properties file
 db.properties
-s3.properties
+aws.properties
 
 # External tool builders
 .externalToolBuilders/

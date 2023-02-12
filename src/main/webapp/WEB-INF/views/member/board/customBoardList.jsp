@@ -55,7 +55,7 @@
 						<div class="container">
 
 							<ol>
-								<li><a href="index.html">Home</a></li>
+								<li><a href="/">Home</a></li>
 								<li>${boardName}</li>
 							</ol>
 							<h2>${boardName}</h2>
