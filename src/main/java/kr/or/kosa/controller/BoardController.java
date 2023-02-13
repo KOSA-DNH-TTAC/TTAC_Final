@@ -188,6 +188,7 @@ public class BoardController {
 		
 		User user = (User) SecurityContextHolder.getContext().getAuthentication().getPrincipal();
 		Post boardContent = boardService.boardContentDTO(idx);
+		List<File> fileContent = boardService.fileContent(Integer.toString(idx));
 
 		
 		// 글 쓴사람과 로그인한 사람이 같은지
@@ -203,6 +204,10 @@ public class BoardController {
 			
 			return "/common/redirect";
 			
+		}
+		
+		if (!fileContent.isEmpty()) {
+			model.addAttribute("fileContent", fileContent);
 		}
 		
 		model.addAttribute("boardContent", boardContent);

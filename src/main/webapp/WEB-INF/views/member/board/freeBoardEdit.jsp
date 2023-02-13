@@ -76,6 +76,26 @@
 					  <label for="title" class="form-label">게시글 제목</label>
 					  <input type="text" class="form-control" name="title" id="title" placeholder="제목을 작성해주세요." value="${boardContent.title}" required>
 					</div>
+					
+					<c:if test="${not empty fileContent}">
+					<div class="mb-3">
+						<label for="file" class="form-label">파일</label>
+						<input type="file" class="form-control" id="file" name="file" multiple>
+					</div>
+					
+					<label class="form-label">파일 목록</label>
+					<article class="entry" style="padding-top: 10px">
+					<c:forEach items="${fileContent }" var="fileContent">
+					<div class="mb-3">
+						
+						<li class="d-flex align-items-center">
+		                    	<i class="bi bi-archive" ></i> &nbsp ${fileContent.fileRealName} &nbsp<i class="bi bi-x"></i>
+	                   	</li>
+					</div>
+					</c:forEach>
+					</article>
+					</c:if>
+					
 					<div class="mb-3">
 					  <label for="content" class="form-label">내용</label>
 					  <textarea id="content" name="content" placeholder="작성해주세요">

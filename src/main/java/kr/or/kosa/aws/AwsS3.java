@@ -116,8 +116,6 @@ public class AwsS3 {
 
         try {
             this.s3Client.putObject(putObjectRequest);
-            System.out.println("세상사람들 이거 꼭 보세요!!" +putObjectRequest.getBucketName());
-            System.out.println(String.format("[%s] upload complete", putObjectRequest.getKey()));
 
         } catch (AmazonServiceException e) {
             e.printStackTrace();
