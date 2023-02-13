@@ -118,7 +118,7 @@ public class FacilityService {
 		System.out.println("신고 리스트 셀렉트 서비스 옴?");
 		List<Report> reportList = facilityDao.selectReport(domitoryname);
 		System.out.println("reportList : " + reportList);
-		
+		System.out.println(reportList);
 		return reportList;
 	}
 	
@@ -128,6 +128,26 @@ public class FacilityService {
 		System.out.println("층별 신고 데이터 출력 서비스");
 		List<Report> reportList = facilityDao.search(domitoryname, domitoryfloor);
 		System.out.println("층별 reportList : " + reportList);
+		
+		return reportList;
+	}
+	
+	// 날짜별 신고 리스트 불러오기
+	public List<Report> searchDate(String domitoryname,String startdate, String enddate) {
+		FacilityDao facilityDao = sqlSession.getMapper(FacilityDao.class);		
+		System.out.println("층별 신고 데이터 출력 서비스");
+		List<Report> reportList = facilityDao.searchDate(domitoryname, startdate, enddate);
+		System.out.println("층별 reportList : " + reportList);
+		
+		return reportList;
+	}
+
+	// 이름별 신고 리스트 불러오기
+	public List<Report> likeSearch(String domitoryname,String facilityname) {
+		FacilityDao facilityDao = sqlSession.getMapper(FacilityDao.class);		
+		System.out.println("이름별 검색 신고 리스트 출력 서비스");
+		List<Report> reportList = facilityDao.likeSearch(domitoryname, facilityname);
+		System.out.println("이름별  reportList : " + reportList); 
 		
 		return reportList;
 	}

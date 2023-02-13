@@ -58,7 +58,7 @@ public class FacilitiesController_Rest {
 				}
 			}
 			
-			//건물(동) DB 테이블만 출력
+			//신고 데이터 DB 테이블만 출력
 			@RequestMapping("/print")
 			public ResponseEntity<List<Report>> reportPrint() {
 				List<Report> reportlist = new ArrayList<Report>();
@@ -80,7 +80,6 @@ public class FacilitiesController_Rest {
 				System.out.println(searchData);
 				 User user = (User) SecurityContextHolder.getContext().getAuthentication().getPrincipal();
 				 String domitoryname = user.getDomitoryName(); //회원의 기숙사 명
-				 //String unicode = user.getUniversityCode();	   //회원의 대학코드
 				 List<Report> reportlist = new ArrayList<Report>();
 				 
 				try {
@@ -98,5 +97,6 @@ public class FacilitiesController_Rest {
 					return new ResponseEntity<List<Report>>(reportlist, HttpStatus.BAD_REQUEST);
 				}
 			}
+			
 			
 }
