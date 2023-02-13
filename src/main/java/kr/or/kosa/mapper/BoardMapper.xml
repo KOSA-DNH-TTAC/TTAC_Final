@@ -137,24 +137,24 @@ PUBLIC "-//mybatis.org//DTD Mapper 3.0//EN"
 	<select id="likeCheck" resultType="int" parameterType="map">
 		SELECT COUNT(*)
 		FROM POSTLIKE
-		WHERE IDX = #{idx} AND MEMBERID = #{memberid}
+		WHERE IDX = #{param1} AND MEMBERID = #{param2}
 	</select>
 
 	<update id="deletePostLike">
 		DELETE FROM POSTLIKE
-		WHERE IDX = #{idx} AND MEMBERID = #{memberid}
+		WHERE IDX = #{param1} AND MEMBERID = #{param2}
 	</update>
 
 	<update id="updateDislike">
-		UPDATE POST SET LIKENUM = LIKENUM-1 WHERE IDX = #{idx}
+		UPDATE POST SET LIKENUM = LIKENUM-1 WHERE IDX = #{param1}
 	</update>
 
 	<insert id="insertPostLike">
-		INSERT INTO POSTLIKE (IDX, MEMBERID) VALUES (#{idx}, #{memberid})
+		INSERT INTO POSTLIKE (IDX, MEMBERID) VALUES (#{param1}, #{param2})
 	</insert>
 
 	<update id="updateLike">
-		UPDATE POST SET LIKENUM = LIKENUM+1 WHERE IDX = #{idx}
+		UPDATE POST SET LIKENUM = LIKENUM+1 WHERE IDX = #{param1}
 	</update>
 
 	<!-- 추천 개수 -->

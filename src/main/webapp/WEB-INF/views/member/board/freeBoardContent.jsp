@@ -89,7 +89,7 @@
                     <ul>
                     	<li class="d-flex align-items-center"><i class="bi bi-person"></i><a value="${boardContent.memberId}">익명</a></li>
                     	<li class="d-flex align-items-center"><i class="bi bi-clock"></i>${boardContent.writeDate}</li>
-                    	<li class="d-flex align-items-center"><button id="postLike"><i class="bi-hand-thumbs-up"></i></button>${boardContent.likeNum}</li>
+                    	<li class="d-flex align-items-center"><button id="postLike"><i class="bi-hand-thumbs-up"></i></button><div id="likenum">${boardContent.likeNum}</div></li>
                     </ul>
                     </div>
                     <div class="entry-content" style="margin-bottom:50px;">
@@ -112,7 +112,7 @@
                     
                     </div>
                     
-                    <b><i class="bi bi-chat-dots"></i>&nbsp
+                    <b><i class="bi bi-chat-dots"></i>&nbsp;
                      ${boardContent.replyCount}</b>
                     <hr> 
                     </c:forEach>
@@ -186,22 +186,26 @@
 		$(document).ready(			
 			function replyContent(dd) {
 				
-				// var boardName = $('#boardName').text();
 				var idx = $('#idx').text();
-				
-				/*
-				if (boardName=="공지사항") {
-					param = "noticeList";
-				} else if (boardName=="건의사항") {
-					param = "opinionList";
-				} else if (boardName=="자유게시판") {
-					param = "freeBoardList";
-				} else if (boardName=="거래게시판") {
-					param = "productBoardList";
-				}
-				*/
-				
 				var param = "freeBoardList";
+				
+				// 추천 아이콘 Ajax
+				$.ajax({
+					type : "get",
+					url : '/board/' + param + '/' + idx + '/postlike/icon',
+					success : function(data) {
+						
+						if (data == 1) {
+							$('#postLike').empty();
+							$('#postLike').append('<i id="like" class="bi-hand-thumbs-up-fill"></i>');
+						} else {
+							$('#postLike').empty();
+							$('#postLike').append('<i class="bi-hand-thumbs-up"></i>');
+						}
+						
+						
+					} 
+				})
 				
 				// 댓글 Ajax
 				$.ajax({
@@ -265,16 +269,7 @@
 						$('#replyDiv').append(replyContent);
 					}
 				}) // 댓글 ajax end
-				
-				// 추천 ajax
-				$.ajax({
-					type: "get",
-					url: '/board/' + param + '/' + idx + '/postlike',
-					success : function(data) {
-						console.log("ready");
-						console.log("count: " +data);
-					}
-				})
+			
 								
 				// 추천 아이콘
 				$('#postLike').click(function() {
@@ -284,7 +279,7 @@
 					
 					$.ajax({
 						type : "post",
-						url : '/board/'+ param + '/' + idx + '/postlike/my', 
+						url : '/board/'+ param + '/' + idx + '/postlike', 
 						contentType : "application/json; charset=utf-8",
 						success : function(data) {
 							
@@ -292,11 +287,15 @@
 												
 							 if ($('#postLike i').hasClass('bi-hand-thumbs-up')) {
 				     			 $('#postLike').empty();
-				      			 $('#postLike').append('<i class="bi-hand-thumbs-up-fill"></i>');
+				      			 $('#postLike').append('<i id="like" class="bi-hand-thumbs-up-fill"></i>');
 				    		} else {
 				      			 $('#postLike').empty();
 				      			 $('#postLike').append('<i class="bi-hand-thumbs-up"></i>');
-				    }
+				    		}
+							
+							$('#likenum').empty();
+							$('#likenum').append(data);
+							
 							
 						}
 							})
