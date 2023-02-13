@@ -98,28 +98,5 @@ public class FacilitiesController_Rest {
 				}
 			}
 			
-			//층별 검색 데이터 출력
-			@RequestMapping("/likesearch")
-			public ResponseEntity<List<Report>> likeSearch(@RequestParam(value = "item") String item) {
-				System.out.println(searchData);
-				 User user = (User) SecurityContextHolder.getContext().getAuthentication().getPrincipal();
-				 String domitoryname = user.getDomitoryName(); //회원의 기숙사 명
-				 List<Report> reportlist = new ArrayList<Report>();
-				 
-				try {
-					//전체보기인지 층별보기인지 판별
-					if(searchData.equals("전체보기")) {
-						 reportlist = facilityService.selectReport(domitoryname);
-						 System.out.println("전체 reportlist : "+reportlist);
-					 } else if(!(searchData.equals("전체 보기"))) {
-						 reportlist = facilityService.likeSearch(domitoryname, item);
-						 System.out.println("층별 reportlist : "+reportlist);
-					 }
-					
-					return new ResponseEntity<List<Report>>(reportlist, HttpStatus.OK);
-				} catch (Exception e) {
-					return new ResponseEntity<List<Report>>(reportlist, HttpStatus.BAD_REQUEST);
-				}
-			}
 			
 }

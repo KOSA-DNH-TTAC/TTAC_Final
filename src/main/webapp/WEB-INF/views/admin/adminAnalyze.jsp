@@ -193,8 +193,6 @@ function todaysearch(){
 		}, 
 		success : function(data) {
 			 $.each(data, function(index) {
-				 
-				 alert(data[0].facilityDate);
 	                tabledata +=
 	                	'<tr class="tar">'+
 		    			'<td style="text-align: center;">'+data[index].facilityDate+'</td>'+ 
@@ -214,22 +212,20 @@ function todaysearch(){
 	});
 }
 //이름으로 정렬하기
-function todaysearch(){
+function likesearch(){
 	/* 선택한 날짜 값 가져오기 */
-	var data = ["today","today"];
+	var data = $('#likesearch').val();
 	var tabledata = "";
 	console.log(today);
 	$.ajax({
 		type : "POST",
-		url : "/adminAnalyze/searchDate",
+		url : "/adminAnalyze/likesearch",
 		//contentType: "application/x-www-form-urlencoded; charset=UTF-8",
 		data : {
 			"data" : data,
 		}, 
 		success : function(data) {
-			 $.each(data, function(index) {
-				 
-				 alert(data[0].facilityDate);
+			 $.each(data, function(index) {	 
 	                tabledata +=
 	                	'<tr class="tar">'+
 		    			'<td style="text-align: center;">'+data[index].facilityDate+'</td>'+ 
@@ -297,7 +293,10 @@ function todaysearch(){
 					<!-- <option value="phone">브랜드코드</option>
 					<option value="mobile">제품코드</option> -->
 				</select>
-				<input type="text" class="w60"/>
+				<input type="text" id="likesearch" class="w60" style="width:233px;"/>
+				<ul class="dpi_li dpi">
+					<li><button type="button" class="btn_sumit2" onclick="likesearch()">검색</button></li>
+				</ul>
 			</td>				
 		</tr>	
 		<tr>
@@ -306,16 +305,16 @@ function todaysearch(){
 				<input class="form-select1" type="date" id="start" name="trip-start" value="연도-월-일">
 				 - <input class="form-select1" type="date" id="end" name="trip-start" value="연도-월-일">&nbsp;&nbsp;
 				<ul class="dpi_li dpi">
-
 					<li><button id="today" onclick="todaysearch()" class="btn_sumit">오늘 날짜</button></li>
+					<li><button type="button" class="btn_sumit2" onclick="search()">검색</button></li>
 				</ul>
 			</td>				
 		</tr>
 	</table>
 	<div class="ok_btn">
-		<ul>
+<!-- 		<ul>
 			<li><button type="button" class="btn_sumit2" onclick="search()">검색</button></li>
-		</ul>
+		</ul> -->
 	</div>	
 </div>
 
