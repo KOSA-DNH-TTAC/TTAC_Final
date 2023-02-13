@@ -196,8 +196,23 @@ public class BoardService {
 		return result;
 	}
 	
-	// 추천 여부 검사
+	// 추천 여부 검사, DB 업데이트
 	// 추천 여부 카운트하기 > 개수에 따라 RUD하기 > 업데이트된 추천 개수 출력하기
+	public void postLike(String idx) {
+		BoardDao boardDao = sqlSession.getMapper(BoardDao.class);
+		User user = (User) SecurityContextHolder.getContext().getAuthentication().getPrincipal();
+		String likeMemberId = user.getMemberId();
+		System.out.println("likeMemberId: " + likeMemberId);
+		boardDao.postLike(likeMemberId, idx);
+	}
+	
+	// 게시글 총 추천 개수
+	public int likeCount(String idx) {
+		BoardDao boardDao = sqlSession.getMapper(BoardDao.class);
+		int likeCount = boardDao.likeCount(idx);
+		System.out.println("likeCount");
+		return likeCount;
+	}
 
 	// 점호 위치값 비교하기
 	public String eveningCall(double lat, double lon) {

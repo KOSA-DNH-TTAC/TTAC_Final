@@ -5,59 +5,93 @@ PUBLIC "-//mybatis.org//DTD Mapper 3.0//EN"
 
 <mapper namespace="kr.or.kosa.dao.BoardDao">
 
-<!-- 게시판 리스트 -->
-<select id="categoryList" resultType="kr.or.kosa.dto.Board">
-SELECT boardidx, boardname FROM BOARD WHERE universitycode=#{param1}
-AND boardname NOT IN('공지사항', '건의사항', '자유게시판', '거래게시판')
-</select>
+	<!-- 게시판 리스트 -->
+	<select id="categoryList" resultType="kr.or.kosa.dto.Board">
+		SELECT boardidx, boardname
+		FROM BOARD WHERE universitycode=#{param1}
+		AND boardname NOT IN('공지사항',
+		'건의사항', '자유게시판', '거래게시판')
+	</select>
 
-<!-- 기본 제공 게시판 글 목록 -->
-<select id="allBoardList" resultType="kr.or.kosa.dto.Post">
-SELECT COUNT(replyidx) replyCount, p.idx, p.boardidx, p.universitycode, b.boardname, p.memberid, p.writedate, p.likenum, p.content, p.title
-FROM POST p LEFT OUTER JOIN BOARD b ON p.boardidx = b.boardidx
-LEFT OUTER JOIN REPLY r ON p.idx = r.idx
-WHERE b.boardname=#{param1} and p.universitycode=#{param2} AND p.status='21'
-GROUP BY idx
-ORDER BY p.writedate DESC;
-</select>
+	<!-- 기본 제공 게시판 글 목록 -->
+	<select id="allBoardList" resultType="kr.or.kosa.dto.Post">
+		SELECT COUNT(replyidx)
+		replyCount, p.idx, p.boardidx, p.universitycode,
+		b.boardname,
+		p.memberid, p.writedate, p.likenum, p.content, p.title
+		FROM POST p LEFT
+		OUTER JOIN BOARD b ON p.boardidx = b.boardidx
+		LEFT OUTER JOIN REPLY r
+		ON p.idx = r.idx
+		WHERE b.boardname=#{param1} and
+		p.universitycode=#{param2} AND
+		p.status='21'
+		GROUP BY idx
+		ORDER BY
+		p.writedate DESC;
+	</select>
 
-<!-- 새 게시판 글 목록 -->
-<select id="customBoardList" resultType="kr.or.kosa.dto.Post">
-SELECT COUNT(replyidx) replyCount, p.idx, p.boardidx, p.universitycode, b.boardname, p.memberid, p.writedate, p.likenum, p.content, p.title
-FROM POST p LEFT OUTER JOIN BOARD b ON p.boardidx = b.boardidx
-LEFT OUTER JOIN REPLY r ON p.idx = r.idx
-WHERE b.boardname=#{param1} and p.universitycode=#{param2} AND p.status='21'
-GROUP BY idx
-ORDER BY p.writedate DESC;
-</select>
+	<!-- 새 게시판 글 목록 -->
+	<select id="customBoardList" resultType="kr.or.kosa.dto.Post">
+		SELECT COUNT(replyidx)
+		replyCount, p.idx, p.boardidx, p.universitycode,
+		b.boardname,
+		p.memberid, p.writedate, p.likenum, p.content, p.title
+		FROM POST p LEFT
+		OUTER JOIN BOARD b ON p.boardidx = b.boardidx
+		LEFT OUTER JOIN REPLY r
+		ON p.idx = r.idx
+		WHERE b.boardname=#{param1} and
+		p.universitycode=#{param2} AND
+		p.status='21'
+		GROUP BY idx
+		ORDER BY
+		p.writedate DESC;
+	</select>
 
-<!-- 게시글 상세보기 -->
-<select id="boardContent" parameterType="String" resultType="kr.or.kosa.dto.Post">
-SELECT count(replyidx) replyCount, p.idx, p.universitycode, b.boardname, p.memberid, p.writedate, p.likenum, p.content, p.title
-FROM POST p LEFT OUTER JOIN BOARD b ON p.BOARDIDX = b.BOARDIDX
-LEFT OUTER JOIN REPLY r ON p.IDX = r. IDX
-WHERE p.IDX=#{idx}
-</select>
+	<!-- 게시글 상세보기 -->
+	<select id="boardContent" parameterType="String"
+		resultType="kr.or.kosa.dto.Post">
+		SELECT count(replyidx) replyCount, p.idx, p.universitycode,
+		b.boardname,
+		p.memberid, p.writedate, p.likenum, p.content, p.title
+		FROM POST p LEFT OUTER JOIN BOARD b ON p.BOARDIDX = b.BOARDIDX
+		LEFT
+		OUTER JOIN REPLY r ON p.IDX = r. IDX
+		WHERE p.IDX=#{idx}
+	</select>
 
-<!-- 게시글 상세보기(DTO에 맞는 형식으로) -->
-<select id="boardContentDTO" parameterType="int" resultType="kr.or.kosa.dto.Post">
-SELECT IDX, BOARDIDX, MEMBERID, BOARDNAME, UNIVERSITYCODE, TITLE, CONTENT, READNUM, WRITEDATE, LIKENUM, STATUS FROM POST
-WHERE IDX = #{idx}
-</select>
+	<!-- 게시글 상세보기(DTO에 맞는 형식으로) -->
+	<select id="boardContentDTO" parameterType="int"
+		resultType="kr.or.kosa.dto.Post">
+		SELECT IDX, BOARDIDX, MEMBERID, BOARDNAME, UNIVERSITYCODE,
+		TITLE, CONTENT,
+		READNUM, WRITEDATE, LIKENUM, STATUS FROM POST
+		WHERE IDX
+		= #{idx}
+	</select>
 
-<!-- 댓글 목록 -->
-<select id="replyContent" parameterType="String" resultType="kr.or.kosa.dto.Reply">
-SELECT replyidx, parentreplyidx, idx, memberid, replycontent, replydate FROM REPLY
-WHERE idx=#{idx} AND STATUS='21' AND parentreplyidx is null
-ORDER BY replydate ASC
-</select>
+	<!-- 댓글 목록 -->
+	<select id="replyContent" parameterType="String"
+		resultType="kr.or.kosa.dto.Reply">
+		SELECT replyidx, parentreplyidx, idx, memberid,
+		replycontent, replydate FROM
+		REPLY
+		WHERE idx=#{idx} AND STATUS='21' AND
+		parentreplyidx is null
+		ORDER BY replydate ASC
+	</select>
 
-<!-- 대댓글 목록 -->
-<select id="reReplyContent" parameterType="String" resultType="kr.or.kosa.dto.Reply">
-SELECT replyidx, parentreplyidx, idx, memberid, replycontent, replydate FROM REPLY
-WHERE idx=#{idx} AND STATUS='21' AND parentreplyidx IS NOT NULL
-ORDER BY replydate ASC
-</select>
+	<!-- 대댓글 목록 -->
+	<select id="reReplyContent" parameterType="String"
+		resultType="kr.or.kosa.dto.Reply">
+		SELECT replyidx, parentreplyidx, idx, memberid,
+		replycontent, replydate FROM
+		REPLY
+		WHERE idx=#{idx} AND STATUS='21' AND
+		parentreplyidx IS NOT NULL
+		ORDER BY replydate ASC
+	</select>
 
 <!-- 글 작성 (파일첨부 x) -->
 <insert id="boardInsert" parameterType="kr.or.kosa.dto.Post">
@@ -65,40 +99,65 @@ INSERT INTO POST (BOARDIDX,BOARDNAME,MEMBERID,UNIVERSITYCODE,TITLE,CONTENT,WRITE
 VALUES(#{boardIdx},#{boardName},#{memberId},#{universityCode},#{title},#{content},NOW())
 </insert>
 
-<!-- 파일 업로드  -->
-<insert id="fileInsert" parameterType="kr.or.kosa.dto.File">
-	<selectKey keyProperty="idx" resultType="int" order="BEFORE">
-		SELECT IDX from POST ORDER BY IDX DESC LIMIT 1
-	</selectKey>
-INSERT INTO FILE (idx, FILENAME,FILEREALNAME,FILESIZE)
-VALUES(#{idx},#{fileName},#{fileRealName},#{fileSize})
-</insert>
+	<!-- 파일 업로드 -->
+	<insert id="fileInsert" parameterType="kr.or.kosa.dto.File">
+		<selectKey keyProperty="idx" resultType="int" order="BEFORE">
+			SELECT
+			IDX from POST ORDER BY IDX DESC LIMIT 1
+		</selectKey>
+		INSERT INTO FILE (idx, FILENAME,FILESIZE)
+		VALUES(#{idx},#{fileName},#{fileSize})
+	</insert>
 
-<!-- 가장 최근 파일업로드한 idx 가져오기 -->
-<select id="recentFileIdx" resultType="int">
-SELECT IDX from FILE ORDER BY IDX DESC LIMIT 1
-</select>
+	<!-- 가장 최근 파일업로드한 idx 가져오기 -->
+	<select id="recentFileIdx" resultType="int">
+		SELECT IDX from FILE ORDER
+		BY IDX DESC LIMIT 1
+	</select>
 
-<select id="fileContent" parameterType="String" resultType="kr.or.kosa.dto.File">
-SELECT FILENUM, IDX, FILENAME,FILEREALNAME ,FILESIZE FROM FILE WHERE IDX = #{idx}
-</select>
+	<select id="fileContent" parameterType="String"
+		resultType="kr.or.kosa.dto.File">
+		SELECT FILENUM, IDX, FILENAME, FILESIZE FROM FILE WHERE IDX
+		= #{idx}
+	</select>
 
-<update id="boardEdit" parameterType="kr.or.kosa.dto.Post">
-UPDATE POST
-SET TITLE = #{title}, CONTENT= #{content}, STATUS=#{status} ,WRITEDATE=NOW()
-WHERE IDX = #{idx};
-</update>
+	<update id="boardEdit" parameterType="kr.or.kosa.dto.Post">
+		UPDATE POST
+		SET TITLE =
+		#{title}, CONTENT= #{content}, STATUS=#{status}
+		,WRITEDATE=NOW()
+		WHERE
+		IDX = #{idx};
+	</update>
 
-<!-- 게시글 추천 기능 -->
-<!-- 추천 여부 검사 -->
-<select id="likeCount" parameterType="String" resultType="int">
-	SELECT COUNT(idx) result FROM POSTLIKE
-	WHERE memberid=#{param1} AND idx=#{param2}
-	GROUP BY idx
-</select>
+	<!-- 게시글 추천 기능 -->
+	<!-- 추천 여부 검사 -->
+	<update id="postLike">
+		<selectKey resultType="int" keyProperty="is_recommended"
+			order="BEFORE">
+			SELECT IFNULL(COUNT(*), 0)
+			FROM POSTLIKE
+			WHERE IDX =	#{param1} AND MEMBERID = #{param2}
+		</selectKey>
+		<choose>
+			<when test="is_recommended == 1">
+				DELETE FROM POSTLIKE 
+				WHERE IDX = #{param1} AND memberid = #{param2}
+			</when>
+			<otherwise>
+				INSERT INTO recommendation (idx, memberid) VALUES (#{param1}, #{param2})
+			</otherwise>
+		</choose>
+	</update>
 
-<!-- 추천 기능 -->
-	
+	<!-- 추천 개수 -->
+	<select id="likeCount" resultType="int">
+		SELECT COUNT(*) FROM POSTLIKE 
+		WHERE idx = #{param1}
+	</select>
+
+
+
 
 </mapper>
 

@@ -202,3 +202,20 @@ div.wrap {
 	display: inline-flex;
 	float: right;
 }
+
+#postLike {
+	padding: 0;
+	list-style: none;
+	background-color: rgba(0, 0, 0, 0);
+	border: none;
+	color: #BABABA;
+}
+
+#postLike:hover {
+	padding: 0;
+	list-style: none;
+	background-color: rgba(0, 0, 0, 0);
+	border: none;
+	color: #e96b56;
+	transition: 0.3s;
+}
