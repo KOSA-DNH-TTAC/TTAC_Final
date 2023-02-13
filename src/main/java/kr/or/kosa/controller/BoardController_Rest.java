@@ -29,12 +29,14 @@ import kr.or.kosa.dto.SleepOverHistory;
 import kr.or.kosa.security.User;
 import kr.or.kosa.service.BoardService;
 import kr.or.kosa.service.FacilityService;
+import kr.or.kosa.service.ReplyService;
 
 @RestController
 public class BoardController_Rest {
 
 	BoardService boardService;
 	FacilityService facilityService;
+	ReplyService replyservice;
 
 	@Autowired
 	public void setBoardService(BoardService boardService) {
@@ -44,6 +46,11 @@ public class BoardController_Rest {
 	@Autowired
 	public void setFacilityService(FacilityService facilityService) {
 		this.facilityService = facilityService;
+	}
+	
+	@Autowired
+	public void setReplyservice(ReplyService replyservice) {
+		this.replyservice = replyservice;
 	}
 
 	// 게시판 종류
@@ -102,7 +109,12 @@ public class BoardController_Rest {
         String reply = (String)data.get("reply");
         System.out.println(postidx + " / " + reply);
         
-        
+        int result = replyservice.newReply(postidx, reply);
+        if(result > 0) {
+        	map.put("성공", result);
+        }else {
+        	map.put("실패", result);
+        }
 		
 		return new ResponseEntity<Map<String, Object>>(map, HttpStatus.OK);
 		
