@@ -5,12 +5,12 @@ import java.sql.SQLException;
 import java.text.SimpleDateFormat;
 import java.util.Date;
 import java.util.List;
-import java.util.UUID;
 
 import org.apache.ibatis.session.SqlSession;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.security.core.context.SecurityContextHolder;
 import org.springframework.stereotype.Service;
+import org.springframework.transaction.annotation.Transactional;
 import org.springframework.web.multipart.MultipartFile;
 
 import kr.or.kosa.aws.AwsS3;
@@ -111,10 +111,10 @@ public class BoardService {
 	}
 	
 	// 파일 상세보기
-	public File fileContent(String idx) {
+	public List<File> fileContent(String idx) {
 		BoardDao boardDao = sqlSession.getMapper(BoardDao.class);
-		File fileContent = boardDao.fileContent(idx);
-		
+		List<File> fileContent = boardDao.fileContent(idx);
+		System.out.println("fileContent : "+fileContent);
 		return fileContent;
 	}
 	
@@ -196,22 +196,36 @@ public class BoardService {
 		return result;
 	}
 	
-	// 추천 여부 검사, DB 업데이트
-	// 추천 여부 카운트하기 > 개수에 따라 RUD하기 > 업데이트된 추천 개수 출력하기
-	public void postLike(String idx) {
+	// 추천 여부 검사, DB 업데이트, 추천 개수 출력
+	// 추천 여부 카운트 > 개수에 따라 RUD > 업데이트된 추천 개수 출력
+	@Transactional(rollbackFor = Exception.class)
+	public int likeCheck(String idx) {
 		BoardDao boardDao = sqlSession.getMapper(BoardDao.class);
 		User user = (User) SecurityContextHolder.getContext().getAuthentication().getPrincipal();
 		String likeMemberId = user.getMemberId();
-		System.out.println("likeMemberId: " + likeMemberId);
-		boardDao.postLike(likeMemberId, idx);
+		
+		int likeCheck = boardDao.likeCheck(idx, likeMemberId);
+		
+		if (likeCheck == 0) {
+			boardDao.insertPostLike(idx, likeMemberId);
+			boardDao.updateLike(idx);
+			int likeCount = boardDao.likeCount(idx);
+			return likeCount;
+		} else {
+			boardDao.deletePostLike(idx, likeMemberId);
+			boardDao.updateDislike(idx);
+			int likeCount = boardDao.likeCount(idx);
+			return likeCount;
+		}
 	}
 	
-	// 게시글 총 추천 개수
-	public int likeCount(String idx) {
+	// 추천 아이콘 ajax
+	public int myPostLikeCheck(String idx) {
 		BoardDao boardDao = sqlSession.getMapper(BoardDao.class);
-		int likeCount = boardDao.likeCount(idx);
-		System.out.println("likeCount");
-		return likeCount;
+		User user = (User) SecurityContextHolder.getContext().getAuthentication().getPrincipal();
+		String likeMemberId = user.getMemberId();
+		int myPostLikeCheck = boardDao.likeCheck(idx, likeMemberId);
+		return myPostLikeCheck;
 	}
 
 	// 점호 위치값 비교하기
@@ -280,11 +294,10 @@ public class BoardService {
 			return result;
 		}
 		
-	//최근 파일  idx가져오기	
-	public int recentFileIdx() {
+	//최근 글 idx가져오기	
+	public int recentPostIdx() {
 		BoardDao boardDao = sqlSession.getMapper(BoardDao.class);
-		int  result = boardDao.recentFileIdx();
-		return result;
+		return boardDao.recentPostIdx();
 	}
 	
 	//게시글 수정 or 삭제
@@ -296,30 +309,33 @@ public class BoardService {
 	}
 	
 	//공지사항 글쓰기
-	public int noticeListInsert(Post post, File file, MultipartFile multipartfile) {
+	public int noticeListInsert(Post post, List<File> fileDTO, List<MultipartFile> files) throws IOException {
 		
 		int idx = 0;
 		int result = 0;
 		String route = "";
+		String url = "";
+		String fileUrl = "";
 		
 		result = this.freeBoardWrite(post);
 		
-		if(multipartfile.getSize() != 0) {
+		if(!files.isEmpty()) {
+			AwsS3 awsS3 = AwsS3.getInstance();
+			idx = this.recentPostIdx();
 			
-			result = this.fileWrite(file);
-			idx = this.recentFileIdx();
-			
-			try {
-				AwsS3 awsS3 = AwsS3.getInstance();
-				route = post.getUniversityCode()+"/"+ "board" + "/" + idx + "/" + file.getFileName();
-				System.out.println(route);
-				System.out.println(awsS3.searchIcon(route));
+			for (MultipartFile multipartfile : files) {
+				route = post.getUniversityCode()+"/"+ "board" + "/" + idx + "/" + multipartfile.getOriginalFilename();
 				awsS3.upload(multipartfile, route);
-				
-			} catch (IOException e) {
-				e.printStackTrace();
+			}
+			
+			for (File file : fileDTO) {
+				url = post.getUniversityCode()+"/"+ "board" + "/" + idx + "/" + file.getFileRealName();
+				fileUrl = awsS3.searchIcon(url);
+				file.setFileUrl(fileUrl);
+				this.fileWrite(file);
 			}
 		}
+				
 		return result;
 	}
 

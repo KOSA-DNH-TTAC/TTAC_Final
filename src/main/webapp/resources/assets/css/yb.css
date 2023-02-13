@@ -219,3 +219,7 @@ div.wrap {
 	color: #e96b56;
 	transition: 0.3s;
 }
+
+#like {
+	color: #e96b56 !important;
+}
