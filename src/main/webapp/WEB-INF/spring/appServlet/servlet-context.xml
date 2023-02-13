@@ -39,13 +39,14 @@
 	<!-- @PreAuthorize @PostAutorize @Secured -->
 	<security:global-method-security pre-post-annotations="enabled" secured-annotations="enabled" />
 	
-	<!-- 선언적 방식의 트랜잭션 설정 -->
+	
+	<tx:annotation-driven proxy-target-class="true"/>
+	<!-- 트랜잭션 -->
 	<beans:bean id="transactionManager" class="org.springframework.jdbc.datasource.DataSourceTransactionManager">
-		<beans:property name="dataSource" ref="dataSource"/> 
+    	<beans:property name="dataSource" ref="driverManagerDataSource"></beans:property> 
+    	<!-- 해당 session의 transaction을 관리하겠다 -->
 	</beans:bean>
-
-	<!-- 어노테이션 기반 트랜잭션 설정 -->
-	<tx:annotation-driven transaction-manager="transactionManager"/>
+	
 	
 	
 </beans:beans>

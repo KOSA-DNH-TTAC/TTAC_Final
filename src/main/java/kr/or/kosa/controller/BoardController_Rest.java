@@ -70,6 +70,7 @@ public class BoardController_Rest {
 		}
 	}
 	
+	/*
 	// 게시글 추천 개수 (출력)
 	@RequestMapping("/board/{allBoard}/{idx}/postlike")
 	public int likeCount(@PathVariable("idx") String idx) {	
@@ -77,12 +78,23 @@ public class BoardController_Rest {
 		
 		return likecnt;
 	}
+	*/
 	
-	// 게시글 추천 (클릭시 동작)
-	@RequestMapping("/board/{allBoard}/{idx}/postlike/my")
-	public void postLike(@PathVariable("idx") String idx) {
-		System.out.println("클릭이벤트서비스로들어왓어");
-		boardService.postLike(idx);
+	// 게시글 추천 (트랜잭션)
+	@RequestMapping("/board/{allBoard}/{idx}/postlike")
+	public int postLike(@PathVariable("idx") String idx) {
+		int postLike = 0;
+		postLike = boardService.likeCheck(idx);
+		
+		return postLike;
+	}
+	
+	// 게시글 추천 (아이콘)
+	@RequestMapping("/board/{allBoard}/{idx}/postlike/icon")
+	public int myPostLikeCheck(@PathVariable("idx") String idx) {
+		int myPostLikeCheck = 0;
+		myPostLikeCheck = boardService.myPostLikeCheck(idx);
+		return myPostLikeCheck;
 	}
 
 	// 저녁점호 위치비교 + 중복체크 + 데이터 인서트

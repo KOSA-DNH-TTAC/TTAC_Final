@@ -43,10 +43,10 @@ public interface BoardDao {
 	// 게시글 추천 여부 검사
 	public int likeCount(String idx);
 	public int likeCheck(String idx, String memberId);
-	public void deletePostLike();
-	public void updateDisLike();
-	public void insertPostLike();
-	public void updateLike();
+	public void deletePostLike(String idx, String memberId);
+	public void updateDislike(String idx);
+	public void insertPostLike(String idx, String memberId);
+	public void updateLike(String idx);
 	
 
 	// 점호하기
