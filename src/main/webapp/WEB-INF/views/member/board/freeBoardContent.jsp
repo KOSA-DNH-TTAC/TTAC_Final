@@ -32,6 +32,7 @@
 <link href="/resources/assets/vendor/swiper/swiper-bundle.min.css" rel="stylesheet">
 <script src="https://kit.fontawesome.com/2a013a2563.js" crossorigin="anonymous"></script>
 <link href="/resources/assets/css/yb.css" rel="stylesheet"> 
+<link href="/resources/assets/css/hj.css" content-Type="text/css" rel="stylesheet"> 
 <!-- Template Main CSS File -->
 <link href="/resources/assets/css/style.css" rel="stylesheet">
 
@@ -122,6 +123,7 @@
 						
 						<li>
 							<textarea class="form-control" name="messageContent" placeholder="댓글을 입력하세요." value="" id="exampleFormControlTextarea1"></textarea>
+							<button id="newreplybtn">댓글작성</button>
 						</li>
 		 	            
 		 	            </ul>
@@ -182,6 +184,33 @@
 	<script src="/resources/assets/js/main.js"></script>
 
 	<script type="text/javascript">
+
+
+		$('#newreplybtn').click(function(){
+			let idx = $('#idx').text();
+			console.log("새댓글!!!")
+			let reply = $('#exampleFormControlTextarea1').val();
+			console.log(idx)
+			console.log(reply);
+
+			$.ajax({
+				type: "post",
+				url: "/board/newreply",
+				data:  JSON.stringify({
+					"postidx" : idx,
+					"reply" : reply
+				}),
+				dataType:'json',
+				async: true, //비동기 여부
+				contentType: "application/json",
+				success: function (result) {
+					console.log(result);
+
+				}
+			})
+			console.log("머노?")
+
+		})
 			
 		$(document).ready(			
 			function replyContent(dd) {
