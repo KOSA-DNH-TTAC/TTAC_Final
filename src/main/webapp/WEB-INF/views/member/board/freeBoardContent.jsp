@@ -186,9 +186,10 @@
 		$(document).ready(			
 			function replyContent(dd) {
 				
-				var boardName = $('#boardName').text();
+				// var boardName = $('#boardName').text();
 				var idx = $('#idx').text();
 				
+				/*
 				if (boardName=="공지사항") {
 					param = "noticeList";
 				} else if (boardName=="건의사항") {
@@ -198,6 +199,9 @@
 				} else if (boardName=="거래게시판") {
 					param = "productBoardList";
 				}
+				*/
+				
+				var param = "freeBoardList";
 				
 				// 댓글 Ajax
 				$.ajax({
@@ -267,9 +271,42 @@
 					type: "get",
 					url: '/board/' + param + '/' + idx + '/postlike',
 					success : function(data) {
-						console.log(data);
+						console.log("ready");
+						console.log("count: " +data);
 					}
 				})
+								
+				// 추천 아이콘
+				$('#postLike').click(function() {
+					
+					console.log("param: " + param);
+					console.log("idx: " + idx);
+					
+					$.ajax({
+						type : "post",
+						url : '/board/'+ param + '/' + idx + '/postlike/my', 
+						contentType : "application/json; charset=utf-8",
+						success : function(data) {
+							
+							console.log("눌럿어!")
+												
+							 if ($('#postLike i').hasClass('bi-hand-thumbs-up')) {
+				     			 $('#postLike').empty();
+				      			 $('#postLike').append('<i class="bi-hand-thumbs-up-fill"></i>');
+				    		} else {
+				      			 $('#postLike').empty();
+				      			 $('#postLike').append('<i class="bi-hand-thumbs-up"></i>');
+				    }
+							
+						}
+							})
+					
+					
+				   
+				  });
+				
+				
+			
 	});
 		
 		// 클릭시 익명 회원의 memberId값 받아오기
@@ -280,33 +317,6 @@
 				var replyIdx = $(this).attr('data-replyIdx');
 				var parentReplyIdx = $(this).attr('data-parentReplyIdx');
 		})
-		
-		// 추천 이벤트
-		$(document).on(					
-			"click",
-			"#postLike", function likeCheck() {
-				
-		})
-		
-		
-		$(document).ready(			
-			function postLike(gg) {
-				
-				// 댓글 Ajax
-				$.ajax({
-					type : "get",
-					url : '/board/'+ param + '/' + idx + '/reply', 
-					contentType : "application/json; charset=utf-8",
-					success : function(data) {
-											
-						var replyContent = "";
-						$('#replyDiv').empty();
-					    $('#postLike').append('<i class="bi-hand-thumbs-up-fill"></i>');
-		                
-		                
-				
-			})
-				})
 		
 		
 			

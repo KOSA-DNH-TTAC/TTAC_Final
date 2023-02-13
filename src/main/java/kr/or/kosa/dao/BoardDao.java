@@ -42,7 +42,12 @@ public interface BoardDao {
 	
 	// 게시글 추천 여부 검사
 	public int likeCount(String idx);
-	public void postLike(String memberId, String idx);
+	public int likeCheck(String idx, String memberId);
+	public void deletePostLike();
+	public void updateDisLike();
+	public void insertPostLike();
+	public void updateLike();
+	
 
 	// 점호하기
 	public Domitory eveningCall(String domitoryname);

@@ -81,6 +81,7 @@ public class BoardController_Rest {
 	// 게시글 추천 (클릭시 동작)
 	@RequestMapping("/board/{allBoard}/{idx}/postlike/my")
 	public void postLike(@PathVariable("idx") String idx) {
+		System.out.println("클릭이벤트서비스로들어왓어");
 		boardService.postLike(idx);
 	}
 

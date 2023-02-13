@@ -5,12 +5,12 @@ import java.sql.SQLException;
 import java.text.SimpleDateFormat;
 import java.util.Date;
 import java.util.List;
-import java.util.UUID;
 
 import org.apache.ibatis.session.SqlSession;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.security.core.context.SecurityContextHolder;
 import org.springframework.stereotype.Service;
+import org.springframework.transaction.annotation.Transactional;
 import org.springframework.web.multipart.MultipartFile;
 
 import kr.or.kosa.aws.AwsS3;
@@ -198,19 +198,40 @@ public class BoardService {
 	
 	// 추천 여부 검사, DB 업데이트
 	// 추천 여부 카운트하기 > 개수에 따라 RUD하기 > 업데이트된 추천 개수 출력하기
+	@Transactional
+	public int likeCheck(String idx, String memberId) {
+		BoardDao boardDao = sqlSession.getMapper(BoardDao.class);
+		User user = (User) SecurityContextHolder.getContext().getAuthentication().getPrincipal();
+		String likeMemberId = user.getMemberId();
+		System.out.println("likeMemberId: " + likeMemberId);
+		
+		int likeCheck = boardDao.likeCheck(idx, likeMemberId);
+		return likeCheck;
+	}
+			
+	public void deletePostLike() {
+		
+	}
+	public void updateDisLike();
+	public void insertPostLike();
+	public void updateLike();
+	
+	
+	
+	
 	public void postLike(String idx) {
 		BoardDao boardDao = sqlSession.getMapper(BoardDao.class);
 		User user = (User) SecurityContextHolder.getContext().getAuthentication().getPrincipal();
 		String likeMemberId = user.getMemberId();
 		System.out.println("likeMemberId: " + likeMemberId);
-		boardDao.postLike(likeMemberId, idx);
+		boardDao.postLike(idx, likeMemberId);
 	}
 	
 	// 게시글 총 추천 개수
 	public int likeCount(String idx) {
 		BoardDao boardDao = sqlSession.getMapper(BoardDao.class);
 		int likeCount = boardDao.likeCount(idx);
-		System.out.println("likeCount");
+		System.out.println("likeCount: " + likeCount);
 		return likeCount;
 	}
 
