@@ -105,28 +105,28 @@ PUBLIC "-//mybatis.org//DTD Mapper 3.0//EN"
 		<selectKey keyProperty="idx" resultType="int" order="BEFORE">
 			SELECT IDX from POST ORDER BY IDX DESC LIMIT 1
 		</selectKey>
-	INSERT INTO FILE (idx, FILENAME,FILEREALNAME,FILESIZE)
-	VALUES(#{idx},#{fileName},#{fileRealName},#{fileSize})
+	INSERT INTO FILE (idx, FILENAME,FILEREALNAME,FILEURL,FILESIZE)
+	VALUES(#{idx},#{fileName},#{fileRealName},#{fileUrl},#{fileSize})
 	</insert>
 
-	<!-- 가장 최근 파일업로드한 idx 가져오기 -->
-	<select id="recentFileIdx" resultType="int">
-		SELECT IDX from FILE ORDER
+	<!-- 가장 최근 글쓴 IDX 가져오기 -->
+	<select id="recentPostIdx" resultType="int">
+		SELECT IDX from POST ORDER
 		BY IDX DESC LIMIT 1
 	</select>
 
+	<!-- 파일테이블 가져오기 -->
 	<select id="fileContent" parameterType="String"
 		resultType="kr.or.kosa.dto.File">
-		SELECT FILENUM, IDX, FILENAME, FILEREALNAME, FILESIZE FROM
-		FILE WHERE IDX
+		SELECT FILENUM, IDX, FILENAME, FILEREALNAME, FILEURL, FILESIZE FROM FILE WHERE IDX
 		= #{idx}
 	</select>
 
+	<!-- 글 수정 -->
 	<update id="boardEdit" parameterType="kr.or.kosa.dto.Post">
 		UPDATE POST
 		SET TITLE =
 		#{title}, CONTENT= #{content}, STATUS=#{status}
-		,WRITEDATE=NOW()
 		WHERE
 		IDX = #{idx};
 	</update>

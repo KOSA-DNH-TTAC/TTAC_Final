@@ -169,8 +169,6 @@ public class AwsS3 {
     }
     
     public ResponseEntity<byte[]> getObject(String storedFileName) throws IOException {
-    	System.out.println(this.bucket);
-    	System.out.println(storedFileName);
         S3Object o = s3Client.getObject(this.bucket, storedFileName);
         S3ObjectInputStream objectInputStream = o.getObjectContent();
         byte[] bytes = IOUtils.toByteArray(objectInputStream);

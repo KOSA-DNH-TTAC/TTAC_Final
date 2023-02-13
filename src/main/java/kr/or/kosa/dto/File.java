@@ -9,6 +9,7 @@ public class File {
 	private int idx; //글번호
 	private String fileName;
 	private String fileRealName;
+	private String fileUrl;
 	private long fileSize;
 		
 }
