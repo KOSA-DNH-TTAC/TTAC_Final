@@ -2,7 +2,9 @@ package kr.or.kosa.controller;
 
 import static org.springframework.test.web.servlet.result.MockMvcResultMatchers.forwardedUrl;
 
+import java.text.SimpleDateFormat;
 import java.util.ArrayList;
+import java.util.Date;
 import java.util.Iterator;
 import java.util.List;
 
@@ -80,20 +82,28 @@ public class AdminController_Rest {
 			
 			//날짜별 검색 데이터 출력
 			@RequestMapping("/searchDate")
-			public ResponseEntity<List<Report>> searchDate(@RequestParam(value = "searchData") String searchData) {
-				System.out.println(searchData);
+			public ResponseEntity<List<Report>> searchDate(@RequestParam(value = "data[]") String[] searchData) {
+				System.out.println("넘어온 searchData : "+searchData);
 				 User user = (User) SecurityContextHolder.getContext().getAuthentication().getPrincipal();
 				 String domitoryname = user.getDomitoryName(); //회원의 기숙사 명
-				 //String unicode = user.getUniversityCode();	   //회원의 대학코드
+				 String startdate = searchData[0];
+				 String enddate = searchData[1];
+				 System.out.println("startdate : "+startdate + "/"+ "enddate : "+enddate);
 				 List<Report> reportlist = new ArrayList<Report>();
 				 
+				// 현재 날짜/시간
+				Date now = new Date();
+				// 포맷팅 정의
+				SimpleDateFormat formatter = new SimpleDateFormat("yyyy-MM-dd");
+				// 포맷팅 적용
+				String date = formatter.format(now);				 
 				try {
-					//전체보기인지 층별보기인지 판별
-					if(searchData.equals("전체보기")) {
-						 reportlist = facilityService.selectReport(domitoryname);
+					//전체보기인지 날짜별보기인지 판별
+					if(startdate.equals("today")) {
+						reportlist = facilityService.searchDate(domitoryname, date, date);
 						 System.out.println("전체 reportlist : "+reportlist);
-					 } else if(!(searchData.equals("전체 보기"))) {
-						 reportlist = facilityService.search(domitoryname, searchData);
+					 } else if(!(searchData.equals("전체보기"))) {
+						 reportlist = facilityService.searchDate(domitoryname, startdate, enddate);
 						 System.out.println("층별 reportlist : "+reportlist);
 					 }
 					

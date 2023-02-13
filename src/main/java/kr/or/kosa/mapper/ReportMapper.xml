@@ -31,6 +31,19 @@ FROM REPORT
 WHERE DOMITORYNAME= #{param1} AND DOMITORYFLOOR = #{param2};
 </select>
 
+<!-- 기간별 신고 리스트 가져오기 -->
+<select id="searchDate" resultType="kr.or.kosa.dto.Report">
+SELECT REPORTIDX,FACILITYIDX,DOMITORYNAME,DOMITORYFLOOR,FACILITYNAME,NAME,FACILITYREPORT,FACILITYDATE,`STATUS` 
+FROM REPORT 
+WHERE DOMITORYNAME= #{param1} AND FACILITYDATE BETWEEN #{param2} AND #{param3};
+</select>
+
+<!-- 이름별 검색 신고 리스트 가져오기 -->
+<select id="likeSearch" resultType="kr.or.kosa.dto.Report">
+SELECT REPORTIDX,FACILITYIDX,DOMITORYNAME,DOMITORYFLOOR,FACILITYNAME,NAME,FACILITYREPORT,FACILITYDATE,`STATUS` 
+FROM REPORT 
+WHERE DOMITORYNAME = #{param1} AND FACILITYNAME = #{param2};
+</select>
 </mapper>
 
 

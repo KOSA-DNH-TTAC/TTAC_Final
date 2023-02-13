@@ -14,6 +14,6 @@ public class Report {
 	private String facilityName;
 	private String name;
 	private String facilityReport;
-	private Date facilityDate;
+	private String facilityDate;
 	private int status;
 }
