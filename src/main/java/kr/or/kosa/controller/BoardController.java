@@ -3,6 +3,8 @@ package kr.or.kosa.controller;
 import java.io.IOException;
 import java.security.Principal;
 import java.sql.SQLException;
+import java.util.ArrayList;
+import java.util.Iterator;
 import java.util.List;
 import java.util.UUID;
 
@@ -88,11 +90,13 @@ public class BoardController {
 		String param = "";
 		String path = "";
 		String extension = "";
-		String fileLink = "";
 		String url = "";
 		
 		List<Post> boardContent = boardService.boardContent(idx);
-		File fileContent = boardService.fileContent(idx);
+		
+		//컨트롤러에서 받아온 파일 리스트
+		List<File> fileContent = boardService.fileContent(idx);
+		System.out.println("컨트롤러 fileContent : "+fileContent);
 
 		if (boardName.equals("noticeList")) {
 			param = "공지사항";
@@ -109,16 +113,7 @@ public class BoardController {
 			path = "productBoardContent";
 		}
 
-		if (fileContent != null) {
-			extension = FilenameUtils.getExtension(fileContent.getFileRealName());
-			System.out.println(fileContent.getFileRealName());
-			System.out.println(extension);
-				if(extension.equals("png") || extension.equals("jpg")) {
-					AwsS3 awsS3 = AwsS3.getInstance();
-					url = user.getUniversityCode() +"/"+ "board" + "/" + idx + "/" + fileContent.getFileName();
-					fileLink = awsS3.searchIcon(url);
-					model.addAttribute("fileLink", fileLink);
-				}
+		if (!fileContent.isEmpty()) {
 			model.addAttribute("fileContent", fileContent);
 		}
 		
@@ -285,7 +280,7 @@ public class BoardController {
 
 	// 공지사항 글쓰기
 	@PostMapping("/board/noticeWrite")
-	public String noticeWriteOk(Model model, @RequestParam("file") MultipartFile multipartfile,
+	public String noticeWriteOk(Model model, @RequestParam("file") List<MultipartFile> files,
 										 	 @RequestParam("title") String title,
 										     @RequestParam("content") String content) throws IOException  {
 		
@@ -305,7 +300,7 @@ public class BoardController {
 
 		} else {
 			Post postDTO = new Post();
-			File fileDTO = new File();
+			List<File> fileDTO = new ArrayList<File>();
 			
 			//글 담아주기
 			postDTO.setBoardIdx(boardIDX);
@@ -316,14 +311,20 @@ public class BoardController {
 			postDTO.setContent(content);
 			
 			//파일 담아주기
-			UUID uuid = UUID.randomUUID();
-			fileName = uuid.toString()+"_"+multipartfile.getOriginalFilename();
-			fileDTO.setFileName(fileName);
-			fileDTO.setFileRealName(multipartfile.getOriginalFilename());
-			fileDTO.setFileSize(multipartfile.getSize());
+			for (MultipartFile multipartfile : files) {
+				File fileOne = new File();
+				
+				UUID uuid = UUID.randomUUID();
+				fileName = uuid.toString()+"_"+multipartfile.getOriginalFilename();
+				fileOne.setFileName(fileName);
+				fileOne.setFileRealName(multipartfile.getOriginalFilename());
+				fileOne.setFileSize(multipartfile.getSize());
+				
+				fileDTO.add(fileOne);
+			}
 		
 			//서비스슝슝
-			result = boardService.noticeListInsert(postDTO, fileDTO, multipartfile);
+			result = boardService.noticeListInsert(postDTO, fileDTO, files);
 			
 			if (result < 1) {
 				icon = "error";
@@ -423,19 +424,17 @@ public class BoardController {
 		return "/common/redirect";
 	}
 	
-	//파일 다운로드
-	@GetMapping("/download/{idx}")
-	public ResponseEntity<byte[]> download(@PathVariable("idx") String idx) throws IOException {
+	@GetMapping("/download/{idx}/{file}")
+	public ResponseEntity<byte[]> download(@PathVariable("idx") String idx,
+										   @PathVariable("file") String file		) throws IOException {
 		
 		User user = (User) SecurityContextHolder.getContext().getAuthentication().getPrincipal();
-		File fileContent = new File();
 		String university = "";
 		String url = "";
 		
-		fileContent = boardService.fileContent(idx);
 		university = user.getUniversityCode();
 		
-		url = university +"/"+ "board" + "/" + idx + "/" + fileContent.getFileName();
+		url = university +"/"+ "board" + "/" + idx + "/" + file;
 		System.out.println("파일다운 url" + url);
 		AwsS3 awsS3 = AwsS3.getInstance();
         return awsS3.getObject(url);
