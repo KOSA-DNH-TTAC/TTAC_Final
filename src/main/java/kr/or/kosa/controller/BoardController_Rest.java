@@ -70,16 +70,6 @@ public class BoardController_Rest {
 		}
 	}
 	
-	/*
-	// 게시글 추천 개수 (출력)
-	@RequestMapping("/board/{allBoard}/{idx}/postlike")
-	public int likeCount(@PathVariable("idx") String idx) {	
-		int likecnt = boardService.likeCount(idx);
-		
-		return likecnt;
-	}
-	*/
-	
 	// 게시글 추천 (트랜잭션)
 	@RequestMapping("/board/{allBoard}/{idx}/postlike")
 	public int postLike(@PathVariable("idx") String idx) {
