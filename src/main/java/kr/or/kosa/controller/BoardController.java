@@ -111,6 +111,8 @@ public class BoardController {
 
 		if (fileContent != null) {
 			extension = FilenameUtils.getExtension(fileContent.getFileRealName());
+			System.out.println(fileContent.getFileRealName());
+			System.out.println(extension);
 				if(extension.equals("png") || extension.equals("jpg")) {
 					AwsS3 awsS3 = AwsS3.getInstance();
 					url = user.getUniversityCode() +"/"+ "board" + "/" + idx + "/" + fileContent.getFileName();
@@ -283,9 +285,10 @@ public class BoardController {
 
 	// 공지사항 글쓰기
 	@PostMapping("/board/noticeWrite")
-	public String noticeWriteOk(Principal principal, Model model,@RequestParam("file") MultipartFile multipartfile,
-															 	 @RequestParam("title") String title,
-															     @RequestParam("content") String content) throws IOException  {
+	public String noticeWriteOk(Model model, @RequestParam("file") MultipartFile multipartfile,
+										 	 @RequestParam("title") String title,
+										     @RequestParam("content") String content) throws IOException  {
+		
 		User user = (User) SecurityContextHolder.getContext().getAuthentication().getPrincipal();
 		int boardIDX = 1;
 		String msg = "";
@@ -351,6 +354,18 @@ public class BoardController {
 	@PostMapping("/opinionList/opinionWrite")
 	public String opinionWriteOk() {
 		return "member/board/opinionWrite";
+	}
+	
+	// 거래게시판 글쓰기
+	@GetMapping("/board/productBoardWrite")
+	public String productWrite() {
+		return "member/board/productBoardWrite";
+	}
+
+	// 거래게시판 글쓰기
+	@PostMapping("/board/productBoardWrite")
+	public String productWriteOk() {
+		return "member/board/productBoardWrite";
 	}
 
 	// 자유게시판 글쓰기

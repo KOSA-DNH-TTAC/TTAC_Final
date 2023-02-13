@@ -178,6 +178,26 @@
         crossorigin="anonymous"></script>
 
 	<script>
+		function dateFormatter(date) {
+			var wantDate = new Date(date);
+			// 년도 getFullYear()
+			var year = wantDate.getFullYear();
+			// 월 getMonth() (0~11로 1월이 0으로 표현되기 때문에 + 1을 해주어야 원하는 월을 구할 수 있다.)
+			var month = wantDate.getMonth() + 1
+			// 일 getDate()
+			var date = wantDate.getDate(); // 일
+			if (month < 10) {
+				month = "0" + month;
+			}
+			if (date < 10) {
+				date = "0" + date;
+			}
+			var wantDateFormat = year + "-" + month + "-" + date;
+			return wantDateFormat;
+		}
+		$(document).ready(function () {
+			getAllHistory();
+		})
 
     function getFirstMsgList(){
       $.ajax({
@@ -193,17 +213,9 @@
                       "<th>받은 날짜</th></tr></thead><tbody>";
                 $.each(result,function(index,msg){
                   // console.log(msg);
-                  var time = new Date(msg.messageDate);
-                  var year = time.getFullYear();
-                  var month = time.getMonth() + 1;
-                  var day = time.getDate();
-                  if(month < 10){
-                    month = "0" + month;
-                  }
-                  if(day < 10){
-                    day = "0" + day;
-                  }
-                  var title;
+
+                  var title;                  
+                  let dateformat = dateFormatter(msg.messageDate);
 
                   if((msg.messageTitle).length > 28){
                     console.log("제목이길다")
@@ -213,7 +225,7 @@
                   }
                   opr += "<tr><td>"+msg.smemberId+
                   "</td><td style='text-align:left'>"+"<a class='hjtitle' href='message/read/" + msg.messageIdx + "'>" +title+ "</a>" +
-                  "</td><td>"+ year + "." + month + "." + day +
+                  "</td><td>"+ dateformat +
                   "</td></tr>";
                  
                 });
@@ -261,17 +273,7 @@
                       "<th>보낸 날짜</th></tr></thead><tbody>";
                 $.each(result,function(index,msg){
                   // console.log(msg);
-                  var time = new Date(msg.messageDate);
-                  var year = time.getFullYear();
-                  var month = time.getMonth() + 1;
-                  var day = time.getDate();
-                  if(month < 10){
-                    month = "0" + month;
-                  }
-                  if(day < 10){
-                    day = "0" + day;
-                  }
-
+                  let dateformat = dateFormatter(msg.messageDate);
                   var title;
 
                   if((msg.messageTitle).length > 28){
@@ -283,7 +285,7 @@
 
                   opr += "<tr><td>"+msg.rmemberId+
                   "</td><td style='text-align:left'>"+"<a class='hjtitle' href='message/read/" + msg.messageIdx + "'>" +title+ "</a>" +
-                  "</td><td>"+ year + "." + month + "." + day +
+                  "</td><td>"+ dateformat +
                   "</td></tr>";
                   
                 });

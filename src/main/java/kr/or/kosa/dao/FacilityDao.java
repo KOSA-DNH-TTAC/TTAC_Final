@@ -5,6 +5,7 @@ import java.util.List;
 import org.apache.ibatis.annotations.Param;
 
 import kr.or.kosa.dto.Facility;
+import kr.or.kosa.dto.Report;
 
 public interface FacilityDao {
 	
@@ -22,10 +23,10 @@ public interface FacilityDao {
 	
 	//특정 시설물 조회
 	public Facility selectReportItem(String universityCode, String facilityname);
-
-//	//점호데이터 넣기
-//	public int eveningCallInsert(String memberId, String universitycode);
-//	
-//	//점호 데이터 중복 체킹
-//	public RollCall eveningCallCompare(String memberId, String universitycode);
+	
+	//신고 리스트 조회
+	public List<Report> selectReport(String domitoryname);
+	
+	//층별 신고 리스트 조회
+	public List<Report> search(String domitoryname, String domitoryfloor);
 }

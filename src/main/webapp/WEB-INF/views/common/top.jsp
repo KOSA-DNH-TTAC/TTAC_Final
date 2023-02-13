@@ -28,7 +28,9 @@
           <li><a href="portfolio.html">Portfolio</a></li>
           <li><a href="team.html">Team</a></li>
           <li><a href="pricing.html">Pricing</a></li> -->
-          <li><a href="/board/noticeList">Community</a></li>
+          <li><a href="/board/noticeList">커뮤니티</a></li>
+          <li><a href="/facility">시설물 신고</a></li>
+          <li><a href="/memberCalendar">연간일정</a></li>
           <li class="dropdown"><a><span>마이페이지</span> <i class="bi bi-chevron-down"></i></a>
             <ul>
               <li><a href="/mypage">내 정보</a></li>

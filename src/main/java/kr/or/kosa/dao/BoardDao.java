@@ -54,7 +54,10 @@ public interface BoardDao {
 	public RollCall eveningCallCompare(String memberId, String universitycode, String date);
 	
 	//건물(동) 리스트 가져오기
-	public List<Domitory> selectDomitory();
+	public List<Domitory> selectDomitory(String universityCode, String domitoryname);
+	
+	//전체 건물(동) 리스트 가져오기
+	public List<Domitory> selectAllDomitory();
 	
 	//최근file 올린 idx 가져오기
 	public int recentFileIdx();

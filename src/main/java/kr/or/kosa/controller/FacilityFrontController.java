@@ -29,14 +29,18 @@ public class FacilityFrontController {
 		@GetMapping("/facility")
 		public ModelAndView facility() {
 			ModelAndView mv = new ModelAndView();
+			User user = (User) SecurityContextHolder.getContext().getAuthentication().getPrincipal();
+			String domitoryname = user.getDomitoryName(); //회원의 기숙사 명
+			String unicode = user.getUniversityCode(); //회원의 대학코드
 			//시설물 정보 가져오기
 			List<Facility> faclist = new ArrayList<Facility>();
 			faclist = facilityService.selectItem();
 			System.out.println("faclist : "+faclist);
 			//건물 정보 가져오기
 			List<Domitory> dolist = new ArrayList<Domitory>();
-			dolist = facilityService.selectDomitory();
+			dolist = facilityService.selectDomitory(unicode, domitoryname);
 			System.out.println("dolist : "+dolist);
+			
 			
 			mv.setViewName("member/facilityReport");
 			mv.addObject("faclist", faclist);	

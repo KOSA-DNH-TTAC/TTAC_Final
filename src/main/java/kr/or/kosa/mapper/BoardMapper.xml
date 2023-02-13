@@ -93,12 +93,11 @@ PUBLIC "-//mybatis.org//DTD Mapper 3.0//EN"
 		ORDER BY replydate ASC
 	</select>
 
-	<!-- 글 작성 (파일첨부 x) -->
-	<insert id="boardInsert" parameterType="kr.or.kosa.dto.Post">
-		INSERT INTO POST
-		(BOARDIDX,BOARDNAME,MEMBERID,UNIVERSITYCODE,TITLE,CONTENT,WRITEDATE)
-		VALUES(#{boardIdx},#{boardName},#{memberId},#{universityCode},#{title},#{content},NOW())
-	</insert>
+<!-- 글 작성 (파일첨부 x) -->
+<insert id="boardInsert" parameterType="kr.or.kosa.dto.Post">
+INSERT INTO POST (BOARDIDX,BOARDNAME,MEMBERID,UNIVERSITYCODE,TITLE,CONTENT,WRITEDATE)
+VALUES(#{boardIdx},#{boardName},#{memberId},#{universityCode},#{title},#{content},NOW())
+</insert>
 
 	<!-- 파일 업로드 -->
 	<insert id="fileInsert" parameterType="kr.or.kosa.dto.File">

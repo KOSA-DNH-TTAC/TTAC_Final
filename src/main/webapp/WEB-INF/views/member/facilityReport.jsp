@@ -80,6 +80,34 @@
   </style>
 </head>
 <script>
+//화면 로딩시 신고 리스트 출력
+$(document).ready(function(){
+	var tabledata = "";
+	$.ajax({
+		type : "POST",
+		url : "/facility/print",
+		/* contentType: "application/x-www-form-urlencoded; charset=UTF-8", */ 
+		success : function(data) {
+			console.log("data : "+data);
+			 $.each(data, function(index) {
+	                tabledata +=
+	                	'<tr>'+
+			              '<td>'+data[index].domitoryName+'</td>'+
+			              '<td>'+data[index].domitoryFloor+'</td>'+
+			              '<td>'+data[index].facilityName+'</td>'+
+			              '<td>'+data[index].facilityReport+'</td>'+
+			            '</tr>'
+	                    })
+			$('#table').empty();
+			$('#table').append(tabledata);
+		},
+		error : function(data) {
+			alert(data+": 로드 실패");
+		}
+	});
+});
+
+//신고 접수
 function report(){
 	/* 셀렉트 옵션 값 가져오기 */
 	var select1 = $('#select1').val();
@@ -89,6 +117,7 @@ function report(){
 	console.log("formdata : "+formdata[0]);
 	console.log("formdata : "+formdata[1]);
 	console.log("formdata : "+formdata[2]);
+	var tabledata = "";
 	
 	$.ajax({
 		type : "POST",
@@ -97,11 +126,55 @@ function report(){
 			"formdata" : formdata,
 		}, 
 		success : function(data) {
-			alert(data);
-
+			alert("시설물 신고 데이터 입력 성공");
+			$('#reportreson').val('');
+			$('#select1').val('기숙사 층');
+			$('#select2').val('시설물');
+			 $.each(data, function(index) {
+	                tabledata +=
+	                	'<tr>'+
+			              '<td>'+data[index].domitoryName+'</td>'+
+			              '<td>'+data[index].domitoryFloor+'</td>'+
+			              '<td>'+data[index].facilityName+'</td>'+
+			              '<td>'+data[index].facilityReport+'</td>'+
+			            '</tr>'
+	                    })
+			$('#table').empty();
+			$('#table').append(tabledata);
 		},
 		error : function(data) {
-			alert(data+": 에러, 또는 점호 가능한 지역이 아닙니다.");
+			alert("시설물 신고 데이터 입력 실패");
+		}
+	});
+}
+
+//층별로 정렬하기
+function search(){
+	/* 선택한 층 값 가져오기 */
+	var searchData = $('#search').val();
+	var tabledata = "";
+	
+	$.ajax({
+		type : "POST",
+		url : "/facility/search",
+		data : {
+			"searchData" : searchData,
+		}, 
+		success : function(data) {
+			 $.each(data, function(index) {
+	                tabledata +=
+	                	'<tr>'+
+			              '<td>'+data[index].domitoryName+'</td>'+
+			              '<td>'+data[index].domitoryFloor+'</td>'+
+			              '<td>'+data[index].facilityName+'</td>'+
+			              '<td>'+data[index].facilityReport+'</td>'+
+			            '</tr>'
+	                    })
+			$('#table').empty();
+			$('#table').append(tabledata);
+		},
+		error : function(data) {
+			alert("시설물 신고 데이터 불러오기 실패");
 		}
 	});
 }
@@ -129,19 +202,18 @@ function report(){
     
     
   	<div style="display: flex; flex-direction: row; justify-content: center; align-items: center;">
- <div id="box" style="width: 275px; height: 553.44px; left: 61.27px; background: #FFFFFF; margin-right:30px; padding-top:50px;">
-  	<div id="select" style="display:flex; flex-direction:column; justify-content:center; width:100%; margin:0">
-<%-- 		<select id="select1" class="form-select3" aria-label="Default select example">
-		  <option selected>기숙사 건물(동)</option>
-		  <c:forEach items="${dolist}" var="dolist">
-		  	<option value="${dolist.domitoryName}">${dolist.domitoryName}</option>
-		  </c:forEach>
-		</select> --%>
+ <div id="box" style="width: 275px; height: 553.44px; left: 61.27px; background: #FFFFFF; margin-right:30px; padding-top:40px;">
+  	<div id="select" style="display:flex; flex-direction:column; justify-content:center; width:100%; margin:0; margin-bottom: 15px;">
 		<select id="select1" class="form-select3" aria-label="Default select example">
 		  <option selected>기숙사 층</option>
-		  <c:forEach items="${dolist}" var="dolist">
-		  	<option value="${dolist.domitoryFloor}">${dolist.domitoryFloor}</option>
-		  </c:forEach>
+		  <!-- 건물의 층수 1층부터 뽑아내기 -->
+		   <c:forEach items="${dolist}" var="dolist">
+		   	<c:if test="${dolist.domitoryFloor > 1}">
+			        <c:forEach begin="1" end="${dolist.domitoryFloor}" step="1" var="i">
+						<option>${i}</option>
+					</c:forEach>
+			</c:if>
+			</c:forEach>
 		</select>
 		<select id="select2" class="form-select3" aria-label="Default select example">
 		  <option selected>시설물</option>
@@ -150,7 +222,7 @@ function report(){
 		  </c:forEach>
 		</select>
   	</div>
-  	<div id="reason">
+  	<div id="reason" style="margin-bottom: 20px;">
   		<div class="form-floating">
 		  <textarea id="reportreson" class="form-control" placeholder="신고 상세 설명을 적어주세요." id="floatingTextarea2" style="height:200px;"></textarea>
 		  <label for="floatingTextarea2">신고 상세 설명</label>
@@ -166,78 +238,34 @@ function report(){
   	
   	<div id="box2" style="width: 835px; height: 553.44px; background: #FFFFFF; margin-left:30px;">
   	<div id="select" style="display:flex; flex-direction:row; width:100%;">
-		<select class="form-select2" aria-label="Default select example">
-		  <option selected>기숙사 건물(동)</option>
-		  <option value="1">명륜학사 A동</option>
-		  <option value="2">장기외박</option>
+		<select id="search" class="form-select2" aria-label="Default select example">
+		 <option selected>층별보기</option>
+		 <option>전체보기</option>
+		 <!-- 건물의 층수 1층부터 뽑아내기 -->
+		   <c:forEach items="${dolist}" var="dolist">
+		   	<c:if test="${dolist.domitoryFloor > 1}">
+			        <c:forEach begin="1" end="${dolist.domitoryFloor}" step="1" var="i">
+						<option>${i}</option>
+					</c:forEach>
+			</c:if>
+			</c:forEach>
 		</select>
-		<select class="form-select2" aria-label="Default select example">
-		  <option selected>기숙사 층</option>
-		  <option value="1">명륜학사 A동</option>
-		  <option value="2">장기외박</option>
-		</select>
-		<select class="form-select2" aria-label="Default select example">
-		  <option selected>시설물</option>
-		  <option value="1">명륜학사 A동</option>
-		  <option value="2">장기외박</option>
-		</select>
+		<button class="form-select2" style="margin-left:30px; background-color:#E96B56; color:white;" onclick="search()">보기</button>
   	</div>
   	<div id="reason1" style="border:none;">
   	<h3 style="margin-left: 10px; color:#4B4B4B;"><b>시설물 현황</b></h3>
   		<table class="table" id='nightoverTable'>
             <thead>
             <tr>
-              <th>기숙사 건물(동)</th>
-              <th>기숙사 층</th>
-              <th>시설물</th>
-              <th>신고 상세</th>
+              <th style="color:#e96b56">기숙사 건물(동)</th>
+              <th style="color:#e96b56">기숙사 층</th>
+              <th style="color:#e96b56">시설물</th>
+              <th style="color:#e96b56">신고 상세</th>
             </tr>
           </thead>
-          <tbody>
-            <tr>
-              <td>명륜학사 A동</td>
-              <td>7층</td>
-              <td>세탁기</td>
-              <td>세탁기가 작동하지 않습니다.</td>
-            </tr>
-            <tr>
-              <td>명륜학사 B동</td>
-              <td>6층</td>
-              <td>변기</td>
-              <td>변기가 내려가지 않습니다.</td>
-            </tr>
-            <tr>
-              <td>명륜학사 B동</td>
-              <td>3층</td>
-              <td>정수기</td>
-              <td>정수기가 온수가 나오지 않습니다.</td>
-            </tr>   
-          	<tr>
-              <td>명륜학사 A동</td>
-              <td>2층</td>
-              <td>세면대</td>
-              <td>세면대 물세면대 물이 나오지.</td>
-            </tr>
-          	<tr>
-	          <td>명륜학사 B동</td>
-              <td>4층</td>
-              <td>거울</td>
-              <td>화장실 거화장실 거울이니깨져있습니다.<td>
-	        </tr>
-	  
-	        <tr>
-              <td>명륜학사 A동</td>
-              <td>2층</td>
-              <td>세면대</td>
-              <td>세면대 물이 나오지 않습니다.</td>
-            </tr>
-            <tr>
-	          <td>명륜학사 B동</td>
-              <td>4층</td>
-              <td>거울</td>
-              <td>화장실 거울이 깨져있습니다.</td>
-	        </tr>       
-	        </tbody>
+          <tbody id="table">
+               
+	      </tbody>
         </table>
    
         </div>
