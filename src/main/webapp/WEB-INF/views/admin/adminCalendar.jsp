@@ -122,18 +122,7 @@ function insert(){
 			$('#title').val('');
 			$('#content').val('');
 			$('#date').val('연도-월-일');
-			 $.each(data, function(index, schedule) {
-	                tabledata +=
-	                	'<tr>'+
-						'<tdstyle="text-align:center;">'+data[index].scheduleDate+'</td>'+
-						'<td style="text-align:center;">'+data[index].scheduleTitle+'</td>'+
-						'<td style="text-align:center;">'+data[index].scheduleContent+'</td>'+
-						'<td style="text-align:center;"><button onclick="confirm(this)">삭제</button></td>'+
-						'<input type="hidden" value="' + schedule.scheduleIdx + '" >'+
-					'</tr>'
-	                    })
-			$('#table').empty();
-			$('#table').append(tabledata);
+			load();
 		},
 		error : function(data) {
 			alert("일정 등록 실패");
@@ -174,7 +163,7 @@ function load(){
 		success : function(data) {
 			 $.each(data, function(index,schedule) {
 	                tabledata +=
-	                	'<tr class="bgc">'+
+	                	'<tr>'+
 							'<td style="text-align:center;">'+data[index].scheduleDate+'</td>'+
 							'<td style="text-align:center;">'+data[index].scheduleTitle+'</td>'+
 							'<td style="text-align:center;">'+data[index].scheduleContent+'</td>'+

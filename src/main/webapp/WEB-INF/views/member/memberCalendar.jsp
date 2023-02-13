@@ -532,7 +532,7 @@ function monthPrint(){
 		success : function(data) {
 			  $.each(data, function(index) {
 	                tabledata +=
-	                	'<tr>'+
+	                	'<tr style="background-color:#EBF3F9; color:black;">'+
 					        '<td  style="text-align: center;" data-th="Supplier Code">'+
 					          data[index].scheduleDate+
 					        '</td>'+
@@ -621,7 +621,7 @@ function monthPrint(){
 //서브 left_menu
 $(document).ready(function(){		
 	//페이지 로딩시 일정 리스트 로드
-	load();
+	//load();
 	monthPrint();
 });
 
