@@ -93,11 +93,12 @@ PUBLIC "-//mybatis.org//DTD Mapper 3.0//EN"
 		ORDER BY replydate ASC
 	</select>
 
-<!-- 글 작성 (파일첨부 x) -->
-<insert id="boardInsert" parameterType="kr.or.kosa.dto.Post">
-INSERT INTO POST (BOARDIDX,BOARDNAME,MEMBERID,UNIVERSITYCODE,TITLE,CONTENT,WRITEDATE)
-VALUES(#{boardIdx},#{boardName},#{memberId},#{universityCode},#{title},#{content},NOW())
-</insert>
+	<!-- 글 작성 (파일첨부 x) -->
+	<insert id="boardInsert" parameterType="kr.or.kosa.dto.Post">
+		INSERT INTO POST
+		(BOARDIDX,BOARDNAME,MEMBERID,UNIVERSITYCODE,TITLE,CONTENT,WRITEDATE)
+		VALUES(#{boardIdx},#{boardName},#{memberId},#{universityCode},#{title},#{content},NOW())
+	</insert>
 
 	<!-- 파일 업로드 -->
 	<insert id="fileInsert" parameterType="kr.or.kosa.dto.File">
@@ -117,7 +118,8 @@ VALUES(#{boardIdx},#{boardName},#{memberId},#{universityCode},#{title},#{content
 
 	<select id="fileContent" parameterType="String"
 		resultType="kr.or.kosa.dto.File">
-		SELECT FILENUM, IDX, FILENAME, FILESIZE FROM FILE WHERE IDX
+		SELECT FILENUM, IDX, FILENAME, FILEREALNAME, FILESIZE FROM
+		FILE WHERE IDX
 		= #{idx}
 	</select>
 
@@ -132,29 +134,35 @@ VALUES(#{boardIdx},#{boardName},#{memberId},#{universityCode},#{title},#{content
 
 	<!-- 게시글 추천 기능 -->
 	<!-- 추천 여부 검사 -->
-	<update id="postLike">
-		<selectKey resultType="int" keyProperty="is_recommended"
-			order="BEFORE">
-			SELECT IFNULL(COUNT(*), 0)
-			FROM POSTLIKE
-			WHERE IDX =	#{param1} AND MEMBERID = #{param2}
-		</selectKey>
-		<choose>
-			<when test="is_recommended == 1">
-				DELETE FROM POSTLIKE 
-				WHERE IDX = #{param1} AND memberid = #{param2}
-			</when>
-			<otherwise>
-				INSERT INTO recommendation (idx, memberid) VALUES (#{param1}, #{param2})
-			</otherwise>
-		</choose>
+	<select id="likeCheck" resultType="int" parameterType="map">
+		SELECT COUNT(*)
+		FROM POSTLIKE
+		WHERE IDX = #{idx} AND MEMBERID = #{memberid}
+	</select>
+
+	<update id="deletePostLike">
+		DELETE FROM POSTLIKE
+		WHERE IDX = #{idx} AND MEMBERID = #{memberid}
+	</update>
+
+	<update id="updateDislike">
+		UPDATE POST SET LIKENUM = LIKENUM-1 WHERE IDX = #{idx}
+	</update>
+
+	<insert id="insertPostLike">
+		INSERT INTO POSTLIKE (IDX, MEMBERID) VALUES (#{idx}, #{memberid})
+	</insert>
+
+	<update id="updateLike">
+		UPDATE POST SET LIKENUM = LIKENUM+1 WHERE IDX = #{idx}
 	</update>
 
 	<!-- 추천 개수 -->
 	<select id="likeCount" resultType="int">
-		SELECT COUNT(*) FROM POSTLIKE 
-		WHERE idx = #{param1}
+		SELECT likenum FROM POST WHERE
+		idx=#{param1};
 	</select>
+
 
 
 
