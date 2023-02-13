@@ -37,7 +37,13 @@
 
 		<!-- Jquery -->
 		<script src="http://code.jquery.com/jquery-latest.min.js"></script>
-
+<style>
+	tr:hover{
+		background-color:#f5f5f5;
+		color: #e96b56;
+		transition: 0.3s;
+	}
+</style>
 <body class="">
 <div class="wrap">
 			
@@ -386,6 +392,10 @@ $(document).ready(function(){
 		</script>
  litebox -->
 <script>
+	function test(){
+		console.log("hi?");
+		console.log(this);
+	}
 
 	$(document).ready(function(){
 		$.ajax({
@@ -406,13 +416,13 @@ $(document).ready(function(){
 
 				$.each(result.list, function(index, member){
 
-					contents += `<tr>
+					contents += `<input type="button"><tr class="memberrow" onclick="test()">
 						<td><b>` + (++index) +`</b></td>
 						<td class="tal">` + member.memberId + `</td>
 						<td>` + member.name + `</td>	
 						<td>` + member.phone + `</td>
 						<td>` + member.demerit + `</td>					
-					</tr>`
+					</tr></input>`
 
 				})
 				contents += `</tbody></table>`;
