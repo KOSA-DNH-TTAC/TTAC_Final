@@ -119,7 +119,7 @@ $(document).ready(function(){
 	$.ajax({
 		type : "POST",
 		url : "/facility/print",
-		/* contentType: "application/x-www-form-urlencoded; charset=UTF-8", */ 
+		contentType: "application/json; charset=UTF-8",
 		success : function(data) {
 			console.log("data : "+data);
 			 $.each(data, function(index) {
@@ -142,30 +142,103 @@ $(document).ready(function(){
 	});
 });
 
-//층별로 정렬하기
+//날짜별로 정렬하기
 function search(){
 	/* 선택한 날짜 값 가져오기 */
-	let start = $('#start').val();
-	let end = $('#end').val();
-	var data = [start,end]
+	var start = $('#start').val();
+	var end = $('#end').val();
+	var data = [start,end];
 	var tabledata = "";
-	
+	console.log(start+"/"+end);
 	$.ajax({
 		type : "POST",
 		url : "/adminAnalyze/searchDate",
-		contentType: "application/x-www-form-urlencoded; charset=UTF-8",
+		//contentType: "application/x-www-form-urlencoded; charset=UTF-8",
 		data : {
 			"data" : data,
 		}, 
 		success : function(data) {
 			 $.each(data, function(index) {
 	                tabledata +=
-	                	'<tr>'+
-			              '<td>'+data[index].domitoryName+'</td>'+
-			              '<td>'+data[index].domitoryFloor+'</td>'+
-			              '<td>'+data[index].facilityName+'</td>'+
-			              '<td>'+data[index].facilityReport+'</td>'+
-			            '</tr>'
+	                	'<tr class="tar">'+
+		    			'<td class="tac bgc">'+data[index].facilityDate+'</td>'+
+		    			'<td style="text-align: center;">'+data[index].domitoryName+'</td>'+
+		    			'<td style="text-align: center;">'+data[index].domitoryFloor+'</td>'+
+		    			'<td style="text-align: center;">'+data[index].facilityName+'</td>'+
+		    			'<td style="text-align: center;">'+data[index].name+'</td>'+
+		    			'<td style="text-align: center;">'+data[index].facilityReport+' </td>'+
+		    		'</tr>'
+	                    })
+			$('#table').empty();
+			$('#table').append(tabledata);
+		},
+		error : function(data) {
+			alert("시설물 신고 데이터 불러오기 실패");
+		}
+	});
+}
+
+//날짜별로 정렬하기
+function todaysearch(){
+	/* 선택한 날짜 값 가져오기 */
+	var data = ["today","today"];
+	var tabledata = "";
+	console.log(today);
+	$.ajax({
+		type : "POST",
+		url : "/adminAnalyze/searchDate",
+		//contentType: "application/x-www-form-urlencoded; charset=UTF-8",
+		data : {
+			"data" : data,
+		}, 
+		success : function(data) {
+			 $.each(data, function(index) {
+				 
+				 alert(data[0].facilityDate);
+	                tabledata +=
+	                	'<tr class="tar">'+
+		    			'<td style="text-align: center;">'+data[index].facilityDate+'</td>'+ 
+		    			'<td style="text-align: center;">'+data[index].domitoryName+'</td>'+
+		    			'<td style="text-align: center;">'+data[index].domitoryFloor+'</td>'+
+		    			'<td style="text-align: center;">'+data[index].facilityName+'</td>'+
+		    			'<td style="text-align: center;">'+data[index].name+'</td>'+
+		    			'<td style="text-align: center;">'+data[index].facilityReport+'</td>'+
+		    		'</tr>'
+	                    })
+			$('#table').empty();
+			$('#table').append(tabledata);
+		},
+		error : function(data) {
+			alert("시설물 신고 데이터 불러오기 실패");
+		}
+	});
+}
+//이름으로 정렬하기
+function todaysearch(){
+	/* 선택한 날짜 값 가져오기 */
+	var data = ["today","today"];
+	var tabledata = "";
+	console.log(today);
+	$.ajax({
+		type : "POST",
+		url : "/adminAnalyze/searchDate",
+		//contentType: "application/x-www-form-urlencoded; charset=UTF-8",
+		data : {
+			"data" : data,
+		}, 
+		success : function(data) {
+			 $.each(data, function(index) {
+				 
+				 alert(data[0].facilityDate);
+	                tabledata +=
+	                	'<tr class="tar">'+
+		    			'<td style="text-align: center;">'+data[index].facilityDate+'</td>'+ 
+		    			'<td style="text-align: center;">'+data[index].domitoryName+'</td>'+
+		    			'<td style="text-align: center;">'+data[index].domitoryFloor+'</td>'+
+		    			'<td style="text-align: center;">'+data[index].facilityName+'</td>'+
+		    			'<td style="text-align: center;">'+data[index].name+'</td>'+
+		    			'<td style="text-align: center;">'+data[index].facilityReport+'</td>'+
+		    		'</tr>'
 	                    })
 			$('#table').empty();
 			$('#table').append(tabledata);
@@ -202,17 +275,7 @@ function search(){
 		<dd><span> 변기</span></dd>
 		<dd class="txt">지난 달 15건</dd>
 	</dl>	
-	
-	<!-- <dl>
-		<dt>이번 주 결제금액</dt>
-		<dd>124,000 <span>원</span></dd>
-		<dd class="txt">지난 주 110,000원</dd>
-	</dl>		
-	<dl>
-		<dt>이번 주 적립 마일리지</dt>
-		<dd>114,000 <span>원</span></dd>
-		<dd class="txt">지난 주 100,000원</dd>
-	</dl>	 -->
+
 </div>
 
 <div class="bmb">
@@ -243,15 +306,15 @@ function search(){
 				<input class="form-select1" type="date" id="start" name="trip-start" value="연도-월-일">
 				 - <input class="form-select1" type="date" id="end" name="trip-start" value="연도-월-일">&nbsp;&nbsp;
 				<ul class="dpi_li dpi">
-					<li><a href="#" class="btn_sumit">이번 달</a></li>
-					<li><a href="#" class="btn_sumit">이번 주</a></li>
+
+					<li><button id="today" onclick="todaysearch()" class="btn_sumit">오늘 날짜</button></li>
 				</ul>
 			</td>				
 		</tr>
 	</table>
 	<div class="ok_btn">
 		<ul>
-			<li><button type="button" class="btn_sumit2" >검색</button></li>
+			<li><button type="button" class="btn_sumit2" onclick="search()">검색</button></li>
 		</ul>
 	</div>	
 </div>
@@ -268,7 +331,7 @@ function search(){
 		// 포맷팅 적용
 		String date = formatter.format(now);
 		%>			
-			<p class="txtin wtTxt fsbb">[<%=date%>] 신고 건</p>
+			<p id="whichdate" class="txtin wtTxt fsbb">오늘 날짜 [<%=date%>]</p>
 		</div>
 		
 	</div>
@@ -302,41 +365,7 @@ function search(){
 		</tr>
 	</thead>
 	<tbody id="table">
-		<!-- <tr class="tar">
-			<td class="tac bgc">23-01-10(수) 23:00</td>
-			<td>B</td>
-			<td>7</td>
-			<td>변기</td>
-			<td class="tal">노다영</td>
-			<td class="tal">[50704444] 오휘 프라임 어드밴서 앰플 세럼 </td>
-		</tr>
-		<tr class="tar">
-			<td class="tac bgc">19-09-16(수) 26:00</td>
-			<td>B</td>
-			<td>5</td>
-			<td>세면대</td>
-			<td class="tal">도현정</td>
-			<td class="tal">[50704444] 오휘 프라임 어드밴서 앰플 세럼 </td>
-		</tr>
-		<tr class="tar">
-			<td class="tac bgc">19-09-16(수) 26:00</td>
-			<td>A</td>
-			<td>3</td>
-			<td>세탁기</td>
-			<td class="tal">박예빈</td>
-			<td class="tal">[50704444] 오휘 프라임 어드밴서 앰플 세럼 </td>
-		</tr> -->
 	</tbody>
-	<!-- <tfoot class="tac">
-		<tr class="bgc tar fwb">
-			<td class="tac">합계</td>
-			<td>1,000,000</td>
-			<td>100,000</td>
-			<td>300,000</td>
-			<td></td>
-			<td class="tac redTxt fsb" colspan="2">현재 마일리지: 0원</td>
-		</tr>
-	</tfoot> -->
 </table>
 
 

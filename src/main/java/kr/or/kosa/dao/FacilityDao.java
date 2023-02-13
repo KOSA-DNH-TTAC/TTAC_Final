@@ -29,4 +29,11 @@ public interface FacilityDao {
 	
 	//층별 신고 리스트 조회
 	public List<Report> search(String domitoryname, String domitoryfloor);
+	
+	//날짜별 신고 리스트 조회
+	public List<Report> searchDate(String domitoryname, String startdate, String enddate);
+	
+	//날짜별 신고 리스트 조회
+	public List<Report> likeSearch(String domitoryname, String facilityname);
+
 }
