@@ -96,16 +96,16 @@
                      ${boardContent.content}
                     </p>
                     <p>
-                    	<c:if test="${fileContent != null}">
+                    	<c:forEach var="fileContent" items="${fileContent }">
 	                    <article class="entry" style="padding-top: 10px">
 	                    	<li class="d-flex align-items-center">
-		                    	<i class="bi bi-archive" ></i> &nbsp<a href="/download/${boardContent.idx}">${fileContent.fileRealName}</a>
+		                    	<i class="bi bi-archive" ></i> &nbsp<a href="/download/${boardContent.idx}/${fileContent.fileRealName}">${fileContent.fileRealName}</a>
 		                   	</li>
 		                   	<div class="col-md-5">
-		                   		<img class="aws-img" src="${fileLink}" alt="">
+		                   		<img class="aws-img" src="${fileContent.fileUrl}" onerror="this.style.display='none'">
 		                   	</div>
 	                   	</article>
-	                   	</c:if>
+	                   	</c:forEach>
                     </p>
                     </div>
                     </article>

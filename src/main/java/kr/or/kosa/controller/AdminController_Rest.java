@@ -1,34 +1,36 @@
 package kr.or.kosa.controller;
 
-import static org.springframework.test.web.servlet.result.MockMvcResultMatchers.forwardedUrl;
-
 import java.text.SimpleDateFormat;
 import java.util.ArrayList;
 import java.util.Date;
+import java.util.HashMap;
 import java.util.Iterator;
 import java.util.List;
+import java.util.Map;
 
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.http.HttpStatus;
 import org.springframework.http.ResponseEntity;
-import org.springframework.jdbc.support.incrementer.AbstractColumnMaxValueIncrementer;
 import org.springframework.security.core.context.SecurityContextHolder;
+import org.springframework.web.bind.annotation.GetMapping;
 import org.springframework.web.bind.annotation.RequestMapping;
 import org.springframework.web.bind.annotation.RequestParam;
 import org.springframework.web.bind.annotation.RestController;
 
 import kr.or.kosa.dto.Domitory;
 import kr.or.kosa.dto.Report;
+import kr.or.kosa.dto.Schedule;
 import kr.or.kosa.security.User;
 import kr.or.kosa.service.BoardService;
 import kr.or.kosa.service.FacilityService;
+import kr.or.kosa.service.calendarService;
 
 @RestController
-@RequestMapping("/adminAnalyze")
 public class AdminController_Rest {
 
 	BoardService boardService;
 	FacilityService facilityService;
+	calendarService calendarService;
 
 	@Autowired
 	public void setBoardService(BoardService boardService) {
@@ -38,10 +40,14 @@ public class AdminController_Rest {
 	public void setFacilityService(FacilityService facilityService) {
 		this.facilityService = facilityService;
 	}
+	@Autowired
+	public void setcalendarService(calendarService calendarService) {
+		this.calendarService = calendarService;
+	}
 
 		 
 			//기숙사 건물  DB 인서트
-			@RequestMapping("/insertDomitory")
+			@RequestMapping("/adminAnalyze/insertDomitory")
 			public ResponseEntity<List<Domitory>> insertDomitory(@RequestParam(value = "domitory[]") String[] domitory) {
 				List<Domitory> domitorylist = new ArrayList<Domitory>();
 				 System.out.println("domitory : "+ domitory);
@@ -65,7 +71,7 @@ public class AdminController_Rest {
 			}
 			
 			//건물(동) DB 테이블만 출력
-			@RequestMapping("/domitoryPrint")
+			@RequestMapping("/adminAnalyze/domitoryPrint")
 			public ResponseEntity<List<Domitory>> domitoryPrint() {
 				System.out.println("나오나?");
 				List<Domitory> dolist = new ArrayList<Domitory>();
@@ -81,7 +87,7 @@ public class AdminController_Rest {
 			}
 			
 			//날짜별 검색 데이터 출력
-			@RequestMapping("/searchDate")
+			@RequestMapping("/adminAnalyze/searchDate")
 			public ResponseEntity<List<Report>> searchDate(@RequestParam(value = "data[]") String[] searchData) {
 				System.out.println("넘어온 searchData : "+searchData);
 				 User user = (User) SecurityContextHolder.getContext().getAuthentication().getPrincipal();
@@ -115,7 +121,7 @@ public class AdminController_Rest {
 			
 			
 			//층별 검색 데이터 출력
-			@RequestMapping("/likesearch")
+			@RequestMapping("/adminAnalyze/likesearch")
 			public ResponseEntity<List<Report>> likeSearch(@RequestParam(value = "data") String item) {
 				System.out.println("item : "+item);
 				 User user = (User) SecurityContextHolder.getContext().getAuthentication().getPrincipal();
@@ -138,7 +144,102 @@ public class AdminController_Rest {
 				}
 			}
 			
+			//연간일정  DB 인서트
+			@RequestMapping("/calendar/insert")
+			public ResponseEntity<List<Schedule>> insertcalendar(@RequestParam(value = "plan[]") String[] plan) {
+				 System.out.println("plan : "+ plan);
+				 User user = (User) SecurityContextHolder.getContext().getAuthentication().getPrincipal();
+				 String unicode = user.getUniversityCode();
+				 String domitoryname = user.getDomitoryName();
+				 System.out.println("unicode : "+unicode);
+				 String date = plan[0];
+				 String title = plan[1];
+				 String content = plan[2];
+				 				 
+				 //들어갔는지 row 수 반환
+				 List<Schedule> result = calendarService.insertcalendar(unicode, date, title, content, domitoryname);
+				 System.out.println("인서트 결과 추가된 ROW : "+result);
+				try {
+					return new ResponseEntity<List<Schedule>>(result, HttpStatus.OK);
+				} catch (Exception e) {
+					return new ResponseEntity<List<Schedule>>(result, HttpStatus.BAD_REQUEST);
+				}
+			}
 			
+			//일정 리스트만 출력
+			@RequestMapping("/calendar/print")
+			public ResponseEntity<List<Schedule>> calendarPrint() {
+				List<Schedule> list = new ArrayList<Schedule>();
+				 User user = (User) SecurityContextHolder.getContext().getAuthentication().getPrincipal();
+				 String unicode = user.getUniversityCode();
+				 String domitoryname = user.getDomitoryName();
+				 
+				try {
+					list = calendarService.selectCalendar(unicode, domitoryname);
+					System.out.println("list : "+list);
+					return new ResponseEntity<List<Schedule>>(list, HttpStatus.OK);
+				} catch (Exception e) {
+					return new ResponseEntity<List<Schedule>>(list, HttpStatus.BAD_REQUEST);
+				}
+			}
+			
+			//일정 삭제
+			@GetMapping("/calendar/update")
+			public ResponseEntity<Map<String, Object>> updateCalecdar(int idx) {
+//				int index = Integer.parseInt(idx);
+//				int result = service.confirm(index);
+//				System.out.println("썅!!");
+				int result = calendarService.updateCalecdar(idx);
+//				int result = 1;
+				Map<String, Object> map = new HashMap<String, Object>();
+				
+				if(result > 0) {
+					map.put("결과", "승인완료");
+					return new ResponseEntity<Map<String, Object>>(map, HttpStatus.OK);
+				}else {
+					map.put("결과", "문제발생");
+					return new ResponseEntity<Map<String, Object>>(map, HttpStatus.BAD_REQUEST);
+				}
+			}
+			
+			//일정 리스트만 출력
+			@RequestMapping("/calendar/monthPrint")
+			public ResponseEntity<List<Schedule>> monthPrint(@RequestParam HashMap<String,String> monthdata) {
+				Map<String, Object> map = new HashMap<String, Object>();
+				System.out.println(monthdata);
+		        String data = (String)monthdata.get("data");
+				System.out.println("data : "+data);
+				List<Schedule> list = new ArrayList<Schedule>();
+				 User user = (User) SecurityContextHolder.getContext().getAuthentication().getPrincipal();
+				 String unicode = user.getUniversityCode();
+				 String domitoryname = user.getDomitoryName();
+				 
+				 String Start = "";
+				 String End = "";
+				 
+				 //월별 날짜 계산 
+				 if(data.equals("2023-01") || data.equals("2023-03") || data.equals("2023-05")||data.equals("2023-07")||data.equals("2023-08")||data.equals("2023-10")||data.equals("2023-12")) {
+					  Start = data + "-01";
+					  End = data + "-31";
+					 System.out.println("Strat : "+ Start +"/"+"End : "+ End);
+				 } else if(data.equals("2023-01")||data.equals("2023-04")||data.equals("2023-06")||data.equals("2023-09")||data.equals("2023-11")) {
+					  Start = data + "-01";
+					  End = data + "-30";
+					 System.out.println("Strat : "+ Start +"/"+"End : "+ End);
+				 } else if(data.equals("2023-02")) {
+					  Start = data + "-01";
+					  End = data + "-28";
+					 System.out.println("Strat : "+ Start +"/"+"End : "+ End);
+				 }
+				 
+				try {
+					list = calendarService.monthPrint(unicode, domitoryname,Start, End);
+					System.out.println("list : "+list);
+					return new ResponseEntity<List<Schedule>>(list, HttpStatus.OK);
+				} catch (Exception e) {
+					return new ResponseEntity<List<Schedule>>(list, HttpStatus.BAD_REQUEST);
+				}
+			}
 			
 			
 			

@@ -178,7 +178,7 @@ function search(){
 	});
 }
 
-//날짜별로 정렬하기
+//오늘날짜 목록 가져오기
 function todaysearch(){
 	/* 선택한 날짜 값 가져오기 */
 	var data = ["today","today"];
