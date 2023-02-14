@@ -5,11 +5,18 @@ PUBLIC "-//mybatis.org//DTD Mapper 3.0//EN"
 
 <mapper namespace="kr.or.kosa.dao.ReplyDao">
 
-	<!-- 글 작성 (파일첨부 x) -->
+	<!-- 새 부모댓글 작성 -->
 	<insert id="newReply" parameterType="kr.or.kosa.dto.Reply">
 		INSERT INTO REPLY(IDX, MEMBERID, REPLYCONTENT, REPLYDATE)
 		VALUES(#{idx}, #{memberId}, #{replyContent}, NOW())
 	</insert>
+	
+	<!-- 새 답댓글 작성 -->
+	
+	<!-- 댓글 삭제 -->
+	<update id="deleteReply">
+		UPDATE REPLY SET STATUS='22' WHERE REPLYIDX=#{idx}
+	</update>
 
 
 </mapper>

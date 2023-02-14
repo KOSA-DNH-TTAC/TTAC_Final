@@ -35,4 +35,11 @@ public class ReplyService {
 	}
 	
 	//답댓글 작성
+	
+	//댓글 삭제
+	public int deleteReply(String idx) {
+		ReplyDao dao = sqlsession.getMapper(ReplyDao.class);
+		int result = dao.deleteReply(idx);
+		return result;
+	}
 }

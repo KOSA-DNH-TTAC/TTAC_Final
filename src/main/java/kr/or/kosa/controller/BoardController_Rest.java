@@ -12,6 +12,7 @@ import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.http.HttpStatus;
 import org.springframework.http.ResponseEntity;
 import org.springframework.security.core.context.SecurityContextHolder;
+import org.springframework.web.bind.annotation.DeleteMapping;
 import org.springframework.web.bind.annotation.GetMapping;
 import org.springframework.web.bind.annotation.PathVariable;
 import org.springframework.web.bind.annotation.PostMapping;
@@ -98,17 +99,14 @@ public class BoardController_Rest {
 	}
 	
 	
-	// 댓글 작성
+	// 새댓글 작성
 	@RequestMapping("/board/newreply")
 	public ResponseEntity<Map<String, Object>> newReply(@RequestBody HashMap<String,Object> data){
-		System.out.println("댓글작성탐?");
-		System.out.println(data);
-		Map<String, Object> map = new HashMap<String, Object>();
-		
+
+		Map<String, Object> map = new HashMap<String, Object>();		
         String postidx = (String)data.get("postidx");
         String reply = (String)data.get("reply");
-        System.out.println(postidx + " / " + reply);
-        
+
         int result = replyservice.newReply(postidx, reply);
         if(result > 0) {
         	map.put("성공", result);
@@ -120,7 +118,19 @@ public class BoardController_Rest {
 		
 	}
 	
-	
+	//댓글 삭제
+	@DeleteMapping("/board/reply/{replyidx}")
+	public  ResponseEntity<String> delreply(@PathVariable("replyidx") String replyidx) {
+		
+		int result = 0;
+		result = replyservice.deleteReply(replyidx);
+		if(result>0) {
+			return new ResponseEntity<>("success", HttpStatus.OK);
+		}else {
+			return new ResponseEntity<>("fail", HttpStatus.BAD_REQUEST);
+		}
+		
+	}
 
 	// 저녁점호 위치비교 + 중복체크 + 데이터 인서트
 	@RequestMapping(value = "/eveningCall", method = RequestMethod.POST, produces = "application/text; charset=utf8")

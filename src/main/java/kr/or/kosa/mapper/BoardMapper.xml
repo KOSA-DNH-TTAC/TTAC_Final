@@ -75,7 +75,7 @@ PUBLIC "-//mybatis.org//DTD Mapper 3.0//EN"
 	<select id="replyContent" parameterType="String"
 		resultType="kr.or.kosa.dto.Reply">
 		SELECT replyidx, parentreplyidx, idx, memberid,
-		replycontent, replydate FROM
+		replycontent, replydate, status FROM
 		REPLY
 		WHERE idx=#{idx} AND STATUS='21' AND
 		parentreplyidx is null

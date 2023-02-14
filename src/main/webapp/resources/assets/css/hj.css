@@ -12,3 +12,25 @@
     color:black;
     margin-top:10px;
 }
+
+.updateReply {
+    font-size: 12px;
+	color: #e96b56;
+	padding: 0;
+	list-style: none;
+	background-color: rgba(0, 0, 0, 0);
+	border: none;
+	display: inline-flex;
+	/* float: right; */
+}
+
+.deleteReply{
+    font-size: 12px;
+	color: #e96b56;
+	padding: 0;
+	list-style: none;
+	background-color: rgba(0, 0, 0, 0);
+	border: none;
+	display: inline-flex;
+	float: right;
+}
