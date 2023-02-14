@@ -8,7 +8,6 @@ import lombok.Data;
 public class DemeritHistory {
 	
 	private int demeritIdx;
-	private String universityCode;
 	private String memberId;
 	private int demerit;
 	private Date demeritDate;

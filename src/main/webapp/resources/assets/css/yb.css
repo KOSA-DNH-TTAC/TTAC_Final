@@ -134,8 +134,6 @@ div.wrap {
 	margin-bottom: 5px;
 }
 
-
-
 #sold {
 	display: inline-block flex;
 	float: left;
@@ -247,9 +245,30 @@ div.wrap {
 
 #demeritBtn {
 	background: #2a3954;
+	color: #ffffff;
+	padding: 0px 25px;
+	font-size: 14px;
+	border: 1px solid #2a3954;
+	height: 38px;
+}
+
+#excelCenter {
+	float: center;
+}
+
+#excelbutton {
+	float: right;
+	width: 100px;
+}
+
+.demerithistory {
+	border: 1px solid #2a3954;
+	margin: 2px;
+}
+
+.btn_submit3 {
+	background: #2a3954;
     color: #ffffff;
-    padding: 0px 25px;
-    font-size: 14px;
-    border: 1px solid #2a3954;
-    height: 38px;
+    border-color: #2a3954;
+    padding: 0 13px;
 }
