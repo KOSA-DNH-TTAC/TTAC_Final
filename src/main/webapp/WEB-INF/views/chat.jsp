@@ -9,6 +9,8 @@
 <meta charset="UTF-8">
 <script src="https://cdn.jsdelivr.net/npm/sockjs-client@1/dist/sockjs.min.js"></script>
  <script src="https://ajax.googleapis.com/ajax/libs/jquery/3.6.0/jquery.min.js"></script>  
+ <meta name="viewport" content="width=device-width, initial-scale=1">
+ <link href="https://cdn.jsdelivr.net/npm/bootstrap@5.2.3/dist/css/bootstrap.min.css" rel="stylesheet" integrity="sha384-rbsA2VBKQhggwzxH7pPCaAqO46MgnOM80zW1RWuH61DGLwZJEdK2Kadq2F9CUG65" crossorigin="anonymous">
 <title>Chatting</title>
 </head>
 <body>
@@ -32,20 +34,30 @@
 	<div class="col-6">
 	</div>
 </div>
+<script src="https://cdn.jsdelivr.net/npm/bootstrap@5.2.3/dist/js/bootstrap.bundle.min.js" integrity="sha384-kenU1KFdBIe4zVF0s0G1M5b4hcpxyD9F7jL+jjXkk+Q2h455rYXK/7HAuoJl+0I4" crossorigin="anonymous"></script>
 </body>
 <script type="text/javascript">
             $(document).ready(function(){
 
             const username = "${userid}";
 
+            //이건 연결 끊기....
             $("#disconn").on("click", (e) => {
                 disconnect();
             })
             
+            //전송 버튼
             $("#button-send").on("click", (e) => {
                 send();
             });
 
+            //엔터 쳐도 전송 버튼 누르게
+            $('#msg').keypress(function(event) {
+                if (event.keyCode === 13) {
+                    event.preventDefault();
+                    $('#button-send').click();
+                }
+            });
  		//const websocket = new WebSocket("ws://192.168.0.31:8090/chat");
 		//const websocket = new WebSocket("ws://3.35.70.249:8090/chat"); 톰캣 ??
 		const websocket = new WebSocket("ws://" + location.host + "/chat/websocket");
