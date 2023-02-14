@@ -114,7 +114,6 @@ public class BoardService {
 	public List<File> fileContent(String idx) {
 		BoardDao boardDao = sqlSession.getMapper(BoardDao.class);
 		List<File> fileContent = boardDao.fileContent(idx);
-		System.out.println("fileContent : "+fileContent);
 		return fileContent;
 	}
 	
@@ -309,6 +308,7 @@ public class BoardService {
 	}
 	
 	//공지사항 글쓰기
+	@Transactional(rollbackFor = Exception.class)
 	public int noticeListInsert(Post post, List<File> fileDTO, List<MultipartFile> files) throws IOException {
 		
 		int idx = 0;
@@ -319,7 +319,7 @@ public class BoardService {
 		
 		result = this.freeBoardWrite(post);
 		
-		if(!files.isEmpty()) {
+		if(files.size() < 0) {
 			AwsS3 awsS3 = AwsS3.getInstance();
 			idx = this.recentPostIdx();
 			

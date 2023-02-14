@@ -96,12 +96,10 @@ public class BoardController {
 		
 		//컨트롤러에서 받아온 파일 리스트
 		List<File> fileContent = boardService.fileContent(idx);
-		System.out.println("컨트롤러 fileContent : "+fileContent);
-
+		
 		if (boardName.equals("noticeList")) {
 			param = "공지사항";
 			path = "noticeContent";
-			System.out.println("공지돌고잇니?");
 		} else if (boardName.equals("opinionList")) {
 			param += "건의사항";
 			path = "opinionContent";
@@ -119,7 +117,7 @@ public class BoardController {
 		
 		model.addAttribute("boardContent", boardContent);
 		model.addAttribute("userId", user.getMemberId());
-
+		
 		String viewPage = "member/board/" + path;
 			
 		return viewPage;
@@ -316,16 +314,18 @@ public class BoardController {
 			postDTO.setContent(content);
 			
 			//파일 담아주기
-			for (MultipartFile multipartfile : files) {
-				File fileOne = new File();
-				
-				UUID uuid = UUID.randomUUID();
-				fileName = uuid.toString()+"_"+multipartfile.getOriginalFilename();
-				fileOne.setFileName(fileName);
-				fileOne.setFileRealName(multipartfile.getOriginalFilename());
-				fileOne.setFileSize(multipartfile.getSize());
-				
-				fileDTO.add(fileOne);
+			if(files.size() < 0) {
+				for (MultipartFile multipartfile : files) {
+					File fileOne = new File();
+					
+					UUID uuid = UUID.randomUUID();
+					fileName = uuid.toString()+"_"+multipartfile.getOriginalFilename();
+					fileOne.setFileName(fileName);
+					fileOne.setFileRealName(multipartfile.getOriginalFilename());
+					fileOne.setFileSize(multipartfile.getSize());
+					
+					fileDTO.add(fileOne);
+				}
 			}
 		
 			//서비스슝슝
