@@ -56,5 +56,16 @@ public class AdminMemberController_Rest {
 		List<Member> memberInfoById = adminService.memberInfo(memberId);
 		return new ResponseEntity<List<Member>>(memberInfoById, HttpStatus.OK);
 	}
+	
+	// 검색 조회
+	// "/admin/memberInfo/search/" + param + "/" + inputBoxValue,
+	@RequestMapping("/admin/memberInfo/search/{param}/{search}")
+	public ResponseEntity<List<Member>> searchMember(@PathVariable("param") String param,
+			@PathVariable("search") String search) {
+		System.out.println("뭐해.");
+		
+		List<Member> memberSearchInfo = adminService.searchMember(param, search);
+		return new ResponseEntity<List<Member>>(memberSearchInfo, HttpStatus.OK);
+	}
 
 }

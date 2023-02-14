@@ -4,14 +4,46 @@ PUBLIC "-//mybatis.org//DTD Mapper 3.0//EN"
 "http://mybatis.org/dtd/mybatis-3-mapper.dtd">
 
 <mapper namespace="kr.or.kosa.dao.AdminDao">
-	
+
 	<!-- 특정 회원 정보 조회 -->
-	<select id="getMemberInfo" parameterType="String" resultType="kr.or.kosa.dto.Member">
-	SELECT memberid, universitycode, NAME, major, email, gender, phone, parentsphone, domitoryname, room, memberpoint 
-	FROM MEMBER WHERE memberid=#{param1} AND universitycode=#{param2}
+	<select id="getMemberInfo" parameterType="String"
+		resultType="kr.or.kosa.dto.Member">
+		SELECT memberid, universitycode, NAME, major, email, gender, phone,
+		parentsphone, domitoryname, room, memberpoint
+		FROM MEMBER WHERE memberid=#{param1} AND universitycode=#{param2}
 	</select>
-	
-	
+
+	<!-- 기숙사생 검색 -->
+	<select id="searchMember" parameterType="hashmap"
+		resultType="kr.or.kosa.dto.Member">
+		SELECT m.memberid, m.universitycode, m.NAME, m.major, m.email,
+		m.gender, m.phone,
+		m.parentsphone, m.domitoryname, m.room, m.memberpoint, m.demerit, a.auth
+		FROM MEMBER m LEFT JOIN MEMBERAUTH a ON m.MEMBERID = a.MEMBERID
+		WHERE a.auth = 'ROLE_MEMBER' AND m.universitycode=#{param1} AND
+		<choose>
+			<when test="param2 == 'memberId'">m.memberId</when>
+			<when test="param2 == 'name'">m.name</when>
+			<when test="param2 == 'domitoryName'">m.domitoryName</when>
+			<when test="param2 == 'room'">m.room</when>
+		</choose>
+		LIKE CONCAT('%',#{param3},'%')
+	</select>
+
+
+	<!-- 기숙사생 벌점 -->
+	<insert id="insertDemerit">
+		INSERT INTO DEMERITHISTORY(memberid, demerit, demeritdate, demeritreason)
+		VALUES(#{memberid}, #{demerit}, NOW(), #{demeritreason});
+	</insert>
+
+	<update id="updateDemerit">
+		UPDATE MEMBER SET demerit = demerit + #{param1}
+		WHERE memberid = #{param2};
+	</update>
+
+
+
 </mapper>
 
 

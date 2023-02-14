@@ -124,12 +124,7 @@ $(document).ready(function(){
 		<h3 class="sub_h3">회원관리 <span>회원현황</span></h3>
 <div class="bmb">
 	<div class="bgtab">
-		<div class="w50 fl">
-			<h3 class="txtin">회원 조회</h3>	
-		</div>
-		<div class="w50 fl tar">
-			<a  class="btn_sumit2"">엑셀다운로드</a>
-		</div>
+	<h3 class="txtin" id="excelCenter">회원 조회 <button class="btn_sumit2" id="excelbutton">엑셀 다운로드</button></h3>
 	</div>
 	<table class="srch_table mb20">	
 		<colgroup>
@@ -141,36 +136,24 @@ $(document).ready(function(){
 		<tr>
 			<th>검색어</th>
 			<td colspan="3">
-				<div class="txtin">
-					<label class="mr10"><input type="radio" value=""> 전체</label>  
-					<label class="mr10"><input type="radio" value=""> 학번</label>  
-					<label class="mr10"><input type="radio" value=""> 이름</label>
-					<label class="mr10"><input type="radio" value=""> 학과</label>
+				<div class="txtin" style="text-align:left;">
+					<label class="mr10"><input type="radio" name="search" checked="checked">전체</label>  
+					<label class="mr10"><input type="radio" name="search">학번</label>  
+					<label class="mr10"><input type="radio" name="search">이름</label>
+					<label class="mr10"><input type="radio" name="search">건물</label>
+					<label class="mr10"><input type="radio" name="search">호수</label>
+					<input type="text" style="width:60%"></input>
+					<button type="button" class="btn_submit3" style="float:right; width:100px;">검색</button>
 				</div>
-			</td>				
-		</tr>	
-		<tr>
-			<th>기간</th>
-			<td colspan="3">
-				<input class="form-select1" type="date" id="start" name="trip-start" value="2000-10-04">
-				 - <input class="form-select1" type="date" id="end" name="trip-start" value="2000-10-04">&nbsp;&nbsp;
-				<ul class="dpi_li dpi">
-					<li><a href="#" class="btn_sumit">전체</a></li>
-				</ul>
-			</td>				
+			</td>
 		</tr>
-	</table>
-	<div class="ok_btn">
-		<ul>
-			<li><button type="button" class="btn_sumit2" >검색</button></li>
-		</ul>
-	</div>	
+	</table>	
 </div>
 
 <div class="ofh">
 	<div class="halfcon mr">		
 		<h4 class="bgtab bgtab2">회원 목록</h4>
-		<table class="comm_table tac bmb" id="membertable">	
+		<table style='height:100px' class="comm_table tac bmb" id="membertable">	
 			
 		</table>
 
@@ -178,15 +161,15 @@ $(document).ready(function(){
 	</div>
 	<div class="halfcon">
 		<h4 class="bgtab bgtab2">회원 정보 상세</h4>
-		<table class="comm_table tac bmb" id="memberinfotable">	
+		<table class="comm_table tac bmb" id="memberinfotable">
 			<tbody>
-				<tr>		
-					<th>학번</th>
-					<th>이름</th>
-					<th>학과</th>
-					<th>휴대폰</th>
-					<th>보호자 연락처</th>
-					<th>기숙사</th>
+				<tr>
+					<th width="17%">학번</th>
+					<th width="11%">이름</th>
+					<th width="19%">학과</th>
+					<th width="19%">휴대폰</th>
+					<th width="19%">보호자 연락처</th>
+					<th width="15%">기숙사</th>
 				</tr>
 				<tr class="plusMemberInfo">
 								
@@ -207,7 +190,7 @@ $(document).ready(function(){
 
 
 		<div id="footer">
-		<p>Copyright(c)뷰티몰 쇼핑몰관리시스템. All rights reserved. supported by <a href="http://www.cmaru.com" target="_blank">크리에이티브마루.</a></p>
+		<p>Copyright(c) 기숙사 통합 관리 시스템. All rights reserved. supported by ttac.</a></p>
 	</div>
 
 	<div id="pageup">
@@ -234,7 +217,7 @@ $(document).ready(function(){
 					console.log(result);
 					//테이블에 append 해줌 (getTodays)
 					$('#membertable').empty();
-					let contents = `<tbody>` +
+					let contents = `<tbody style='overflow: auto;'>` +
 				`<tr>		
 					<th>순번</th>
 					<th>학번</th>
@@ -264,8 +247,74 @@ $(document).ready(function(){
 					console.log("code:" + request.status + "\n" + "message:" + request.responseText + "\n" + "error:" + error);
 				}
 			})
+		}
 	
+	function search(){
+		
+		var selectedRadioText = $('input[name="search"]:checked').parent().text();
+	    var inputBoxValue = $('.txtin input[type="text"]').val();
+	    
+	    console.log(selectedRadioText);
+	    console.log(inputBoxValue);
+	    
+	    var searchMemberData = "";
+	    
+	    if (selectedRadioText == '전체') {
+	    	getMemberList();
+	    } else if (selectedRadioText == '학번') {
+	    	radio = "memberId";
+	    } else if (selectedRadioText == '이름') {
+	    	radio = "name";
+	    } else if (selectedRadioText == '건물') {
+	    	radio = 'domitoryName';
+	    } else if (selectedRadioText == '호수') {
+	    	radio = 'room';
+	    }
+	    
+	    $.ajax({
+	    	type: "get",
+	    	url: "/admin/memberInfo/search/" + radio + "/" + inputBoxValue,
+				success: function (data) {
+					
+					console.log("클릭")
+					
+					$('#membertable').empty();
+					let contents = `<tbody>` +
+				`<tr>		
+					<th>순번</th>
+					<th>학번</th>
+					<th>이름</th>
+					<th>전화번호</th>
+					<th>벌점</th>
+				</tr>`
+
+				$.each(data, function(index, member){
+
+					contents += `<tr class="memberrow">
+						<td><b>` + (++index) +`</b></td>
+						<td class="tal"><div id="memberId">` 
+						+ member.memberId + `</div></td>
+						<td>` + member.name + `</td>	
+						<td>` + member.phone + `</td>
+						<td>` + member.demerit + `</td>
+					</tr></button>`
+
+				})
+				contents += `</tbody></table>`;
+				$('#membertable').append(contents);
+				$('.plusMemberInfo').empty();
+				$('.inputDemerit').empty();
+				}
+	    })
+		
+	}
 	
+	 $(".btn_submit3").click(function() {
+		 search(); 
+			})
+	
+
+
 	$(document).on(					
 			"click",
 			".memberrow", function memberrow() {
@@ -293,11 +342,11 @@ $(document).ready(function(){
 					+ "</td><br>"		
 					
 					inputDemerit += 
-						"<h4 class='bgtab bgtab2'>회원 벌점</h4><table class='comm_table tac bmb' id='memberinfotable' style='margin-bottom:10px !important'><tbody><tr>"		
-					+ "<th width='30%'>벌점</th>"
-					+ "<th width='70%'>사유</th></tr>"
-					+ "<tr><td><input type='text' name='demerit' style='width:80%; border: 0;'>점</td>"
-					+ "<td><input type='text' name='demeritreason' style='width:100%; border: 0;'></td></tr></tbody></table>"
+						"<h4 class='bgtab bgtab2'>벌점 이력</h4><table class='comm_table tac bmb' id='memberinfotable' style='margin-bottom:10px !important'><tbody><tr>"		
+					+ "<th width='25%'>날짜</th><th width='10%'>벌점</th>"
+					+ "<th width='65%'>사유</th></tr>"
+					+ "<tr><td></td><td style='text-align:right; margin-right:5px;'>점</input></td>"
+					+ "<td></td></tr></tbody></table>"
 					+ "<button type='button' id='demeritBtn'>벌점 주기</button>"
 					
 					$('.plusMemberInfo').empty();
