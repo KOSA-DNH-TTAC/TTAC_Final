@@ -133,8 +133,8 @@
 
 										</div>
 
-										<b><i class="bi bi-chat-dots"></i>&nbsp;
-											${boardContent.replyCount}</b>
+										<i class="bi bi-chat-dots"></i>&nbsp;
+										<b id="hjreplycount">${boardContent.replyCount}</b>
 										<hr>
 									</c:forEach>
 									<div class="box">
@@ -153,26 +153,6 @@
 									</div>
 								</div>
 								<!-- End blog entries list -->
-
-
-								<!-- <hr>
-								<div class="hjreply">
-									<li class="ybreply2"><button class="toMessage" seq="
-									+ data.replyContent[index].memberId +
-									`data-replyIdx="
-									data.replyContent[index].replyIdx
-									data-parentReplyIdx="'
-									data.replyContent[index].parentReplyIdx
-									>익명&ensp;</button>'
-									</li><span class="replyDate">'
-									data.replyContent[index].replyDate;
-									</span><div style="clear:both"></div><li class="replyContent">'
-									data.replyContent[index].replyContent
-									</li><button class="reSubmit">답댓글 쓰기</button><br>'
-									<div id="replyIdx2" style="display:none">'
-									data.replyContent[index].replyIdx
-									</div>
-								</div><hr> -->
 
 								<div class="col-lg-4">
 
@@ -357,6 +337,7 @@
 
 		var currentId = "${prc.memberId}"
 		console.log(currentId);
+		
 		// 추천 아이콘 Ajax
 		$.ajax({
 			type: "get",
@@ -381,11 +362,16 @@
 			url: '/board/' + param + '/' + idx + '/reply',
 			contentType: "application/json; charset=utf-8",
 			success: function (data) {
+				console.log(data);
 
+				let replyCount = data.replyContent.length;
+				let rereplyCount = data.reReplyContent.length;
+				console.log(replyCount + rereplyCount);
+				let totalcount = replyCount + rereplyCount;
 				var replyContent = "";
-
 				$('#replyDiv').empty();
-
+				$('#hjreplycount').empty();
+				$('#hjreplycount').append(totalcount);
 				$.each(data.replyContent, function (index, reply) {
 					// console.log(reply);
 					if (data.replyContent[index].parentReplyIdx == '0') {
