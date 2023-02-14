@@ -96,7 +96,7 @@ public class BoardController {
 		
 		//컨트롤러에서 받아온 파일 리스트
 		List<File> fileContent = boardService.fileContent(idx);
-		System.out.println("컨트롤러 fileContent : "+fileContent);
+//		System.out.println("컨트롤러 fileContent : "+fileContent);
 
 		if (boardName.equals("noticeList")) {
 			param = "공지사항";

@@ -12,8 +12,11 @@ import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.http.HttpStatus;
 import org.springframework.http.ResponseEntity;
 import org.springframework.security.core.context.SecurityContextHolder;
+import org.springframework.web.bind.annotation.DeleteMapping;
 import org.springframework.web.bind.annotation.GetMapping;
 import org.springframework.web.bind.annotation.PathVariable;
+import org.springframework.web.bind.annotation.PostMapping;
+import org.springframework.web.bind.annotation.RequestBody;
 import org.springframework.web.bind.annotation.RequestMapping;
 import org.springframework.web.bind.annotation.RequestMethod;
 import org.springframework.web.bind.annotation.RequestParam;
@@ -23,15 +26,18 @@ import kr.or.kosa.dto.Board;
 import kr.or.kosa.dto.Domitory;
 import kr.or.kosa.dto.Facility;
 import kr.or.kosa.dto.Reply;
+import kr.or.kosa.dto.SleepOverHistory;
 import kr.or.kosa.security.User;
 import kr.or.kosa.service.BoardService;
 import kr.or.kosa.service.FacilityService;
+import kr.or.kosa.service.ReplyService;
 
 @RestController
 public class BoardController_Rest {
 
 	BoardService boardService;
 	FacilityService facilityService;
+	ReplyService replyservice;
 
 	@Autowired
 	public void setBoardService(BoardService boardService) {
@@ -41,6 +47,11 @@ public class BoardController_Rest {
 	@Autowired
 	public void setFacilityService(FacilityService facilityService) {
 		this.facilityService = facilityService;
+	}
+	
+	@Autowired
+	public void setReplyservice(ReplyService replyservice) {
+		this.replyservice = replyservice;
 	}
 
 	// 게시판 종류
@@ -85,6 +96,61 @@ public class BoardController_Rest {
 		int myPostLikeCheck = 0;
 		myPostLikeCheck = boardService.myPostLikeCheck(idx);
 		return myPostLikeCheck;
+	}
+	
+	
+	// 새댓글 작성
+	@RequestMapping("/board/newreply")
+	public ResponseEntity<Map<String, Object>> newReply(@RequestBody HashMap<String,Object> data){
+
+		Map<String, Object> map = new HashMap<String, Object>();		
+        String postidx = (String)data.get("postidx");
+        String reply = (String)data.get("reply");
+
+        int result = replyservice.newReply(postidx, reply);
+        if(result > 0) {
+        	map.put("성공", result);
+        }else {
+        	map.put("실패", result);
+        }
+		
+		return new ResponseEntity<Map<String, Object>>(map, HttpStatus.OK);
+		
+	}
+	
+	//답댓글 작성
+	@RequestMapping("/board/newrereply")
+	public ResponseEntity<Map<String, Object>> newRereply(@RequestBody HashMap<String,Object> data){
+
+		Map<String, Object> map = new HashMap<String, Object>();		
+        String postidx = (String)data.get("postidx");
+        String parentidx = (String)data.get("parentidx");
+        String reply = (String)data.get("reply");
+        
+        //String postidx, String parentidx, String reply
+        int result = replyservice.newRereply(postidx, parentidx, reply);
+        if(result > 0) {
+        	map.put("성공", result);
+        }else {
+        	map.put("실패", result);
+        }
+		
+		return new ResponseEntity<Map<String, Object>>(map, HttpStatus.OK);
+		
+	}
+	
+	//댓글 삭제
+	@DeleteMapping("/board/reply/{replyidx}")
+	public  ResponseEntity<String> delreply(@PathVariable("replyidx") String replyidx) {
+		
+		int result = 0;
+		result = replyservice.deleteReply(replyidx);
+		if(result>0) {
+			return new ResponseEntity<>("success", HttpStatus.OK);
+		}else {
+			return new ResponseEntity<>("fail", HttpStatus.BAD_REQUEST);
+		}
+		
 	}
 
 	// 저녁점호 위치비교 + 중복체크 + 데이터 인서트
