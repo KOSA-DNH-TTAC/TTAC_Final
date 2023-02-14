@@ -147,30 +147,22 @@ public class BoardController {
 		String msg = "";
 		String url = "";
 
-		// 로그인 오래되면 팅기도록
-		if (user == null) {
-
+		//게시글 status 22로 변경 (삭제)
+		boardContent.setStatus(22);
+		result = boardService.boardContentEdit(boardContent);
+		
+		//글 수정이 제대로 되었는지 확인
+		if (result < 1) {
 			icon = "error";
-			msg = "세션이 만료되었습니다.";
-			url = "/";
-			
+			msg = "글 작성이 실패했습니다.";
+			url = "/board/"+boardName+"/"+idx+"/edit";
 		} else {
-			//게시글 status 22로 변경 (삭제)
-			boardContent.setStatus(22);
-			result = boardService.boardContentEdit(boardContent);
+			icon = "success";
+			msg = "글 삭제가 완료되었습니다!";
+			url = "/board/"+boardName;
 			
-			//글 수정이 제대로 되었는지 확인
-			if (result < 1) {
-				icon = "error";
-				msg = "글 작성이 실패했습니다.";
-				url = "/board/"+boardName+"/"+idx+"/edit";
-			} else {
-				icon = "success";
-				msg = "글 삭제가 완료되었습니다!";
-				url = "/board/"+boardName;
-				
-			}
 		}
+		
 		
 		model.addAttribute("msg", msg);
 		model.addAttribute("url", url);
@@ -228,33 +220,25 @@ public class BoardController {
 		String msg = "";
 		String url = "";
 
-		// 로그인 오래되면 팅기도록
-		if (user == null) {
-
-			icon = "error";
-			msg = "세션이 만료되었습니다.";
-			url = "/";
-			
-		} else {
-			//글 제목, 내용 수정
-			boardContent.setTitle(title);
-			boardContent.setContent(content);
-			
-			result = boardService.boardContentEdit(boardContent);
-			
-			//글 수정이 제대로 되었는지 확인
-			if (result < 1) {
-				icon = "error";
-				msg = "글 작성이 실패했습니다.";
-				url = "/board/"+boardName+"/"+idx+"/edit";
-			} else {
-				icon = "success";
-				msg = "글 작성이 완료되었습니다!";
-				url = "/board/"+boardName+"/"+idx;
-				
-			}
-		}
 		
+		//글 제목, 내용 수정
+		boardContent.setTitle(title);
+		boardContent.setContent(content);
+		
+		result = boardService.boardContentEdit(boardContent);
+		
+		//글 수정이 제대로 되었는지 확인
+		if (result < 1) {
+			icon = "error";
+			msg = "글 작성이 실패했습니다.";
+			url = "/board/"+boardName+"/"+idx+"/edit";
+		} else {
+			icon = "success";
+			msg = "글 작성이 완료되었습니다!";
+			url = "/board/"+boardName+"/"+idx;
+			
+		}
+
 		model.addAttribute("msg", msg);
 		model.addAttribute("url", url);
 		model.addAttribute("icon", icon);
@@ -293,40 +277,37 @@ public class BoardController {
 		String url = "";
 		String icon = "";
 		String fileName = "";
+		MultipartFile multiFile = files.get(0);
 		
 		int result = 0;
 		
-		if (user == null) {
-			icon = "warning";
-			msg = "세션이 만료되었습니다.";
-			url = "/";
-
-		} else {
-			Post postDTO = new Post();
-			List<File> fileDTO = new ArrayList<File>();
-			
-			//글 담아주기
-			postDTO.setBoardIdx(boardIDX);
-			postDTO.setBoardName("공지사항");
-			postDTO.setUniversityCode(user.getUniversityCode());
-			postDTO.setMemberId(user.getMemberId());
-			postDTO.setTitle(title);
-			postDTO.setContent(content);
-			
-			//파일 담아주기
-			if(files.size() < 0) {
-				for (MultipartFile multipartfile : files) {
-					File fileOne = new File();
-					
-					UUID uuid = UUID.randomUUID();
-					fileName = uuid.toString()+"_"+multipartfile.getOriginalFilename();
-					fileOne.setFileName(fileName);
-					fileOne.setFileRealName(multipartfile.getOriginalFilename());
-					fileOne.setFileSize(multipartfile.getSize());
-					
-					fileDTO.add(fileOne);
-				}
+		
+		Post postDTO = new Post();
+		List<File> fileDTO = new ArrayList<File>();
+		
+		//글 담아주기
+		postDTO.setBoardIdx(boardIDX);
+		postDTO.setBoardName("공지사항");
+		postDTO.setUniversityCode(user.getUniversityCode());
+		postDTO.setMemberId(user.getMemberId());
+		postDTO.setTitle(title);
+		postDTO.setContent(content);
+		
+		//파일 담아주기
+		if(multiFile.getSize() != 0) {
+			for (MultipartFile multipartfile : files) {
+				File fileOne = new File();
+				
+				UUID uuid = UUID.randomUUID();
+				fileName = uuid.toString()+"_"+multipartfile.getOriginalFilename();
+				fileOne.setFileName(fileName);
+				fileOne.setFileRealName(multipartfile.getOriginalFilename());
+				fileOne.setFileSize(multipartfile.getSize());
+				
+				fileDTO.add(fileOne);
 			}
+		}
+			
 		
 			//서비스슝슝
 			result = boardService.noticeListInsert(postDTO, fileDTO, files);
@@ -341,7 +322,7 @@ public class BoardController {
 				url = "/board/noticeList";
 				
 			}
-		}
+		
 
 		model.addAttribute("msg", msg);
 		model.addAttribute("url", url);

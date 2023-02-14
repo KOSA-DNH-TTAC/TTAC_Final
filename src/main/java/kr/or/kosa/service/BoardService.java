@@ -316,10 +316,11 @@ public class BoardService {
 		String route = "";
 		String url = "";
 		String fileUrl = "";
+		MultipartFile multiFile = files.get(0);
 		
 		result = this.freeBoardWrite(post);
 		
-		if(files.size() < 0) {
+		if(multiFile.getSize() != 0) {
 			AwsS3 awsS3 = AwsS3.getInstance();
 			idx = this.recentPostIdx();
 			
