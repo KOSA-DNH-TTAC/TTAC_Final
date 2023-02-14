@@ -114,7 +114,7 @@ public class BoardService {
 	public List<File> fileContent(String idx) {
 		BoardDao boardDao = sqlSession.getMapper(BoardDao.class);
 		List<File> fileContent = boardDao.fileContent(idx);
-		System.out.println("fileContent : "+fileContent);
+//		System.out.println("fileContent : "+fileContent);
 		return fileContent;
 	}
 	
