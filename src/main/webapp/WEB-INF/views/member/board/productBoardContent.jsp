@@ -93,7 +93,11 @@
                     <ul>
                     	<li class="d-flex align-items-center"><i class="bi bi-person"></i><a href="blog-single.html" value="${boardContent.memberId}">익명</a></li>
                     	<li class="d-flex align-items-center"><i class="bi bi-clock"></i>${boardContent.writeDate}</li>
-                    	<li class="d-flex align-items-center"><i class="bi-hand-thumbs-up"></i>${boardContent.likeNum}</li>
+                    	<li class="d-flex align-items-center"><button
+							id="postLike"><i
+								class="bi-hand-thumbs-up"></i></button>
+						<div id="likenum">${boardContent.likeNum}</div>
+					</li>
                     </ul>
                     </div>
                     <div class="entry-content" style="margin-bottom:50px;">
@@ -260,7 +264,7 @@
 			toggleReply.forEach(function(replyidx, index){
 				if(replyidx == parentIdx){
 					toggleReply.splice(index, 1);
-					console.log(toggleReply);
+					// console.log(toggleReply);
 					$(e).parent().children().last().remove();
 					count++;
 					return;
@@ -268,7 +272,7 @@
 			})
 			if(count==0){
 				toggleReply.push(parentIdx);
-				console.log(toggleReply)
+				// console.log(toggleReply)
 				let content = `
 								<ul id="rerearea">
 								<li><i class="bi bi-arrow-return-right">&ensp;</i>
@@ -301,7 +305,7 @@
 				async: true, //비동기 여부
 				contentType: "application/json",
 				success: function (data) {
-					console.log(data);
+					// console.log(data);
 					replyContent();
 				}
 			})
@@ -310,10 +314,10 @@
 		function replyContent(dd) {
 	
 			var idx = $('#idx').text();
-			var param = "freeBoardList";
+			var param = "productBoardList";
 	
 			var currentId = "${prc.memberId}"
-			console.log(currentId);
+			// console.log(currentId);
 			
 			// 추천 아이콘 Ajax
 			$.ajax({
@@ -343,7 +347,7 @@
 	
 					let replyCount = data.replyContent.length;
 					let rereplyCount = data.reReplyContent.length;
-					console.log(replyCount + rereplyCount);
+					// console.log(replyCount + rereplyCount);
 					let totalcount = replyCount + rereplyCount;
 					var replyContent = "";
 					$('#replyDiv').empty();

@@ -69,6 +69,7 @@ public class BoardController_Rest {
 	// 댓글, 대댓글 Map Return
 	@GetMapping("/board/{allBoard}/{idx}/reply")
 	public ResponseEntity<Map<String, Object>> allReply(@PathVariable("idx") String idx) {
+		
 		Map<String, Object> map = new HashMap<>();
 		try {
 			map.put("replyContent", boardService.replyContent(idx));
