@@ -225,7 +225,10 @@
 
 <script type="text/javascript">
 
+	let toggleReply = [];
 
+
+	//새 부모댓글 작성
 	$('#newreplybtn').click(function () {
 		let idx = $('#idx').text();
 		let reply = $('#exampleFormControlTextarea1').val();
@@ -290,10 +293,61 @@
 	}
 
 	//답댓글 쓰기....
+	function rereply(e){
+		let parentIdx = $(e).parent().attr("id");
+		
+		let count = 0;
+		//toggleReply 배열 돌면서
+		//배열에 있다면 제거해주고, 답댓글 div를 없앰
+		toggleReply.forEach(function(replyidx, index){
+			if(replyidx == parentIdx){
+				toggleReply.splice(index, 1);
+				console.log(toggleReply);
+				$(e).parent().children().last().remove();
+				count++;
+				return;
+			}
+		})
+		if(count==0){
+			toggleReply.push(parentIdx);
+			console.log(toggleReply)
+			let content = `
+							<ul id="rerearea">
+							<li><i class="bi bi-arrow-return-right">&ensp;</i>
+							<textarea class="form-control" name="messageContent" placeholder="댓글을 입력하세요." id="rereplyarea"></textarea>
+							<button id="newrereplybtn" onclick="rereplySubmit(this)">작성</button>
+							</li>
+							</ul>`
+			$(e).parent().append(content);
+		}
+		
+	}
 
 
 	//답댓글 작성 버튼 클릭!!
-
+	function rereplySubmit(e){
+		let idx = $('#idx').text();
+		let rereply = $('#rereplyarea').val();
+		let parentidx = $(e).parent().parent().parent().attr("id")
+		
+		//ajax로 댓글 작성
+		$.ajax({
+			type: "post",
+			url: "/board/newrereply",
+			data: JSON.stringify({
+				"postidx": idx,
+				"reply": rereply,
+				"parentidx": parentidx
+			}),
+			dataType: 'json',
+			async: true, //비동기 여부
+			contentType: "application/json",
+			success: function (data) {
+				console.log(data);
+				replyContent();
+			}
+		})
+	}
 
 	function replyContent(dd) {
 
@@ -332,13 +386,13 @@
 				$('#replyDiv').empty();
 
 				$.each(data.replyContent, function (index, reply) {
-					console.log(reply);
+					// console.log(reply);
 					if (data.replyContent[index].parentReplyIdx == '0') {
 
 						var pIdx = data.replyContent[index].replyIdx;
 
 						replyContent +=
-							`<div class="hjreply" id="` + reply.replyIdx + `">
+							`<div class="hjreply" id="` + reply.replyIdx + `"  data-toggle="off">
 							<li class="ybreply2"><button class="toMessage"
 							seq="`+ reply.memberId + `data-replyIdx="` + reply.replyIdx+ '" data-parentReplyIdx="'+ reply.parentReplyIdx+ '">익명&ensp;</button></li>'
 							if(reply.memberId == currentId){
@@ -347,14 +401,15 @@
 							replyContent += '<span class="replyDate">'+ reply.replyDate +'</span>'
 							+ '<div style="clear:both"></div>'
 							+ `<li class="replyContent">`;
-								if(reply.status=='22'){
-									replyContent += "삭제된 댓글입니다."
-								}else{
-									replyContent += reply.replyContent
-								}
+								// if(reply.status=='22'){
+								// 	replyContent += "<p id='hjdelre'>삭제된 댓글입니다.</p>"
+								// }else{
+								// 	replyContent += reply.replyContent
+								// }
 							replyContent += '</li>'
-							+ '<button class="reSubmit">답댓글 쓰기</button><br>'
-							+ '</div><hr>';
+							+ '<button class="reSubmit" onclick="rereply(this)">답댓글 쓰기</button><br>'
+							+ '</div><hr>'
+							
 
 						$.each(data.reReplyContent, function (index, rere) {
 							
@@ -377,7 +432,6 @@
 									+ '"</div></div><hr>'
 							}
 						})
-
 					}
 
 				})
@@ -389,8 +443,8 @@
 		// 추천 아이콘
 		$('#postLike').click(function () {
 
-			console.log("param: " + param);
-			console.log("idx: " + idx);
+			// console.log("param: " + param);
+			// console.log("idx: " + idx);
 
 			$.ajax({
 				type: "post",

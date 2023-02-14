@@ -7,7 +7,8 @@ public interface ReplyDao {
 	//댓글 작성
 	public int newReply(Reply reply);
 	
-	//답댓글 작성 
+	//답댓글 작성
+	public int newRereply(Reply reply);
 	
 	//댓글 수정
 	

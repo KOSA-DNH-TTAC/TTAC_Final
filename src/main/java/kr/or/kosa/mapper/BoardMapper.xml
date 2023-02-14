@@ -15,23 +15,19 @@ PUBLIC "-//mybatis.org//DTD Mapper 3.0//EN"
 
 	<!-- 기본 제공 게시판 글 목록 -->
 	<select id="allBoardList" resultType="kr.or.kosa.dto.Post">
-		SELECT COUNT(replyidx)
-		replyCount, p.idx, p.boardidx, p.universitycode,
+		SELECT COUNT(r.replyidx) AS replyCount, p.idx, p.boardidx, p.universitycode,
 		b.boardname,
 		p.memberid, p.writedate, p.likenum, p.content, p.title
-		FROM POST p LEFT
-		OUTER JOIN BOARD b ON p.boardidx = b.boardidx
-		LEFT OUTER JOIN REPLY r
-		ON p.idx = r.idx
+		FROM POST p
+		JOIN BOARD b ON p.boardidx = b.boardidx
+		LEFT JOIN REPLY r ON p.idx = r.idx AND r.status = '21'
 		WHERE b.boardname=#{param1} and
-		p.universitycode=#{param2} AND
-		p.status='21'
-		GROUP BY idx
-		ORDER BY
-		p.writedate DESC;
+		p.universitycode=#{param2}
+		GROUP BY p.idx, p.boardidx, b.boardidx
+		ORDER BY p.writedate DESC
 	</select>
 
-	<!-- 새 게시판 글 목록 -->
+	<!-- (커스텀 게시판)새 게시판 글 목록 이거필요없음 -->
 	<select id="customBoardList" resultType="kr.or.kosa.dto.Post">
 		SELECT COUNT(replyidx)
 		replyCount, p.idx, p.boardidx, p.universitycode,

@@ -35,6 +35,21 @@ public class ReplyService {
 	}
 	
 	//답댓글 작성
+	public int newRereply(String postidx, String parentidx, String reply) {
+		User user = (User) SecurityContextHolder.getContext().getAuthentication().getPrincipal();
+		ReplyDao dao = sqlsession.getMapper(ReplyDao.class);
+		
+		Reply newre = new Reply();
+		
+		String memberid = user.getMemberId();
+		newre.setMemberId(memberid);
+		newre.setIdx(Integer.parseInt(postidx));
+		newre.setParentReplyIdx(Integer.parseInt(parentidx));
+		newre.setReplyContent(reply);
+		
+		int result = dao.newRereply(newre);
+		return result;
+	}
 	
 	//댓글 삭제
 	public int deleteReply(String idx) {

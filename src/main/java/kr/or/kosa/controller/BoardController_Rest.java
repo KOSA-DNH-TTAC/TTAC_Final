@@ -118,6 +118,27 @@ public class BoardController_Rest {
 		
 	}
 	
+	//답댓글 작성
+	@RequestMapping("/board/newrereply")
+	public ResponseEntity<Map<String, Object>> newRereply(@RequestBody HashMap<String,Object> data){
+
+		Map<String, Object> map = new HashMap<String, Object>();		
+        String postidx = (String)data.get("postidx");
+        String parentidx = (String)data.get("parentidx");
+        String reply = (String)data.get("reply");
+        
+        //String postidx, String parentidx, String reply
+        int result = replyservice.newRereply(postidx, parentidx, reply);
+        if(result > 0) {
+        	map.put("성공", result);
+        }else {
+        	map.put("실패", result);
+        }
+		
+		return new ResponseEntity<Map<String, Object>>(map, HttpStatus.OK);
+		
+	}
+	
 	//댓글 삭제
 	@DeleteMapping("/board/reply/{replyidx}")
 	public  ResponseEntity<String> delreply(@PathVariable("replyidx") String replyidx) {

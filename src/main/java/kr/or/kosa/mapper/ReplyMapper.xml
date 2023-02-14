@@ -12,7 +12,10 @@ PUBLIC "-//mybatis.org//DTD Mapper 3.0//EN"
 	</insert>
 	
 	<!-- 새 답댓글 작성 -->
-	
+	<insert id="newRereply" parameterType="kr.or.kosa.dto.Reply">
+		INSERT INTO REPLY(IDX, PARENTREPLYIDX, MEMBERID, REPLYCONTENT, REPLYDATE)
+		VALUES(#{idx}, #{parentReplyIdx}, #{memberId}, #{replyContent}, NOW())
+	</insert>
 	<!-- 댓글 삭제 -->
 	<update id="deleteReply">
 		UPDATE REPLY SET STATUS='22' WHERE REPLYIDX=#{idx}
