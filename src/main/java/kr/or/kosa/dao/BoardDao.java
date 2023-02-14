@@ -65,10 +65,10 @@ public interface BoardDao {
 	public List<Domitory> selectAllDomitory();
 	
 	//최근file 올린 idx 가져오기
-	public int recentFileIdx();
+	public int recentPostIdx();
 	
 	// 파일 상세보기
-	public File fileContent(String idx);
+	public List<File> fileContent(String idx);
 	
 	// 게시글 수정하기
 	public int boardEdit(Post post);
