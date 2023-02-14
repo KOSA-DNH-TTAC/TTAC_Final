@@ -272,3 +272,12 @@ div.wrap {
     border-color: #2a3954;
     padding: 0 13px;
 }
+
+#demeritSum {
+	color: #000000;
+    background: #fff;
+    border: 1px solid #e6e6e6;
+    overflow: hidden;
+    border-bottom: 0px;
+    padding: 10px 10px;
+}

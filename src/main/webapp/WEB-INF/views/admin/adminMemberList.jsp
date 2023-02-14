@@ -340,34 +340,56 @@ $(document).ready(function(){
 					+ "</td><td>"
 					+ data[0].domitoryName + "&nbsp;" + data[0].room
 					+ "</td><br>"		
+	
+					$('.plusMemberInfo').empty();
+					$('.plusMemberInfo').append(memberInfo);
+
+					
+				}
+			}) // 회원 정보 출력 ajax end
+			
+			// 벌점 이력 출력
+			$.ajax({
+				type: "get",
+				url: "/admin/memberInfo/demerit/" + memberId,
+				success: function (data) {
+					
+					var demeritSum = 0;
 					
 					inputDemerit += 
 						"<h4 class='bgtab bgtab2'>벌점 이력</h4><table class='comm_table tac bmb' id='memberinfotable' style='margin-bottom:10px !important'><tbody><tr>"		
 					+ "<th width='25%'>날짜</th><th width='10%'>벌점</th>"
 					+ "<th width='65%'>사유</th></tr>"
-					+ "<tr><td></td><td style='text-align:right; margin-right:5px;'>점</input></td>"
-					+ "<td></td></tr></tbody></table>"
-					+ "<button type='button' id='demeritBtn'>벌점 주기</button>"
 					
-					$('.plusMemberInfo').empty();
-					$('.plusMemberInfo').append(memberInfo);
+					$.each(data, function(index){
+						
+						inputDemerit +=
+							"<tr><td>"
+							+ data[index].demeritDate 
+							+ "</td><td>"
+							+ data[index].demerit
+							+ "</td><td>"
+							+ data[index].demeritReason
+							+ "</td></tr>"
+					
+							
+						demeritSum += data[index].demerit;
+						
+					})
+					
+					inputDemerit += "</tbody></table>"
+					
+					+ "<h4 id='demeritSum'>총 "
+					+ demeritSum
+					+ "점</h4>"
+					
 					
 					$('.inputDemerit').empty();
 					$('.inputDemerit').append(inputDemerit);
 					
 				}
-			}) // 회원 정보 출력 ajax end
+			}) // 벌점 이력 출력 ajax end
 			
-			// 벌점 부과
-			$.ajax({
-				type: post,
-				url: "/admin/member/demerit" + memberId,
-				success: function () {
-				
-					console.log();
-					getMemberList();
-				}
-				})
 							
 			
 			}) // document.on end
