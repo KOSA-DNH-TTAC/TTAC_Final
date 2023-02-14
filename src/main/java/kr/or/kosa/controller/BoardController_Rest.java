@@ -141,16 +141,12 @@ public class BoardController_Rest {
 	
 	//댓글 삭제
 	@DeleteMapping("/board/reply/{replyidx}")
-	public  ResponseEntity<String> delreply(@PathVariable("replyidx") String replyidx) {
+	public  Map<String, Integer> delreply(@PathVariable("replyidx") String replyidx) {
 		
-		int result = 0;
-		result = replyservice.deleteReply(replyidx);
-		if(result>0) {
-			return new ResponseEntity<>("success", HttpStatus.OK);
-		}else {
-			return new ResponseEntity<>("fail", HttpStatus.BAD_REQUEST);
-		}
+		Map<String, Integer> map = new HashMap<String, Integer>();
+		map = replyservice.deleteReply(replyidx);
 		
+		return map;
 	}
 
 	// 저녁점호 위치비교 + 중복체크 + 데이터 인서트

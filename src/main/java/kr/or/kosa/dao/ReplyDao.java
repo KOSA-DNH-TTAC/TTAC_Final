@@ -14,4 +14,7 @@ public interface ReplyDao {
 	
 	//댓글 삭제
 	public int deleteReply(String idx);
+	
+	//답댓글 삭제
+	public int deleteRereply(String parentidx);
 }
