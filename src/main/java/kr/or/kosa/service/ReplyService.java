@@ -1,9 +1,13 @@
 package kr.or.kosa.service;
 
+import java.util.HashMap;
+import java.util.Map;
+
 import org.apache.ibatis.session.SqlSession;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.security.core.context.SecurityContextHolder;
 import org.springframework.stereotype.Service;
+import org.springframework.transaction.annotation.Transactional;
 
 import kr.or.kosa.dao.ReplyDao;
 import kr.or.kosa.dto.Reply;
@@ -51,10 +55,23 @@ public class ReplyService {
 		return result;
 	}
 	
-	//댓글 삭제
-	public int deleteReply(String idx) {
+	//댓글 삭제(부모댓글일시 자식 댓글도 삭제되게)
+	@Transactional(rollbackFor = Exception.class)
+	public Map<String, Integer> deleteReply(String idx) {
+		Map<String, Integer> map = new HashMap<String, Integer>();
+		
 		ReplyDao dao = sqlsession.getMapper(ReplyDao.class);
-		int result = dao.deleteReply(idx);
-		return result;
+		int parentResult = 0;
+		int rereplyResult = 0;
+		try {
+			parentResult = dao.deleteReply(idx);
+			map.put("parentResult", parentResult);
+			rereplyResult = dao.deleteRereply(idx);
+			map.put("rereplyResult", rereplyResult);
+
+		} catch (Exception e) {
+			e.printStackTrace();
+		}
+		return map;
 	}
 }
