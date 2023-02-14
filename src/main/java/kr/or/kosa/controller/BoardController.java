@@ -74,7 +74,7 @@ public class BoardController {
 	// 커스텀 생성 게시판
 	@GetMapping("/board/custom/{boardName}")
 	public String boardList(Model model, @PathVariable String boardName) {
-		List<Post> boardList = boardService.customBoardList(boardName);
+		List<Post> boardList = boardService.allBoardList(boardName);
 		model.addAttribute("boardList", boardList);
 		model.addAttribute("boardName", boardName);
 
