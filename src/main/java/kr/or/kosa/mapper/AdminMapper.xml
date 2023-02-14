@@ -41,6 +41,12 @@ PUBLIC "-//mybatis.org//DTD Mapper 3.0//EN"
 		UPDATE MEMBER SET demerit = demerit + #{param1}
 		WHERE memberid = #{param2};
 	</update>
+	
+	<!-- 벌점 이력 보기 -->
+	<select id="memberDemeritHistory" parameterType="String" resultType="kr.or.kosa.dto.DemeritHistory">
+		SELECT * FROM DEMERITHISTORY
+		WHERE memberid=#{param1};
+	</select>
 
 
 

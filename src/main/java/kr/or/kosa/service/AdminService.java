@@ -14,6 +14,7 @@ import org.springframework.transaction.annotation.Transactional;
 import kr.or.kosa.dao.AdminDao;
 import kr.or.kosa.dto.DemeritHistory;
 import kr.or.kosa.dto.Member;
+import kr.or.kosa.dto.Reply;
 import kr.or.kosa.security.User;
 
 @Service
@@ -65,5 +66,20 @@ public class AdminService {
 		adminDao.updateDemerit(demerit, memberid);
 		
 	}
-
+	
+	// 벌점 이력 보기
+	public List<DemeritHistory> memberDemeritHistory(String memberId) {
+		AdminDao adminDao = sqlsession.getMapper(AdminDao.class);
+		System.out.println("?");
+		List<DemeritHistory> demeritHistory = new ArrayList<DemeritHistory>();
+		demeritHistory = adminDao.memberDemeritHistory(memberId);
+		
+		for (DemeritHistory d : demeritHistory) {
+			d.setDemeritDate(d.getDemeritDate().substring(0, 10));
+		}
+		
+		System.out.println("Service: " + demeritHistory);
+		return demeritHistory;
+	}
+	
 }
