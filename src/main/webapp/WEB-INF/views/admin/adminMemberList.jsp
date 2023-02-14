@@ -20,6 +20,7 @@
 <link href="/resources/assets/css/menu.css" rel="stylesheet">
 <link href="/resources/assets/css/category.css" rel="stylesheet">
 <link href="/resources/assets/css/graph.css" rel="stylesheet">
+<link href="/resources/assets/css/yb.css" rel="stylesheet">
 
 		<!-- <script type="text/javascript" src="resources/assets/js/pg_script.js"></script> -->
 		<!-- <script type="text/javascript" src="resources/assets/js/jquery-2.1.4.js"></script> -->
@@ -38,7 +39,7 @@
 		<!-- Jquery -->
 		<script src="http://code.jquery.com/jquery-latest.min.js"></script>
 <style>
-	tr:hover{
+	.memberrow:hover{
 		background-color:#f5f5f5;
 		color: #e96b56;
 		transition: 0.3s;
@@ -170,95 +171,7 @@ $(document).ready(function(){
 	<div class="halfcon mr">		
 		<h4 class="bgtab bgtab2">회원 목록</h4>
 		<table class="comm_table tac bmb" id="membertable">	
-			<tbody>
-				<tr>		
-					<th>순번</th>
-					<th colspan="2">이름</th>
-					<th>학번</th>
-					<th>학과</th>
-					<th>전화</th>
-				</tr>
-				<tr>
-					<td>1</td>
-					<td><img src="../img/no_img.gif" width="50px" alt=""/></td>
-					<td class="tal">임준한</td>
-					<td>20171839</td>	
-					<td>실버산업</td>
-					<td>01012345678</td>					
-				</tr>
-				<tr>
-					<td>2</td>
-					<td><img src="../img/no_img.gif" width="50px" alt=""/></td>
-					<td class="tal">도현정</td>
-					<td>20135241</td>	
-					<td>귤감별사</td>
-					<td>01012345678</td>					
-				</tr>
-				<tr>
-					<td>3</td>
-					<td><img src="../img/no_img.gif" width="50px" alt=""/></td>
-					<td class="tal">고범종</td>
-					<td>20145875</td>	
-					<td>해커학과</td>
-					<td>01045678955</td>					
-				</tr>
-				<tr>
-					<td>4</td>
-					<td><img src="../img/no_img.gif" width="50px" alt=""/></td>
-					<td class="tal">박예빈</td>
-					<td>20157845</td>	
-					<td>치킨학과</td>
-					<td>01098745632</td>					
-				</tr>
-				<tr>
-					<td>5</td>
-					<td><img src="../img/no_img.gif" width="50px" alt=""/></td>
-					<td class="tal">노현중</td>
-					<td>맞장구치기</td>	
-					<td>103</td>
-					<td>10</td>					
-				</tr>
-				<tr>
-					<td>6</td>
-					<td><img src="../img/no_img.gif" width="50px" alt=""/></td>
-					<td class="tal">노다영</td>
-					<td>난리부리기</td>	
-					<td>103</td>
-					<td>10</td>					
-				</tr>
-				<tr>
-					<td>7</td>
-					<td><img src="../img/no_img.gif" width="50px" alt=""/></td>
-					<td class="tal">경아리</td>
-					<td>감말리기</td>	
-					<td>103</td>
-					<td>10</td>					
-				</tr>
-				<tr>
-					<td>8</td>
-					<td><img src="../img/no_img.gif" width="50px" alt=""/></td>
-					<td class="tal">회원이름</td>
-					<td>20,000원</td>	
-					<td>103</td>
-					<td>10</td>					
-				</tr>
-				<tr>
-					<td>9</td>
-					<td><img src="../img/no_img.gif" width="50px" alt=""/></td>
-					<td class="tal">회원이름</td>
-					<td>20,000원</td>	
-					<td>103</td>
-					<td>10</td>					
-				</tr>
-				<tr>
-					<td>10</td>
-					<td><img src="../img/no_img.gif" width="50px" alt=""/></td>
-					<td class="tal">회원이름</td>
-					<td>20,000원</td>	
-					<td>103</td>
-					<td>10</td>					
-				</tr>
-			</tbody>
+			
 		</table>
 
 
@@ -268,94 +181,19 @@ $(document).ready(function(){
 		<table class="comm_table tac bmb" id="memberinfotable">	
 			<tbody>
 				<tr>		
-					<th>순번</th>
-					<th colspan="2">이름</th>
 					<th>학번</th>
+					<th>이름</th>
 					<th>학과</th>
-					<th>전화</th>
+					<th>휴대폰</th>
+					<th>보호자 연락처</th>
+					<th>기숙사</th>
 				</tr>
-				<tr>
-					<td>1</td>
-					<td><img src="../img/no_img.gif" width="50px" alt=""/></td>
-					<td class="tal">회원이름</td>
-					<td>20,000원</td>	
-					<td>103</td>
-					<td>10</td>					
-				</tr>
-				<tr>
-					<td>2</td>
-					<td><img src="../img/no_img.gif" width="50px" alt=""/></td>
-					<td class="tal">회원이름</td>
-					<td>20,000원</td>	
-					<td>103</td>
-					<td>10</td>					
-				</tr>
-				<tr>
-					<td>3</td>
-					<td><img src="../img/no_img.gif" width="50px" alt=""/></td>
-					<td class="tal">회원이름</td>
-					<td>20,000원</td>	
-					<td>103</td>
-					<td>10</td>					
-				</tr>
-				<tr>
-					<td>4</td>
-					<td><img src="../img/no_img.gif" width="50px" alt=""/></td>
-					<td class="tal">회원이름</td>
-					<td>20,000원</td>	
-					<td>103</td>
-					<td>10</td>					
-				</tr>
-				<tr>
-					<td>5</td>
-					<td><img src="../img/no_img.gif" width="50px" alt=""/></td>
-					<td class="tal">회원이름</td>
-					<td>20,000원</td>	
-					<td>103</td>
-					<td>10</td>					
-				</tr>
-				<tr>
-					<td>6</td>
-					<td><img src="../img/no_img.gif" width="50px" alt=""/></td>
-					<td class="tal">회원이름</td>
-					<td>20,000원</td>	
-					<td>103</td>
-					<td>10</td>					
-				</tr>
-				<tr>
-					<td>7</td>
-					<td><img src="../img/no_img.gif" width="50px" alt=""/></td>
-					<td class="tal">회원이름</td>
-					<td>20,000원</td>	
-					<td>103</td>
-					<td>10</td>					
-				</tr>
-				<tr>
-					<td>8</td>
-					<td><img src="../img/no_img.gif" width="50px" alt=""/></td>
-					<td class="tal">회원이름</td>
-					<td>20,000원</td>	
-					<td>103</td>
-					<td>10</td>					
-				</tr>
-				<tr>
-					<td>9</td>
-					<td><img src="../img/no_img.gif" width="50px" alt=""/></td>
-					<td class="tal">회원이름</td>
-					<td>20,000원</td>	
-					<td>103</td>
-					<td>10</td>					
-				</tr>
-				<tr>
-					<td>10</td>
-					<td><img src="../img/no_img.gif" width="50px" alt=""/></td>
-					<td class="tal">회원이름</td>
-					<td>20,000원</td>	
-					<td>103</td>
-					<td>10</td>					
+				<tr class="plusMemberInfo">
+								
 				</tr>
 			</tbody>
 		</table>
+		<div class="inputDemerit"></div>
 	</div>
 </div>
 
@@ -380,24 +218,15 @@ $(document).ready(function(){
 
 
 </body>
-<!-- litebox 
-		<script type="text/javascript" src="resources/assets/js/hs_draggable.js"></script>
-		<script type="text/javascript" src="resources/assets/js/jquery-ui.min.js"></script>
-		<link rel="stylesheet" media="all" href="/resources/assets/css/litebox.css" />
-		<script type="text/javascript" src="resources/assets/js/litebox.js"></script>
-		<script type="text/javascript" src="resources/assets/js/backbone.js"></script>
-		<script type="text/javascript" src="resources/assets/js/images-loaded.min.js"></script>
-		<script type="text/javascript">
-			$('.litebox').liteBox();
-		</script>
- litebox -->
-<script>
-	function test(){
-		console.log("hi?");
-		console.log(this);
-	}
 
-	$(document).ready(function(){
+<script>
+
+	$(document).ready(function() {
+		// 회원 목록 부르기
+		getMemberList();
+	})
+	
+	function getMemberList(){
 		$.ajax({
 				type: "get",
 				url: "/admin/allmember",
@@ -405,8 +234,8 @@ $(document).ready(function(){
 					console.log(result);
 					//테이블에 append 해줌 (getTodays)
 					$('#membertable').empty();
-					let contents = `<tbody>
-				<tr>		
+					let contents = `<tbody>` +
+				`<tr>		
 					<th>순번</th>
 					<th>학번</th>
 					<th>이름</th>
@@ -416,13 +245,14 @@ $(document).ready(function(){
 
 				$.each(result.list, function(index, member){
 
-					contents += `<input type="button"><tr class="memberrow" onclick="test()">
+					contents += `<tr class="memberrow">
 						<td><b>` + (++index) +`</b></td>
-						<td class="tal">` + member.memberId + `</td>
+						<td class="tal"><div id="memberId">` 
+						+ member.memberId + `</div></td>
 						<td>` + member.name + `</td>	
 						<td>` + member.phone + `</td>
-						<td>` + member.demerit + `</td>					
-					</tr></input>`
+						<td>` + member.demerit + `</td>
+					</tr></button>`
 
 				})
 				contents += `</tbody></table>`;
@@ -434,6 +264,69 @@ $(document).ready(function(){
 					console.log("code:" + request.status + "\n" + "message:" + request.responseText + "\n" + "error:" + error);
 				}
 			})
-	})
+	
+	
+	$(document).on(					
+			"click",
+			".memberrow", function memberrow() {
+				var memberId = $(this).find("#memberId").text();			
+				var memberInfo = "";
+				var inputDemerit = "";
+			
+			$.ajax({
+				type: "get",
+				url: "/admin/memberInfo/" + memberId,
+				success: function (data) {
+					
+					memberInfo += "<td>"
+					+ data[0].memberId 
+					+ "</td><td>"
+					+ data[0].name
+					+ "</td><td>"
+					+ data[0].major
+					+ "</td><td>"
+					+ data[0].phone
+					+ "</td><td>"
+					+ data[0].parentsPhone
+					+ "</td><td>"
+					+ data[0].domitoryName + "&nbsp;" + data[0].room
+					+ "</td><br>"		
+					
+					inputDemerit += 
+						"<h4 class='bgtab bgtab2'>회원 벌점</h4><table class='comm_table tac bmb' id='memberinfotable' style='margin-bottom:10px !important'><tbody><tr>"		
+					+ "<th width='30%'>벌점</th>"
+					+ "<th width='70%'>사유</th></tr>"
+					+ "<tr><td><input type='text' name='demerit' style='width:80%; border: 0;'>점</td>"
+					+ "<td><input type='text' name='demeritreason' style='width:100%; border: 0;'></td></tr></tbody></table>"
+					+ "<button type='button' id='demeritBtn'>벌점 주기</button>"
+					
+					$('.plusMemberInfo').empty();
+					$('.plusMemberInfo').append(memberInfo);
+					
+					$('.inputDemerit').empty();
+					$('.inputDemerit').append(inputDemerit);
+					
+				}
+			}) // 회원 정보 출력 ajax end
+			
+			// 벌점 부과
+			$.ajax({
+				type: post,
+				url: "/admin/member/demerit" + memberId,
+				success: function () {
+				
+					console.log();
+					getMemberList();
+				}
+				})
+							
+			
+			}) // document.on end
+
+		
+		
+		
+		
+		
 </script>
 </html>

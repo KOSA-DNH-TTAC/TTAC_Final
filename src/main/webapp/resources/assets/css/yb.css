@@ -17,6 +17,16 @@
 	transition: 0.3s;
 }
 
+.memberlist {
+	padding-left: 7px !important;
+	text-align: left;
+	margin: 0;
+	list-style: none;
+	background-color: rgba(0, 0, 0, 0);
+	border: none;
+	color: #545454;
+}
+
 #boardName {
 	padding: 0;
 	list-style: none;
@@ -222,4 +232,24 @@ div.wrap {
 
 #like {
 	color: #e96b56 !important;
+}
+
+.memberrow {
+	cursor: pointer;
+}
+
+.demerit {
+	display: inline-flex;
+	float: left;
+	padding: 0;
+	margin-bottom: 10px;
+}
+
+#demeritBtn {
+	background: #2a3954;
+    color: #ffffff;
+    padding: 0px 25px;
+    font-size: 14px;
+    border: 1px solid #2a3954;
+    height: 38px;
 }
