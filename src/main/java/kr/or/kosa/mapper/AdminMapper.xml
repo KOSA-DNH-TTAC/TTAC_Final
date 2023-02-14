@@ -3,8 +3,13 @@
 PUBLIC "-//mybatis.org//DTD Mapper 3.0//EN"
 "http://mybatis.org/dtd/mybatis-3-mapper.dtd">
 
-<mapper namespace="kr.or.kosa.dao.dao">
+<mapper namespace="kr.or.kosa.dao.AdminDao">
 	
+	<!-- 특정 회원 정보 조회 -->
+	<select id="getMemberInfo" parameterType="String" resultType="kr.or.kosa.dto.Member">
+	SELECT memberid, universitycode, NAME, major, email, gender, phone, parentsphone, domitoryname, room, memberpoint 
+	FROM MEMBER WHERE memberid=#{param1} AND universitycode=#{param2}
+	</select>
 	
 	
 </mapper>
