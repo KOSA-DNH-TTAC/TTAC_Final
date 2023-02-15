@@ -26,6 +26,9 @@ public interface AdminDao {
 	// 벌점 이력
 	public List<DemeritHistory> memberDemeritHistory(String memberId);
 	
+	// 퇴소 조치
+	public void memberGetOut(String memberId);
+	
 	
 	
 	// 시설 조회

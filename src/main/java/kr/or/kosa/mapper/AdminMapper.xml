@@ -9,15 +9,15 @@ PUBLIC "-//mybatis.org//DTD Mapper 3.0//EN"
 	<select id="getMemberInfo" parameterType="String"
 		resultType="kr.or.kosa.dto.Member">
 		SELECT memberid, universitycode, NAME, major, email, gender, phone,
-		parentsphone, domitoryname, room, memberpoint
-		FROM MEMBER WHERE memberid=#{param1} AND universitycode=#{param2}
+		parentsphone, domitoryname, room, memberpoint, status
+		FROM MEMBER WHERE memberid=#{param1} AND universitycode=#{param2} AND status='1'
 	</select>
 
 	<!-- 기숙사생 검색 -->
 	<select id="searchMember" parameterType="hashmap"
 		resultType="kr.or.kosa.dto.Member">
 		SELECT m.memberid, m.universitycode, m.NAME, m.major, m.email,
-		m.gender, m.phone,
+		m.gender, m.phone, m.status,
 		m.parentsphone, m.domitoryname, m.room, m.memberpoint, m.demerit, a.auth
 		FROM MEMBER m LEFT JOIN MEMBERAUTH a ON m.MEMBERID = a.MEMBERID
 		WHERE a.auth = 'ROLE_MEMBER' AND m.universitycode=#{param1} AND
@@ -32,11 +32,11 @@ PUBLIC "-//mybatis.org//DTD Mapper 3.0//EN"
 
 
 	<!-- 기숙사생 벌점 -->
+	<!-- 트랜잭션 처리 -->
 	<insert id="insertDemerit">
 		INSERT INTO DEMERITHISTORY(memberId, demerit, demeritDate, demeritReason)
 		VALUES(#{memberId}, #{demerit}, NOW(), #{demeritReason});
 	</insert>
-
 	<update id="updateDemerit">
 		UPDATE MEMBER SET demerit = demerit + #{param1}
 		WHERE memberid = #{param2};
@@ -47,6 +47,11 @@ PUBLIC "-//mybatis.org//DTD Mapper 3.0//EN"
 		SELECT * FROM DEMERITHISTORY
 		WHERE memberid=#{param1};
 	</select>
+	
+	<!-- 퇴소 처리 -->
+	<update id="memberGetOut">
+	UPDATE MEMBER SET STATUS='88' WHERE memberid=#{param}
+	</update>
 
 
 

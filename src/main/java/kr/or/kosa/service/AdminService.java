@@ -76,16 +76,20 @@ public class AdminService {
 	// 벌점 이력 보기
 	public List<DemeritHistory> memberDemeritHistory(String memberId) {
 		AdminDao adminDao = sqlsession.getMapper(AdminDao.class);
-		System.out.println("?");
 		List<DemeritHistory> demeritHistory = new ArrayList<DemeritHistory>();
 		demeritHistory = adminDao.memberDemeritHistory(memberId);
 		
 		for (DemeritHistory d : demeritHistory) {
 			d.setDemeritDate(d.getDemeritDate().substring(0, 10));
 		}
-		
-		System.out.println("Service: " + demeritHistory);
 		return demeritHistory;
+	}
+	
+	// 퇴소 조치
+	public void memberGetOut(String memberId) {
+		AdminDao adminDao = sqlsession.getMapper(AdminDao.class);
+		adminDao.memberGetOut(memberId);
+		System.out.println("퇴소 서비스 돌앗당.");
 	}
 	
 }

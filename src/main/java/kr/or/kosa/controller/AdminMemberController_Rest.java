@@ -75,5 +75,12 @@ public class AdminMemberController_Rest {
 			@PathVariable("demerit") String demerit, @PathVariable("demeritReason") String demeritReason) {
 		adminService.memberDemerit(memberId, demerit, demeritReason);
 	}
+	
+	// 퇴소 조치
+	@RequestMapping("/admin/memberInfo/getout/{memberId}")
+	public void memberGetOut(@PathVariable("memberId") String memberId) {
+		adminService.memberGetOut(memberId);
+		System.out.println("컨트롤러 돌앗당.");
+	}
 
 }

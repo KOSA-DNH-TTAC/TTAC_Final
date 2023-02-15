@@ -319,3 +319,13 @@ div.wrap {
 #getout2 {
 	padding: 0 !important;
 }
+
+#memberinfotable {
+	margin-bottom: 40px !important;
+	overflow-y: scroll;
+}
+
+#tablescroll {
+	height:100px; 
+	overflow-y: scroll;
+}
