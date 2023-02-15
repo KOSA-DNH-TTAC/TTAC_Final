@@ -25,4 +25,15 @@ public class CommonController {
 		model.addAttribute("userid", user.getUsername());
 		return "chat";
 	}
+	
+	@GetMapping("/forgot")
+	public String findPw() {
+		return "common/forgotPw";
+	}
+	
+	//인증 메일 발송
+	@GetMapping("/forgotMail")
+	public String email() {
+		return null;
+	}
 }
