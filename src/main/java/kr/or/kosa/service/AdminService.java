@@ -32,9 +32,9 @@ public class AdminService {
 		List<Member> infoList = new ArrayList<Member>();
 		AdminDao adminDao = sqlsession.getMapper(AdminDao.class);
 		User user = (User) SecurityContextHolder.getContext().getAuthentication().getPrincipal();
-
+		
 		infoList = adminDao.getMemberInfo(memberId, user.getUniversityCode());
-
+		
 		return infoList;
 	}
 	
