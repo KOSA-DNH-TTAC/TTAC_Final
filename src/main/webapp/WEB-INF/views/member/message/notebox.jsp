@@ -195,9 +195,6 @@
 			var wantDateFormat = year + "-" + month + "-" + date;
 			return wantDateFormat;
 		}
-		$(document).ready(function () {
-			getAllHistory();
-		})
 
     function getFirstMsgList(){
       $.ajax({
