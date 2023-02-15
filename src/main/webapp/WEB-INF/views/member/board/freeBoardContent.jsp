@@ -133,8 +133,8 @@
 
 										</div>
 
-										<b><i class="bi bi-chat-dots"></i>&nbsp;
-											${boardContent.replyCount}</b>
+										<i class="bi bi-chat-dots"></i>&nbsp;
+										<b id="hjreplycount">${boardContent.replyCount}</b>
 										<hr>
 									</c:forEach>
 									<div class="box">
@@ -153,26 +153,6 @@
 									</div>
 								</div>
 								<!-- End blog entries list -->
-
-
-								<!-- <hr>
-								<div class="hjreply">
-									<li class="ybreply2"><button class="toMessage" seq="
-									+ data.replyContent[index].memberId +
-									`data-replyIdx="
-									data.replyContent[index].replyIdx
-									data-parentReplyIdx="'
-									data.replyContent[index].parentReplyIdx
-									>익명&ensp;</button>'
-									</li><span class="replyDate">'
-									data.replyContent[index].replyDate;
-									</span><div style="clear:both"></div><li class="replyContent">'
-									data.replyContent[index].replyContent
-									</li><button class="reSubmit">답댓글 쓰기</button><br>'
-									<div id="replyIdx2" style="display:none">'
-									data.replyContent[index].replyIdx
-									</div>
-								</div><hr> -->
 
 								<div class="col-lg-4">
 
@@ -267,15 +247,16 @@
 			text: "되돌릴 수 없어요!",
 			icon: 'warning',
 			showCancelButton: true,
-			confirmButtonColor: '#3085d6',
-			cancelButtonColor: '#d33',
+			confirmButtonColor: '#e96b56',
+			cancelButtonColor: 'grey',
 			confirmButtonText: 'DELETE'
 			}).then((result) => {
 			if (result.isConfirmed) {
 				$.ajax({
 					type: "delete",
 					url: '/board/reply/' + replyidx,
-					success: function(){
+					success: function(result){
+						console.log(result);
 						replyContent();
 						Swal.fire(
 						'삭제완료!',
@@ -356,6 +337,7 @@
 
 		var currentId = "${prc.memberId}"
 		console.log(currentId);
+		
 		// 추천 아이콘 Ajax
 		$.ajax({
 			type: "get",
@@ -380,11 +362,16 @@
 			url: '/board/' + param + '/' + idx + '/reply',
 			contentType: "application/json; charset=utf-8",
 			success: function (data) {
+				console.log(data);
 
+				let replyCount = data.replyContent.length;
+				let rereplyCount = data.reReplyContent.length;
+				console.log(replyCount + rereplyCount);
+				let totalcount = replyCount + rereplyCount;
 				var replyContent = "";
-
 				$('#replyDiv').empty();
-
+				$('#hjreplycount').empty();
+				$('#hjreplycount').append(totalcount);
 				$.each(data.replyContent, function (index, reply) {
 					// console.log(reply);
 					if (data.replyContent[index].parentReplyIdx == '0') {
@@ -396,11 +383,11 @@
 							<li class="ybreply2"><button class="toMessage"
 							seq="`+ reply.memberId + `data-replyIdx="` + reply.replyIdx+ '" data-parentReplyIdx="'+ reply.parentReplyIdx+ '">익명&ensp;</button></li>'
 							if(reply.memberId == currentId){
-								replyContent += `<button class="updateReply" onclick="deleteClick(this)">삭제</button>`;
+								replyContent += `<button class="deleteReply" onclick="deleteClick(this)">삭제</button>`;
 							}
 							replyContent += '<span class="replyDate">'+ reply.replyDate +'</span>'
 							+ '<div style="clear:both"></div>'
-							+ `<li class="replyContent">`;
+							+ `<li class="replyContent">` + reply.replyContent;
 								// if(reply.status=='22'){
 								// 	replyContent += "<p id='hjdelre'>삭제된 댓글입니다.</p>"
 								// }else{
@@ -415,23 +402,27 @@
 							
 							if (rere.parentReplyIdx == pIdx) {
 								replyContent +=
-									'<div class="rereply">'+
+									'<div class="rereply"><div class="hjreply" id="' + rere.replyIdx + '">'+
 									'<li class="ybreply3"><i class="bi bi-arrow-return-right">&ensp;</i><button class="toMessage" seq"'
 									+ data.reReplyContent[index].memberId
 									+ '" data=replyIdx="'
 									+ data.reReplyContent[index].replyIdx
 									+ '" data=parentReplyIdx"'
-									+ data.reReplyContent[index].parentReplyIdx
-									+ '">익명&ensp;</button></li><span class="replyDate">'
+									+ data.reReplyContent[index].parentReplyIdx+'">익명&ensp;</button></li>'
+									if(rere.memberId == currentId){
+										replyContent += `<button class="deleteReply" onclick="deleteClick(this)">삭제</button>`;
+									}
+									replyContent += '<span class="replyDate">'
 									+ data.reReplyContent[index].replyDate
 									+ '</span><div style="clear:both"></div><li class="replyContent">&emsp;&ensp;'
 									+ data.reReplyContent[index].replyContent
 									+ '</li><br><div class="replyDown">'
 									+ '<div id="replyIdx3" style="display:none">'
 									+ data.reReplyContent[index].replyIdx
-									+ '"</div></div><hr>'
+									+ '"</div></div></div><hr>'
 							}
 						})
+					replyContent +="</div>"
 					}
 
 				})

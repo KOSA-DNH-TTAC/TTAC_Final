@@ -74,7 +74,7 @@ public class BoardController {
 	// 커스텀 생성 게시판
 	@GetMapping("/board/custom/{boardName}")
 	public String boardList(Model model, @PathVariable String boardName) {
-		List<Post> boardList = boardService.customBoardList(boardName);
+		List<Post> boardList = boardService.allBoardList(boardName);
 		model.addAttribute("boardList", boardList);
 		model.addAttribute("boardName", boardName);
 
@@ -87,11 +87,11 @@ public class BoardController {
 			@PathVariable("boardName") String boardName) {
 		
 		User user = (User) SecurityContextHolder.getContext().getAuthentication().getPrincipal();
-		String param = "";
+//		String param = "";
 		String path = "";
 		String extension = "";
 		String url = "";
-		
+		System.out.println("보드네임 : " + boardName);
 		List<Post> boardContent = boardService.boardContent(idx);
 		
 		//컨트롤러에서 받아온 파일 리스트
@@ -99,17 +99,17 @@ public class BoardController {
 //		System.out.println("컨트롤러 fileContent : "+fileContent);
 
 		if (boardName.equals("noticeList")) {
-			param = "공지사항";
+//			param = "공지사항";
 			path = "noticeContent";
 			System.out.println("공지돌고잇니?");
 		} else if (boardName.equals("opinionList")) {
-			param += "건의사항";
+//			param += "건의사항";
 			path = "opinionContent";
 		} else if (boardName.equals("freeBoardList")) {
-			param += "자유게시판";
+//			param += "자유게시판";
 			path = "freeBoardContent";
 		} else if (boardName.equals("productBoardList")) {
-			param += "거래게시판";
+//			param += "거래게시판";
 			path = "productBoardContent";
 		}
 

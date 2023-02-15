@@ -58,12 +58,18 @@ public class AdminService {
 	
 	// 벌점
 	@Transactional(rollbackFor = Exception.class)
-	public void memberDemerit(DemeritHistory demeritHistory, String demerit, String memberid) {
+	public void memberDemerit(String memberId, String demerit, String demeritReason) {
 		AdminDao adminDao = sqlsession.getMapper(AdminDao.class);
-		
+		int demerit2 = Integer.parseInt(demerit);
 		DemeritHistory result = new DemeritHistory();
-		adminDao.insertDemerit(demeritHistory);
-		adminDao.updateDemerit(demerit, memberid);
+
+		result.setMemberId(memberId);
+		result.setDemerit(demerit2);
+		result.setDemeritReason(demeritReason);
+
+		System.out.println(result);
+		adminDao.insertDemerit(result);
+		adminDao.updateDemerit(demerit2, memberId);
 		
 	}
 	

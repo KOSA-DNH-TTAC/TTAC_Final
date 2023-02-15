@@ -76,10 +76,7 @@
 									<h1>기숙사 통합관리 솔루션</h1>
 								</a></li>
 							<li class="smenu"><a href="/admin/adminMember" class="msub on">회원관리</a>
-								<ul class="sub ">
-									<li><a href="/admin/adminMember">회원현황</a></li>
-									<li><a href="../sub01/sub01_02.php">벌점관리</a></li>
-								</ul>
+								
 							</li>
 							<li class="smenu"><a href="/admin/coupon">식권관리</a></li>
 							<li class="smenu"><a href="/admin/popular">외박관리</a>
@@ -169,7 +166,7 @@ $(document).ready(function(){
 					<th width="19%">학과</th>
 					<th width="19%">휴대폰</th>
 					<th width="19%">보호자 연락처</th>
-					<th width="15%">기숙사</th>
+					<th width="15%">퇴소</th>
 				</tr>
 				<tr class="plusMemberInfo">
 								
@@ -214,16 +211,16 @@ $(document).ready(function(){
 				type: "get",
 				url: "/admin/allmember",
 				success: function (result) {
-					console.log(result);
-					//테이블에 append 해줌 (getTodays)
+
 					$('#membertable').empty();
 					let contents = `<tbody style='overflow: auto;'>` +
 				`<tr>		
-					<th>순번</th>
-					<th>학번</th>
-					<th>이름</th>
-					<th>전화번호</th>
-					<th>벌점</th>
+					<th width='8%'>순번</th>
+					<th width='17%'>학번</th>
+					<th width='11%'>이름</th>
+					<th width='19%'>전화번호</th>
+					<th width='15%'>기숙사</th>
+					<th width='8%'>벌점</th>
 				</tr>`
 
 				$.each(result.list, function(index, member){
@@ -234,6 +231,7 @@ $(document).ready(function(){
 						+ member.memberId + `</div></td>
 						<td>` + member.name + `</td>	
 						<td>` + member.phone + `</td>
+						<td>` + member.domitoryName + `&nbsp;` + member.room + `</td>
 						<td>` + member.demerit + `</td>
 					</tr></button>`
 
@@ -275,17 +273,16 @@ $(document).ready(function(){
 	    	type: "get",
 	    	url: "/admin/memberInfo/search/" + radio + "/" + inputBoxValue,
 				success: function (data) {
-					
-					console.log("클릭")
-					
+										
 					$('#membertable').empty();
 					let contents = `<tbody>` +
 				`<tr>		
-					<th>순번</th>
-					<th>학번</th>
-					<th>이름</th>
-					<th>전화번호</th>
-					<th>벌점</th>
+					<th width='8%'>순번</th>
+					<th width='17%'>학번</th>
+					<th width='11%'>이름</th>
+					<th width='19%'>전화번호</th>
+					<th width='15%'>기숙사</th>
+					<th width='8%'>벌점</th>
 				</tr>`
 
 				$.each(data, function(index, member){
@@ -296,6 +293,7 @@ $(document).ready(function(){
 						+ member.memberId + `</div></td>
 						<td>` + member.name + `</td>	
 						<td>` + member.phone + `</td>
+						<td>` + member.domitoryName + `&nbsp;` + member.room + `</td>
 						<td>` + member.demerit + `</td>
 					</tr></button>`
 
@@ -319,15 +317,28 @@ $(document).ready(function(){
 			"click",
 			".memberrow", function memberrow() {
 				var memberId = $(this).find("#memberId").text();			
-				var memberInfo = "";
-				var inputDemerit = "";
+				
+				
+				memberAllList(memberId);
+				
+			 // 회원 정보 출력 ajax end
 			
+			// 회원 벌점 이력 출력
+			memberDemeritHistory(memberId);
+			}
+		) // document.on end
+
+		
+		function memberAllList(memberId) {
+		 
+		 var memberInfo = "";
+		 
 			$.ajax({
 				type: "get",
 				url: "/admin/memberInfo/" + memberId,
 				success: function (data) {
 					
-					memberInfo += "<td>"
+					memberInfo += "<td id='demeritId'>"
 					+ data[0].memberId 
 					+ "</td><td>"
 					+ data[0].name
@@ -337,18 +348,22 @@ $(document).ready(function(){
 					+ data[0].phone
 					+ "</td><td>"
 					+ data[0].parentsPhone
-					+ "</td><td>"
-					+ data[0].domitoryName + "&nbsp;" + data[0].room
-					+ "</td><br>"		
+					+ "</td><td id='getout2'>"
+					+ "<div id='getout'>퇴소</div>"
+					+ "</td><br>"
 	
 					$('.plusMemberInfo').empty();
 					$('.plusMemberInfo').append(memberInfo);
-
-					
-				}
-			}) // 회원 정보 출력 ajax end
-			
-			// 벌점 이력 출력
+		} 
+	}) 
+}
+		
+		
+		function memberDemeritHistory(uid){
+		 
+		 var memberId = uid;	
+		 var inputDemerit = "";
+		
 			$.ajax({
 				type: "get",
 				url: "/admin/memberInfo/demerit/" + memberId,
@@ -378,24 +393,41 @@ $(document).ready(function(){
 					})
 					
 					inputDemerit += "</tbody></table>"
-					
 					+ "<h4 id='demeritSum'>총 "
 					+ demeritSum
-					+ "점</h4>"
-					
+					+ "점</h4><div style='line-height:50%'><br><br></div>"
+					+ "<input class='inputbox' style='width:30%' type='text' placeholder='벌점'></input>"
+					+ "<input class='inputbox' style='width:50%' type='text' placeholder='사유'></input>"
+					+ "<button class='btn_demerit'>벌점 주기</button>"
 					
 					$('.inputDemerit').empty();
 					$('.inputDemerit').append(inputDemerit);
 					
 				}
-			}) // 벌점 이력 출력 ajax end
-			
-							
-			
-			}) // document.on end
+			})
+		 
+	 }
+		
+		$(document).on(					
+				"click",
+				".btn_demerit", function btn_demerit() {	
+					
+					var demeritId = $("#demeritId").text();					
+					var demerit = $('.inputbox:first').val();
+				    var demeritReason = $('.inputbox:last').val();
+				    console.log('벌점:', demerit);
+				    console.log('사유:', demeritReason);
+				
+				    $.ajax({
+						type: "post",
+						url: "/admin/memberInfo/demerit/" + demeritId + "/" + demerit + "/" + demeritReason,
+						success: function (data) {
+							memberDemeritHistory(demeritId);
+							getMemberList();
+						}
+		});
 
-		
-		
+		})
 		
 		
 		
