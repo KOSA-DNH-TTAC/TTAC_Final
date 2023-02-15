@@ -20,6 +20,8 @@
 <link href="/resources/assets/css/menu.css" rel="stylesheet">
 <link href="/resources/assets/css/category.css" rel="stylesheet">
 <link href="/resources/assets/css/graph.css" rel="stylesheet">
+<link href="/resources/assets/css/yb.css" rel="stylesheet">
+
 
 		<!-- <script type="text/javascript" src="resources/assets/js/pg_script.js"></script> -->
 		<!-- <script type="text/javascript" src="resources/assets/js/jquery-2.1.4.js"></script> -->
@@ -37,8 +39,11 @@
 
 		<!-- Jquery -->
 		<script src="http://code.jquery.com/jquery-latest.min.js"></script>
+		
+		<!-- Sweet Alert -->
+		<script src="https://cdn.jsdelivr.net/npm/sweetalert2@11"></script>
 <style>
-	tr:hover{
+	.memberrow:hover{
 		background-color:#f5f5f5;
 		color: #e96b56;
 		transition: 0.3s;
@@ -55,7 +60,7 @@
 					<ul>
 					
 						<li class="menu last">
-							<button class="btn_sumit ml네일아트" onclick="document.location.href='/bbs/logout.php';">로그아웃</button><button class="btn_sumit blbtn ml네일아트" onclick="document.location.href='/';">홈페이지</button>
+							<button class="btn_sumit ml네일아트" onclick="document.location.href='/logout';">로그아웃</button><button class="btn_sumit blbtn ml네일아트" onclick="document.location.href='/';">홈페이지</button>
 						</li> <!--.menu.g1-->
 
 					</ul>
@@ -69,17 +74,15 @@
 
 		<div class="subcon">
 	<div class="leftcon">
-	<nav id="sidemenu">
+	<nav id="sidemenu" style="text-align:left">
 						<ul class="submenu">
 							<li class="smenu" style="background-color:#4D6794; color:white;"><a href="/admin/coupon">
 									<h1>기숙사 통합관리 솔루션</h1>
 								</a></li>
 							<li class="smenu"><a href="/admin/adminMember" class="msub on">회원관리</a>
-								<ul class="sub ">
-									<li><a href="/admin/adminMember">회원현황</a></li>
-									<li><a href="../sub01/sub01_02.php">벌점관리</a></li>
-								</ul>
+								
 							</li>
+							<li class="smenu"><a href="/admin/board">커뮤니티관리</a>
 							<li class="smenu"><a href="/admin/coupon">식권관리</a></li>
 							<li class="smenu"><a href="/admin/popular">외박관리</a>
 								<ul class="sub ">
@@ -120,15 +123,10 @@ $(document).ready(function(){
 </script>
 
 </div>	<div class="con">
-		<h3 class="sub_h3">회원관리 <span>회원현황</span></h3>
+		<h3 class="sub_h3" style="text-align:left">회원관리 <span>회원현황</span></h3>
 <div class="bmb">
 	<div class="bgtab">
-		<div class="w50 fl">
-			<h3 class="txtin">회원 조회</h3>	
-		</div>
-		<div class="w50 fl tar">
-			<a  class="btn_sumit2"">엑셀다운로드</a>
-		</div>
+	<h3 class="txtin" id="excelCenter" style="text-align:left">회원 조회</h3>
 	</div>
 	<table class="srch_table mb20">	
 		<colgroup>
@@ -140,222 +138,47 @@ $(document).ready(function(){
 		<tr>
 			<th>검색어</th>
 			<td colspan="3">
-				<div class="txtin">
-					<label class="mr10"><input type="radio" value=""> 전체</label>  
-					<label class="mr10"><input type="radio" value=""> 학번</label>  
-					<label class="mr10"><input type="radio" value=""> 이름</label>
-					<label class="mr10"><input type="radio" value=""> 학과</label>
+				<div class="txtin" style="text-align:left;">
+					<label class="mr10"><input type="radio" name="search" checked="checked">전체</label>  
+					<label class="mr10"><input type="radio" name="search">학번</label>  
+					<label class="mr10"><input type="radio" name="search">이름</label>
+					<label class="mr10"><input type="radio" name="search">건물</label>
+					<label class="mr10"><input type="radio" name="search">호수</label>
+					<input type="text" style="width:60%"></input>
+					<button type="button" class="btn_submit3" style="float:right; width:100px;">검색</button>
 				</div>
-			</td>				
-		</tr>	
-		<tr>
-			<th>기간</th>
-			<td colspan="3">
-				<input class="form-select1" type="date" id="start" name="trip-start" value="2000-10-04">
-				 - <input class="form-select1" type="date" id="end" name="trip-start" value="2000-10-04">&nbsp;&nbsp;
-				<ul class="dpi_li dpi">
-					<li><a href="#" class="btn_sumit">전체</a></li>
-				</ul>
-			</td>				
+			</td>
 		</tr>
-	</table>
-	<div class="ok_btn">
-		<ul>
-			<li><button type="button" class="btn_sumit2" >검색</button></li>
-		</ul>
-	</div>	
+	</table>	
 </div>
 
 <div class="ofh">
 	<div class="halfcon mr">		
 		<h4 class="bgtab bgtab2">회원 목록</h4>
 		<table class="comm_table tac bmb" id="membertable">	
-			<tbody>
-				<tr>		
-					<th>순번</th>
-					<th colspan="2">이름</th>
-					<th>학번</th>
-					<th>학과</th>
-					<th>전화</th>
-				</tr>
-				<tr>
-					<td>1</td>
-					<td><img src="../img/no_img.gif" width="50px" alt=""/></td>
-					<td class="tal">임준한</td>
-					<td>20171839</td>	
-					<td>실버산업</td>
-					<td>01012345678</td>					
-				</tr>
-				<tr>
-					<td>2</td>
-					<td><img src="../img/no_img.gif" width="50px" alt=""/></td>
-					<td class="tal">도현정</td>
-					<td>20135241</td>	
-					<td>귤감별사</td>
-					<td>01012345678</td>					
-				</tr>
-				<tr>
-					<td>3</td>
-					<td><img src="../img/no_img.gif" width="50px" alt=""/></td>
-					<td class="tal">고범종</td>
-					<td>20145875</td>	
-					<td>해커학과</td>
-					<td>01045678955</td>					
-				</tr>
-				<tr>
-					<td>4</td>
-					<td><img src="../img/no_img.gif" width="50px" alt=""/></td>
-					<td class="tal">박예빈</td>
-					<td>20157845</td>	
-					<td>치킨학과</td>
-					<td>01098745632</td>					
-				</tr>
-				<tr>
-					<td>5</td>
-					<td><img src="../img/no_img.gif" width="50px" alt=""/></td>
-					<td class="tal">노현중</td>
-					<td>맞장구치기</td>	
-					<td>103</td>
-					<td>10</td>					
-				</tr>
-				<tr>
-					<td>6</td>
-					<td><img src="../img/no_img.gif" width="50px" alt=""/></td>
-					<td class="tal">노다영</td>
-					<td>난리부리기</td>	
-					<td>103</td>
-					<td>10</td>					
-				</tr>
-				<tr>
-					<td>7</td>
-					<td><img src="../img/no_img.gif" width="50px" alt=""/></td>
-					<td class="tal">경아리</td>
-					<td>감말리기</td>	
-					<td>103</td>
-					<td>10</td>					
-				</tr>
-				<tr>
-					<td>8</td>
-					<td><img src="../img/no_img.gif" width="50px" alt=""/></td>
-					<td class="tal">회원이름</td>
-					<td>20,000원</td>	
-					<td>103</td>
-					<td>10</td>					
-				</tr>
-				<tr>
-					<td>9</td>
-					<td><img src="../img/no_img.gif" width="50px" alt=""/></td>
-					<td class="tal">회원이름</td>
-					<td>20,000원</td>	
-					<td>103</td>
-					<td>10</td>					
-				</tr>
-				<tr>
-					<td>10</td>
-					<td><img src="../img/no_img.gif" width="50px" alt=""/></td>
-					<td class="tal">회원이름</td>
-					<td>20,000원</td>	
-					<td>103</td>
-					<td>10</td>					
-				</tr>
-			</tbody>
+			
 		</table>
 
 
 	</div>
 	<div class="halfcon">
 		<h4 class="bgtab bgtab2">회원 정보 상세</h4>
-		<table class="comm_table tac bmb" id="memberinfotable">	
+		<table class="comm_table tac bmb" id="memberinfotable">
 			<tbody>
-				<tr>		
-					<th>순번</th>
-					<th colspan="2">이름</th>
-					<th>학번</th>
-					<th>학과</th>
-					<th>전화</th>
-				</tr>
 				<tr>
-					<td>1</td>
-					<td><img src="../img/no_img.gif" width="50px" alt=""/></td>
-					<td class="tal">회원이름</td>
-					<td>20,000원</td>	
-					<td>103</td>
-					<td>10</td>					
+					<th width="17%">학번</th>
+					<th width="11%">이름</th>
+					<th width="19%">학과</th>
+					<th width="19%">휴대폰</th>
+					<th width="19%">보호자 연락처</th>
+					<th width="15%">퇴소</th>
 				</tr>
-				<tr>
-					<td>2</td>
-					<td><img src="../img/no_img.gif" width="50px" alt=""/></td>
-					<td class="tal">회원이름</td>
-					<td>20,000원</td>	
-					<td>103</td>
-					<td>10</td>					
-				</tr>
-				<tr>
-					<td>3</td>
-					<td><img src="../img/no_img.gif" width="50px" alt=""/></td>
-					<td class="tal">회원이름</td>
-					<td>20,000원</td>	
-					<td>103</td>
-					<td>10</td>					
-				</tr>
-				<tr>
-					<td>4</td>
-					<td><img src="../img/no_img.gif" width="50px" alt=""/></td>
-					<td class="tal">회원이름</td>
-					<td>20,000원</td>	
-					<td>103</td>
-					<td>10</td>					
-				</tr>
-				<tr>
-					<td>5</td>
-					<td><img src="../img/no_img.gif" width="50px" alt=""/></td>
-					<td class="tal">회원이름</td>
-					<td>20,000원</td>	
-					<td>103</td>
-					<td>10</td>					
-				</tr>
-				<tr>
-					<td>6</td>
-					<td><img src="../img/no_img.gif" width="50px" alt=""/></td>
-					<td class="tal">회원이름</td>
-					<td>20,000원</td>	
-					<td>103</td>
-					<td>10</td>					
-				</tr>
-				<tr>
-					<td>7</td>
-					<td><img src="../img/no_img.gif" width="50px" alt=""/></td>
-					<td class="tal">회원이름</td>
-					<td>20,000원</td>	
-					<td>103</td>
-					<td>10</td>					
-				</tr>
-				<tr>
-					<td>8</td>
-					<td><img src="../img/no_img.gif" width="50px" alt=""/></td>
-					<td class="tal">회원이름</td>
-					<td>20,000원</td>	
-					<td>103</td>
-					<td>10</td>					
-				</tr>
-				<tr>
-					<td>9</td>
-					<td><img src="../img/no_img.gif" width="50px" alt=""/></td>
-					<td class="tal">회원이름</td>
-					<td>20,000원</td>	
-					<td>103</td>
-					<td>10</td>					
-				</tr>
-				<tr>
-					<td>10</td>
-					<td><img src="../img/no_img.gif" width="50px" alt=""/></td>
-					<td class="tal">회원이름</td>
-					<td>20,000원</td>	
-					<td>103</td>
-					<td>10</td>					
+				<tr class="plusMemberInfo">
+								
 				</tr>
 			</tbody>
 		</table>
+		<div class="inputDemerit"></div>
 	</div>
 </div>
 
@@ -369,7 +192,7 @@ $(document).ready(function(){
 
 
 		<div id="footer">
-		<p>Copyright(c)뷰티몰 쇼핑몰관리시스템. All rights reserved. supported by <a href="http://www.cmaru.com" target="_blank">크리에이티브마루.</a></p>
+		<p>Copyright(c) 기숙사 통합 관리 시스템. All rights reserved. supported by ttac.</a></p>
 	</div>
 
 	<div id="pageup">
@@ -380,49 +203,42 @@ $(document).ready(function(){
 
 
 </body>
-<!-- litebox 
-		<script type="text/javascript" src="resources/assets/js/hs_draggable.js"></script>
-		<script type="text/javascript" src="resources/assets/js/jquery-ui.min.js"></script>
-		<link rel="stylesheet" media="all" href="/resources/assets/css/litebox.css" />
-		<script type="text/javascript" src="resources/assets/js/litebox.js"></script>
-		<script type="text/javascript" src="resources/assets/js/backbone.js"></script>
-		<script type="text/javascript" src="resources/assets/js/images-loaded.min.js"></script>
-		<script type="text/javascript">
-			$('.litebox').liteBox();
-		</script>
- litebox -->
-<script>
-	function test(){
-		console.log("hi?");
-		console.log(this);
-	}
 
-	$(document).ready(function(){
+<script>
+
+	$(document).ready(function() {
+		// 회원 목록 부르기
+		getMemberList();
+	})
+	
+	function getMemberList(){
 		$.ajax({
 				type: "get",
 				url: "/admin/allmember",
 				success: function (result) {
-					console.log(result);
-					//테이블에 append 해줌 (getTodays)
+
 					$('#membertable').empty();
-					let contents = `<tbody>
-				<tr>		
-					<th>순번</th>
-					<th>학번</th>
-					<th>이름</th>
-					<th>전화번호</th>
-					<th>벌점</th>
+					let contents = `<tbody style='overflow: auto;'>` +
+				`<tr>		
+					<th width='6%'>순번</th>
+					<th width='17%'>학번</th>
+					<th width='11%'>이름</th>
+					<th width='19%'>전화번호</th>
+					<th width='15%'>기숙사</th>
+					<th width='6%'>벌점</th>
 				</tr>`
 
 				$.each(result.list, function(index, member){
 
-					contents += `<input type="button"><tr class="memberrow" onclick="test()">
+					contents += `<tr class="memberrow">
 						<td><b>` + (++index) +`</b></td>
-						<td class="tal">` + member.memberId + `</td>
+						<td><div id="memberId">` 
+						+ member.memberId + `</div></td>
 						<td>` + member.name + `</td>	
 						<td>` + member.phone + `</td>
-						<td>` + member.demerit + `</td>					
-					</tr></input>`
+						<td>` + member.domitoryName + `&nbsp;` + member.room + `</td>
+						<td>` + member.demerit + `</td>
+					</tr>`
 
 				})
 				contents += `</tbody></table>`;
@@ -434,6 +250,225 @@ $(document).ready(function(){
 					console.log("code:" + request.status + "\n" + "message:" + request.responseText + "\n" + "error:" + error);
 				}
 			})
-	})
+		}
+	
+	function search(){
+		
+		var selectedRadioText = $('input[name="search"]:checked').parent().text();
+	    var inputBoxValue = $('.txtin input[type="text"]').val();
+	    
+	    console.log(selectedRadioText);
+	    console.log(inputBoxValue);
+	    
+	    var searchMemberData = "";
+	    
+	    if (selectedRadioText == '전체') {
+	    	getMemberList();
+	    } else if (selectedRadioText == '학번') {
+	    	radio = "memberId";
+	    } else if (selectedRadioText == '이름') {
+	    	radio = "name";
+	    } else if (selectedRadioText == '건물') {
+	    	radio = 'domitoryName';
+	    } else if (selectedRadioText == '호수') {
+	    	radio = 'room';
+	    }
+	    
+	    $.ajax({
+	    	type: "get",
+	    	url: "/admin/memberInfo/search/" + radio + "/" + inputBoxValue,
+				success: function (data) {
+										
+					$('#membertable').empty();
+					let contents = `<tbody>` +
+				`<tr>		
+					<th width='6%'>순번</th>
+					<th width='17%'>학번</th>
+					<th width='11%'>이름</th>
+					<th width='15%'>전화번호</th>
+					<th width='15%'>기숙사</th>
+					<th width='6%'>벌점</th>
+				</tr>`
+
+				$.each(data, function(index, member){
+
+					contents += `<tr class="memberrow">
+						<td><b>` + (++index) +`</b></td>
+						<td class="tal"><div id="memberId">` 
+						+ member.memberId + `</div></td>
+						<td>` + member.name + `</td>	
+						<td>` + member.phone + `</td>
+						<td>` + member.domitoryName + `&nbsp;` + member.room + `</td>
+						<td>` + member.demerit + `</td>
+					</tr>`
+
+				})
+				contents += `</tbody></table>`;
+				$('#membertable').append(contents);
+				$('.plusMemberInfo').empty();
+				$('.inputDemerit').empty();
+				}
+	    })
+		
+	}
+	
+	 $(".btn_submit3").click(function() {
+		 search(); 
+			})
+	
+
+
+	$(document).on(					
+			"click",
+			".memberrow", function memberrow() {
+				var memberId = $(this).find("#memberId").text();			
+				
+				
+				memberAllList(memberId);
+				
+			 // 회원 정보 출력 ajax end
+			
+			// 회원 벌점 이력 출력
+			memberDemeritHistory(memberId);
+			}
+		) // document.on end
+
+		
+		function memberAllList(memberId) {
+		 
+		 var memberInfo = "";
+		 
+			$.ajax({
+				type: "get",
+				url: "/admin/memberInfo/" + memberId,
+				success: function (data) {
+					
+					memberInfo += "<td id='demeritId'>"
+					+ data[0].memberId 
+					+ "</td><td>"
+					+ data[0].name
+					+ "</td><td>"
+					+ data[0].major
+					+ "</td><td>"
+					+ data[0].phone
+					+ "</td><td>"
+					+ data[0].parentsPhone
+					+ "</td><td id='getout2'>"
+					+ "<div id='getout'>퇴소</div>"
+					+ "</td><br>"
+	
+					$('.plusMemberInfo').empty();
+					$('.plusMemberInfo').append(memberInfo);
+			} 
+		}) 
+	}
+	 
+	 	
+		function memberDemeritHistory(uid){
+		 
+		 var memberId = uid;	
+		 var inputDemerit = "";
+		
+			$.ajax({
+				type: "get",
+				url: "/admin/memberInfo/demerit/" + memberId,
+				success: function (data) {
+					
+					var demeritSum = 0;
+					
+					inputDemerit += 
+						"<h4 class='bgtab bgtab2'>벌점 이력</h4><table class='comm_table tac bmb' id='memberinfotable' style='margin-bottom:10px !important'><tbody><tr>"		
+					+ "<th width='25%'>날짜</th><th width='10%'>벌점</th>"
+					+ "<th width='65%'>사유</th></tr>"
+					
+					$.each(data, function(index){
+						
+						inputDemerit +=
+							"<tr><td>"
+							+ data[index].demeritDate 
+							+ "</td><td>"
+							+ data[index].demerit
+							+ "</td><td>"
+							+ data[index].demeritReason
+							+ "</td></tr>"
+					
+							
+						demeritSum += data[index].demerit;
+						
+					})
+					
+					inputDemerit += "</tbody></table>"
+					+ "<h4 id='demeritSum'>총 "
+					+ demeritSum
+					+ "점</h4><div style='line-height:50%'><br><br></div>"
+					+ "<input class='inputbox' style='width:30%' type='text' placeholder='벌점'></input>"
+					+ "<input class='inputbox' style='width:50%' type='text' placeholder='사유'></input>"
+					+ "<button class='btn_demerit'>벌점 주기</button>"
+					
+					$('.inputDemerit').empty();
+					$('.inputDemerit').append(inputDemerit);
+					
+				}
+			})
+		 
+	 }
+		
+		// 벌점 부여 ajax
+		$(document).on(					
+				"click",
+				".btn_demerit", function btn_demerit() {	
+					
+					var demeritId = $("#demeritId").text();					
+					var demerit = $('.inputbox:first').val();
+				    var demeritReason = $('.inputbox:last').val();
+				    
+				
+				    $.ajax({
+						type: "post",
+						url: "/admin/memberInfo/demerit/" + demeritId + "/" + demerit + "/" + demeritReason,
+						success: function (data) {
+							memberDemeritHistory(demeritId);
+							getMemberList();
+						}
+		});
+
+		})
+		
+		
+		// 퇴소 처리 ajax
+		$(document).on(					
+				"click",
+				"#getout", function memberGetOut() {	
+					
+			
+					var memberId = $("#demeritId").text();					
+					
+				    Swal.fire({
+						title: '퇴소 처리하시겠습니까?',
+						icon: 'warning',
+						showCancelButton: true,
+						confirmButtonColor: '#e96b56',
+						cancelButtonColor: 'grey',
+						confirmButtonText: 'DELETE'
+						}).then((result) => {
+						if (result.isConfirmed) {
+							 $.ajax({
+									type: "post",
+									url: "/admin/memberInfo/getout/" + memberId,
+									success: function (data) {
+										
+										$('.plusMemberInfo').empty();
+										getMemberList();
+									}
+								}) // ajax end
+						}
+						})
+
+				   
+
+		})
+		
+		
+		
 </script>
 </html>

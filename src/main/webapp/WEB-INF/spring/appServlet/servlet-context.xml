@@ -33,6 +33,7 @@
 
 	<websocket:handlers>
 		<websocket:mapping handler="chattingHandler" path="/chat"/>
+		<websocket:sockjs></websocket:sockjs>
 		</websocket:handlers>
 	<beans:bean id="chattingHandler" class="kr.or.kosa.chat.ChattingHandler"/>
 	

@@ -34,7 +34,7 @@
 					<ul>
 					
 						<li class="menu last">
-							<button class="btn_sumit ml네일아트" onclick="document.location.href='/bbs/logout.php';">로그아웃</button><button class="btn_sumit blbtn ml네일아트" onclick="document.location.href='/';">홈페이지</button>
+							<button class="btn_sumit ml네일아트" onclick="document.location.href='/logout';">로그아웃</button><button class="btn_sumit blbtn ml네일아트" onclick="document.location.href='/';">홈페이지</button>
 						</li> <!--.menu.g1-->
 
 					</ul>
@@ -57,6 +57,7 @@
 					<li ><a href="../sub01/sub01_02.php">벌점관리</a></li>
 				</ul>	
 			</li>	
+			<li class="smenu"><a href="/admin/board">커뮤니티관리</a>
 			<li class="smenu"><a href="/admin/coupon" >식권관리</a></li>
 			<li class="smenu"><a href="/admin/popular" >외박관리</a>
 			</li>
@@ -96,7 +97,89 @@ $(document).ready(function(){
 		}
 		return false;
 	});
+	
+	//페이지 로딩시 일정 리스트 로드
+	load();
+	
 });
+
+//신고 접수
+function insert(){
+	/* 셀렉트 옵션 값 가져오기 */
+	var date = $('#date').val();
+	var title = $('#title').val();
+	var content = $('#content').val();
+	var plan = [date, title, content];
+	console.log("plan : "+plan);
+	var tabledata = "";
+	
+	$.ajax({
+		type : "POST",
+		url : "/calendar/insert",
+		data : {
+			"plan" : plan,
+		}, 
+		success : function(data) {
+			$('#title').val('');
+			$('#content').val('');
+			$('#date').val('연도-월-일');
+			load();
+		},
+		error : function(data) {
+			alert("일정 등록 실패");
+		}
+	});
+}
+//일정 삭제(상태값 22로 업데이트)
+function confirm(schedule) {
+	var tr = $(schedule).closest('tr');
+	let index = tr.find('input[type=hidden]').val();
+	let datas = { "idx": index };
+	console.log(datas);
+
+	//ajax로 업데이트 함 (confirm N->Y)
+	$.ajax({
+		type: "get",
+		url: "/calendar/update",
+		dataType: "json",
+		data: datas,
+		success: function (result) {
+			console.log(result);
+			//테이블에 append 해줌 (getTodays)
+			load();
+		},
+		error: function (request, status, error) {
+			console.log("에러")
+			console.log("code:" + request.status + "\n" + "message:" + request.responseText + "\n" + "error:" + error);
+		}
+	})
+}
+
+//테이블 생성
+function load(){
+	var tabledata = "";
+	$.ajax({
+		type : "POST",
+		url : "/calendar/print",
+		success : function(data) {
+			 $.each(data, function(index,schedule) {
+	                tabledata +=
+	                	'<tr>'+
+							'<td style="text-align:center;">'+data[index].scheduleDate+'</td>'+
+							'<td style="text-align:center;">'+data[index].scheduleTitle+'</td>'+
+							'<td style="text-align:center;">'+data[index].scheduleContent+'</td>'+
+							'<td style="text-align:center;"><button onclick="confirm(this)">삭제</button></td>'+
+							'<input type="hidden" value="' + schedule.scheduleIdx + '" >'+
+						'</tr>'
+	                    })
+			$('#table').empty();
+			$('#table').append(tabledata);
+		},
+		error : function(data) {
+			alert("일정 등록 실패");
+		}
+	});
+}
 </script>
 
 </div>	<div class="con">
@@ -109,7 +192,9 @@ $(document).ready(function(){
 
 <!--일정정보-->
 <div class="coupon">
-	<div class="ofh mb10">	
+	
+	<div class="bgtab bgtab2">
+		<div class="ofh mb10">	
 		<select name="" class="dpi">
 			<option value="">10개씩보기</option>
 			<option value="">20개씩보기</option>
@@ -117,44 +202,17 @@ $(document).ready(function(){
 			<option value="">50개씩 보기</option>
 		</select>
 	</div>
-	
-	<div class="bgtab bgtab2">
-		<div class="w70 fl">
-			<a href="#" class="btn_sumit">수정</a>
-			<a href="#" class="btn_sumit2">삭제</a>
-		</div>
 	</div>
 	<table class="comm_table tac bmb">	
 		<tr>
-			<th><input type="checkbox" value=""/></th>
+			<!-- <th><input type="checkbox" value=""/></th> -->
 			<th>날짜</th>
 			<th>일정제목</th>
 			<th>일정내용</th>
+			<th>처리</th>
 		</tr>
-		<tr>
-			<td><input type="checkbox" value=""/></td>
-			<td>200170800001</td>
-			<td class="tal">박예빈 소방훈련</td>
-			<td>소방의 날</td>
-		</tr>
-		<tr class="bgc">
-			<td><input type="checkbox" value=""/></td>
-			<td>200170800001</td>
-			<td class="tal">고범종 지진대피훈련</td>
-			<td>지진의 날</td>
-		</tr>
-		<tr class="bgc">
-			<td><input type="checkbox" value=""/></td>
-			<td>200170800001</td>
-			<td class="tal">도현정 위장훈련</td>
-			<td>군인의 날</td>
-		</tr>
-		<tr class="bgc">
-			<td><input type="checkbox" value=""/></td>
-			<td>200170800001</td>
-			<td class="tal">임준한 김장체험</td>
-			<td>세계 김치의 날</td>
-		</tr>
+		<tbody id="table">
+		</tbody>
 	</table>
 </div>
 <!--쿠폰정보 e-->
@@ -171,17 +229,16 @@ $(document).ready(function(){
 		</colgroup>
 		<tr>
 			<th>날짜선택 <span class="blTxt">*</span></th>
-			<td><input class="form-select1" type="date" id="start" name="trip-start" value="2000-10-04">
-				 - <input class="form-select1" type="date" id="end" name="trip-start" value="2000-10-04">&nbsp;&nbsp;</td>			
+			<td><input id="date" class="form-select1" type="date" id="start" name="trip-start" value="연도-월-일">
 		</tr>
 		<tr>
 			<th>일정제목 <span class="blTxt">*</span></th>
-			<td><input type="text" class="w60"/></td>			
+			<td><input id="title" type="text" class="w60"/></td>			
 		</tr>
 		<tr>
 			<th>일정내용 <span class="blTxt">*</span></th>
 			<td>				
-				<input type="text"/> 
+				<input id="content" type="text"/> 
 			</td>
 		</tr>	
 		
@@ -198,7 +255,7 @@ $(document).ready(function(){
 
 	<div class="ok_btn">
 		<ul>
-			<li><button type="button" class="btn_sumit2">일정등록</button></li>
+			<li><button onclick="insert()" type="button" class="btn_sumit2">일정등록</button></li>
 		</ul>
 	</div>
 </div> 

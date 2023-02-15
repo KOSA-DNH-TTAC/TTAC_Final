@@ -17,6 +17,16 @@
 	transition: 0.3s;
 }
 
+.memberlist {
+	padding-left: 7px !important;
+	text-align: left;
+	margin: 0;
+	list-style: none;
+	background-color: rgba(0, 0, 0, 0);
+	border: none;
+	color: #545454;
+}
+
 #boardName {
 	padding: 0;
 	list-style: none;
@@ -99,7 +109,7 @@ div.divider {
 
 div.wrap {
 	box-sizing: border-box;
-	text-align: center;
+	/* text-align: center; */
 	white-space: nowrap;
 	overflow: hidden;
 	overflow-x: auto;
@@ -123,8 +133,6 @@ div.wrap {
 	padding-left: 25px;
 	margin-bottom: 5px;
 }
-
-
 
 #sold {
 	display: inline-block flex;
@@ -222,4 +230,123 @@ div.wrap {
 
 #like {
 	color: #e96b56 !important;
+}
+
+.memberrow {
+	cursor: pointer;
+}
+
+.demerit {
+	display: inline-flex;
+	float: left;
+	padding: 0;
+	margin-bottom: 10px;
+}
+
+#demeritBtn {
+	background: #2a3954;
+	color: #ffffff;
+	padding: 0px 25px;
+	font-size: 14px;
+	border: 1px solid #2a3954;
+	height: 38px;
+}
+
+#excelCenter {
+	float: center;
+}
+
+#excelbutton {
+	float: right;
+	width: 100px;
+}
+
+.demerithistory {
+	border: 1px solid #2a3954;
+	margin: 2px;
+}
+
+.btn_submit3 {
+	background: #2a3954;
+	color: #ffffff;
+	border-color: #2a3954;
+	padding: 0 13px;
+}
+
+#demeritSum {
+	color: #000000;
+	background: #fff;
+	border: 1px solid #e6e6e6;
+	overflow: hidden;
+	padding: 10px 10px;
+}
+
+.btn_demerit {
+	background: #2a3954;
+	color: #ffffff;
+	border-color: #2a3954;
+	padding: 0 13px;
+	display: inline-block;
+	float: right;
+}
+
+.inputbox {
+	color: #000 !important;
+	display: inline-block;
+	float: left;
+	margin-right: 10px !important;
+}
+
+.inputbox:focus {
+	outline: #BABABA;
+}
+
+.inputbox::placeholder {
+	color: #808080;
+}
+
+#getout, .menuUpdate, .menuDelete {
+	cursor: pointer;
+	border-collapse: collapse;
+	border: 1px solid #2a3954;
+	background-color: #2a3954;
+	color: #fff;
+	/* border-radius: 20px; */
+	padding: 4px;
+	margin: 2px 20px 2px 20px;
+}
+
+.menuComplete {
+	cursor: pointer;
+	border-collapse: collapse;
+	border: 1px solid #2a3954;
+	background-color: #f5f5f5;
+	color: #000;
+	/* border-radius: 20px; */
+	padding: 4px;
+	margin: 2px 20px 2px 20px;
+}
+
+.menuname input {
+  padding: 10px; /* .menuname 내부의 input 요소에 대한 padding */
+}
+
+#getout2, .menuBtn, .nameInput, .menutd {
+	padding: 0 !important;
+}
+
+#memberinfotable {
+	margin-bottom: 40px !important;
+	overflow-y: scroll;
+}
+
+#tablescroll {
+	height: 100px;
+	overflow-y: scroll;
+}
+
+.menurow:hover {
+	background-color: #f5f5f5;
+	color: #e96b56;
+	transition: 0.3s;
 }

@@ -1,0 +1,36 @@
+<?xml version="1.0" encoding="UTF-8" ?>
+<!DOCTYPE mapper
+PUBLIC "-//mybatis.org//DTD Mapper 3.0//EN"
+"http://mybatis.org/dtd/mybatis-3-mapper.dtd">
+
+<mapper namespace="kr.or.kosa.dao.ReplyDao">
+
+	<!-- 새 부모댓글 작성 -->
+	<insert id="newReply" parameterType="kr.or.kosa.dto.Reply">
+		INSERT INTO REPLY(IDX, MEMBERID, REPLYCONTENT, REPLYDATE)
+		VALUES(#{idx}, #{memberId}, #{replyContent}, NOW())
+	</insert>
+	
+	<!-- 새 답댓글 작성 -->
+	<insert id="newRereply" parameterType="kr.or.kosa.dto.Reply">
+		INSERT INTO REPLY(IDX, PARENTREPLYIDX, MEMBERID, REPLYCONTENT, REPLYDATE)
+		VALUES(#{idx}, #{parentReplyIdx}, #{memberId}, #{replyContent}, NOW())
+	</insert>
+	
+	<!-- 댓글 삭제 -->
+	<update id="deleteReply">
+		UPDATE REPLY SET STATUS='22' WHERE REPLYIDX=#{idx}
+	</update>
+	
+	<!-- 답댓글 삭제 -->
+	<update id="deleteRereply">
+		UPDATE REPLY SET STATUS='22' WHERE PARENTREPLYIDX=#{deleteRereply}
+	</update>
+
+
+</mapper>
+
+
+
+
+

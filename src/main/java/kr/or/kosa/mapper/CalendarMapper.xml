@@ -1,0 +1,39 @@
+<?xml version="1.0" encoding="UTF-8" ?>
+<!DOCTYPE mapper
+PUBLIC "-//mybatis.org//DTD Mapper 3.0//EN"
+"http://mybatis.org/dtd/mybatis-3-mapper.dtd">
+
+<mapper namespace="kr.or.kosa.dao.CalendarDao">
+
+<!-- 일정 데이터 인서트 -->
+<insert id="insertcalendar" parameterType="kr.or.kosa.dto.Schedule">
+INSERT INTO SCHEDULE (UNIVERSITYCODE,SCHEDULEDATE,SCHEDULETITLE,SCHEDULECONTENT,`STATUS`,DOMITORYNAME) 
+VALUES(#{universitycode}, #{scheduledate}, #{scheduletitle}, #{schedulecontent}, 21, #{domitoryname});
+</insert>
+
+<!-- 리스트가져오기 -->
+<select id="selectCalendar" parameterType="String" resultType="kr.or.kosa.dto.Schedule">
+SELECT SCHEDULEIDX,UNIVERSITYCODE,SCHEDULEDATE,SCHEDULETITLE,SCHEDULECONTENT,`STATUS`, DOMITORYNAME 
+FROM SCHEDULE 
+WHERE UNIVERSITYCODE= #{universityCode} AND DOMITORYNAME = #{domitoryName} AND STATUS = 21 
+ORDER BY SCHEDULEDATE;
+</select>
+
+<!-- 외박 수정(update) : 사감이 승인을 했을 경우 -->
+<update id="updateCalecdar" parameterType="kr.or.kosa.dto.Schedule">
+	UPDATE SCHEDULE SET `STATUS`=22 WHERE SCHEDULEIDX=#{idx}
+</update>
+
+<!-- 월별 리스트가져오기 -->
+<select id="monthPrint" parameterType="String" resultType="kr.or.kosa.dto.Schedule">
+SELECT SCHEDULEIDX,UNIVERSITYCODE,SCHEDULEDATE,SCHEDULETITLE,SCHEDULECONTENT,`STATUS`, DOMITORYNAME 
+FROM SCHEDULE 
+WHERE UNIVERSITYCODE= #{universityCode} AND DOMITORYNAME = #{domitoryName} AND STATUS = 21 AND SCHEDULEDATE BETWEEN #{start} AND #{end} 
+ORDER BY SCHEDULEDATE;
+</select>
+</mapper>
+
+
+
+
+

@@ -116,41 +116,4 @@ public class MemberController {
 		return "/common/redirect";
 	}
 	
-	
-	
-	//테스트용....
-	@GetMapping("/testmember")
-	public String test() {
-		List<Member> list = new ArrayList<Member>();
-		list = memberservice.getAllMember("kosa");
-		for(Member m : list) {
-			System.out.println(m);
-		}
-		return null;
-	}
-	
-	@GetMapping("/testgetmemberid")
-	public String testSearchById(@AuthenticationPrincipal Object principal) {
-		System.out.println(principal.toString());
-//		Member member = new Member();
-//		member = service.getMemberById("2017109210");
-//		System.out.println(member);
-		return null;
-	}
-	@GetMapping("/testgetmember")
-	public String testSearchByName(Principal principal) {
-		Member member = memberservice.getMemberById(principal.getName());
-		List<Member> list = new ArrayList<Member>();
-//		list = service.getMemberByName("도현정", "kosa");
-		list = memberservice.getMemberByName(member.getName(), member.getUniversityCode());
-		System.out.println(list);
-		return null;
-	}
-	
-	@GetMapping("/testpayments")
-	public List<PaymentHistory> testpay() {
-		List<PaymentHistory> list = paymentService.getPaymentHistoryById("2017109210");
-		System.out.println(list);
-		return list;
-	}
 }

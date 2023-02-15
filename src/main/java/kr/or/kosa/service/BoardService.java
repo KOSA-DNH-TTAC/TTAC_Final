@@ -99,7 +99,8 @@ public class BoardService {
 	public List<Post> boardContent(String idx) {
 		BoardDao boardDao = sqlSession.getMapper(BoardDao.class);
 		List<Post> boardContent = boardDao.boardContent(idx);
-
+		System.out.println(boardContent.get(0));
+		System.out.println(boardContent.get(0).getWriteDate());
 		boardContent.get(0).setWriteDate(boardContent.get(0).getWriteDate().substring(2, 16));
 
 		return boardContent;

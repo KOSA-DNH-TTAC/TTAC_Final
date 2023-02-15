@@ -150,11 +150,10 @@
 										<!-- End sidebar search formn-->
 
 										<jsp:include page="/WEB-INF/views/member/board/boardInclude/category.jsp" />
-
-
+										
 									</div>
 									<!-- End sidebar -->
-
+									<jsp:include page="/WEB-INF/views/member/board/boardInclude/Chatting.jsp" />
 								</div>
 								<!-- End blog sidebar -->
 

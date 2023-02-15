@@ -476,7 +476,7 @@ function calendarInit() {
         // console.log(prevDate, prevDay, nextDate, nextDay);
 
         // 현재 월 표기
-        $('.year-month').text(currentYear + '.' + (currentMonth + 1));
+        $('.year-month').text(currentYear + '-0' + (currentMonth + 1));
 
         // 렌더링 html 요소 생성
         calendar = document.querySelector('.dates')
@@ -507,13 +507,47 @@ function calendarInit() {
     $('.go-prev').on('click', function() {
         thisMonth = new Date(currentYear, currentMonth - 1, 1);
         renderCalender(thisMonth);
+        monthPrint();
     });
 
     // 다음달로 이동
     $('.go-next').on('click', function() {
         thisMonth = new Date(currentYear, currentMonth + 1, 1);
         renderCalender(thisMonth); 
+        monthPrint();
     });
+}
+//월별 데이터
+function monthPrint(){
+	var tabledata = "";
+	var data = $('#yearmonth').text();
+	console.log("data : "+data); //2023-02
+	$.ajax({
+		type : "GET",
+		url : "/calendar/monthPrint",
+		data : {
+			"data": data,
+		},
+		contentType: "application/json; charset=UTF-8",
+		success : function(data) {
+			  $.each(data, function(index) {
+	                tabledata +=
+	                	'<tr style="background-color:#EBF3F9; color:black;">'+
+					        '<td  style="text-align: center;" data-th="Supplier Code">'+
+					          data[index].scheduleDate+
+					        '</td>'+
+					        '<td style="text-align: center;" data-th="Supplier Name">'+
+					        data[index].scheduleTitle+
+					        '</td>'+
+					      '</tr>'
+	                    })
+			$('#table').empty();
+			$('#table').append(tabledata); 
+		},
+		error : function(data) {
+			alert("일정 불러오기 실패");
+		}
+	});
 }
 </script>
 </head>
@@ -542,7 +576,7 @@ function calendarInit() {
     	<div class="sec_cal" style="width:500px; margin:0 0 50px 0; margin-top:0px;">
 		  <div class="cal_nav">
 		    <a href="javascript:;" class="nav-btn go-prev">prev</a>
-		    <div class="year-month"></div>
+		    <div id="yearmonth" class="year-month"></div>
 		    <a href="javascript:;" class="nav-btn go-next">next</a>
 		  </div>
 		  <div class="cal_wrap">
@@ -562,67 +596,13 @@ function calendarInit() {
     
     <div style="width:500px; margin-bottom:80px;">
      <table class="rwd-table">
-    <tbody>
-      <tr>
-        <th style="text-align: center;">날짜</th>
-        <th style="text-align: center;">일정</th>
-      </tr>
-      <tr>
-        <td data-th="Supplier Code">
-          2023.02.08
-        </td>
-        <td data-th="Supplier Name">
-          세계 도넛의 날
-        </td>
-      </tr>
-      <tr>
-        <td data-th="Supplier Code">
-          2023.02.12
-        </td>
-        <td data-th="Supplier Name">
-          제순의 날
-        </td>
-      </tr>
-      <tr>
-        <td data-th="Supplier Code">
-          2023.02.19
-        </td>
-        <td data-th="Supplier Name">
-          소방훈련
-        </td>
-      </tr>
-      <tr>
-        <td data-th="Supplier Code">
-          2023.02.25
-        </td>
-        <td data-th="Supplier Name">
-          세계 젤리의 날
-        </td>
-      </tr>
-      <tr>
-        <td data-th="Supplier Code">
-          2023.02.08
-        </td>
-        <td data-th="Supplier Name">
-          지진대피훈련
-        </td>
-      </tr>
-      <tr>
-        <td data-th="Supplier Code">
-          2023.02.12
-        </td>
-        <td data-th="Supplier Name">
-          일꾼의 날
-        </td>
-      </tr>
-      <tr>
-        <td data-th="Supplier Code">
-          2023.02.19
-        </td>
-        <td data-th="Supplier Name">
-          도넛 방석의 날
-        </td>
-      </tr>
+     <thead>
+     	 <tr>
+	        <th style="text-align: center;">날짜</th>
+	        <th style="text-align: center;">일정</th>
+	      </tr>
+     </thead>
+    <tbody id="table">
     </tbody>
   </table>
     </div>
@@ -637,6 +617,42 @@ function calendarInit() {
   <a href="#" class="back-to-top d-flex align-items-center justify-content-center"><i class="bi bi-arrow-up-short"></i>
 
 </body>
+<script>
+//서브 left_menu
+$(document).ready(function(){		
+	//페이지 로딩시 일정 리스트 로드
+	//load();
+	monthPrint();
+});
+
+//테이블 생성
+function load(){
+	var tabledata = "";
+	$.ajax({
+		type : "POST",
+		url : "/calendar/print",
+		success : function(data) {
+			 $.each(data, function(index) {
+	                tabledata +=
+	                	'<tr>'+
+					        '<td  style="text-align: center;" data-th="Supplier Code">'+
+					          data[index].scheduleDate+
+					        '</td>'+
+					        '<td style="text-align: center;" data-th="Supplier Name">'+
+					        data[index].scheduleTitle+
+					        '</td>'+
+					      '</tr>'
+	                    })
+			$('#table').empty();
+			$('#table').append(tabledata);
+		},
+		error : function(data) {
+			alert("일정 불러오기 실패");
+		}
+	});
+}
+
+</script>
 
 <!-- Vendor JS Files -->
   <script src="resources/assets/vendor/purecounter/purecounter_vanilla.js"></script>
