@@ -160,8 +160,21 @@ PUBLIC "-//mybatis.org//DTD Mapper 3.0//EN"
 	</select>
 
 
+	<!-- 관리자 -->
+	<!-- 게시판 카테고리 -->
+	<select id="getAdminCategory" resultType="kr.or.kosa.dto.Board">
+		SELECT b.boardidx, b.boardname, COUNT(p.idx) as postCount, COUNT(r.replyidx) AS replyCount
+		FROM BOARD b
+		LEFT JOIN POST p ON p.boardidx = b.boardidx
+		LEFT JOIN REPLY r ON p.idx = r.IDX
+		WHERE b.universitycode=#{universitycode}
+		GROUP BY BOARDIDX
+	</select>
 
-
+	<!-- 게시판 이름 수정 -->
+	<update id="updateBoardName">
+		UPDATE BOARD SET BOARDNAME=#{boardname} WHERE BOARDIDX=#{boardidx}
+	</update>
 
 </mapper>
 

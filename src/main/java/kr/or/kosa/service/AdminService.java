@@ -12,6 +12,8 @@ import org.springframework.stereotype.Service;
 import org.springframework.transaction.annotation.Transactional;
 
 import kr.or.kosa.dao.AdminDao;
+import kr.or.kosa.dao.BoardDao;
+import kr.or.kosa.dto.Board;
 import kr.or.kosa.dto.DemeritHistory;
 import kr.or.kosa.dto.Member;
 import kr.or.kosa.dto.Reply;
@@ -80,6 +82,22 @@ public class AdminService {
 		
 		System.out.println("Service: " + demeritHistory);
 		return demeritHistory;
+	}
+	
+	//관리자 게시판 목록 보기
+	public List<Board> getBoardList(){
+		User user = (User) SecurityContextHolder.getContext().getAuthentication().getPrincipal();
+		BoardDao boarddao = sqlsession.getMapper(BoardDao.class);
+		List<Board> list = boarddao.getAdminCategory(user.getUniversityCode());
+		return list;
+	}
+	
+	//관리자 게시판 이름 수정
+	public int updateBoard(String boardname, String boardidx) {
+		User user = (User) SecurityContextHolder.getContext().getAuthentication().getPrincipal();
+		BoardDao boarddao = sqlsession.getMapper(BoardDao.class);
+		int result = boarddao.updateBoardName(boardname, boardidx);
+		return result;
 	}
 	
 }
