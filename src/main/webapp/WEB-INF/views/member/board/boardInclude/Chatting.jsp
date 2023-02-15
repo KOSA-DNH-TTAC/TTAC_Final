@@ -59,6 +59,10 @@
     margin-top:10px;
     margin-bottom: 10px;
 }
+
+    #mychat{
+        color : Tomato;
+    }
 </style>
   <div class="sidebar">
     <h3 class="sidebar-title">채팅</h3>
@@ -208,24 +212,24 @@
 					//현재 세션에 로그인 한 사람
 					console.log("cur_session : " + cur_session);
 					// sessionId = arr[0];
-                    ranNickId = arr[1];
+                    sessionId = arr[1];
 					message = arr[2];
 
-					console.log("ranNickId : " + sessionId);
+					console.log("sessionId : " + arr[1]);
 					console.log("cur_session : " + cur_session);
 
 					//로그인 한 클라이언트와 타 클라이언트를 분류하기 위함
 					if(sessionId == cur_session){
 						var str = "<div class='col'>";
 						str += "<div class='alert alert-secondary'>";
-						str += "<p>" + username + " : " + message + "</p>";
+						str += "<p id='mychat'>" + username + " : " + message + "</p>";
 						str += "</div></div>";
 						$("#msgArea").append(str);
 					}
 					else{
 						var str = "<div class='col'>";
 						str += "<div class='alert alert-warning'>";
-						str += "<p>" + ranNickId + " : " + message + "</p>";
+						str += "<p>" + sessionId + " : " + message + "</p>";
 						str += "</div></div>";
 						$("#msgArea").append(str);
 					}
