@@ -5,6 +5,7 @@ import java.sql.SQLException;
 import java.text.SimpleDateFormat;
 import java.util.Date;
 import java.util.List;
+import java.util.UUID;
 
 import org.apache.ibatis.session.SqlSession;
 import org.springframework.beans.factory.annotation.Autowired;
@@ -19,6 +20,7 @@ import kr.or.kosa.dto.Board;
 import kr.or.kosa.dto.Domitory;
 import kr.or.kosa.dto.File;
 import kr.or.kosa.dto.Post;
+import kr.or.kosa.dto.Product;
 import kr.or.kosa.dto.Reply;
 import kr.or.kosa.dto.RollCall;
 import kr.or.kosa.security.User;
@@ -117,6 +119,12 @@ public class BoardService {
 		return fileContent;
 	}
 	
+	// 거래 게시판 상세보기
+	public Product productContent(String idx) {
+		BoardDao boardDao = sqlSession.getMapper(BoardDao.class);
+		return boardDao.productContent(idx);
+	}
+	
 	// 댓글 목록 보기
 	public List<Reply> replyContent(String idx) {
 		BoardDao boardDao = sqlSession.getMapper(BoardDao.class);
@@ -157,6 +165,23 @@ public class BoardService {
 			}
 		}
 		return reReplyContent;
+	}
+	
+	//거래게시판 글쓰기
+	public int productWrite(Product product) {
+		int result = 0;
+		
+		try {
+			BoardDao boardDao = sqlSession.getMapper(BoardDao.class);
+			result = boardDao.productInsert(product);
+
+		} catch (ClassNotFoundException e) {
+			e.printStackTrace();
+		} catch (SQLException e) {
+			e.printStackTrace();
+		}
+
+		return result;
 	}
 
 	// 자유게시판 글쓰기
@@ -307,9 +332,9 @@ public class BoardService {
 		return result;
 	}
 	
-	//공지사항 글쓰기
+	//파일첨부 글 쓰기
 	@Transactional(rollbackFor = Exception.class)
-	public int noticeListInsert(Post post, List<File> fileDTO, List<MultipartFile> files) throws IOException {
+	public int postListInsert(Post post, List<MultipartFile> files) throws IOException {
 		
 		int idx = 0;
 		int result = 0;
@@ -322,15 +347,58 @@ public class BoardService {
 		
 		if(multiFile.getSize() != 0) {
 			AwsS3 awsS3 = AwsS3.getInstance();
+			
 			idx = this.recentPostIdx();
 			
 			for (MultipartFile multipartfile : files) {
-				route = post.getUniversityCode()+"/"+ "board" + "/" + idx + "/" + multipartfile.getOriginalFilename();
+				
+				UUID uuid = UUID.randomUUID();
+				File fileOne = new File();
+				
+				String fileName = post.getUniversityCode()+"/"+ "board" + "/" + idx + "/" + uuid.toString()+"_"+multipartfile.getOriginalFilename();
+				
+				fileUrl = awsS3.searchIcon(fileName);
+				fileOne.setFileUrl(fileUrl);
+				fileOne.setFileName(fileName);
+				fileOne.setFileRealName(multipartfile.getOriginalFilename());
+				fileOne.setFileSize(multipartfile.getSize());
+				
+				this.fileWrite(fileOne);
+				
+				awsS3.upload(multipartfile, fileName);
+			}
+			
+		}
+				
+		return result;
+	}
+	
+	//거래게시판 글쓰기
+	@Transactional(rollbackFor = Exception.class)
+	public int postListInsert(Post postDTO, Product productDTO, List<File> fileDTO, List<MultipartFile> files) throws IOException {
+		
+		int idx = 0;
+		int result = 0;
+		String route = "";
+		String url = "";
+		String fileUrl = "";
+		MultipartFile multiFile = files.get(0);
+		
+		result = this.freeBoardWrite(postDTO);
+		
+		if(multiFile.getSize() != 0) {
+			AwsS3 awsS3 = AwsS3.getInstance();
+			idx = this.recentPostIdx();
+			
+			result = this.productWrite(productDTO);
+			
+			for (MultipartFile multipartfile : files) {
+				route = postDTO.getUniversityCode()+"/"+ "board" + "/" + idx + "/" + multipartfile.getOriginalFilename();
 				awsS3.upload(multipartfile, route);
 			}
 			
 			for (File file : fileDTO) {
-				url = post.getUniversityCode()+"/"+ "board" + "/" + idx + "/" + file.getFileRealName();
+				url = postDTO.getUniversityCode()+"/"+ "board" + "/" + idx + "/" + file.getFileRealName();
 				fileUrl = awsS3.searchIcon(url);
 				file.setFileUrl(fileUrl);
 				this.fileWrite(file);

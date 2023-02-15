@@ -105,6 +105,16 @@ public class AwsS3 {
     	File uploadFile = convert(multipartfile)
     			.orElseThrow(() -> new IllegalArgumentException("MultipartFile -> File 전환 실패"));
         uploadToS3(new PutObjectRequest(this.bucket, key, uploadFile));
+        removeNewFile(uploadFile);
+        
+    }
+    
+    private void removeNewFile(File targetFile) {
+        if (targetFile.delete()) {
+            System.out.println("File delete success");
+            return;
+        }
+        System.out.println("File delete fail");
     }
 
     public void upload(InputStream is, String key, String contentType, long contentLength) {

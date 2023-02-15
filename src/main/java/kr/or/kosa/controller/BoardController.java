@@ -24,6 +24,7 @@ import kr.or.kosa.aws.AwsS3;
 import kr.or.kosa.dto.File;
 import kr.or.kosa.dto.Member;
 import kr.or.kosa.dto.Post;
+import kr.or.kosa.dto.Product;
 import kr.or.kosa.security.User;
 import kr.or.kosa.service.BoardService;
 import kr.or.kosa.service.MemberService;
@@ -93,9 +94,10 @@ public class BoardController {
 		String url = "";
 		
 		List<Post> boardContent = boardService.boardContent(idx);
-		
-		//컨트롤러에서 받아온 파일 리스트
 		List<File> fileContent = boardService.fileContent(idx);
+		Product productContent = boardService.productContent(idx);
+		
+		System.out.println(productContent);
 		
 		if (boardName.equals("noticeList")) {
 			param = "공지사항";
@@ -113,6 +115,10 @@ public class BoardController {
 
 		if (!fileContent.isEmpty()) {
 			model.addAttribute("fileContent", fileContent);
+		}
+		
+		if (productContent != null) {
+			model.addAttribute("productContent", productContent);
 		}
 		
 		model.addAttribute("boardContent", boardContent);
@@ -276,14 +282,10 @@ public class BoardController {
 		String msg = "";
 		String url = "";
 		String icon = "";
-		String fileName = "";
-		MultipartFile multiFile = files.get(0);
 		
 		int result = 0;
 		
-		
 		Post postDTO = new Post();
-		List<File> fileDTO = new ArrayList<File>();
 		
 		//글 담아주기
 		postDTO.setBoardIdx(boardIDX);
@@ -293,36 +295,20 @@ public class BoardController {
 		postDTO.setTitle(title);
 		postDTO.setContent(content);
 		
-		//파일 담아주기
-		if(multiFile.getSize() != 0) {
-			for (MultipartFile multipartfile : files) {
-				File fileOne = new File();
-				
-				UUID uuid = UUID.randomUUID();
-				fileName = uuid.toString()+"_"+multipartfile.getOriginalFilename();
-				fileOne.setFileName(fileName);
-				fileOne.setFileRealName(multipartfile.getOriginalFilename());
-				fileOne.setFileSize(multipartfile.getSize());
-				
-				fileDTO.add(fileOne);
-			}
+		//서비스슝슝
+		result = boardService.postListInsert(postDTO, files);
+		
+		if (result < 1) {
+			icon = "error";
+			msg = "글 작성이 실패했습니다.";
+			url = "/board/noticeWrite";
+		} else {
+			icon = "success";
+			msg = "글 작성이 완료되었습니다!";
+			url = "/board/noticeList";
+			
 		}
-			
-		
-			//서비스슝슝
-			result = boardService.noticeListInsert(postDTO, fileDTO, files);
-			
-			if (result < 1) {
-				icon = "error";
-				msg = "글 작성이 실패했습니다.";
-				url = "/board/noticeList/noticeWrite";
-			} else {
-				icon = "success";
-				msg = "글 작성이 완료되었습니다!";
-				url = "/board/noticeList";
-				
-			}
-		
+	
 
 		model.addAttribute("msg", msg);
 		model.addAttribute("url", url);
@@ -351,8 +337,73 @@ public class BoardController {
 
 	// 거래게시판 글쓰기
 	@PostMapping("/board/productBoardWrite")
-	public String productWriteOk() {
-		return "member/board/productBoardWrite";
+	public String productWriteOk(Model model, @RequestParam("file") List<MultipartFile> files,
+							 	 			  @RequestParam("title") String title,
+							 	 			  @RequestParam("content") String content,
+							 	 			  @RequestParam("price") int price,
+							 	 			  @RequestParam("sold") String sold) throws IOException  {
+		User user = (User) SecurityContextHolder.getContext().getAuthentication().getPrincipal();
+		int boardIDX = 4;
+		String msg = "";
+		String url = "";
+		String icon = "";
+		String fileName = "";
+		MultipartFile multiFile = files.get(0);
+		
+		int result = 0;
+		
+		
+		Post postDTO = new Post();
+		Product ProductDTO = new Product();
+		List<File> fileDTO = new ArrayList<File>();
+		
+		//글 담아주기
+		postDTO.setBoardIdx(boardIDX);
+		postDTO.setBoardName("거래게시판");
+		postDTO.setUniversityCode(user.getUniversityCode());
+		postDTO.setMemberId(user.getMemberId());
+		postDTO.setTitle(title);
+		postDTO.setContent(content);
+		
+		ProductDTO.setProductPrice(price);
+		ProductDTO.setProductSold(sold);
+		
+		//파일 담아주기
+		if(multiFile.getSize() != 0) {
+			for (MultipartFile multipartfile : files) {
+				File fileOne = new File();
+				
+				UUID uuid = UUID.randomUUID();
+				fileName = uuid.toString()+"_"+multipartfile.getOriginalFilename();
+				fileOne.setFileName(fileName);
+				fileOne.setFileRealName(multipartfile.getOriginalFilename());
+				fileOne.setFileSize(multipartfile.getSize());
+				
+				fileDTO.add(fileOne);
+			}
+		}
+			
+		
+			//서비스슝슝
+			result = boardService.postListInsert(postDTO, ProductDTO, fileDTO, files);
+			
+			if (result < 1) {
+				icon = "error";
+				msg = "글 작성이 실패했습니다.";
+				url = "/board/productBoardWrite";
+			} else {
+				icon = "success";
+				msg = "글 작성이 완료되었습니다!";
+				url = "/board/productBoardList";
+				
+			}
+		
+
+		model.addAttribute("msg", msg);
+		model.addAttribute("url", url);
+		model.addAttribute("icon", icon);
+
+		return "/common/redirect";
 	}
 
 	// 자유게시판 글쓰기

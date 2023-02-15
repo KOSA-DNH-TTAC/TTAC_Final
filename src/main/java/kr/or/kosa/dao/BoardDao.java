@@ -8,6 +8,7 @@ import kr.or.kosa.dto.Board;
 import kr.or.kosa.dto.Domitory;
 import kr.or.kosa.dto.File;
 import kr.or.kosa.dto.Post;
+import kr.or.kosa.dto.Product;
 import kr.or.kosa.dto.Reply;
 import kr.or.kosa.dto.RollCall;
 
@@ -40,6 +41,9 @@ public interface BoardDao {
 	// 파일 글 작성
 	public int fileInsert(File file) throws ClassNotFoundException, SQLException;
 	
+	// 거래 글 작성
+	public int productInsert(Product product) throws ClassNotFoundException, SQLException;
+	
 	// 게시글 추천 여부 검사
 	public int likeCount(String idx);
 	public int likeCheck(String idx, String memberId);
@@ -69,6 +73,9 @@ public interface BoardDao {
 	
 	// 파일 상세보기
 	public List<File> fileContent(String idx);
+	
+	// 거래게시글 상세보기
+	public Product productContent(String idx);
 	
 	// 게시글 수정하기
 	public int boardEdit(Post post);

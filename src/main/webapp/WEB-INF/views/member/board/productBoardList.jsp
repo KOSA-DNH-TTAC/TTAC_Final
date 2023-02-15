@@ -74,7 +74,8 @@
 										<article class="entry">
 
 											<div class="entry-title">
-											<span id="sold">판매중</span><h2 class="entry-title">              
+											<span id="sold">판매중</span>
+											<h2 class="entry-title">              
                      						&nbsp;<a href="/board/productBoardList/${productList.idx}">${productList.title}</a></h2>
 											</div>
 
@@ -84,6 +85,8 @@
 													<li class="d-flex align-items-center"><i class="bi bi-clock"></i>${productList.writeDate}</a></li>
 													<li class="d-flex align-items-center"><i class="bi-hand-thumbs-up"></i>${productList.likeNum}</li>
 													<li class="d-flex align-items-center"><i class="bi-chat-dots"></i>${productList.replyCount}</li>
+													<li class="d-flex align-items-center"><i class="bi bi-cart2"></i>${productList.replyCount}원</li>
+													
 												</ul>
 											</div>
 
@@ -135,8 +138,6 @@
 								<div class="col-lg-4">
 
 									<div class="sidebar">
-
-
 										<div class="sidebar-item search-form">
 											<div class="d-flex justify-content-center align-self-center">
 												<button type="submit"

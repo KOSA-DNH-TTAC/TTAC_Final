@@ -71,7 +71,7 @@
           <div class="col-lg-12 entries">
 
             <article class="entry">
-				<form action="/board/noticeWrite" method="POST" enctype="multipart/form-data" accept-charset="UTF-8">
+				<form action="/board/productBoardWrite" method="POST" enctype="multipart/form-data" accept-charset="UTF-8">
 					<div class="mb-3">
 					  <label for="title" class="form-label">게시글 제목</label>
 					  <input type="text" class="form-control" name="title" id="title" placeholder="제목을 작성해주세요." autofocus required>
@@ -79,12 +79,12 @@
 					
 					<div class="mb-3">
 						<label for="file" class="form-label">대표이미지</label>
-						<input type="file" class="form-control" id="file" name="file" required>
+						<input type="file" class="form-control" id="file" name="file" accept="image/gif, image/jpeg, image/png" multiple required>
 					</div>
 					
 					<div class="mb-3">
 						<label for="price" class="form-label">물품 가격</label>
-						<input type="number" class="form-control" name="price" id="price" min="0" step="1000" value="0" required>
+						<input type="number" class="form-control" name="price" id="price" min="0" step="100" value="0" required>
 					</div>
 					
 					<div class="mb-3">
@@ -97,8 +97,19 @@
 					</div>
 					
 					<div class="mb-3">
-					  <textarea id="content" name="content" placeholder="글을 작성해주세요."> </textarea>
+						<textarea id="content" name="content" placeholder="글을 작성해주세요."> 
+					  
+					  	<h3>▶ 구매시기 </h3>
+					  	<p></p>
+					  	<h3>▶ 브랜드/모델명 </h3>
+					  	<p></p>
+					  	<h3>▶  제품의 상태 (사용감, 하자 유무 등)</h3>
+					  	<p></p>
+					  	<h6>※ 서로가 믿고 거래할 수 있도록, 자세한 정보와 다양한 각도의 상품 사진을 올려주세요.</h6>
+					  
+					  	</textarea>
 					</div>
+					
 					
 					<div class="d-grid gap-2 d-md-flex justify-content-md-end">
 					<button onclick="history.go(-1)" style="width:130px; height:20; border-radius: 50px; padding:5px; border: none; background-color:#000000; color:white; margin-top:10px; font-size: large;">취소</button>

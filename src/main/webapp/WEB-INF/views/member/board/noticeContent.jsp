@@ -99,10 +99,10 @@
                     	<c:forEach var="fileContent" items="${fileContent }">
 	                    <article class="entry" style="padding-top: 10px">
 	                    	<li class="d-flex align-items-center">
-		                    	<i class="bi bi-archive"></i> &nbsp<a href="/download/${boardContent.idx}/${fileContent.fileRealName}">${fileContent.fileRealName}</a>
+		                    	<i class="bi bi-archive"></i> &nbsp<a href="javascript:void(0);" onclick="window.open('${fileContent.fileUrl}', '${fileContent.fileRealName}')">${fileContent.fileRealName}</a>
 		                   	</li>
 		                   	<div class="col-md-5">
-		                   		<img class="aws-img" src="${fileContent.fileUrl}" onerror="this.style.display='none'">
+		                   		<img class="aws-img" src="${fileContent.fileUrl}"  onerror="this.style.display='none'">
 		                   	</div>
 	                   	</article>
 	                   	</c:forEach>
@@ -132,6 +132,13 @@
 				<div class="col-lg-4">
 
 						<div class="sidebar">
+							<div class="sidebar-item search-form">
+								<div class="d-flex justify-content-center align-self-center">
+									<button type="submit"
+									onclick="location.href='/board/noticeWrite'"
+									style="width: 100%; height: 20; border-radius: 50px; padding: 5px; border: none; background-color: #E96B56; color: white; margin-top: 10px; font-size: large;">글쓰기</button>
+								</div>
+							</div>
 
 							<h3 class="sidebar-title">Search</h3>
 							<div class="sidebar-item search-form">
