@@ -362,6 +362,23 @@
                     console.log("ajax 성공");
                     console.log(result);
                     $('#nightoverN').empty();
+                    $('#nightoverY').empty();
+                    let contentY = `<thead>
+                                    <tr>
+                                        <th>새 게시판 만들기</th>
+                                        <th></th>
+                                    </tr>
+                                </thead>
+                                <tbody>
+                                    <tr>
+                                        <td>
+                                            <label for="newboard">게시판 이름&nbsp;</label><input name="newboard"
+                                                id="newboard" type="text">
+                                            <button id="newboardbtn" onclick="createBoard()">생성</button>
+                                        </td>
+                                    </tr>
+                                </tbody>`;
+                    $('#nightoverY').append(contentY);
 
                     let boardarr = ['자유게시판', '거래게시판', '공지사항', '건의사항']
 
