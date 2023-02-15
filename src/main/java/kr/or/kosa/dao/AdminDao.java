@@ -21,7 +21,7 @@ public interface AdminDao {
 	
 	// 기숙사생 벌점
 	public void insertDemerit(DemeritHistory demerit);
-	public void updateDemerit(String demerit, String memberid);
+	public void updateDemerit(int demerit2, String memberId);
 	
 	// 벌점 이력
 	public List<DemeritHistory> memberDemeritHistory(String memberId);

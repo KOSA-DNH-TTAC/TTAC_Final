@@ -268,16 +268,54 @@ div.wrap {
 
 .btn_submit3 {
 	background: #2a3954;
-    color: #ffffff;
-    border-color: #2a3954;
-    padding: 0 13px;
+	color: #ffffff;
+	border-color: #2a3954;
+	padding: 0 13px;
 }
 
 #demeritSum {
 	color: #000000;
-    background: #fff;
-    border: 1px solid #e6e6e6;
-    overflow: hidden;
-    border-bottom: 0px;
-    padding: 10px 10px;
+	background: #fff;
+	border: 1px solid #e6e6e6;
+	overflow: hidden;
+	padding: 10px 10px;
+}
+
+.btn_demerit {
+	background: #2a3954;
+	color: #ffffff;
+	border-color: #2a3954;
+	padding: 0 13px;
+	display: inline-block;
+	float: right;
+}
+
+.inputbox {
+	color: #000 !important;
+	display: inline-block;
+	float: left;
+	margin-right: 10px !important;
+}
+
+.inputbox:focus {
+	outline: #BABABA;
+}
+
+.inputbox::placeholder {
+	color: #808080;
+}
+
+#getout {
+	cursor: pointer;
+	border-collapse: collapse;
+	border: 1px solid #2a3954;
+	background-color: #2a3954;
+	color: #fff;
+	border-radius: 20px;
+	padding: 4px;
+	margin: 2px 20px 2px 20px;
+}
+
+#getout2 {
+	padding: 0 !important;
 }
