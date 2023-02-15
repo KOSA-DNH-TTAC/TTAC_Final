@@ -125,7 +125,7 @@ $(document).ready(function(){
 		<h3 class="sub_h3" style="text-align:left">회원관리 <span>회원현황</span></h3>
 <div class="bmb">
 	<div class="bgtab">
-	<h3 class="txtin" id="excelCenter">회원 조회 <button class="btn_sumit2" id="excelbutton">엑셀 다운로드</button></h3>
+	<h3 class="txtin" id="excelCenter" style="text-align:left">회원 조회</h3>
 	</div>
 	<table class="srch_table mb20">	
 		<colgroup>
@@ -231,7 +231,7 @@ $(document).ready(function(){
 
 					contents += `<tr class="memberrow">
 						<td><b>` + (++index) +`</b></td>
-						<td class="tal"><div id="memberId">` 
+						<td><div id="memberId">` 
 						+ member.memberId + `</div></td>
 						<td>` + member.name + `</td>	
 						<td>` + member.phone + `</td>

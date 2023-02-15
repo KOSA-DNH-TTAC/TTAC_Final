@@ -109,7 +109,7 @@ div.divider {
 
 div.wrap {
 	box-sizing: border-box;
-	text-align: center;
+	/* text-align: center; */
 	white-space: nowrap;
 	overflow: hidden;
 	overflow-x: auto;
@@ -305,18 +305,33 @@ div.wrap {
 	color: #808080;
 }
 
-#getout {
+#getout, .menuUpdate, .menuDelete {
 	cursor: pointer;
 	border-collapse: collapse;
 	border: 1px solid #2a3954;
 	background-color: #2a3954;
 	color: #fff;
-	border-radius: 20px;
+	/* border-radius: 20px; */
 	padding: 4px;
 	margin: 2px 20px 2px 20px;
 }
 
-#getout2 {
+.menuComplete {
+	cursor: pointer;
+	border-collapse: collapse;
+	border: 1px solid #2a3954;
+	background-color: #f5f5f5;
+	color: #000;
+	/* border-radius: 20px; */
+	padding: 4px;
+	margin: 2px 20px 2px 20px;
+}
+
+.menuname input {
+  padding: 10px; /* .menuname 내부의 input 요소에 대한 padding */
+}
+
+#getout2, .menuBtn, .nameInput, .menutd {
 	padding: 0 !important;
 }
 
@@ -326,6 +341,12 @@ div.wrap {
 }
 
 #tablescroll {
-	height:100px; 
+	height: 100px;
 	overflow-y: scroll;
+}
+
+.menurow:hover {
+	background-color: #f5f5f5;
+	color: #e96b56;
+	transition: 0.3s;
 }
