@@ -3,8 +3,7 @@ package kr.or.kosa.dao;
 import java.util.List;
 import java.util.Map;
 
-import org.apache.ibatis.annotations.Param;
-
+import kr.or.kosa.dto.Cafeteria;
 import kr.or.kosa.dto.DemeritHistory;
 import kr.or.kosa.dto.Member;
 
@@ -28,6 +27,9 @@ public interface AdminDao {
 	
 	// 퇴소 조치
 	public void memberGetOut(String memberId);
+	
+	// 식당 메뉴 조회
+	public List<Cafeteria> allMenuList(String universitycode);
 	
 	
 	

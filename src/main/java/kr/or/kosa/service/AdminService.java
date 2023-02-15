@@ -12,9 +12,9 @@ import org.springframework.stereotype.Service;
 import org.springframework.transaction.annotation.Transactional;
 
 import kr.or.kosa.dao.AdminDao;
+import kr.or.kosa.dto.Cafeteria;
 import kr.or.kosa.dto.DemeritHistory;
 import kr.or.kosa.dto.Member;
-import kr.or.kosa.dto.Reply;
 import kr.or.kosa.security.User;
 
 @Service
@@ -89,7 +89,18 @@ public class AdminService {
 	public void memberGetOut(String memberId) {
 		AdminDao adminDao = sqlsession.getMapper(AdminDao.class);
 		adminDao.memberGetOut(memberId);
-		System.out.println("퇴소 서비스 돌앗당.");
+	}
+	
+	// 식당 메뉴 조회
+	public List<Cafeteria> allMenuList() {
+		AdminDao adminDao = sqlsession.getMapper(AdminDao.class);
+		User user = (User) SecurityContextHolder.getContext().getAuthentication().getPrincipal();
+		System.out.println("서비스 들ㅇㅓ옴");
+		List<Cafeteria> menulist = new ArrayList<Cafeteria>();
+		menulist = adminDao.allMenuList(user.getUniversityCode());
+		System.out.println("service: " + menulist);
+		
+		return menulist;
 	}
 	
 }
