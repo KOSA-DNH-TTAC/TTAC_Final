@@ -94,10 +94,23 @@ public class AdminService {
 	
 	//관리자 게시판 이름 수정
 	public int updateBoard(String boardname, String boardidx) {
-		User user = (User) SecurityContextHolder.getContext().getAuthentication().getPrincipal();
 		BoardDao boarddao = sqlsession.getMapper(BoardDao.class);
 		int result = boarddao.updateBoardName(boardname, boardidx);
 		return result;
 	}
 	
+	//관리자 게시판 생성
+	public int createBoard(String boardname) {
+		User user = (User) SecurityContextHolder.getContext().getAuthentication().getPrincipal();
+		BoardDao boarddao = sqlsession.getMapper(BoardDao.class);
+		int result = boarddao.newCustomBoard(user.getUniversityCode(), boardname);
+		return result;
+	}
+	
+	//관리자 게시판 삭제(비활성화)
+	public int deleteBoard(String boardidx) {
+		BoardDao boarddao = sqlsession.getMapper(BoardDao.class);
+		int result = boarddao.deleteBoard(boardidx);
+		return result;
+	}
 }

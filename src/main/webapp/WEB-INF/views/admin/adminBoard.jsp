@@ -147,7 +147,7 @@
                                 <tbody>
                                     <tr>
                                         <td>
-                                            <label for="newboard">입력</label><input name="newboard" id="newboard" type="text">
+                                            <label for="newboard">게시판 이름&nbsp;</label><input name="newboard" id="newboard" type="text">
                                             <button id="newboardbtn" onclick="createBoard()">생성</button>
                                         </td>
                                     </tr>
@@ -213,6 +213,32 @@
             $('#newboard').val("");
             console.log(boardname);
 
+            $.ajax({
+                type: "POST",
+                url: "/admin/board/create",
+                data: JSON.stringify({
+                    "boardname" : boardname,
+                }),
+                contentType: "application/json; charset=UTF-8",
+                success: function (result) {
+                    console.log(result);
+                    
+                    if(result.rows > 0){
+                        Swal.fire(
+                        '생성 완료!',
+                        '게시판을 생성했습니다',
+                        'success'
+                        )
+                    }else{
+                        Swal.fire(
+                        'ERROR!',
+                        '요청한 작업을 수행하지 못했습니다',
+                        'error'
+                        )
+                    }
+                    getCategory();
+                }
+            })
         }
 
         //커스텀 게시판 이름 수정
@@ -239,6 +265,12 @@
                         '게시판 이름을 바꿨습니다',
                         'success'
                         )
+                    }else{
+                        Swal.fire(
+                        'ERROR!',
+                        '요청한 작업을 수행하지 못했습니다',
+                        'error'
+                        )
                     }
                     getCategory();
                 }
@@ -248,8 +280,34 @@
         //게시판 삭제
         function deleteBoard(){
             console.log("삭제 눌럿삼")
-
+            let boardidx = $('#currentidx').val();
+            console.log(boardidx);
             //swal로 정말 삭제하겠냐고 확인 받은 후 삭제
+            $.ajax({
+                type: "DELETE",
+                url: "/admin/board/delete",
+                data: JSON.stringify({
+                    "boardidx" : boardidx
+                }),
+                contentType: "application/json; charset=UTF-8",
+                success: function (result) {
+                    console.log(result);
+                    if(result.rows > 0){
+                        Swal.fire(
+                        '삭제 완료!',
+                        '게시판을 삭제했습니다',
+                        'success'
+                        )
+                    }else{
+                        Swal.fire(
+                        'ERROR!',
+                        '요청한 작업을 수행하지 못했습니다',
+                        'error'
+                        )
+                    }
+                    getCategory();
+                }
+            })
 
         }
 
@@ -300,7 +358,7 @@
 					//게시판 리스트 받아와서 테이블에 뿌려주는데
                     //커스텀 게시판일 경우에는 옆에는 수정, 삭제 버튼이 있어야 함
                     $.each(result.list, function(index, board){
-                        console.log(board);
+                        // console.log(board);
                         contents += `<tr><td>` + board.boardIdx + `</td>
                                     <td id="`+ board.boardIdx + `">` + board.boardName + `</td>
                                     <td>` + board.postCount + `</td>
