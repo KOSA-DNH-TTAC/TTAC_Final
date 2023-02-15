@@ -12,6 +12,8 @@ import org.springframework.stereotype.Service;
 import org.springframework.transaction.annotation.Transactional;
 
 import kr.or.kosa.dao.AdminDao;
+import kr.or.kosa.dao.BoardDao;
+import kr.or.kosa.dto.Board;
 import kr.or.kosa.dto.DemeritHistory;
 import kr.or.kosa.dto.Member;
 import kr.or.kosa.dto.Reply;
@@ -85,11 +87,42 @@ public class AdminService {
 		return demeritHistory;
 	}
 	
+
+	//관리자 게시판 목록 보기
+	public List<Board> getBoardList(){
+		User user = (User) SecurityContextHolder.getContext().getAuthentication().getPrincipal();
+		BoardDao boarddao = sqlsession.getMapper(BoardDao.class);
+		List<Board> list = boarddao.getAdminCategory(user.getUniversityCode());
+		return list;
+	}
+	
+	//관리자 게시판 이름 수정
+	public int updateBoard(String boardname, String boardidx) {
+		BoardDao boarddao = sqlsession.getMapper(BoardDao.class);
+		int result = boarddao.updateBoardName(boardname, boardidx);
+		return result;
+	}
+	
+	//관리자 게시판 생성
+	public int createBoard(String boardname) {
+		User user = (User) SecurityContextHolder.getContext().getAuthentication().getPrincipal();
+		BoardDao boarddao = sqlsession.getMapper(BoardDao.class);
+		int result = boarddao.newCustomBoard(user.getUniversityCode(), boardname);
+		return result;
+	}
+	
+	//관리자 게시판 삭제(비활성화)
+	public int deleteBoard(String boardidx) {
+		BoardDao boarddao = sqlsession.getMapper(BoardDao.class);
+		int result = boarddao.deleteBoard(boardidx);
+		return result;
+	}
+
 	// 퇴소 조치
 	public void memberGetOut(String memberId) {
 		AdminDao adminDao = sqlsession.getMapper(AdminDao.class);
 		adminDao.memberGetOut(memberId);
 		System.out.println("퇴소 서비스 돌앗당.");
 	}
-	
+
 }
