@@ -164,12 +164,13 @@ PUBLIC "-//mybatis.org//DTD Mapper 3.0//EN"
 	<!-- 관리자 -->
 	<!-- 게시판 카테고리 -->
 	<select id="getAdminCategory" resultType="kr.or.kosa.dto.Board">
-		SELECT b.boardidx, b.boardname, COUNT(p.idx) as postCount, COUNT(r.replyidx) AS replyCount
-		FROM BOARD b
-		LEFT JOIN POST p ON p.boardidx = b.boardidx
-		LEFT JOIN REPLY r ON p.idx = r.IDX
-		WHERE b.universitycode=#{universitycode} AND b.STATUS='21'
-		GROUP BY BOARDIDX
+	SELECT b.boardidx, b.boardname, COUNT(DISTINCT p.idx) as postCount, COUNT(DISTINCT r.replyidx) AS replyCount
+	FROM BOARD b
+	LEFT JOIN POST p ON p.boardidx = b.boardidx AND p.STATUS='21'
+	LEFT JOIN REPLY r ON p.idx = r.IDX AND r.STATUS='21'
+	WHERE b.universitycode=#{universitycode}
+	AND b.STATUS='21'
+	GROUP BY BOARDIDX
 	</select>
 
 	<!-- 게시판 이름 수정 -->
