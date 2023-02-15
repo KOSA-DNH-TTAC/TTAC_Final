@@ -9,4 +9,6 @@ public class Board {
 	private String universityCode;
 	private String boardName;
 	
+	private int postCount;
+	private int replyCount;
 }
