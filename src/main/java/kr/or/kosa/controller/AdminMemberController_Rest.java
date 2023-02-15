@@ -13,6 +13,7 @@ import org.springframework.web.bind.annotation.PathVariable;
 import org.springframework.web.bind.annotation.RequestMapping;
 import org.springframework.web.bind.annotation.RestController;
 
+import kr.or.kosa.dto.Cafeteria;
 import kr.or.kosa.dto.DemeritHistory;
 import kr.or.kosa.dto.Member;
 import kr.or.kosa.security.User;
@@ -80,7 +81,22 @@ public class AdminMemberController_Rest {
 	@RequestMapping("/admin/memberInfo/getout/{memberId}")
 	public void memberGetOut(@PathVariable("memberId") String memberId) {
 		adminService.memberGetOut(memberId);
-		System.out.println("컨트롤러 돌앗당.");
 	}
+	
+	// 식당 메뉴 조회
+	@RequestMapping("/admin/cafeteria")
+	public ResponseEntity<List<Cafeteria>> allMenuList() {
+		List<Cafeteria> list = adminService.allMenuList();
+		return new ResponseEntity<List<Cafeteria>>(list, HttpStatus.OK);
+	}
+	
+	// 식당 메뉴 수정
+	@RequestMapping("/admin/cafeteria/{menuname}/{menuprice}")
+	public void menuUpdate(@PathVariable("menuname") String menu,
+			@PathVariable("menuprice") String menuprice) {
+		int menuPrice = Integer.parseInt(menuprice);
+	}
+	
+	// 식당 메뉴 삭제
 
 }

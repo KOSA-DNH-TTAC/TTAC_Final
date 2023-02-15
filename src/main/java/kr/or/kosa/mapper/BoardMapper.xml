@@ -11,6 +11,7 @@ PUBLIC "-//mybatis.org//DTD Mapper 3.0//EN"
 		FROM BOARD WHERE universitycode=#{param1}
 		AND boardname NOT IN('공지사항',
 		'건의사항', '자유게시판', '거래게시판')
+		AND STATUS='21'
 	</select>
 
 	<!-- 기본 제공 게시판 글 목록 -->
@@ -160,8 +161,32 @@ PUBLIC "-//mybatis.org//DTD Mapper 3.0//EN"
 	</select>
 
 
+	<!-- 관리자 -->
+	<!-- 게시판 카테고리 -->
+	<select id="getAdminCategory" resultType="kr.or.kosa.dto.Board">
+	SELECT b.boardidx, b.boardname, COUNT(DISTINCT p.idx) as postCount, COUNT(DISTINCT r.replyidx) AS replyCount
+	FROM BOARD b
+	LEFT JOIN POST p ON p.boardidx = b.boardidx AND p.STATUS='21'
+	LEFT JOIN REPLY r ON p.idx = r.IDX AND r.STATUS='21'
+	WHERE b.universitycode=#{universitycode}
+	AND b.STATUS='21'
+	GROUP BY BOARDIDX
+	</select>
 
-
+	<!-- 게시판 이름 수정 -->
+	<update id="updateBoardName">
+		UPDATE BOARD SET BOARDNAME=#{boardname} WHERE BOARDIDX=#{boardidx}
+	</update>
+	
+	<!-- 새 커스텀 게시판 -->
+	<insert id="newCustomBoard">
+		INSERT INTO BOARD(UNIVERSITYCODE, BOARDNAME) VALUES(#{universitycode}, #{boardname})
+	</insert>
+	
+	<!-- 커스텀 게시판 삭제(비활성화) -->
+	<update id="deleteBoard">
+		UPDATE BOARD SET STATUS='22' WHERE BOARDIDX=#{boardidx}
+	</update>
 
 </mapper>
 

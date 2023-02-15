@@ -4,6 +4,8 @@ import java.sql.SQLException;
 import java.util.Date;
 import java.util.List;
 
+import org.apache.ibatis.annotations.Param;
+
 import kr.or.kosa.dto.Board;
 import kr.or.kosa.dto.Domitory;
 import kr.or.kosa.dto.File;
@@ -47,6 +49,23 @@ public interface BoardDao {
 	public void updateDislike(String idx);
 	public void insertPostLike(String idx, String memberId);
 	public void updateLike(String idx);
+	
+	
+	/////////////////////////
+	
+	//관리자 게시판 카테고리
+	public List<Board> getAdminCategory(String universitycode);
+	
+	//관리자 커스텀 게시판 수정
+	public int updateBoardName(@Param("boardname")String boardname, @Param("boardidx")String boardidx);
+	
+	//관리자 커스텀 게시판 생성
+	public int newCustomBoard(@Param("universitycode")String universitycode, @Param("boardname")String boardname);
+	
+	//관리자 커스텀 게시판 비활성화(삭제)
+	public int deleteBoard(String boardidx);
+	
+	///////////////////////////
 	
 
 	// 점호하기

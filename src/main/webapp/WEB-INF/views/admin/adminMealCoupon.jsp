@@ -20,8 +20,13 @@
 <link href="/resources/assets/css/menu.css" rel="stylesheet">
 <link href="/resources/assets/css/category.css" rel="stylesheet">
 <link href="/resources/assets/css/graph.css" rel="stylesheet">
-<script src="http://code.jquery.com/jquery-latest.min.js"></script>
+<link href="/resources/assets/css/yb.css" rel="stylesheet">
 
+<!-- Jquery -->
+<script src="http://code.jquery.com/jquery-latest.min.js"></script>
+		
+<!-- Sweet Alert -->
+<script src="https://cdn.jsdelivr.net/npm/sweetalert2@11"></script>
 
 <body class="">
 <div class="wrap">
@@ -34,7 +39,7 @@
 					<ul>
 					
 						<li class="menu last">
-							<button class="btn_sumit ml네일아트" onclick="document.location.href='/bbs/logout.php';">로그아웃</button><button class="btn_sumit blbtn ml네일아트" onclick="document.location.href='/';">홈페이지</button>
+							<button class="btn_sumit ml네일아트" onclick="document.location.href='/logout';">로그아웃</button><button class="btn_sumit blbtn ml네일아트" onclick="document.location.href='/';">홈페이지</button>
 						</li> <!--.menu.g1-->
 
 					</ul>
@@ -59,6 +64,7 @@
 									<li><a href="../sub01/sub01_02.php">벌점관리</a></li>
 								</ul>
 							</li>
+							<li class="smenu"><a href="/admin/board">커뮤니티관리</a>
 							<li class="smenu"><a href="/admin/coupon" class="msub on">식권관리</a></li>
 							<li class="smenu"><a href="/admin/popular">외박관리</a>
 								<ul class="sub ">
@@ -179,13 +185,15 @@ function load(){
 </div>	<div class="con">
 		<h3 class="sub_h3">식권관리 <span></span></h3>
 
-<!--쿠폰검색-->
+<!-- 식권 검색 -->
 <div class="coupon_top bmb">
 	<h3 class="bgtab txtin">메뉴 현황 보기</h3>	
 </div>
-<!--쿠폰검색e-->
+<!-- 식권 검색 e-->
 
-<!--쿠폰정보-->
+<!-- 식권 목록 -->
+<div class="ofh">
+<div class="halfcon mr">
 <div class="coupon">
 	<div class="bgtab bgtab2">
 		<div class="ofh mb10">	
@@ -208,16 +216,22 @@ function load(){
 		</tbody>
 	</table>
 </div>
-<!--쿠폰정보 e-->
+</div>
+<!-- 식권 목록 e-->
 
 
 
-<!--쿠폰등록-->
-<div class="coupon_write bmb">
-	<h4 class="tit_nm">쿠폰등록</h4>
-	<table class="comm_table mb">
+<!-- 식권 등록 -->
+<div class="halfcon">
+<div class="coupon_write bmb" style="margin-bottom:20px !important">
+	<div class="bgtab bgtab2">
+		<div class="w70 fl">
+			<h4>식권 등록</h4>
+		</div>
+	</div>
+	<table class="comm_table mb" style="margin-bottom: 0 !important">
 		<colgroup>
-			<col width="180px"/>
+			<col width="150px"/>
 			<col width="*"/>
 		</colgroup>
 		<tr>
@@ -235,7 +249,6 @@ function load(){
 	</table>
 
 </div>
-<!--쿠폰등록 e-->
 
 
 
@@ -248,7 +261,9 @@ function load(){
 		</ul>
 	</div>
 </div> 
-<!--쿠폰등록 e-->
+</div>
+</div>
+<!-- 식권 등록 end-->
 
 
 
@@ -262,7 +277,7 @@ function load(){
 
 
 		<div id="footer">
-		<p>Copyright(c)뷰티몰 쇼핑몰관리시스템. All rights reserved. supported by <a href="http://www.cmaru.com" target="_blank">크리에이티브마루.</a></p>
+		<p>Copyright(c) 기숙사 통합 관리 시스템. All rights reserved. supported by ttac.</a></p>
 	</div>
 
 	<div id="pageup">

@@ -64,4 +64,9 @@ public class AdminController {
 		
 		return "admin/adminDomitory";
 	}
+	
+	@GetMapping("/board")
+	public String adminBoard() {
+		return "admin/adminBoard";
+	}
 }
