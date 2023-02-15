@@ -22,6 +22,7 @@
 <link href="/resources/assets/css/graph.css" rel="stylesheet">
 <link href="/resources/assets/css/yb.css" rel="stylesheet">
 
+
 		<!-- <script type="text/javascript" src="resources/assets/js/pg_script.js"></script> -->
 		<!-- <script type="text/javascript" src="resources/assets/js/jquery-2.1.4.js"></script> -->
 
@@ -38,6 +39,9 @@
 
 		<!-- Jquery -->
 		<script src="http://code.jquery.com/jquery-latest.min.js"></script>
+		
+		<!-- Sweet Alert -->
+		<script src="https://cdn.jsdelivr.net/npm/sweetalert2@11"></script>
 <style>
 	.memberrow:hover{
 		background-color:#f5f5f5;
@@ -150,7 +154,7 @@ $(document).ready(function(){
 <div class="ofh">
 	<div class="halfcon mr">		
 		<h4 class="bgtab bgtab2">회원 목록</h4>
-		<table style='height:100px' class="comm_table tac bmb" id="membertable">	
+		<table class="comm_table tac bmb" id="membertable">	
 			
 		</table>
 
@@ -215,12 +219,13 @@ $(document).ready(function(){
 					$('#membertable').empty();
 					let contents = `<tbody style='overflow: auto;'>` +
 				`<tr>		
-					<th width='8%'>순번</th>
+					<th width='6%'>순번</th>
 					<th width='17%'>학번</th>
 					<th width='11%'>이름</th>
 					<th width='19%'>전화번호</th>
 					<th width='15%'>기숙사</th>
-					<th width='8%'>벌점</th>
+					<th width='6%'>벌점</th>
+					<th width='8%'>퇴소 여부</th>
 				</tr>`
 
 				$.each(result.list, function(index, member){
@@ -233,7 +238,8 @@ $(document).ready(function(){
 						<td>` + member.phone + `</td>
 						<td>` + member.domitoryName + `&nbsp;` + member.room + `</td>
 						<td>` + member.demerit + `</td>
-					</tr></button>`
+						<td>` + `퇴소` + `</td>
+					</tr>`
 
 				})
 				contents += `</tbody></table>`;
@@ -277,12 +283,13 @@ $(document).ready(function(){
 					$('#membertable').empty();
 					let contents = `<tbody>` +
 				`<tr>		
-					<th width='8%'>순번</th>
+					<th width='6%'>순번</th>
 					<th width='17%'>학번</th>
 					<th width='11%'>이름</th>
-					<th width='19%'>전화번호</th>
+					<th width='15%'>전화번호</th>
 					<th width='15%'>기숙사</th>
-					<th width='8%'>벌점</th>
+					<th width='6%'>벌점</th>
+					<th width='8%'>퇴소 여부</th>
 				</tr>`
 
 				$.each(data, function(index, member){
@@ -295,7 +302,8 @@ $(document).ready(function(){
 						<td>` + member.phone + `</td>
 						<td>` + member.domitoryName + `&nbsp;` + member.room + `</td>
 						<td>` + member.demerit + `</td>
-					</tr></button>`
+						<td>` + `퇴소` + `</td>
+					</tr>`
 
 				})
 				contents += `</tbody></table>`;
@@ -354,11 +362,11 @@ $(document).ready(function(){
 	
 					$('.plusMemberInfo').empty();
 					$('.plusMemberInfo').append(memberInfo);
-		} 
-	}) 
-}
-		
-		
+			} 
+		}) 
+	}
+	 
+	 	
 		function memberDemeritHistory(uid){
 		 
 		 var memberId = uid;	
@@ -408,6 +416,7 @@ $(document).ready(function(){
 		 
 	 }
 		
+		// 벌점 부여 ajax
 		$(document).on(					
 				"click",
 				".btn_demerit", function btn_demerit() {	
@@ -415,8 +424,7 @@ $(document).ready(function(){
 					var demeritId = $("#demeritId").text();					
 					var demerit = $('.inputbox:first').val();
 				    var demeritReason = $('.inputbox:last').val();
-				    console.log('벌점:', demerit);
-				    console.log('사유:', demeritReason);
+				    
 				
 				    $.ajax({
 						type: "post",
@@ -426,6 +434,40 @@ $(document).ready(function(){
 							getMemberList();
 						}
 		});
+
+		})
+		
+		
+		// 퇴소 처리 ajax
+		$(document).on(					
+				"click",
+				"#getout", function memberGetOut() {	
+					
+			
+					var memberId = $("#demeritId").text();					
+					
+				    Swal.fire({
+						title: '퇴소 처리하시겠습니까?',
+						icon: 'warning',
+						showCancelButton: true,
+						confirmButtonColor: '#e96b56',
+						cancelButtonColor: 'grey',
+						confirmButtonText: 'DELETE'
+						}).then((result) => {
+						if (result.isConfirmed) {
+							 $.ajax({
+									type: "post",
+									url: "/admin/memberInfo/getout/" + memberId,
+									success: function (data) {
+										
+										$('.plusMemberInfo').empty();
+										getMemberList();
+									}
+								}) // ajax end
+						}
+						})
+
+				   
 
 		})
 		
