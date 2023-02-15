@@ -34,9 +34,9 @@ public class AdminService {
 		List<Member> infoList = new ArrayList<Member>();
 		AdminDao adminDao = sqlsession.getMapper(AdminDao.class);
 		User user = (User) SecurityContextHolder.getContext().getAuthentication().getPrincipal();
-
+		
 		infoList = adminDao.getMemberInfo(memberId, user.getUniversityCode());
-
+		
 		return infoList;
 	}
 	
@@ -60,30 +60,34 @@ public class AdminService {
 	
 	// 벌점
 	@Transactional(rollbackFor = Exception.class)
-	public void memberDemerit(DemeritHistory demeritHistory, String demerit, String memberid) {
+	public void memberDemerit(String memberId, String demerit, String demeritReason) {
 		AdminDao adminDao = sqlsession.getMapper(AdminDao.class);
-		
+		int demerit2 = Integer.parseInt(demerit);
 		DemeritHistory result = new DemeritHistory();
-		adminDao.insertDemerit(demeritHistory);
-		adminDao.updateDemerit(demerit, memberid);
+
+		result.setMemberId(memberId);
+		result.setDemerit(demerit2);
+		result.setDemeritReason(demeritReason);
+
+		System.out.println(result);
+		adminDao.insertDemerit(result);
+		adminDao.updateDemerit(demerit2, memberId);
 		
 	}
 	
 	// 벌점 이력 보기
 	public List<DemeritHistory> memberDemeritHistory(String memberId) {
 		AdminDao adminDao = sqlsession.getMapper(AdminDao.class);
-		System.out.println("?");
 		List<DemeritHistory> demeritHistory = new ArrayList<DemeritHistory>();
 		demeritHistory = adminDao.memberDemeritHistory(memberId);
 		
 		for (DemeritHistory d : demeritHistory) {
 			d.setDemeritDate(d.getDemeritDate().substring(0, 10));
 		}
-		
-		System.out.println("Service: " + demeritHistory);
 		return demeritHistory;
 	}
 	
+
 	//관리자 게시판 목록 보기
 	public List<Board> getBoardList(){
 		User user = (User) SecurityContextHolder.getContext().getAuthentication().getPrincipal();
@@ -113,4 +117,12 @@ public class AdminService {
 		int result = boarddao.deleteBoard(boardidx);
 		return result;
 	}
+
+	// 퇴소 조치
+	public void memberGetOut(String memberId) {
+		AdminDao adminDao = sqlsession.getMapper(AdminDao.class);
+		adminDao.memberGetOut(memberId);
+		System.out.println("퇴소 서비스 돌앗당.");
+	}
+
 }

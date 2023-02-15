@@ -57,9 +57,7 @@ public class AdminMemberController_Rest {
 	// 검색 조회
 	@RequestMapping("/admin/memberInfo/search/{param}/{search}")
 	public ResponseEntity<List<Member>> searchMember(@PathVariable("param") String param,
-			@PathVariable("search") String search) {
-		System.out.println("뭐해.");
-		
+			@PathVariable("search") String search) {		
 		List<Member> memberSearchInfo = adminService.searchMember(param, search);
 		return new ResponseEntity<List<Member>>(memberSearchInfo, HttpStatus.OK);
 	}
@@ -67,11 +65,22 @@ public class AdminMemberController_Rest {
 	// 벌점 이력 조회
 	@RequestMapping("/admin/memberInfo/demerit/{memberId}")
 	public ResponseEntity<List<DemeritHistory>> memberDemeritHistory(@PathVariable("memberId") String memberId) {
-		
-		System.out.println("컨트롤러 타는 중 !!!!!!!!!!!!!!!!!!!");
 		List<DemeritHistory> list = adminService.memberDemeritHistory(memberId);
-		
 		return new ResponseEntity<List<DemeritHistory>>(list, HttpStatus.OK);
+	}
+	
+	// 벌점 insert, update
+	@RequestMapping("/admin/memberInfo/demerit/{memberId}/{demerit}/{demeritReason}")
+	public void memberDemeritInsert(@PathVariable("memberId") String memberId,
+			@PathVariable("demerit") String demerit, @PathVariable("demeritReason") String demeritReason) {
+		adminService.memberDemerit(memberId, demerit, demeritReason);
+	}
+	
+	// 퇴소 조치
+	@RequestMapping("/admin/memberInfo/getout/{memberId}")
+	public void memberGetOut(@PathVariable("memberId") String memberId) {
+		adminService.memberGetOut(memberId);
+		System.out.println("컨트롤러 돌앗당.");
 	}
 
 }
