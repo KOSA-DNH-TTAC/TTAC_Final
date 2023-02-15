@@ -19,4 +19,6 @@ public interface CalendarDao {
 	
 	//월별 데이터 가져오기
 	public List<Schedule> monthPrint(@Param("universityCode")String universityCode, @Param("domitoryName")String domitoryName, @Param("start")String start, @Param("end")String end);
+
+	public int insertmenu(@Param("universitycode")String universitycode, @Param("menu")String menu, @Param("menuPrice")String menuPrice, @Param("domitoryname")String domitoryname);
 }
