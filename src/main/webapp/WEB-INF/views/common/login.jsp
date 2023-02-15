@@ -332,7 +332,7 @@ form:after {
       </div>
       <div>
         <input type="submit" value="Log in" />
-        <a href="#">비밀번호를 잊으셨나요?</a>
+        <a href="/forgot">비밀번호를 잊으셨나요?</a>
       </div>
     </form><!-- form -->
     
