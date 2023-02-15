@@ -11,6 +11,7 @@ PUBLIC "-//mybatis.org//DTD Mapper 3.0//EN"
 		FROM BOARD WHERE universitycode=#{param1}
 		AND boardname NOT IN('공지사항',
 		'건의사항', '자유게시판', '거래게시판')
+		AND STATUS='21'
 	</select>
 
 	<!-- 기본 제공 게시판 글 목록 -->
