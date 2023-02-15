@@ -74,7 +74,7 @@
 
 		<div class="subcon">
 	<div class="leftcon">
-	<nav id="sidemenu">
+	<nav id="sidemenu" style="text-align:left">
 						<ul class="submenu">
 							<li class="smenu" style="background-color:#4D6794; color:white;"><a href="/admin/coupon">
 									<h1>기숙사 통합관리 솔루션</h1>
@@ -122,7 +122,7 @@ $(document).ready(function(){
 </script>
 
 </div>	<div class="con">
-		<h3 class="sub_h3">회원관리 <span>회원현황</span></h3>
+		<h3 class="sub_h3" style="text-align:left">회원관리 <span>회원현황</span></h3>
 <div class="bmb">
 	<div class="bgtab">
 	<h3 class="txtin" id="excelCenter">회원 조회 <button class="btn_sumit2" id="excelbutton">엑셀 다운로드</button></h3>
@@ -299,7 +299,6 @@ $(document).ready(function(){
 						<td>` + member.phone + `</td>
 						<td>` + member.domitoryName + `&nbsp;` + member.room + `</td>
 						<td>` + member.demerit + `</td>
-						<td>` + member.status + `</td>
 					</tr>`
 
 				})
