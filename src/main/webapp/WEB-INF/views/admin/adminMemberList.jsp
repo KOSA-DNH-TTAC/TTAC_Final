@@ -225,7 +225,6 @@ $(document).ready(function(){
 					<th width='19%'>전화번호</th>
 					<th width='15%'>기숙사</th>
 					<th width='6%'>벌점</th>
-					<th width='8%'>퇴소 여부</th>
 				</tr>`
 
 				$.each(result.list, function(index, member){
@@ -238,7 +237,6 @@ $(document).ready(function(){
 						<td>` + member.phone + `</td>
 						<td>` + member.domitoryName + `&nbsp;` + member.room + `</td>
 						<td>` + member.demerit + `</td>
-						<td>` + `퇴소` + `</td>
 					</tr>`
 
 				})
@@ -289,7 +287,6 @@ $(document).ready(function(){
 					<th width='15%'>전화번호</th>
 					<th width='15%'>기숙사</th>
 					<th width='6%'>벌점</th>
-					<th width='8%'>퇴소 여부</th>
 				</tr>`
 
 				$.each(data, function(index, member){
@@ -302,7 +299,7 @@ $(document).ready(function(){
 						<td>` + member.phone + `</td>
 						<td>` + member.domitoryName + `&nbsp;` + member.room + `</td>
 						<td>` + member.demerit + `</td>
-						<td>` + `퇴소` + `</td>
+						<td>` + member.status + `</td>
 					</tr>`
 
 				})
