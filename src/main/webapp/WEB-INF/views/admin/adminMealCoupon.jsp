@@ -130,7 +130,7 @@ function insert(){
 		}
 	});
 }
-//메뉴 삭제(상태값 22로 업데이트)
+//메뉴 삭제
 function confirm(menu) {
 	var tr = $(menu).closest('tr');
 	let index = tr.find('input[type=hidden]').val();
