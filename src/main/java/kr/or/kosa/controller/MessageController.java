@@ -54,7 +54,7 @@ public class MessageController {
 	
 	
 	//쪽지 하나 조회
-	@GetMapping("/read/{idx}")
+	
 //	public ResponseEntity<Message> readMsg(@PathVariable("idx")String idx){
 //		int index = Integer.parseInt(idx);
 //		Message msg = service.getMsg(index);
@@ -62,12 +62,13 @@ public class MessageController {
 //		return new ResponseEntity<Message>(msg, HttpStatus.OK);
 //	     
 //	}
+	@GetMapping("/read/{idx}")
 	public ModelAndView readMsg(@PathVariable("idx")String idx) {
 		ModelAndView mv = new ModelAndView();
 		
 		int index = Integer.parseInt(idx);
 		Message msg = service.getMsg(index);
-		System.out.println(msg);
+		
 		mv.setViewName("member/message/note");
 		mv.addObject("msg", msg);
 		return mv;
