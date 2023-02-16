@@ -27,6 +27,11 @@ PUBLIC "-//mybatis.org//DTD Mapper 3.0//EN"
 		GROUP BY p.idx, p.boardidx, b.boardidx
 		ORDER BY p.writedate DESC
 	</select>
+	
+	<!-- 게시판 boardidx 가져오기 -->
+	<select id="selectBoardIdx" parameterType="kr.or.kosa.dto.Board" resultType="int">
+		SELECT BOARDIDX FROM BOARD WHERE UNIVERSITYCODE = #{universityCode} and BOARDNAME = #{boardName};
+	</select>
 
 	<!-- (커스텀 게시판)새 게시판 글 목록 이거필요없음 -->
 	<select id="customBoardList" resultType="kr.or.kosa.dto.Post">

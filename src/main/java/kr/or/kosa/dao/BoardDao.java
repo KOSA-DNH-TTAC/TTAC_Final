@@ -3,6 +3,7 @@ package kr.or.kosa.dao;
 import java.sql.SQLException;
 import java.util.Date;
 import java.util.List;
+import java.util.Map;
 
 import org.apache.ibatis.annotations.Param;
 
@@ -21,6 +22,9 @@ public interface BoardDao {
 
 	// 기본 제공 게시판 글 목록
 	public List<Post> allBoardList(String boardName, String universitycode);
+	
+	// 게시판 학교, 이름으로 boardidx 가져오기
+	public int selectBoardIdx(Board board) throws ClassNotFoundException, SQLException;
 
 	// 커스텀 생성 게시판
 	public List<Post> customBoardList(String boardName, String universitycode);

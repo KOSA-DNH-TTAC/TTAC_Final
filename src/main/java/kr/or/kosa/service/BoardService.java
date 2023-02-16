@@ -5,6 +5,7 @@ import java.sql.SQLException;
 import java.text.SimpleDateFormat;
 import java.util.Date;
 import java.util.List;
+import java.util.Map;
 import java.util.UUID;
 
 import org.apache.ibatis.session.SqlSession;
@@ -94,6 +95,7 @@ public class BoardService {
 		}
 		return customBoardList;
 	}
+	//
 
 	// 게시글 상세보기
 	public List<Post> boardContent(String idx) {
@@ -104,6 +106,10 @@ public class BoardService {
 		boardContent.get(0).setWriteDate(boardContent.get(0).getWriteDate().substring(2, 16));
 
 		return boardContent;
+	}
+	public int selectBoardIdx(Board board) throws ClassNotFoundException, SQLException {
+		BoardDao boardDao = sqlSession.getMapper(BoardDao.class);
+		return boardDao.selectBoardIdx(board);
 	}
 	
 	// 게시글 상세보기 (객체로)

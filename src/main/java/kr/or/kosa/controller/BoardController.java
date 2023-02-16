@@ -4,8 +4,10 @@ import java.io.IOException;
 import java.security.Principal;
 import java.sql.SQLException;
 import java.util.ArrayList;
+import java.util.HashMap;
 import java.util.Iterator;
 import java.util.List;
+import java.util.Map;
 import java.util.UUID;
 
 import org.apache.commons.io.FilenameUtils;
@@ -21,6 +23,7 @@ import org.springframework.web.bind.annotation.RequestParam;
 import org.springframework.web.multipart.MultipartFile;
 
 import kr.or.kosa.aws.AwsS3;
+import kr.or.kosa.dto.Board;
 import kr.or.kosa.dto.File;
 import kr.or.kosa.dto.Member;
 import kr.or.kosa.dto.Post;
@@ -81,6 +84,60 @@ public class BoardController {
 
 		return "member/board/customBoardList";
 	}
+	
+	// 게시판 글쓰기
+	@GetMapping("/board/custom/{boardName}/write")
+	public String customBoardWrite(Model model, @PathVariable String boardName) {
+		model.addAttribute("boardName", boardName);
+		return "member/board/customBoardWrite";
+	}
+	
+	// 커스텀 게시판 글쓰기
+	@PostMapping("/board/custom/{boardName}/write")
+	public String customBoardWriteOk(Model model, @RequestParam("title") String title,
+												  @RequestParam("content") String content,
+												  @PathVariable String boardName) throws ClassNotFoundException, SQLException {
+		
+		User user = (User) SecurityContextHolder.getContext().getAuthentication().getPrincipal();
+		String msg = "";
+		String url = "";
+		String icon = "";
+		int result = 0;
+
+		Board board = new Board();
+		Post post = new Post();
+		
+
+		board.setBoardName(boardName);
+		board.setUniversityCode(user.getUniversityCode());
+
+		post.setBoardIdx(boardService.selectBoardIdx(board));
+		post.setBoardName(boardName);
+		post.setUniversityCode(user.getUniversityCode());
+		post.setMemberId(user.getMemberId());
+		post.setTitle(title);
+		post.setContent(content);
+		
+
+		result = boardService.freeBoardWrite(post);
+
+		if (result < 1) {
+			icon = "error";
+			msg = "글 작성이 실패했습니다.";
+			url = "/board/custom/"+boardName+"/write";
+		} else {
+			icon = "success";
+			msg = "글 작성이 완료되었습니다!";
+			url = "/board/custom/"+boardName;
+		}
+		
+
+		model.addAttribute("msg", msg);
+		model.addAttribute("url", url);
+		model.addAttribute("icon", icon);
+		
+		return "/common/redirect";
+	}
 
 	// 게시글 보기
 	@GetMapping("/board/{boardName}/{idx}")
@@ -97,9 +154,6 @@ public class BoardController {
 		List<File> fileContent = boardService.fileContent(idx);
 		Product productContent = boardService.productContent(idx);
 		
-		//컨트롤러에서 받아온 파일 리스트
-		List<File> fileContent = boardService.fileContent(idx);
-//		System.out.println("컨트롤러 fileContent : "+fileContent);
 
 		if (boardName.equals("noticeList")) {
 //			param = "공지사항";
