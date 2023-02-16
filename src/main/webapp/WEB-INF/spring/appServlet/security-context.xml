@@ -30,7 +30,7 @@
 	<security:intercept-url pattern="/eveningCall" access="isAuthenticated()" /> 
 	<security:intercept-url pattern="/community" access="isAuthenticated()" /> 
 	<security:intercept-url pattern="/facility" access="isAuthenticated()" /> 
-    <security:intercept-url pattern="/board/noticeList" access="isAuthenticated()" /> 
+    <security:intercept-url pattern="/board/*" access="isAuthenticated()" /> 
     <security:intercept-url pattern="/memberCalendar" access="isAuthenticated()" /> 
     <security:intercept-url pattern="/admin/*" access="isAuthenticated()" /> 
     

@@ -96,7 +96,4 @@ public class AdminMemberController_Rest {
 			@PathVariable("menuprice") String menuprice) {
 		int menuPrice = Integer.parseInt(menuprice);
 	}
-	
-	// 식당 메뉴 삭제
-
 }

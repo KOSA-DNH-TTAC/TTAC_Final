@@ -289,7 +289,7 @@ public class AdminController_Rest {
 				}
 			}
 			
-			//일정 삭제
+			//메뉴 삭제
 			@GetMapping("/coupon/delete")
 			public ResponseEntity<Map<String, Object>> deleteMenu(int idx) {
 				int result = cafeteriaService.deleteMenu(idx);

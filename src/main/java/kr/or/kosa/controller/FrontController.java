@@ -70,6 +70,12 @@ public class FrontController {
 	}
 	*/
 	
+	@GetMapping("/accessError")
+	public String accessError() {
+		
+		return "common/errorPage";
+	}
+	
 	@GetMapping("/message")
 	@PreAuthorize("isAuthenticated()")
 	public String messageBox() {
