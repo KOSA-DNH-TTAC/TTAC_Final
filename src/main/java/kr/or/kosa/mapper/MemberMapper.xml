@@ -60,7 +60,7 @@ PUBLIC "-//mybatis.org//DTD Mapper 3.0//EN"
 	SELECT COUNT(replyidx) replyCount, p.idx, p.boardidx, p.universitycode, b.boardname, p.memberid, p.writedate, p.likenum, p.content, p.title
 	FROM POST p LEFT OUTER JOIN BOARD b ON p.boardidx = b.boardidx
 	LEFT OUTER JOIN REPLY r ON p.idx = r.idx
-	WHERE p.memberid = #{memberid}
+	WHERE p.memberid = #{memberid} AND b.status='21'
 	GROUP BY idx
 	ORDER BY p.writedate DESC
 	</select>
