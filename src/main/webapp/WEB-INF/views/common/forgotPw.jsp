@@ -106,8 +106,8 @@
                     <div id="content">
                         <div>
                             <label for="emailInput">이메일:</label>
-                            <input type="text" id="emailInput">
-                            <button id="sendEmailBtn">메일받기</button>
+                            <input type="text" id="email">
+                            <button onclick="sendMail()" id="sendEmailBtn">메일받기</button>
                         </div>
                         <div id="afterSent">
 
@@ -156,26 +156,46 @@
         crossorigin="anonymous"></script>
 
 	<script>
+        function sendMail() {
+			email = $('#email').val();
+	         console.log("보낼 메일 주소 : "+ email)
+
+			if (email == '') {
+				swal("Check!", " 이메일을 입력해 주세요.", "warning");
+				return false;
+			}
+
+			$.ajax({
+				type : "POST",
+				url : "/emailAuth",
+				data : {
+					"email" : email,
+				}, 
+				success : function(data) {
+					swal("Check!", "메일이 발송되었습니다.", "success");
+					//alert("인증번호가 발송되었습니다.");
+					email_auth_cd = data;
+				},
+				error : function(data) {
+					swal("Check!", "메일 발송에 실패했습니다.", "error");
+					//alert("메일 발송에 실패했습니다.");
+				}
+			});
+		};
+
+        
         $(document).ready(function(){
             $("#sendEmailBtn").click(function() {
-				var email = $("#emailInput").val();
+				var email = $("#email").val();
 				// 이메일 유효성 검사
 				if (email === '') {
 					alert('이메일을 입력해주세요.');
 					return;
 				}
-				// if (!isValidEmail(email)) {
-				// 	alert('올바른 이메일 주소를 입력해주세요.');
-				// 	return;
-				// }
-				// 인증메일을 보내는 로직
-				// sendVerificationEmail(email);
-
-                console.log("야호")
-
+                //인증메일 발송 ajax...
 				// 인증메일을 보냈다는 알림 출력
                 $('#sendEmailBtn').attr('style', 'display:none;');
-				$("#emailInput").after("<div id='sentMsg'>인증메일을 보냈습니다.</div>");
+				$("#email").after("<div id='sentMsg'>인증메일을 보냈습니다.</div>");
 				// 인증번호 입력창과 버튼 생성
 				$("#afterSent").append("<div><label for='verificationInput'>인증번호 입력:</label><input type='text' id='verificationInput'><button id='verifyBtn'>인증</button></div>");
 			});

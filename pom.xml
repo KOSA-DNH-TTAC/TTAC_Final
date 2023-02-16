@@ -155,7 +155,7 @@
 					<artifactId>jmxri</artifactId>
 				</exclusion>
 			</exclusions>
-			<!-- <scope>runtime</scope>  -->
+			<!-- <scope>runtime</scope> -->
 		</dependency>
 
 		<!-- @Inject -->
@@ -228,6 +228,18 @@
 		    <version>5.0.7.RELEASE</version>
 		</dependency>
 		
+		<!-- javax.mail -->
+		<dependency>
+			<groupId>javax.mail</groupId>
+			<artifactId>mail</artifactId>
+			<version>1.5.0-b01</version>
+		</dependency>
+		<!-- 외부 라이브러리를 스프링 어플리케이션 컨텍스트에 통합하는데 도움을 주는 repository -->
+		<dependency>
+			<groupId>org.springframework</groupId>
+			<artifactId>spring-context-support</artifactId>
+			<version>${org.springframework-version}</version>
+		</dependency>
 
 			
 			        
