@@ -35,22 +35,7 @@
  	</bean>
  	<!-- DB설정 END -->
  	
- 	<!-- navermail설정 -->
-	<bean id="mailSender" class="org.springframework.mail.javamail.JavaMailSenderImpl">
-		<property name="host" value="smtp.naver.com" />
-		<property name="port" value="587" />
-		<property name="username" value="hjdo0211@naver.com" />
-		<property name="password" value="idontknowarray!" />
-		<property name="javaMailProperties">
-			<props>
-				<prop key="mail.debug">true</prop>
-				<prop key="mail.smtp.auth">true</prop>
-				<prop key="mail.smtp.starttls.enable">true</prop>
-				<prop key="mail.mime.charset">UTF-8</prop>
-				<prop key="mail.transport.protocol">smtp</prop>
-			</props>
-		</property>
-	</bean>
+
  	
  	<!-- 파일 업로드 보조(반드시) -->
 	<bean id="multipartResolver"
