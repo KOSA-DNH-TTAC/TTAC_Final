@@ -43,9 +43,23 @@ public class MessageService {
 	//쪽지 상세 조회
 	public Message getMsg(int idx) {
 		MessageDao dao = sqlsession.getMapper(MessageDao.class);
-		
+		User user = (User) SecurityContextHolder.getContext().getAuthentication().getPrincipal();
 		Message msg;
 		msg = dao.getMessage(idx);
+		System.out.println(msg);
+		//받는 사람 = 로그인한 사람일 경우
+		//status = 'N'이면 'Y'로바꿔줌
+		System.out.println(msg.getStatus());
+		System.out.println("N".equals(msg.getStatus()));
+		System.out.println(msg.getStatus().equals("N"));
+		if(msg.getStatus().equals("N")) {
+			System.out.println("분기1");
+			if(msg.getRmemberId().equals(user.getMemberId())) {
+				System.out.println("분기2");
+				dao.setMsgRead(idx);
+			}
+		}
+		
 		return msg;
 	}
 	
