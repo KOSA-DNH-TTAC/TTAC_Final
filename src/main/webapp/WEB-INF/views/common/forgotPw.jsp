@@ -156,6 +156,45 @@
         crossorigin="anonymous"></script>
 
 	<script>
+        function sendMail() {
+			var a =[];
+			email = $('.email').val();
+			$("input[name=email]").each(function(index, item){
+	              //a.push($(item).val());
+	              let txt = "";
+	              txt =( $(item).val());
+	              console.log("보낼 메일 주소 : "+txt)
+	              a.push(txt)
+	              //console.log($(item).val());
+	        });
+			 console.log("a배열 : "+ a);
+			 console.log("a배열 0 : "+ a[0]);
+			 console.log("a배열 1 : "+ a[1])
+			if (email == '') {
+				swal("Check!", " 이메일을 입력해 주세요.", "warning");
+				//alert("이메일을 입력해주세요.");
+				return false;
+			}
+
+			$.ajax({
+				type : "POST",
+				url : "emailAuth/",
+				data : {
+					"email" : a
+				}, 
+				success : function(data) {
+					swal("Check!", "메일이 발송되었습니다.", "success");
+					//alert("인증번호가 발송되었습니다.");
+					email_auth_cd = data;
+				},
+				error : function(data) {
+					swal("Check!", "메일 발송에 실패했습니다.", "error");
+					//alert("메일 발송에 실패했습니다.");
+				}
+			});
+		};
+
+        
         $(document).ready(function(){
             $("#sendEmailBtn").click(function() {
 				var email = $("#emailInput").val();
@@ -171,7 +210,11 @@
 				// 인증메일을 보내는 로직
 				// sendVerificationEmail(email);
 
+                //
+
                 console.log("야호")
+
+                //인증메일 발송 ajax...
 
 				// 인증메일을 보냈다는 알림 출력
                 $('#sendEmailBtn').attr('style', 'display:none;');
