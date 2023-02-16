@@ -27,6 +27,11 @@ PUBLIC "-//mybatis.org//DTD Mapper 3.0//EN"
 		GROUP BY p.idx, p.boardidx, b.boardidx
 		ORDER BY p.writedate DESC
 	</select>
+	
+	<!-- 게시판 boardidx 가져오기 -->
+	<select id="selectBoardIdx" parameterType="kr.or.kosa.dto.Board" resultType="int">
+		SELECT BOARDIDX FROM BOARD WHERE UNIVERSITYCODE = #{universityCode} and BOARDNAME = #{boardName};
+	</select>
 
 	<!-- (커스텀 게시판)새 게시판 글 목록 이거필요없음 -->
 	<select id="customBoardList" resultType="kr.or.kosa.dto.Post">
@@ -106,6 +111,15 @@ PUBLIC "-//mybatis.org//DTD Mapper 3.0//EN"
 	INSERT INTO FILE (idx, FILENAME,FILEREALNAME,FILEURL,FILESIZE)
 	VALUES(#{idx},#{fileName},#{fileRealName},#{fileUrl},#{fileSize})
 	</insert>
+	
+	<!-- 거래 업로드 -->
+	<insert id="productInsert" parameterType="kr.or.kosa.dto.Product">
+		<selectKey keyProperty="idx" resultType="int" order="BEFORE">
+			SELECT IDX from POST ORDER BY IDX DESC LIMIT 1
+		</selectKey>
+	INSERT INTO PRODUCT (idx, PRODUCTPRICE,PRODUCTSOLD)
+	VALUES(#{idx},#{productPrice},#{productSold})
+	</insert>
 
 	<!-- 가장 최근 글쓴 IDX 가져오기 -->
 	<select id="recentPostIdx" resultType="int">
@@ -117,6 +131,13 @@ PUBLIC "-//mybatis.org//DTD Mapper 3.0//EN"
 	<select id="fileContent" parameterType="String"
 		resultType="kr.or.kosa.dto.File">
 		SELECT FILENUM, IDX, FILENAME, FILEREALNAME, FILEURL, FILESIZE FROM FILE WHERE IDX
+		= #{idx}
+	</select>
+	
+	<!-- 거래테이블 가져오기 -->
+	<select id="productContent" parameterType="String"
+		resultType="kr.or.kosa.dto.Product">
+		SELECT PRODUCTIDX, IDX, PRODUCTPRICE, PRODUCTSOLD from PRODUCT WHERE IDX
 		= #{idx}
 	</select>
 

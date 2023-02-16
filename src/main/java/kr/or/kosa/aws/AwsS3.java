@@ -6,6 +6,8 @@ import java.io.IOException;
 import java.io.InputStream;
 import java.io.Reader;
 import java.net.URLEncoder;
+import java.util.ArrayList;
+import java.util.List;
 import java.util.Optional;
 import java.util.Properties;
 
@@ -27,10 +29,12 @@ import com.amazonaws.services.s3.AmazonS3;
 import com.amazonaws.services.s3.AmazonS3ClientBuilder;
 import com.amazonaws.services.s3.model.CopyObjectRequest;
 import com.amazonaws.services.s3.model.DeleteObjectRequest;
+import com.amazonaws.services.s3.model.ObjectListing;
 import com.amazonaws.services.s3.model.ObjectMetadata;
 import com.amazonaws.services.s3.model.PutObjectRequest;
 import com.amazonaws.services.s3.model.S3Object;
 import com.amazonaws.services.s3.model.S3ObjectInputStream;
+import com.amazonaws.services.s3.model.S3ObjectSummary;
 import com.amazonaws.util.IOUtils;
 
 @Configuration
@@ -101,6 +105,16 @@ public class AwsS3 {
     	File uploadFile = convert(multipartfile)
     			.orElseThrow(() -> new IllegalArgumentException("MultipartFile -> File 전환 실패"));
         uploadToS3(new PutObjectRequest(this.bucket, key, uploadFile));
+        removeNewFile(uploadFile);
+        
+    }
+    
+    private void removeNewFile(File targetFile) {
+        if (targetFile.delete()) {
+            System.out.println("File delete success");
+            return;
+        }
+        System.out.println("File delete fail");
     }
 
     public void upload(InputStream is, String key, String contentType, long contentLength) {
@@ -116,8 +130,6 @@ public class AwsS3 {
 
         try {
             this.s3Client.putObject(putObjectRequest);
-            System.out.println("세상사람들 이거 꼭 보세요!!" +putObjectRequest.getBucketName());
-            System.out.println(String.format("[%s] upload complete", putObjectRequest.getKey()));
 
         } catch (AmazonServiceException e) {
             e.printStackTrace();
@@ -149,6 +161,8 @@ public class AwsS3 {
         }
     }
 
+    
+    //파일 삭제
     public void delete(String key) {
         try {
             //Delete 객체 생성
@@ -168,6 +182,22 @@ public class AwsS3 {
         return s3Client.getUrl(this.bucket, fileName).toString();
     }
     
+    //aws 파일 목록 리스트
+    public List<String> bucketList(String key) {
+		//key = "kosa/board/129"     <-- 예시
+    	ObjectListing objectListing = s3Client.listObjects(this.bucket, key);
+    	
+    	List<String> fileList = new ArrayList<String>();
+    	
+    	for(S3ObjectSummary s : objectListing.getObjectSummaries()) {
+    		String file[] = s.getKey().split("/");
+    		fileList.add(file[3]);
+    	}
+    	
+    	return fileList;
+    }
+    
+    //파일 다운로드
     public ResponseEntity<byte[]> getObject(String storedFileName) throws IOException {
         S3Object o = s3Client.getObject(this.bucket, storedFileName);
         S3ObjectInputStream objectInputStream = o.getObjectContent();

@@ -4,8 +4,10 @@ import java.io.IOException;
 import java.security.Principal;
 import java.sql.SQLException;
 import java.util.ArrayList;
+import java.util.HashMap;
 import java.util.Iterator;
 import java.util.List;
+import java.util.Map;
 import java.util.UUID;
 
 import org.apache.commons.io.FilenameUtils;
@@ -21,9 +23,11 @@ import org.springframework.web.bind.annotation.RequestParam;
 import org.springframework.web.multipart.MultipartFile;
 
 import kr.or.kosa.aws.AwsS3;
+import kr.or.kosa.dto.Board;
 import kr.or.kosa.dto.File;
 import kr.or.kosa.dto.Member;
 import kr.or.kosa.dto.Post;
+import kr.or.kosa.dto.Product;
 import kr.or.kosa.security.User;
 import kr.or.kosa.service.BoardService;
 import kr.or.kosa.service.MemberService;
@@ -80,6 +84,60 @@ public class BoardController {
 
 		return "member/board/customBoardList";
 	}
+	
+	// 게시판 글쓰기
+	@GetMapping("/board/custom/{boardName}/write")
+	public String customBoardWrite(Model model, @PathVariable String boardName) {
+		model.addAttribute("boardName", boardName);
+		return "member/board/customBoardWrite";
+	}
+	
+	// 커스텀 게시판 글쓰기
+	@PostMapping("/board/custom/{boardName}/write")
+	public String customBoardWriteOk(Model model, @RequestParam("title") String title,
+												  @RequestParam("content") String content,
+												  @PathVariable String boardName) throws ClassNotFoundException, SQLException {
+		
+		User user = (User) SecurityContextHolder.getContext().getAuthentication().getPrincipal();
+		String msg = "";
+		String url = "";
+		String icon = "";
+		int result = 0;
+
+		Board board = new Board();
+		Post post = new Post();
+		
+
+		board.setBoardName(boardName);
+		board.setUniversityCode(user.getUniversityCode());
+
+		post.setBoardIdx(boardService.selectBoardIdx(board));
+		post.setBoardName(boardName);
+		post.setUniversityCode(user.getUniversityCode());
+		post.setMemberId(user.getMemberId());
+		post.setTitle(title);
+		post.setContent(content);
+		
+
+		result = boardService.freeBoardWrite(post);
+
+		if (result < 1) {
+			icon = "error";
+			msg = "글 작성이 실패했습니다.";
+			url = "/board/custom/"+boardName+"/write";
+		} else {
+			icon = "success";
+			msg = "글 작성이 완료되었습니다!";
+			url = "/board/custom/"+boardName;
+		}
+		
+
+		model.addAttribute("msg", msg);
+		model.addAttribute("url", url);
+		model.addAttribute("icon", icon);
+		
+		return "/common/redirect";
+	}
 
 	// 게시글 보기
 	@GetMapping("/board/{boardName}/{idx}")
@@ -93,15 +151,13 @@ public class BoardController {
 		String url = "";
 		System.out.println("보드네임 : " + boardName);
 		List<Post> boardContent = boardService.boardContent(idx);
-		
-		//컨트롤러에서 받아온 파일 리스트
 		List<File> fileContent = boardService.fileContent(idx);
-//		System.out.println("컨트롤러 fileContent : "+fileContent);
+		Product productContent = boardService.productContent(idx);
+		
 
 		if (boardName.equals("noticeList")) {
 //			param = "공지사항";
 			path = "noticeContent";
-			System.out.println("공지돌고잇니?");
 		} else if (boardName.equals("opinionList")) {
 //			param += "건의사항";
 			path = "opinionContent";
@@ -117,9 +173,13 @@ public class BoardController {
 			model.addAttribute("fileContent", fileContent);
 		}
 		
+		if (productContent != null) {
+			model.addAttribute("productContent", productContent);
+		}
+		
 		model.addAttribute("boardContent", boardContent);
 		model.addAttribute("userId", user.getMemberId());
-
+		
 		String viewPage = "member/board/" + path;
 			
 		return viewPage;
@@ -149,30 +209,22 @@ public class BoardController {
 		String msg = "";
 		String url = "";
 
-		// 로그인 오래되면 팅기도록
-		if (user == null) {
-
+		//게시글 status 22로 변경 (삭제)
+		boardContent.setStatus(22);
+		result = boardService.boardContentEdit(boardContent);
+		
+		//글 수정이 제대로 되었는지 확인
+		if (result < 1) {
 			icon = "error";
-			msg = "세션이 만료되었습니다.";
-			url = "/";
-			
+			msg = "글 작성이 실패했습니다.";
+			url = "/board/"+boardName+"/"+idx+"/edit";
 		} else {
-			//게시글 status 22로 변경 (삭제)
-			boardContent.setStatus(22);
-			result = boardService.boardContentEdit(boardContent);
+			icon = "success";
+			msg = "글 삭제가 완료되었습니다!";
+			url = "/board/"+boardName;
 			
-			//글 수정이 제대로 되었는지 확인
-			if (result < 1) {
-				icon = "error";
-				msg = "글 작성이 실패했습니다.";
-				url = "/board/"+boardName+"/"+idx+"/edit";
-			} else {
-				icon = "success";
-				msg = "글 삭제가 완료되었습니다!";
-				url = "/board/"+boardName;
-				
-			}
 		}
+		
 		
 		model.addAttribute("msg", msg);
 		model.addAttribute("url", url);
@@ -188,6 +240,7 @@ public class BoardController {
 		
 		User user = (User) SecurityContextHolder.getContext().getAuthentication().getPrincipal();
 		Post boardContent = boardService.boardContentDTO(idx);
+		List<File> fileContent = boardService.fileContent(Integer.toString(idx));
 
 		
 		// 글 쓴사람과 로그인한 사람이 같은지
@@ -203,6 +256,10 @@ public class BoardController {
 			
 			return "/common/redirect";
 			
+		}
+		
+		if (!fileContent.isEmpty()) {
+			model.addAttribute("fileContent", fileContent);
 		}
 		
 		model.addAttribute("boardContent", boardContent);
@@ -225,33 +282,25 @@ public class BoardController {
 		String msg = "";
 		String url = "";
 
-		// 로그인 오래되면 팅기도록
-		if (user == null) {
-
-			icon = "error";
-			msg = "세션이 만료되었습니다.";
-			url = "/";
-			
-		} else {
-			//글 제목, 내용 수정
-			boardContent.setTitle(title);
-			boardContent.setContent(content);
-			
-			result = boardService.boardContentEdit(boardContent);
-			
-			//글 수정이 제대로 되었는지 확인
-			if (result < 1) {
-				icon = "error";
-				msg = "글 작성이 실패했습니다.";
-				url = "/board/"+boardName+"/"+idx+"/edit";
-			} else {
-				icon = "success";
-				msg = "글 작성이 완료되었습니다!";
-				url = "/board/"+boardName+"/"+idx;
-				
-			}
-		}
 		
+		//글 제목, 내용 수정
+		boardContent.setTitle(title);
+		boardContent.setContent(content);
+		
+		result = boardService.boardContentEdit(boardContent);
+		
+		//글 수정이 제대로 되었는지 확인
+		if (result < 1) {
+			icon = "error";
+			msg = "글 작성이 실패했습니다.";
+			url = "/board/"+boardName+"/"+idx+"/edit";
+		} else {
+			icon = "success";
+			msg = "글 작성이 완료되었습니다!";
+			url = "/board/"+boardName+"/"+idx;
+			
+		}
+
 		model.addAttribute("msg", msg);
 		model.addAttribute("url", url);
 		model.addAttribute("icon", icon);
@@ -289,54 +338,33 @@ public class BoardController {
 		String msg = "";
 		String url = "";
 		String icon = "";
-		String fileName = "";
 		
 		int result = 0;
 		
-		if (user == null) {
-			icon = "warning";
-			msg = "세션이 만료되었습니다.";
-			url = "/";
-
-		} else {
-			Post postDTO = new Post();
-			List<File> fileDTO = new ArrayList<File>();
-			
-			//글 담아주기
-			postDTO.setBoardIdx(boardIDX);
-			postDTO.setBoardName("공지사항");
-			postDTO.setUniversityCode(user.getUniversityCode());
-			postDTO.setMemberId(user.getMemberId());
-			postDTO.setTitle(title);
-			postDTO.setContent(content);
-			
-			//파일 담아주기
-			for (MultipartFile multipartfile : files) {
-				File fileOne = new File();
-				
-				UUID uuid = UUID.randomUUID();
-				fileName = uuid.toString()+"_"+multipartfile.getOriginalFilename();
-				fileOne.setFileName(fileName);
-				fileOne.setFileRealName(multipartfile.getOriginalFilename());
-				fileOne.setFileSize(multipartfile.getSize());
-				
-				fileDTO.add(fileOne);
-			}
+		Post postDTO = new Post();
 		
-			//서비스슝슝
-			result = boardService.noticeListInsert(postDTO, fileDTO, files);
+		//글 담아주기
+		postDTO.setBoardIdx(boardIDX);
+		postDTO.setBoardName("공지사항");
+		postDTO.setUniversityCode(user.getUniversityCode());
+		postDTO.setMemberId(user.getMemberId());
+		postDTO.setTitle(title);
+		postDTO.setContent(content);
+		
+		//서비스슝슝
+		result = boardService.postListInsert(postDTO, files);
+		
+		if (result < 1) {
+			icon = "error";
+			msg = "글 작성이 실패했습니다.";
+			url = "/board/noticeWrite";
+		} else {
+			icon = "success";
+			msg = "글 작성이 완료되었습니다!";
+			url = "/board/noticeList";
 			
-			if (result < 1) {
-				icon = "error";
-				msg = "글 작성이 실패했습니다.";
-				url = "/board/noticeList/noticeWrite";
-			} else {
-				icon = "success";
-				msg = "글 작성이 완료되었습니다!";
-				url = "/board/noticeList";
-				
-			}
 		}
+	
 
 		model.addAttribute("msg", msg);
 		model.addAttribute("url", url);
@@ -365,8 +393,73 @@ public class BoardController {
 
 	// 거래게시판 글쓰기
 	@PostMapping("/board/productBoardWrite")
-	public String productWriteOk() {
-		return "member/board/productBoardWrite";
+	public String productWriteOk(Model model, @RequestParam("file") List<MultipartFile> files,
+							 	 			  @RequestParam("title") String title,
+							 	 			  @RequestParam("content") String content,
+							 	 			  @RequestParam("price") int price,
+							 	 			  @RequestParam("sold") String sold) throws IOException  {
+		User user = (User) SecurityContextHolder.getContext().getAuthentication().getPrincipal();
+		int boardIDX = 4;
+		String msg = "";
+		String url = "";
+		String icon = "";
+		String fileName = "";
+		MultipartFile multiFile = files.get(0);
+		
+		int result = 0;
+		
+		
+		Post postDTO = new Post();
+		Product ProductDTO = new Product();
+		List<File> fileDTO = new ArrayList<File>();
+		
+		//글 담아주기
+		postDTO.setBoardIdx(boardIDX);
+		postDTO.setBoardName("거래게시판");
+		postDTO.setUniversityCode(user.getUniversityCode());
+		postDTO.setMemberId(user.getMemberId());
+		postDTO.setTitle(title);
+		postDTO.setContent(content);
+		
+		ProductDTO.setProductPrice(price);
+		ProductDTO.setProductSold(sold);
+		
+		//파일 담아주기
+		if(multiFile.getSize() != 0) {
+			for (MultipartFile multipartfile : files) {
+				File fileOne = new File();
+				
+				UUID uuid = UUID.randomUUID();
+				fileName = uuid.toString()+"_"+multipartfile.getOriginalFilename();
+				fileOne.setFileName(fileName);
+				fileOne.setFileRealName(multipartfile.getOriginalFilename());
+				fileOne.setFileSize(multipartfile.getSize());
+				
+				fileDTO.add(fileOne);
+			}
+		}
+			
+		
+			//서비스슝슝
+			result = boardService.postListInsert(postDTO, ProductDTO, fileDTO, files);
+			
+			if (result < 1) {
+				icon = "error";
+				msg = "글 작성이 실패했습니다.";
+				url = "/board/productBoardWrite";
+			} else {
+				icon = "success";
+				msg = "글 작성이 완료되었습니다!";
+				url = "/board/productBoardList";
+				
+			}
+		
+
+		model.addAttribute("msg", msg);
+		model.addAttribute("url", url);
+		model.addAttribute("icon", icon);
+
+		return "/common/redirect";
 	}
 
 	// 자유게시판 글쓰기

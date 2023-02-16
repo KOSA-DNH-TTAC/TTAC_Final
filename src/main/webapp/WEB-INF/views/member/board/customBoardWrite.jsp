@@ -9,7 +9,7 @@
   <meta charset="utf-8">
   <meta content="width=device-width, initial-scale=1.0" name="viewport">
 
-  <title>DOTO:공지사항</title>
+  <title>DOTO:커뮤니티</title>
   <meta content="" name="description">
   <meta content="" name="keywords">
 
@@ -71,29 +71,28 @@
           <div class="col-lg-12 entries">
 
             <article class="entry">
-				<form action="/board/noticeWrite" method="POST" enctype="multipart/form-data" accept-charset="UTF-8">
+				<form action="/board/custom/${boardName}/write" method="POST" enctype="form-data">
 					<div class="mb-3">
 					  <label for="title" class="form-label">게시글 제목</label>
 					  <input type="text" class="form-control" name="title" id="title" placeholder="제목을 작성해주세요." autofocus required>
 					</div>
-					
 					<div class="mb-3">
-					<label for="file" class="form-label">파일</label>
-					<input type="file" class="form-control" id="file" name="file" multiple>
-					</div>
-					
-					<div class="mb-3">
-					  <textarea id="content" name="content" placeholder="글을 작성해주세요."> </textarea>
+					  <label for="content" class="form-label">내용</label>
+					  <textarea id="content" name="content" placeholder="작성해주세요"> </textarea>
 					</div>
 					
 					<div class="d-grid gap-2 d-md-flex justify-content-md-end">
-					<button onclick="history.go(-1)" style="width:130px; height:20; border-radius: 50px; padding:5px; border: none; background-color:#000000; color:white; margin-top:10px; font-size: large;">취소</button>
+					<button type="button" onclick="history.go(-1)" style="width:130px; height:20; border-radius: 50px; padding:5px; border: none; background-color:#000000; color:white; margin-top:10px; font-size: large;">취소</button>
 					<button type="submit" style="width:130px; height:20; border-radius: 50px; padding:5px; border: none; background-color:#E96B56; color:white; margin-top:10px; font-size: large;">확인</button>
                     </div>
                     
                     
-                    
-                    	
+                    <%-- 	
+                  		<!-- 숨길 데이터들 -->
+	                    <input name="refer" value="${refer}" type="hidden" />
+	              		<input name="b_code" value="${b_code}" type="hidden" />
+	              		<input name="depth" value="${depth}" type="hidden" />
+	              		<input name="step" value="${step}" type="hidden" /> --%>
 				</form>
             </article><!-- End blog entry -->
 
@@ -103,6 +102,7 @@
 
         </div>
       </div>
+      
     </section><!-- End Blog Section -->
 
   </main><!-- End #main -->

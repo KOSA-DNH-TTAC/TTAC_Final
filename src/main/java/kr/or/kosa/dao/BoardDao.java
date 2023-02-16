@@ -3,6 +3,7 @@ package kr.or.kosa.dao;
 import java.sql.SQLException;
 import java.util.Date;
 import java.util.List;
+import java.util.Map;
 
 import org.apache.ibatis.annotations.Param;
 
@@ -10,6 +11,7 @@ import kr.or.kosa.dto.Board;
 import kr.or.kosa.dto.Domitory;
 import kr.or.kosa.dto.File;
 import kr.or.kosa.dto.Post;
+import kr.or.kosa.dto.Product;
 import kr.or.kosa.dto.Reply;
 import kr.or.kosa.dto.RollCall;
 
@@ -20,6 +22,9 @@ public interface BoardDao {
 
 	// 기본 제공 게시판 글 목록
 	public List<Post> allBoardList(String boardName, String universitycode);
+	
+	// 게시판 학교, 이름으로 boardidx 가져오기
+	public int selectBoardIdx(Board board) throws ClassNotFoundException, SQLException;
 
 	// 커스텀 생성 게시판
 	public List<Post> customBoardList(String boardName, String universitycode);
@@ -41,6 +46,9 @@ public interface BoardDao {
 
 	// 파일 글 작성
 	public int fileInsert(File file) throws ClassNotFoundException, SQLException;
+	
+	// 거래 글 작성
+	public int productInsert(Product product) throws ClassNotFoundException, SQLException;
 	
 	// 게시글 추천 여부 검사
 	public int likeCount(String idx);
@@ -88,6 +96,9 @@ public interface BoardDao {
 	
 	// 파일 상세보기
 	public List<File> fileContent(String idx);
+	
+	// 거래게시글 상세보기
+	public Product productContent(String idx);
 	
 	// 게시글 수정하기
 	public int boardEdit(Post post);

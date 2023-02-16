@@ -20,6 +20,9 @@
 <link href="resources/assets/img/favicon.png" rel="icon">
 <link href="resources/assets/img/apple-touch-icon.png" rel="apple-touch-icon">
 
+<!-- Swiper.css -->
+<link rel="stylesheet" href="https://cdn.jsdelivr.net/npm/swiper@8/swiper-bundle.min.css"/>
+
 <!-- Google Fonts -->
 <link
 	href="https://fonts.googleapis.com/css?family=Open+Sans:300,300i,400,400i,600,600i,700,700i|Raleway:300,300i,400,400i,500,500i,600,600i,700,700i|Poppins:300,300i,400,400i,500,500i,600,600i,700,700i"
@@ -84,31 +87,61 @@
 						<div class="col-lg-12 entries">
 					
 					<article class="entry">
-					<span id="sold">판매중</span><h2 class="entry-title">              
-                     &nbsp;${boardContent.title}
+					<h2 class="entry-title">          
+					<c:choose>
+						<c:when test="${productContent.productSold eq '판매중'}"><span id="sold">판매중</span>&nbsp; ${boardContent.title}</c:when>
+						<c:when test="${productContent.productSold eq '거래완료'}"><span id="sold">거래완료</span>&nbsp; ${boardContent.title}</c:when>
+						<c:when test="${productContent.productSold eq '예약중'}"><span id="sold">예약중</span>&nbsp; ${boardContent.title}</c:when>
+					</c:choose> 
+                    
                     </h2>
                     <div class="entry-meta">
                     <div id="boardName" style="display:none">${boardContent.boardName}</div>
 					<div id="idx" style="display:none">${boardContent.idx}</div>
                     <ul>
-                    	<li class="d-flex align-items-center"><i class="bi bi-person"></i><a href="blog-single.html" value="${boardContent.memberId}">익명</a></li>
+                    	<li class="d-flex align-items-center"><i class="bi bi-person"></i><a href="blog-single.html" value="${boardContent.memberId}">${boardContent.memberId}</a></li>
                     	<li class="d-flex align-items-center"><i class="bi bi-clock"></i>${boardContent.writeDate}</li>
-                    	<li class="d-flex align-items-center"><button
-							id="postLike"><i
-								class="bi-hand-thumbs-up"></i></button>
-						<div id="likenum">${boardContent.likeNum}</div>
-					</li>
+                    	<li class="d-flex align-items-center"><i class="bi-hand-thumbs-up"></i>${boardContent.likeNum}</li>
                     </ul>
                     </div>
+                    <article class="entry" style="padding-top: 15px">
+                    <div class="swiper" id="my-swiper">
+					  <!-- Additional required wrapper -->
+					  <div class="swiper-wrapper">
+					    <!-- Slides -->
+					    <c:forEach var="fileContent" items="${fileContent }">
+					    <div class="swiper-slide d-flex justify-content-center"><img class="aws-img " src="${fileContent.fileUrl}" onerror="this.style.display='none'"></div>
+				      	</c:forEach>
+				    
+					  </div>
+					  <!-- If we need pagination -->
+					  <div class="swiper-pagination"></div>
+					
+					  <!-- If we need navigation buttons -->
+					  <div class="swiper-button-prev"></div>
+					  <div class="swiper-button-next"></div>
+					
+					</div>  
+					</article>
+					
                     <div class="entry-content" style="margin-bottom:50px;">
                     <p style="margin-top: 40px;">
                      ${boardContent.content}
                     </p>
+                    
+                   
                     </div>
                     </article>
                     </div>
                     </div> 
-                    
+                    <div class="d-grid gap-2 d-md-flex justify-content-md-end">
+	                    
+	                    	<c:if test="${userId == boardContent.memberId}">
+			                    <button onclick="location.href='/board/${boardName}/${idx}/edit'" type="submit" style="width:130px; height:20; border-radius: 50px; padding:5px; border: none; background-color:#E96B56; color:white; margin-top:10px; font-size: large;">수정</button>
+	                    	</c:if>
+		                    
+							<button onclick="history.go(-1)" style="width:130px; height:20; border-radius: 50px; padding:5px; border: none; background-color:#000000; color:white; margin-top:10px; font-size: large;">목록</button>					
+	                    </div>
                     </div>
                     <i class="bi bi-chat-dots"></i>&nbsp;
 										<b id="hjreplycount">${boardContent.replyCount}</b>
@@ -135,6 +168,13 @@
 				<div class="col-lg-4">
 
 						<div class="sidebar">
+							<div class="sidebar-item search-form">
+								<div class="d-flex justify-content-center align-self-center">
+									<button type="submit"
+									onclick="location.href='/board/productBoardWrite'"
+									style="width: 100%; height: 20; border-radius: 50px; padding: 5px; border: none; background-color: #E96B56; color: white; margin-top: 10px; font-size: large;">글쓰기</button>
+								</div>
+							</div>
 
 							<h3 class="sidebar-title">Search</h3>
 							<div class="sidebar-item search-form">
@@ -180,6 +220,9 @@
 	<script src="/resources/assets/vendor/swiper/swiper-bundle.min.js"></script>
 	<script	src="/resources/assets/vendor/waypoints/noframework.waypoints.js"></script>
 	<script src="/resources/assets/vendor/php-email-form/validate.js"></script>
+	
+	<!-- Swiper.js -->
+	<script src="https://cdn.jsdelivr.net/npm/swiper@8/swiper-bundle.min.js"></script>
 
 	<!-- Template Main JS File -->
 	<script src="/resources/assets/js/main.js"></script>
@@ -461,11 +504,36 @@
 				var toMessage = $(this).attr('seq');
 				var replyIdx = $(this).attr('data-replyIdx');
 				var parentReplyIdx = $(this).attr('data-parentReplyIdx');
-			})
-	
-	
-	
-</script>
+		})
+		
+		const swiper = new Swiper('.swiper', {
+		// Optional parameters
+		direction: 'horizontal',
+		loop: true,
+
+		// If we need pagination
+		pagination: {
+			el: '.swiper-pagination',
+			
+		},
+
+		// Navigation arrows
+		navigation: {
+			nextEl: '.swiper-button-next',
+			prevEl: '.swiper-button-prev',
+		},
+
+		// And if we need scrollbar
+		scrollbar: {
+			el: '.swiper-scrollbar',
+		},
+		
+		autoplay: {
+			   delay: 3000,
+			 },
+		});
+			
+	</script>
 
 </body>
 

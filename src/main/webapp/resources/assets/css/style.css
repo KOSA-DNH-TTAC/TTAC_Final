@@ -285,12 +285,6 @@ h6 {
   line-height: 0;
   transition: 0.5s;
 }
-.aws-img{
-    padding-top: 10px;
-	width: 100%;
-	height: 100%;
-	
-}
 
 .mobile-nav-toggle.bi-x {
   color: #fff;
@@ -814,6 +808,12 @@ section {
 /*--------------------------------------------------------------
 # Our Clients
 --------------------------------------------------------------*/
+
+.entry .swiper {
+  width: 400px;
+  height: 500px;
+}
+
 .clients .swiper-pagination {
   margin-top: 20px;
   position: relative;
@@ -1622,9 +1622,22 @@ section {
   font-size: 15px;
 }
 
+.swiper-slide .aws-img{
+	width: auto;
+	height: 100%;
+}
+
+
+.entry .col-md-5 .aws-img{
+	width: 100%;
+	height: 100%;
+	padding-top: 10px;
+}
+
 .entry-content{
 	width: 100%;
 }
+
 
 .entry-content > p > img {
 	width: 100%;
