@@ -139,6 +139,7 @@
                         </td>
                       </tr>
                       <tr>
+                        <td style="text-align : left"><button onclick="history.back()" class="btn btn-dark">돌아가기</button></td>
                       	<td colspan="2" style="text-align : right"><button id="hjbtn" class="btn btn-dark">답장하기</button></td>
                       </tr>
                     </tbody>

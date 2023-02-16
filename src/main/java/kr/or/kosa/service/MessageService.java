@@ -43,9 +43,18 @@ public class MessageService {
 	//쪽지 상세 조회
 	public Message getMsg(int idx) {
 		MessageDao dao = sqlsession.getMapper(MessageDao.class);
-		
+		User user = (User) SecurityContextHolder.getContext().getAuthentication().getPrincipal();
 		Message msg;
 		msg = dao.getMessage(idx);
+		System.out.println(msg);
+		//받는 사람 = 로그인한 사람일 경우
+		//status = 'N'이면 'Y'로바꿔줌
+		if(msg.getStatus().equals("N")) {
+			if(msg.getRmemberId().equals(user.getMemberId())) {
+				dao.setMsgRead(idx);
+			}
+		}
+		
 		return msg;
 	}
 	

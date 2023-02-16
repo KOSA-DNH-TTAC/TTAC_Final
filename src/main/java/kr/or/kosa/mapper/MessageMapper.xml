@@ -24,6 +24,11 @@ PUBLIC "-//mybatis.org//DTD Mapper 3.0//EN"
 	  STATUS FROM MESSAGE WHERE MESSAGEIDX = #{index}
 	</select>
 	
+	<!-- setMsgRead (메시지 읽으면 상태 바꾸기) -->
+	<update id="setMsgRead">
+		UPDATE MESSAGE SET STATUS='Y' WHERE MESSAGEIDX=#{index}
+	</update>
+	
 	<!-- sendMessage(쪽지 보내기) -->
 	<insert id="sendMessage" parameterType="kr.or.kosa.dto.Message">
 		INSERT INTO MESSAGE(sMEMBERID, rMEMBERID, MESSAGETITLE, MESSAGECONTENT, MESSAGEDATE)
