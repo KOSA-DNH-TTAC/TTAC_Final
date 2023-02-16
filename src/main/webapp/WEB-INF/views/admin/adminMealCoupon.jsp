@@ -28,6 +28,7 @@
 <!-- Sweet Alert -->
 <script src="https://cdn.jsdelivr.net/npm/sweetalert2@11"></script>
 
+
 <body class="">
 <div class="wrap">
 			
@@ -39,7 +40,7 @@
 					<ul>
 					
 						<li class="menu last">
-							<button class="btn_sumit ml네일아트" onclick="document.location.href='/logout';">로그아웃</button><button class="btn_sumit blbtn ml네일아트" onclick="document.location.href='/';">홈페이지</button>
+							<button class="btn_sumit ml네일아트" onclick="document.location.href='/bbs/logout.php';">로그아웃</button><button class="btn_sumit blbtn ml네일아트" onclick="document.location.href='/';">홈페이지</button>
 						</li> <!--.menu.g1-->
 
 					</ul>
@@ -64,7 +65,6 @@
 									<li><a href="../sub01/sub01_02.php">벌점관리</a></li>
 								</ul>
 							</li>
-							<li class="smenu"><a href="/admin/board">커뮤니티관리</a>
 							<li class="smenu"><a href="/admin/coupon" class="msub on">식권관리</a></li>
 							<li class="smenu"><a href="/admin/popular">외박관리</a>
 								<ul class="sub ">
@@ -101,8 +101,6 @@ $(document).ready(function(){
 		}
 		return false;
 	});
-	//페이지 로딩시 일정 리스트 로드
-	load();
 });
 
 //메뉴 등록
@@ -187,7 +185,26 @@ function load(){
 
 <!-- 식권 검색 -->
 <div class="coupon_top bmb">
-	<h3 class="bgtab txtin">메뉴 현황 보기</h3>	
+	<h3 class="bgtab txtin" style="text-align:left">식권 조회</h3>	
+	<table class="srch_table mb20">	
+		<colgroup>
+			<col width="10%"/>
+			<col width="20%"/>
+			<col width="10%"/>
+			<col width="60%"/>
+		</colgroup>
+		<tr>
+			<th>검색어</th>
+			<td colspan="3">
+				<div class="txtin" style="text-align:left;">
+					<label class="mr10"><input type="radio" name="search" checked="checked">전체</label>  
+					<label class="mr10"><input type="radio" name="search">이름</label>  
+					<input type="text" style="width:75%"></input>
+					<button type="button" class="btn_submit3" style="float:right; width:100px;">검색</button>
+				</div>
+			</td>
+		</tr>
+	</table>
 </div>
 <!-- 식권 검색 e-->
 
@@ -195,25 +212,21 @@ function load(){
 <div class="ofh">
 <div class="halfcon mr">
 <div class="coupon">
-	<div class="bgtab bgtab2">
-		<div class="ofh mb10">	
+	<!-- <div class="ofh mb10">	
 		<select name="" class="dpi">
 			<option value="">10개씩보기</option>
 			<option value="">20개씩보기</option>
 			<option value="">30개씩 보기</option>
 			<option value="">50개씩 보기</option>
 		</select>
+	</div> -->
+	
+	<div class="bgtab bgtab2">
+		<div class="w70 fl">
+			<h4>식권 목록</h4>
+		</div>
 	</div>
-	</div>
-	<table class="comm_table tac bmb">	
-		<tr>
-			<th>식권번호</th>
-			<th>메뉴이름</th>
-			<th>가격</th>
-			<th>처리</th>
-		</tr>
-		<tbody id="table">
-		</tbody>
+	<table class="comm_table tac bmb" id="allMenuList">			
 	</table>
 </div>
 </div>
@@ -236,12 +249,12 @@ function load(){
 		</colgroup>
 		<tr>
 			<th>메뉴이름 <span class="blTxt">*</span></th>
-			<td><input type="text" id="menuname" class="w60"/></td>			
+			<td style="padding:4px"><input type="text" class="w60"/></td>			
 		</tr>
 		<tr>
 			<th>금액 <span class="blTxt">*</span></th>
-			<td>				
-				<input id="charge" type="text"/> 원
+			<td style="padding:4px">				
+				<input type="text"/> 원
 			</td>
 		</tr>	
 		
@@ -251,13 +264,9 @@ function load(){
 </div>
 
 
-
-
-
-
 	<div class="ok_btn">
 		<ul>
-			<li><button onclick="insert()" type="button" class="btn_sumit2">식권생성</button></li>
+			<li><button type="button" class="btn_sumit2">식권생성</button></li>
 		</ul>
 	</div>
 </div> 
@@ -289,6 +298,74 @@ function load(){
 
 </body>
 
+
+<script type="text/javascript">
+
+$(document).ready(function() {
+	getAllMenuList();
+})
+
+function getAllMenuList(){
+	$.ajax({
+			type: "get",
+			url: "/admin/cafeteria",
+			success: function (result) {
+
+				$('#allMenuList').empty();
+				let contents = `<tbody>` +
+			`<tr>
+				<th width="20%">식권번호</th>
+				<th width="25%">메뉴이름</th>
+				<th width="25%">가격</th>
+				<th width="15%">수정</th>
+				<th width="15%">삭제</th>
+			</tr>`
+			
+			$.each(result, function(index, menu){
+				
+				console.log(menu.menuindex);
+				
+				contents += `<tr class="menurow">
+					<td><b>` + (++index) +`</b><div class='menuidx' style="display:none">`
+					+ menu.menuidx
+					+ `</div></td>
+					<td class="menutd"><div class="menuname">` 
+					+ menu.menu + `</div></td>
+					<td class="menutd"><div class="menuprice">` + menu.menuPrice + `</div></td>
+					<td class="menuBtn"><div class='menuUpdate'>수정</div></td>
+					<td class="menuBtn"><div class='menuDelete'>삭제</div></td>
+				</tr>`
+
+			})
+			contents += `</tbody></table>`;
+			$('#allMenuList').append(contents);
+			
+			}
+		})
+	}
+	
+// 메뉴 수정
+$(document).on("click", ".menuUpdate", function() {
+  var row = $(this).closest(".menurow");
+  var idx = row.find(".menuidx").text();
+  console.log("idx: " + idx);
+  var name = row.find(".menuname").text();
+  var price = row.find(".menuprice").text();
+  row.find(".menuname").html("<input type='text' style='width:95%' class='nameInput' placeholder='" + name + "' value='" + name + "' />");
+  row.find(".menuprice").html("<input type='text' style='width:95%' class='priceInput' placeholder='" + price + "' value='" + price + "' />");
+  $(this).html("완료").removeClass("menuUpdate").addClass("menuComplete");
+});
+
+$(document).on("click", ".menuComplete", function() {
+  var row = $(this).closest(".menurow");
+  var name = row.find(".nameInput").val();
+  var price = row.find(".priceInput").val();
+  row.find(".menuname").text(name);
+  row.find(".menuprice").text(price);
+  $(this).html("수정").removeClass("menuComplete").addClass("menuUpdate");
+}); // document.on end
+		
+</script>
 	
 
 

@@ -8,6 +8,10 @@ import javax.mail.internet.MimeMessage;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.mail.javamail.JavaMailSender;
 import org.springframework.mail.javamail.MimeMessageHelper;
+import java.util.List;
+
+import org.springframework.beans.factory.annotation.Autowired;
+import org.springframework.http.ResponseEntity;
 import org.springframework.security.access.prepost.PreAuthorize;
 import org.springframework.security.core.context.SecurityContextHolder;
 import org.springframework.stereotype.Controller;
@@ -16,13 +20,19 @@ import org.springframework.web.bind.annotation.GetMapping;
 import org.springframework.web.bind.annotation.RequestMapping;
 import org.springframework.web.bind.annotation.RequestMethod;
 import org.springframework.web.bind.annotation.RequestParam;
+import org.springframework.web.bind.annotation.PostMapping;
+import org.springframework.web.bind.annotation.ResponseBody;
 
 import kr.or.kosa.security.User;
+import kr.or.kosa.service.MessageService;
 
 
 @Controller
 public class CommonController {
 	String key;
+	
+	@Autowired
+	MessageService messageservice;
 	
    @Autowired
    private JavaMailSender mailSender;
@@ -49,6 +59,28 @@ public class CommonController {
 	@GetMapping("/forgotMail")
 	public String email() {
 		return null;
+	}
+	//헤더에서 쪽지함에 안 읽은 쪽지 있는지...
+	@ResponseBody
+	@GetMapping("/top/notebox")
+	public String getMsgCount() {
+		User user;
+		String result = "N";
+		try {
+			user = (User) SecurityContextHolder.getContext().getAuthentication().getPrincipal();
+			List<Message> list = messageservice.getReceivedMsg(user.getMemberId());
+			loop : for(Message m : list) {
+				if(m.getStatus().equals("N")) {
+					result = "Y";
+					break loop;
+				}
+			}
+		} catch (Exception e) {
+			e.printStackTrace();
+			
+		}
+		
+		return result;
 	}
 	
    // 개인 or 단체 메일 보내기

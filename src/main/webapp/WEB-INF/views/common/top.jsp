@@ -5,7 +5,34 @@
 <html>
 <head>
 <meta charset="UTF-8">
+<!-- Jquery -->
+<script src="http://code.jquery.com/jquery-latest.min.js"></script>
+<style>
+  #msgbox{
+    color:red;
+  }
+</style>
 </head>
+<script>
+  $(document).ready(function(){
+    $.ajax({
+      type: "GET",
+      url: "/top/notebox",
+      success: function (result) {
+        console.log(result);
+        console.log("TQQQQQ")
+        if(result == 'Y'){
+          console.log(result)
+          $('#msgbox').append('<img src="${pageContext.request.contextPath}/resources/assets/img/circle-square.svg"  style="color: red;"/>')
+        }
+      },
+      error: function (request, status, error) {
+                    console.log("에러")
+                    console.log("code:" + request.status + "\n" + "message:" + request.responseText + "\n" + "error:" + error);
+                }
+    })
+  })
+</script>
 <body>
 
 <!-- ======= Header ======= -->
@@ -37,7 +64,7 @@
               <sec:authorize access="isAuthenticated()">
               	<li><a href="#">포인트 : ${principal.memberPoint}</a></li>
               </sec:authorize>
-              <li><a href="/message">쪽지함</a></li>
+              <li><a href="/message">쪽지함<span id="msgbox"></span></a></li>
               <li><a href="/GPT">내 식권보기</a></li>
               <li><a href="/eveningCall"><b style="color:black">점호하기</b></a></li> <!-- #E96B56 -->
 
@@ -61,4 +88,5 @@
   <!-- End Header -->
 
 </body>
+
 </html>

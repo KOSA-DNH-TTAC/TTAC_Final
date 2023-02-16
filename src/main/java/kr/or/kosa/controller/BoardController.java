@@ -138,6 +138,97 @@ public class BoardController {
 		
 		return "/common/redirect";
 	}
+	
+	// 커스텀 게시글 수정(GET)
+	@GetMapping("/board/custom/{boardName}/{idx}/edit")
+	public String boardCustomEdit(Model model, @PathVariable("idx") int idx,
+										 @PathVariable("boardName") String boardName) throws ClassNotFoundException, SQLException{
+		
+		User user = (User) SecurityContextHolder.getContext().getAuthentication().getPrincipal();
+		Post boardContent = boardService.boardContentDTO(idx);
+
+		model.addAttribute("boardContent", boardContent);
+		
+		return "member/board/customBoardEdit";
+	}
+	
+	// 커스텀 게시글 수정(POST)
+	@PostMapping("/board/custom/{boardName}/{idx}/edit")
+	public String boardCustomEditOk(Model model, @PathVariable("idx") int idx,
+										   @PathVariable("boardName") String boardName,
+										   @RequestParam("title") String title,
+										   @RequestParam("content") String content) throws ClassNotFoundException, SQLException {
+		
+		User user = (User) SecurityContextHolder.getContext().getAuthentication().getPrincipal();
+		Post boardContent = boardService.boardContentDTO(idx);
+		
+		int result= 0;
+		String icon= "";
+		String msg = "";
+		String url = "";
+
+		
+		//글 제목, 내용 수정
+		boardContent.setTitle(title);
+		boardContent.setContent(content);
+		
+		result = boardService.boardContentEdit(boardContent);
+		
+		//글 수정이 제대로 되었는지 확인
+		if (result < 1) {
+			icon = "error";
+			msg = "글 작성이 실패했습니다.";
+			url = "/board/custom/"+boardName+"/"+idx+"/edit";
+		} else {
+			icon = "success";
+			msg = "글 작성이 완료되었습니다!";
+			url = "/board/custom/"+boardName+"/"+idx;
+			
+		}
+
+		model.addAttribute("msg", msg);
+		model.addAttribute("url", url);
+		model.addAttribute("icon", icon);
+		
+		return "/common/redirect";
+	}
+	
+	// 커스텀게시글 삭제
+	@GetMapping("/board/custom/{boardName}/{idx}/delete")
+	public String boardDeleteOk(Model model, @PathVariable("idx") int idx,
+			 							   @PathVariable("boardName") String boardName) throws ClassNotFoundException, SQLException{
+		
+		User user = (User) SecurityContextHolder.getContext().getAuthentication().getPrincipal();
+		Post boardContent = boardService.boardContentDTO(idx);
+		
+		int result= 0;
+		String icon= "";
+		String msg = "";
+		String url = "";
+
+		//게시글 status 22로 변경 (삭제)
+		boardContent.setStatus(22);
+		result = boardService.boardContentEdit(boardContent);
+		
+		//글 수정이 제대로 되었는지 확인
+		if (result < 1) {
+			icon = "error";
+			msg = "글 작성이 실패했습니다.";
+			url = "/board/custom/"+boardName+"/"+idx+"/edit";
+		} else {
+			icon = "success";
+			msg = "글 삭제가 완료되었습니다!";
+			url = "/board/custom/"+boardName;
+			
+		}
+		
+		
+		model.addAttribute("msg", msg);
+		model.addAttribute("url", url);
+		model.addAttribute("icon", icon);
+		
+		return "/common/redirect";
+	}
 
 	// 게시글 보기
 	@GetMapping("/board/{boardName}/{idx}")
@@ -242,21 +333,6 @@ public class BoardController {
 		Post boardContent = boardService.boardContentDTO(idx);
 		List<File> fileContent = boardService.fileContent(Integer.toString(idx));
 
-		
-		// 글 쓴사람과 로그인한 사람이 같은지
-		if (!user.getMemberId().equals(boardContent.getMemberId())) {
-
-			String icon = "";
-			String msg = "세션이 만료되었습니다.";
-			String url = "/";
-			
-			model.addAttribute("msg", msg);
-			model.addAttribute("url", url);
-			model.addAttribute("icon", icon);
-			
-			return "/common/redirect";
-			
-		}
 		
 		if (!fileContent.isEmpty()) {
 			model.addAttribute("fileContent", fileContent);
