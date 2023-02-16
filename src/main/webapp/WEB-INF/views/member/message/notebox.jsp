@@ -97,6 +97,14 @@
           .hjicon{
             color: #e96b56;
           }
+
+          .hjiconcheck{
+            color:rgb(40, 177, 97)
+          }
+
+          .hjiconopen{
+            color:grey;
+          }
         </style>
       </head>
 
@@ -229,8 +237,7 @@
                   if(msg.status=="N"){
                     opr+= `&nbsp;<i class="bi bi-envelope-heart hjicon"></i>`
                   }else{
-                    console.log("나와주세요!!!!")
-                    opr += `&nbsp;<i class="bi bi-envelope-open hjicon"></i>`
+                    opr += `&nbsp;<i class="bi bi-envelope-open hjiconopen"></i>`
                   }
                   opr += "</a>" +
                   "</td><td>"+ dateformat +
@@ -298,7 +305,7 @@
                     if(msg.status=='N')  {
                       opr += `<i class="bi bi-x hjicon"></i>`
                     }else if(msg.status='Y'){
-                      opr += `<i class="bi bi-check hjicon"></i>`
+                      opr += `<i class="bi bi-check hjiconcheck"></i>`
                     }
                     opr += `</td></tr>`;
                   
