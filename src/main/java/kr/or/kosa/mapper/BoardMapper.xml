@@ -11,6 +11,7 @@ PUBLIC "-//mybatis.org//DTD Mapper 3.0//EN"
 		FROM BOARD WHERE universitycode=#{param1}
 		AND boardname NOT IN('공지사항',
 		'건의사항', '자유게시판', '거래게시판')
+		AND STATUS='21'
 	</select>
 
 	<!-- 기본 제공 게시판 글 목록 -->
@@ -25,6 +26,11 @@ PUBLIC "-//mybatis.org//DTD Mapper 3.0//EN"
 		p.universitycode=#{param2}
 		GROUP BY p.idx, p.boardidx, b.boardidx
 		ORDER BY p.writedate DESC
+	</select>
+	
+	<!-- 게시판 boardidx 가져오기 -->
+	<select id="selectBoardIdx" parameterType="kr.or.kosa.dto.Board" resultType="int">
+		SELECT BOARDIDX FROM BOARD WHERE UNIVERSITYCODE = #{universityCode} and BOARDNAME = #{boardName};
 	</select>
 
 	<!-- (커스텀 게시판)새 게시판 글 목록 이거필요없음 -->
@@ -105,6 +111,15 @@ PUBLIC "-//mybatis.org//DTD Mapper 3.0//EN"
 	INSERT INTO FILE (idx, FILENAME,FILEREALNAME,FILEURL,FILESIZE)
 	VALUES(#{idx},#{fileName},#{fileRealName},#{fileUrl},#{fileSize})
 	</insert>
+	
+	<!-- 거래 업로드 -->
+	<insert id="productInsert" parameterType="kr.or.kosa.dto.Product">
+		<selectKey keyProperty="idx" resultType="int" order="BEFORE">
+			SELECT IDX from POST ORDER BY IDX DESC LIMIT 1
+		</selectKey>
+	INSERT INTO PRODUCT (idx, PRODUCTPRICE,PRODUCTSOLD)
+	VALUES(#{idx},#{productPrice},#{productSold})
+	</insert>
 
 	<!-- 가장 최근 글쓴 IDX 가져오기 -->
 	<select id="recentPostIdx" resultType="int">
@@ -116,6 +131,13 @@ PUBLIC "-//mybatis.org//DTD Mapper 3.0//EN"
 	<select id="fileContent" parameterType="String"
 		resultType="kr.or.kosa.dto.File">
 		SELECT FILENUM, IDX, FILENAME, FILEREALNAME, FILEURL, FILESIZE FROM FILE WHERE IDX
+		= #{idx}
+	</select>
+	
+	<!-- 거래테이블 가져오기 -->
+	<select id="productContent" parameterType="String"
+		resultType="kr.or.kosa.dto.Product">
+		SELECT PRODUCTIDX, IDX, PRODUCTPRICE, PRODUCTSOLD from PRODUCT WHERE IDX
 		= #{idx}
 	</select>
 
@@ -160,8 +182,32 @@ PUBLIC "-//mybatis.org//DTD Mapper 3.0//EN"
 	</select>
 
 
+	<!-- 관리자 -->
+	<!-- 게시판 카테고리 -->
+	<select id="getAdminCategory" resultType="kr.or.kosa.dto.Board">
+	SELECT b.boardidx, b.boardname, COUNT(DISTINCT p.idx) as postCount, COUNT(DISTINCT r.replyidx) AS replyCount
+	FROM BOARD b
+	LEFT JOIN POST p ON p.boardidx = b.boardidx AND p.STATUS='21'
+	LEFT JOIN REPLY r ON p.idx = r.IDX AND r.STATUS='21'
+	WHERE b.universitycode=#{universitycode}
+	AND b.STATUS='21'
+	GROUP BY BOARDIDX
+	</select>
 
-
+	<!-- 게시판 이름 수정 -->
+	<update id="updateBoardName">
+		UPDATE BOARD SET BOARDNAME=#{boardname} WHERE BOARDIDX=#{boardidx}
+	</update>
+	
+	<!-- 새 커스텀 게시판 -->
+	<insert id="newCustomBoard">
+		INSERT INTO BOARD(UNIVERSITYCODE, BOARDNAME) VALUES(#{universitycode}, #{boardname})
+	</insert>
+	
+	<!-- 커스텀 게시판 삭제(비활성화) -->
+	<update id="deleteBoard">
+		UPDATE BOARD SET STATUS='22' WHERE BOARDIDX=#{boardidx}
+	</update>
 
 </mapper>
 

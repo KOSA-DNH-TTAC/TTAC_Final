@@ -101,8 +101,8 @@
 				// chatBody.scrollTop = chatBody.scrollHeight;
 				// }
                 function generateRandomNickname() {
-                        const adjectives = ["행복한", "바보같은", "졸린", "까다로운", "실없는", "수다스러운", "미친", "똑똑한", "재밌는", "쾌활한"];
-                        const nouns = ["기린", "코끼리", "원숭이", "판다", "코알라", "펭귄", "캥거루", "사자", "호랑이", "얼룩말", "쿼카"];
+                        const adjectives = ["행복한", "바보같은", "졸린", "까다로운", "실없는", "수다스러운", "미친", "똑똑한", "재밌는", "쾌활한", "신난"];
+                        const nouns = ["기린", "코끼리", "원숭이", "판다", "코알라", "펭귄", "캥거루", "사자", "호랑이", "얼룩말", "쿼카", "개"];
                         const randomAdj = adjectives[Math.floor(Math.random() * adjectives.length)];
                         const randomNoun = nouns[Math.floor(Math.random() * nouns.length)];
 

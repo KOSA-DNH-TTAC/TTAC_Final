@@ -4,7 +4,6 @@ import java.text.SimpleDateFormat;
 import java.util.ArrayList;
 import java.util.Date;
 import java.util.HashMap;
-import java.util.Iterator;
 import java.util.List;
 import java.util.Map;
 
@@ -17,11 +16,13 @@ import org.springframework.web.bind.annotation.RequestMapping;
 import org.springframework.web.bind.annotation.RequestParam;
 import org.springframework.web.bind.annotation.RestController;
 
+import kr.or.kosa.dto.Cafeteria;
 import kr.or.kosa.dto.Domitory;
 import kr.or.kosa.dto.Report;
 import kr.or.kosa.dto.Schedule;
 import kr.or.kosa.security.User;
 import kr.or.kosa.service.BoardService;
+import kr.or.kosa.service.CafeteriaService;
 import kr.or.kosa.service.FacilityService;
 import kr.or.kosa.service.calendarService;
 
@@ -31,6 +32,7 @@ public class AdminController_Rest {
 	BoardService boardService;
 	FacilityService facilityService;
 	calendarService calendarService;
+	CafeteriaService cafeteriaService;
 
 	@Autowired
 	public void setBoardService(BoardService boardService) {
@@ -43,6 +45,10 @@ public class AdminController_Rest {
 	@Autowired
 	public void setcalendarService(calendarService calendarService) {
 		this.calendarService = calendarService;
+	}
+	@Autowired
+	public void setcafeteriaService(CafeteriaService cafeteriaService) {
+		this.cafeteriaService = cafeteriaService;
 	}
 
 		 
@@ -79,7 +85,7 @@ public class AdminController_Rest {
 				try {
 					dolist = facilityService.selectAllDomitory();
 					System.out.println("dolist : "+dolist);
-					int maxValue = max(dolist);
+					//int maxValue = max(dolist);
 					return new ResponseEntity<List<Domitory>>(dolist, HttpStatus.OK);
 				} catch (Exception e) {
 					return new ResponseEntity<List<Domitory>>(dolist, HttpStatus.BAD_REQUEST);
@@ -243,23 +249,57 @@ public class AdminController_Rest {
 			
 			
 			
-			public int max(List<Domitory> dolist) {
-						    Iterator<Domitory> iterator = dolist.iterator();
-						    String domitoryFloor = "";
-						    while (iterator.hasNext()) {
-						    	Domitory domitory = iterator.next();
-						    	domitoryFloor = domitory.getDomitoryFloor();
-						    }
-						int tmp = Integer.parseInt(domitoryFloor); //7
-						int max = 0;
-						 for(int i = 0 ; i < tmp ; i++) {
-							 if(i==0)
-								 max=i;
-							 if(max < tmp) {
-								 max = i;
-							 }
-						 }
-						 return max;
-				
+			//메뉴  DB 인서트
+			@RequestMapping("/coupon/insert")
+			public ResponseEntity<List<Cafeteria>> insertmenu(@RequestParam(value = "menu[]") String[] menu) {
+				 System.out.println("menu : "+ menu);
+				 User user = (User) SecurityContextHolder.getContext().getAuthentication().getPrincipal();
+				 String unicode = user.getUniversityCode();
+				 String domitoryname = user.getDomitoryName();
+				 System.out.println("unicode : "+unicode);
+				 String menuname = menu[0];
+				 String charge = menu[1];
+				 				 
+				 //들어갔는지 row 수 반환
+				 List<Cafeteria> result = cafeteriaService.insertmenu(unicode, menuname, charge, domitoryname);
+				 System.out.println("인서트 결과 추가된 ROW : "+result);
+				try {
+					return new ResponseEntity<List<Cafeteria>>(result, HttpStatus.OK);
+				} catch (Exception e) {
+					return new ResponseEntity<List<Cafeteria>>(result, HttpStatus.BAD_REQUEST);
+				}
+			}
+			
+			//메뉴 리스트만 출력
+			@RequestMapping("/coupon/print")
+			public ResponseEntity<List<Cafeteria>> cafeteriaPrint() {
+				System.out.println("옴?");
+				List<Cafeteria> menulist = new ArrayList<Cafeteria>();
+				 User user = (User) SecurityContextHolder.getContext().getAuthentication().getPrincipal();
+				 String unicode = user.getUniversityCode();
+				 String domitoryname = user.getDomitoryName();
+				 
+				try {
+					System.out.println("ㅅ겨");
+					menulist = cafeteriaService.selectCafeteria(unicode, domitoryname);
+					System.out.println("menulist : "+menulist);
+					return new ResponseEntity<List<Cafeteria>>(menulist, HttpStatus.OK);
+				} catch (Exception e) {
+					return new ResponseEntity<List<Cafeteria>>(menulist, HttpStatus.BAD_REQUEST);
+				}
+			}
+			
+			//일정 삭제
+			@GetMapping("/coupon/delete")
+			public ResponseEntity<Map<String, Object>> deleteMenu(int idx) {
+				int result = cafeteriaService.deleteMenu(idx);
+				Map<String, Object> map = new HashMap<String, Object>();
+				if(result > 0) {
+					map.put("결과", "승인완료");
+					return new ResponseEntity<Map<String, Object>>(map, HttpStatus.OK);
+				}else {
+					map.put("결과", "문제발생");
+					return new ResponseEntity<Map<String, Object>>(map, HttpStatus.BAD_REQUEST);
+				}
 			}
 }

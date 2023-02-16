@@ -51,7 +51,7 @@
 
 								<li class="menu last">
 									<button class="btn_sumit ml네일아트"
-										onclick="document.location.href='/bbs/logout.php';">로그아웃</button><button
+										onclick="document.location.href='/logout';">로그아웃</button><button
 										class="btn_sumit blbtn ml네일아트"
 										onclick="document.location.href='/';">홈페이지</button>
 								</li> <!--.menu.g1-->
@@ -77,6 +77,7 @@
 									<li><a href="../sub01/sub01_02.php">벌점관리</a></li>
 								</ul>
 							</li>
+							<li class="smenu"><a href="/admin/board">커뮤니티관리</a>
 							<li class="smenu"><a href="/admin/coupon">식권관리</a></li>
 							<li class="smenu"><a href="/admin/popular" class="msub on">외박관리</a>
 								<ul class="sub ">

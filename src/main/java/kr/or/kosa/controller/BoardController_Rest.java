@@ -22,9 +22,11 @@ import org.springframework.web.bind.annotation.RequestMethod;
 import org.springframework.web.bind.annotation.RequestParam;
 import org.springframework.web.bind.annotation.RestController;
 
+import kr.or.kosa.aws.AwsS3;
 import kr.or.kosa.dto.Board;
 import kr.or.kosa.dto.Domitory;
 import kr.or.kosa.dto.Facility;
+import kr.or.kosa.dto.File;
 import kr.or.kosa.dto.Reply;
 import kr.or.kosa.dto.SleepOverHistory;
 import kr.or.kosa.security.User;
@@ -217,5 +219,16 @@ public class BoardController_Rest {
 			return new ResponseEntity<List<Facility>>(faclist, HttpStatus.BAD_REQUEST);
 		}
 	}
+	
+	/*
+	 * // 첨부파일 삭제
+	 * 
+	 * @delete("/delete/{idx}/{file}") public ResponseEntity<List<File> fileList(){
+	 * AwsS3 awsS3 = AwsS3.getInstance();
+	 * 
+	 * awsS3.delete(key);
+	 * 
+	 * }
+	 */
 
 }

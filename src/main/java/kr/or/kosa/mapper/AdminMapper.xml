@@ -52,7 +52,17 @@ PUBLIC "-//mybatis.org//DTD Mapper 3.0//EN"
 	<update id="memberGetOut">
 	UPDATE MEMBER SET STATUS='88' WHERE memberid=#{param}
 	</update>
+	
+	<!-- 식당 메뉴 조회 -->
+	<select id="allMenuList" resultType="kr.or.kosa.dto.Cafeteria">
+	SELECT menuidx, menu, menuprice FROM CAFETERIA WHERE universitycode=#{universitycode};
+	</select>
 
+	<!-- 식당 메뉴 수정 -->
+	<update id="menuUpdate">
+	UPDATE CAFETERIA SET menu=#{menu}, menuprice=#{menuPrice}
+	WHERE menuidx=#{menuIdx};
+	</update>
 
 
 </mapper>

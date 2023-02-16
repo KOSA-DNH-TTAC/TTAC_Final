@@ -7,7 +7,7 @@ import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Service;
 
 import kr.or.kosa.dao.CalendarDao;
-import kr.or.kosa.dao.SleepOverDao;
+import kr.or.kosa.dto.Cafeteria;
 import kr.or.kosa.dto.Schedule;
 
 @Service
