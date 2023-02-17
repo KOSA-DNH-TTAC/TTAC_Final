@@ -19,8 +19,6 @@
       type: "GET",
       url: "/top/notebox",
       success: function (result) {
-        console.log(result);
-        console.log("TQQQQQ")
         if(result == 'Y'){
           console.log(result)
           $('#msgbox').append('<img src="${pageContext.request.contextPath}/resources/assets/img/circle-square.svg"  style="color: red;"/>')

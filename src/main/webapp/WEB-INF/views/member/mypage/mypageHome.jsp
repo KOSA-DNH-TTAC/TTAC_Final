@@ -550,53 +550,37 @@
 
             $.ajax({
               type: "GET",
-              url: "/mypage/myinfo",
+              url: "/mypage/demerit",
               success: function (result) {
                 console.log("성공")
                 console.log(result);
+                let contents = `<p align="left"><b>누적 벌점 : `+  result.total +`점</b></p>
+                    <table class="table">
+                    <thead>
+                      <tr>
+                        <th scope="col">일자</th>
+                        <th scope="col">사유</th>
+                        <th scope="col">부여벌점</th>
+                      </tr>
+                    </thead>
+                    <tbody>`;
+                
+                $.each(result.list, function(index, demerit){
+                  console.log(demerit);
+                  contents+= `<tr><td>` + demerit.demeritDate + `</td>
+                              <td>` + demerit.demeritReason + `</td>
+                              <td>` + demerit.demerit + `</td>
+                              </tr>`
+                })
+                contents += '</tbody></table>'
+                $('#content').empty()
+                $('#content').append(contents)
               },
               error: function (err) {
                 console.log("에러");
                 console.log(err);
               }
             })
-
-            var contents = `
-          <p align="left"><b>누적 벌점 : 18점</b></p>
-          <table class="table">
-            <thead>
-              <tr>
-                <th scope="col">일자</th>
-                <th scope="col">사유</th>
-                <th scope="col">부여 벌점</th>
-              </tr>
-            </thead>
-            <tbody>
-              <tr>
-                <td>23.01.17</td>
-                <td>방 청소 불량</td>
-                <td>1</td>
-              </tr>
-              <tr>
-                <td>23.01.18</td>
-                <td>무단 외박</td>
-                <td>2</td>
-              </tr>
-              <tr>
-                <td>23.01.19</td>
-                <td>무단 외박</td>
-                <td>2</td>
-              </tr>
-              <tr>
-                <td>23.01.30</td>
-                <td>점호 이후 출입</td>
-                <td>3</td>
-              </tr>
-            </tbody>
-          </table>
-        `
-            $('#content').empty()
-            $('#content').append(contents)
 
           }
         })
