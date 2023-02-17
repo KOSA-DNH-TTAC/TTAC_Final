@@ -405,7 +405,7 @@
 							replyContent +=
 								`<div class="hjreply" id="` + reply.replyIdx + `"  data-toggle="off">
 								<li class="ybreply2"><button class="toMessage"
-								seq="`+ reply.memberId + `data-replyIdx="` + reply.replyIdx+ '" data-parentReplyIdx="'+ reply.parentReplyIdx+ '">익명&ensp;</button></li>'
+								seq="`+ reply.memberId + `data-replyIdx="` + reply.replyIdx+ '" data-parentReplyIdx="'+ reply.parentReplyIdx+ '">' + reply.memberId + '&nbsp;</button></li>'
 								if(reply.memberId == currentId){
 									replyContent += `<button class="deleteReply" onclick="deleteClick(this)">삭제</button>`;
 								}
