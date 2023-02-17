@@ -73,7 +73,7 @@ public class CommonController {
 				}
 			}
 		} catch (Exception e) {
-			e.printStackTrace();
+			System.out.println("헤더 ajax에서 나는 에러...추후에 잡을 예정 : " + e.getMessage() );
 			
 		}
 		

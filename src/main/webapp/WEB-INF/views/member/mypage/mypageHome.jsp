@@ -95,6 +95,14 @@
             border-collapse: collapse;
             border-spacing: 0;
           }
+          .hjtitle{
+            color : black;
+          }
+          .hjtitle:hover {
+            color: #e96b56;
+            transition: 0.3s;
+          }
+
         </style>
       </head>
 
@@ -502,8 +510,24 @@
                     day = "0" + day;
                   }
 
+                  let bname = "";
+                  if(post.boardName == "자유게시판"){
+                    bname = "freeBoardList"
+                  }else if(post.boardName == "거래게시판"){
+                    bname="productBoardList"
+                  }else if(post.boardName == "건의게시판"){
+                    bname="opinionList"
+                  }else if(post.boardName == "공지사항"){
+                    bname="noticeList"
+                  }else{
+                    bname = "custom/" + post.boardName;
+                  }
+
+                  let link = "/board/" + bname + "/" + post.idx;
+                  console.log(link)
                   contents += "<tr><td>" + post.boardName +
-                    "</td><td style='text-align:left'>" + post.title + "&nbsp;<span id='hjreply'> <i class='bi-chat-dots'>" + post.replyCount + "</span>" +
+                    `</td><td style='text-align:left'><a class="hjtitle" href='` + link + `'>` + post.title 
+                    + "&nbsp;<span id='hjreply'> <i class='bi-chat-dots'>" + post.replyCount + "</span></a>" +
                     "</td><td>" + writetime +
                     "</td></tr>";
 
