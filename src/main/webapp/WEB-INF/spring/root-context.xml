@@ -24,6 +24,23 @@
 		<constructor-arg ref="hikariConfig"></constructor-arg>
  	</bean>
  
+  	<!-- navermail설정 -->
+	<bean id="mailSender" class="org.springframework.mail.javamail.JavaMailSenderImpl">
+		<property name="host" value="smtp.naver.com" />
+		<property name="port" value="587" />
+		<property name="username" value="${mail.username}" />
+		<property name="password" value="${mail.password}" />
+		<property name="javaMailProperties">
+			<props>
+				<prop key="mail.debug">true</prop>
+				<prop key="mail.smtp.auth">true</prop>
+				<prop key="mail.smtp.starttls.enable">true</prop>
+				<prop key="mail.mime.charset">UTF-8</prop>
+				<prop key="mail.transport.protocol">smtp</prop>
+			</props>
+		</property>
+	</bean>
+	
  	<!-- MyBatis -->
  	<bean id="sqlSessionFactoryBean"  class="org.mybatis.spring.SqlSessionFactoryBean">
     	<property name="dataSource" ref="driverManagerDataSource"></property>
