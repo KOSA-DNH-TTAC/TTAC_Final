@@ -17,6 +17,7 @@ local.properties
 # ignore properties file
 db.properties
 aws.properties
+mail.properties
 
 # External tool builders
 .externalToolBuilders/
