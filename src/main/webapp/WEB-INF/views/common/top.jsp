@@ -58,20 +58,18 @@
           <li><a href="/memberCalendar">연간일정</a></li>
           <li class="dropdown"><a><span>마이페이지</span> <i class="bi bi-chevron-down"></i></a>
             <ul>
+             
+             <sec:authorize access="isAnonymous()">
+              <li><a href="/userlogin">로그인</a></li>
+             </sec:authorize>
+             <sec:authorize access="isAuthenticated()">
               <li><a href="/mypage">내 정보</a></li>
-              <sec:authorize access="isAuthenticated()">
-              	<li><a href="#">포인트 : ${principal.memberPoint}</a></li>
-              </sec:authorize>
+              <li><a href="#">포인트 : ${principal.memberPoint}</a></li>
               <li><a href="/message">쪽지함<span id="msgbox"></span></a></li>
               <li><a href="/GPT">내 식권보기</a></li>
               <li><a href="/eveningCall"><b style="color:black">점호하기</b></a></li> <!-- #E96B56 -->
-
-              <sec:authorize access="isAnonymous()">
-                <a href="/userlogin">로그인</a>
-              </sec:authorize>
-              <sec:authorize access="isAuthenticated()">
-                <a href="/logout">로그아웃</a>
-              </sec:authorize>
+              <li><a href="/logout">로그아웃</a></li>
+             </sec:authorize>
 
               <!-- <li><a href="/userlogin">로그인</a></li> -->
             </ul>
