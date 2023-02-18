@@ -348,7 +348,8 @@ public class BoardController {
 	public String boardEditOk(Model model, @PathVariable("idx") int idx,
 										   @PathVariable("boardName") String boardName,
 										   @RequestParam("title") String title,
-										   @RequestParam("content") String content) throws ClassNotFoundException, SQLException {
+										   @RequestParam("content") String content,
+										   @RequestParam("file") List<MultipartFile> files) throws ClassNotFoundException, SQLException, IOException {
 		
 		User user = (User) SecurityContextHolder.getContext().getAuthentication().getPrincipal();
 		Post boardContent = boardService.boardContentDTO(idx);
@@ -363,7 +364,7 @@ public class BoardController {
 		boardContent.setTitle(title);
 		boardContent.setContent(content);
 		
-		result = boardService.boardContentEdit(boardContent);
+		result = boardService.boardContentEdit(boardContent, files);
 		
 		//글 수정이 제대로 되었는지 확인
 		if (result < 1) {

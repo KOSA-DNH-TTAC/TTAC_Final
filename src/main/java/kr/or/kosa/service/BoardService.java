@@ -126,6 +126,19 @@ public class BoardService {
 		return fileContent;
 	}
 	
+	// 파일 삭제하기
+	@Transactional(rollbackFor = Exception.class)
+	public int fileDelete(String idx, String fileName) {
+		BoardDao boardDao = sqlSession.getMapper(BoardDao.class);
+		AwsS3 awsS3 = AwsS3.getInstance();
+		File file = new File();
+		
+		file = boardDao.fileDetailContent(idx,fileName);
+		awsS3.delete(file.getFileName());
+		
+		return boardDao.fileDelete(idx, fileName);
+	}
+	
 	// 거래 게시판 상세보기
 	public Product productContent(String idx) {
 		BoardDao boardDao = sqlSession.getMapper(BoardDao.class);
@@ -209,7 +222,25 @@ public class BoardService {
 		return result;
 	}
 
-	// 파일첨부 글쓰기
+	// 파일첨부 글쓰기 (가장 최근글 idx 가져온걸로 글쓰는거)
+	public int fileWrite(File file, int idx) {
+
+		int result = 0;
+
+		try {
+			BoardDao boardDao = sqlSession.getMapper(BoardDao.class);
+			result = boardDao.fileWrite(file);
+
+		} catch (ClassNotFoundException e) {
+			e.printStackTrace();
+		} catch (SQLException e) {
+			e.printStackTrace();
+		}
+
+		return result;
+	}
+	
+	// 파일첨부 글쓰기 (가장 최근글 idx 가져온걸로 글쓰는거)
 	public int fileWrite(File file) {
 
 		int result = 0;
@@ -226,6 +257,7 @@ public class BoardService {
 
 		return result;
 	}
+	
 	
 	// 추천 여부 검사, DB 업데이트, 추천 개수 출력
 	// 추천 여부 카운트 > 개수에 따라 RUD > 업데이트된 추천 개수 출력
@@ -335,6 +367,49 @@ public class BoardService {
 	public int boardContentEdit(Post post) {
 		BoardDao boardDao = sqlSession.getMapper(BoardDao.class);
 		int result = boardDao.boardEdit(post);
+		
+		return result;
+	}
+	
+	//게시글 수정 or 삭제 (파일 포함)
+	@Transactional(rollbackFor = Exception.class)
+	public int boardContentEdit(Post post, List<MultipartFile> files) throws IOException  {
+		BoardDao boardDao = sqlSession.getMapper(BoardDao.class);
+		
+		int idx = 0;
+		String fileUrl = "";
+		MultipartFile multiFile = files.get(0);
+		
+		//글부터 수정
+		int result = boardDao.boardEdit(post);
+		
+		//파일 있는지 없는지
+		if(multiFile.getSize() != 0) {
+			AwsS3 awsS3 = AwsS3.getInstance();
+			
+			idx = post.getIdx();
+			
+			
+			for (MultipartFile multipartfile : files) {
+				
+				UUID uuid = UUID.randomUUID();
+				File fileOne = new File();
+				
+				String fileName = post.getUniversityCode()+"/"+ "board" + "/" + idx + "/" + uuid.toString()+"_"+multipartfile.getOriginalFilename();
+				
+				fileUrl = awsS3.searchIcon(fileName);
+				fileOne.setIdx(idx);
+				fileOne.setFileUrl(fileUrl);
+				fileOne.setFileName(fileName);
+				fileOne.setFileRealName(multipartfile.getOriginalFilename());
+				fileOne.setFileSize(multipartfile.getSize());
+				
+				this.fileWrite(fileOne, idx);
+				
+				awsS3.upload(multipartfile, fileName);
+			}
+			
+		}
 		
 		return result;
 	}

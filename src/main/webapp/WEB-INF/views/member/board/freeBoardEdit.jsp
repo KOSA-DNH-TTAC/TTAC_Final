@@ -33,6 +33,9 @@
   
   <!-- tinymce -->
   <script src="https://cdn.tiny.cloud/1/5ig9du9kh0a5htt18rr9cep98j1plgchozigfsoyk2nfuwn5/tinymce/6/tinymce.min.js" referrerpolicy="origin"></script>
+  
+  <!-- Sweet Alert -->
+  <script src="https://cdn.jsdelivr.net/npm/sweetalert2@11"></script>
 
   <!-- =======================================================
   * Template Name: Eterna - v4.10.0
@@ -71,29 +74,28 @@
           <div class="col-lg-12 entries">
 
             <article class="entry">
-				<form action="/board/${boardName}/${idx}/edit" method="POST" enctype="form-data">
+				<form action="/board/${boardName}/${idx}/edit" method="POST" enctype="multipart/form-data" accept-charset="UTF-8">
 					<div class="mb-3">
 					  <label for="title" class="form-label">게시글 제목</label>
 					  <input type="text" class="form-control" name="title" id="title" placeholder="제목을 작성해주세요." value="${boardContent.title}" required>
 					</div>
 					
 					<c:if test="${not empty fileContent}">
-					<div class="mb-3">
-						<label for="file" class="form-label">파일</label>
-						<input type="file" class="form-control" id="file" name="file" multiple>
-					</div>
+						<div class="mb-3">
+							<label for="file" class="form-label">파일</label>
+							<input type="file" class="form-control" id="file" name="file" multiple>
+						</div>
 					
-					<label class="form-label">파일 목록</label>
-					<article class="entry" style="padding-top: 10px">
-					<c:forEach items="${fileContent }" var="fileContent">
-					<div class="mb-3">
-						
-						<li class="d-flex align-items-center">
-		                    	<i class="bi bi-archive" ></i> &nbsp ${fileContent.fileRealName} &nbsp<i class="bi bi-x"></i>
-	                   	</li>
-					</div>
-					</c:forEach>
-					</article>
+						<label class="form-label">파일 목록</label>
+						<article class="entry" style="padding-top: 10px">
+							<c:forEach items="${fileContent }" var="fileContent">
+							<div class="mb-3 d-flex align-items-center filelist">
+								
+									<i class="bi bi-archive">&nbsp ${fileContent.fileRealName} &nbsp<i class="bi bi-x" style="cursor:pointer;"></i></i>
+				                
+							</div>
+							</c:forEach>
+						</article>
 					</c:if>
 					
 					<div class="mb-3">
@@ -102,7 +104,7 @@
 					  ${boardContent.content}
 					  </textarea>
 					</div>
-					
+					<div id="idx" style="display:none">${boardContent.idx}</div>
 					<div class="d-grid gap-2 d-md-flex justify-content-md-end">
 					<button type="button" onclick="location.href='/board/${boardName}/${idx}/delete'" style="width:130px; height:20; border-radius: 50px; padding:5px; border: none; background-color:#fd2c08; color:white; margin-top:10px; font-size: large;">삭제</button>
 					<button type="button" onclick="history.back()" style="width:130px; height:20; border-radius: 50px; padding:5px; border: none; background-color:#000000; color:white; margin-top:10px; font-size: large;">취소</button>
@@ -150,6 +152,67 @@
         { value: 'Email', title: 'Email' },
       ]
     });
+    
+    
+    
+    
+    
+    $(document).ready(function(){
+    	$(".filelist > .bi-archive").click(function(){
+    		let idx = $('#idx').text();
+    		let fileName = $(this).text().trim();
+        	
+        	Swal.fire({
+    			title: '정말 삭제하시겠습니까?',
+    			text: "되돌릴 수 없어요!",
+    			icon: 'warning',
+    			showCancelButton: true,
+    			confirmButtonColor: '#e96b56',
+    			cancelButtonColor: 'grey',
+    			confirmButtonText: 'DELETE'
+    			}).then((result) => {
+    			if (result.isConfirmed) {
+    				$(this).unwrap();
+    	        	$(this).detach();
+    				$.ajax({
+    					type: "delete",
+    					url: '/board/delete/' + idx + '/' + fileName,
+    					success: function(result){
+    						console.log(result);
+    						Swal.fire(
+    						'삭제완료!',
+    						'댓글이 지워졌습니다.',
+    						'success'
+    						)
+    					}
+    				})
+    				
+    			}
+    			})
+      
+        })
+	})
+	
+	function rereplySubmit(e){
+		
+		//ajax로 댓글 작성
+		$.ajax({
+			type: "post",
+			url: "/board/newrereply",
+			data: JSON.stringify({
+				"postidx": idx,
+				"reply": rereply,
+				"parentidx": parentidx
+			}),
+			dataType: 'json',
+			async: true, //비동기 여부
+			contentType: "application/json",
+			success: function (data) {
+				console.log(data);
+				replyContent();
+			}
+		})
+	}
   </script>
 
   <!-- Template Main JS File -->
