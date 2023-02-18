@@ -1,12 +1,16 @@
 package kr.or.kosa.controller;
 
+import java.util.HashMap;
 import java.util.List;
+import java.util.Map;
 import java.util.Random;
 
 import javax.mail.MessagingException;
 import javax.mail.internet.MimeMessage;
 
 import org.springframework.beans.factory.annotation.Autowired;
+import org.springframework.http.HttpStatus;
+import org.springframework.http.ResponseEntity;
 import org.springframework.mail.javamail.JavaMailSender;
 import org.springframework.mail.javamail.MimeMessageHelper;
 import org.springframework.security.access.prepost.PreAuthorize;
@@ -19,15 +23,23 @@ import org.springframework.web.bind.annotation.RequestMethod;
 import org.springframework.web.bind.annotation.RequestParam;
 import org.springframework.web.bind.annotation.ResponseBody;
 
+import kr.or.kosa.dto.Member;
 import kr.or.kosa.dto.Message;
 import kr.or.kosa.security.User;
+import kr.or.kosa.service.CommonService;
 import kr.or.kosa.service.MessageService;
 
 
 @Controller
 public class CommonController {
 	String key;
-	
+	int checkNum;
+	CommonService commonService;
+
+	@Autowired
+	public void setcommonService(CommonService commonService) {
+		this.commonService = commonService;
+	}
 	@Autowired
 	MessageService messageservice;
 	
@@ -73,7 +85,7 @@ public class CommonController {
 				}
 			}
 		} catch (Exception e) {
-			e.printStackTrace();
+			System.out.println("헤더 ajax에서 나는 에러...추후에 잡을 예정 : " + e.getMessage() );
 			
 		}
 		
@@ -86,8 +98,9 @@ public class CommonController {
       System.out.println("컨트롤러로 넘어온 이메일 파라미터 : " + email.toString());
 
       Random random = new Random();
-      int checkNum = random.nextInt(888888) + 111111; // 6자리 난수 생성
+      checkNum = random.nextInt(888888) + 111111; // 6자리 난수 생성
       key = Integer.toString(checkNum);
+      System.out.println("checkNum : "+checkNum);
 
       // 메일 본문 템플릿
       String content = "홈페이지를 방문해주셔서 감사합니다." + "<br><br>" + "인증 번호는 <" + checkNum + "> 입니다." + "<br>"
@@ -127,4 +140,23 @@ public class CommonController {
 
       return Integer.toString(checkNum);
    }
+   
+   //인증번호 대조하기
+ 	@RequestMapping("/personalNum")
+ 	public ResponseEntity<Member> insertmenu(@RequestParam String personalNum, String email) {
+ 		 System.out.println("personalNum : "+ personalNum);
+ 		 System.out.println("email : "+email);
+ 		 
+ 		 Map<String, String> memberNuM = new HashMap<String, String>();
+ 		 memberNuM.put(email, personalNum);	
+ 		 
+ 		 //들어갔는지 row 수 반환
+ 		 Member result = commonService.compareNum(memberNuM, checkNum, email);
+ 		 System.out.println("비밀번호 초기화한 멤버 정보"+result);
+ 		try {
+ 			return new ResponseEntity<Member>(result, HttpStatus.OK);
+ 		} catch (Exception e) {
+ 			return new ResponseEntity<Member>(result, HttpStatus.BAD_REQUEST);
+ 		}
+ 	}
 }
