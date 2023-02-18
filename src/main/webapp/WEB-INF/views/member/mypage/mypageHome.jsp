@@ -134,6 +134,7 @@
                       <a href="#" class="list-group-item list-group-item-action">결제내역</a>
                       <a href="#" class="list-group-item list-group-item-action">내 커뮤니티</a>
                       <a href="#" class="list-group-item list-group-item-action">벌점이력</a>
+                      <a href="#" class="list-group-item list-group-item-action">나의 통계</a>
                     </div>
                     <!-- </div> -->
                   </div>
@@ -278,7 +279,7 @@
         }
 
         function sleepoverChart(){
-          console.log("외박 통계 보기를 눌렀음")
+          location.href="/mypage/mychart"
         }
 
         $('.list-group-item').click(function (e) {
@@ -582,6 +583,8 @@
               }
             })
 
+          }else if(menu == '나의 통계'){
+            location.href='/mypage/mychart'
           }
         })
 

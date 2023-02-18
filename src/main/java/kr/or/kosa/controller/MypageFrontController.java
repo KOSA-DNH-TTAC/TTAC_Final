@@ -84,4 +84,9 @@ public class MypageFrontController {
 			model.addAttribute("icon", icon);
 			return "/common/redirect";
 		}
+		
+		@GetMapping("/mypage/mychart")
+		public String mychart() {
+			return "member/mypage/myChart";
+		}
 }
