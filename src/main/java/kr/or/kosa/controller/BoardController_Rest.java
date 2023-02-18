@@ -151,6 +151,14 @@ public class BoardController_Rest {
 		
 		return map;
 	}
+	
+	//파일 삭제
+	@DeleteMapping("/board/delete/{idx}/{filename}")
+	public int delFile(@PathVariable("idx") String idx,
+					   @PathVariable("filename") String fileName) {
+
+		return boardService.fileDelete(idx, fileName);
+	}
 
 	// 저녁점호 위치비교 + 중복체크 + 데이터 인서트
 	@RequestMapping(value = "/eveningCall", method = RequestMethod.POST, produces = "application/text; charset=utf8")

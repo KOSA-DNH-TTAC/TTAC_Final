@@ -103,13 +103,25 @@ PUBLIC "-//mybatis.org//DTD Mapper 3.0//EN"
 		VALUES(#{boardIdx},#{boardName},#{memberId},#{universityCode},#{title},#{content},NOW())
 	</insert>
 
-	<!-- 파일 업로드 -->
+	<!-- 파일 업로드 (최신idx) -->
 	<insert id="fileInsert" parameterType="kr.or.kosa.dto.File">
 		<selectKey keyProperty="idx" resultType="int" order="BEFORE">
 			SELECT IDX from POST ORDER BY IDX DESC LIMIT 1
 		</selectKey>
 	INSERT INTO FILE (idx, FILENAME,FILEREALNAME,FILEURL,FILESIZE)
 	VALUES(#{idx},#{fileName},#{fileRealName},#{fileUrl},#{fileSize})
+	</insert>
+	
+	<!-- 파일 업로드 -->
+	<insert id="fileWrite" parameterType="kr.or.kosa.dto.File">
+	INSERT INTO FILE (idx, FILENAME,FILEREALNAME,FILEURL,FILESIZE)
+	VALUES(#{idx},#{fileName},#{fileRealName},#{fileUrl},#{fileSize})
+	</insert>
+	
+	<!-- 파일 삭제 -->
+	<insert id="fileDelete" parameterType="String">
+	DELETE FROM FILE
+	WHERE IDX = #{param1} AND FILEREALNAME = #{param2}
 	</insert>
 	
 	<!-- 거래 업로드 -->
@@ -132,6 +144,13 @@ PUBLIC "-//mybatis.org//DTD Mapper 3.0//EN"
 		resultType="kr.or.kosa.dto.File">
 		SELECT FILENUM, IDX, FILENAME, FILEREALNAME, FILEURL, FILESIZE FROM FILE WHERE IDX
 		= #{idx}
+	</select>
+	
+	<!-- 파일테이블 하나만 가져오기 -->
+	<select id="fileDetailContent" parameterType="String"
+		resultType="kr.or.kosa.dto.File">
+		SELECT FILENUM, IDX, FILENAME, FILEREALNAME, FILEURL, FILESIZE FROM FILE
+		WHERE IDX = #{param1} AND FILEREALNAME = #{param2}
 	</select>
 	
 	<!-- 거래테이블 가져오기 -->
