@@ -7,7 +7,7 @@ PUBLIC "-//mybatis.org//DTD Mapper 3.0//EN"
 
 <!-- 마이페이지 통계 -->
 	<!-- 월별 외박횟수 -->
-	<select id="">
+	<select id="monthSleepover" parameterType="String" resultType="kr.or.kosa.dto.Chart">
 		SELECT
 		DATE_FORMAT(startdate, '%Y-%m') AS month,
 		memberid,
@@ -19,7 +19,7 @@ PUBLIC "-//mybatis.org//DTD Mapper 3.0//EN"
 	</select>
 	
 	<!-- 월별 결제 -->
-	<select id="">
+	<select id="bb">
 		SELECT
 		DATE_FORMAT(paydate, '%Y-%m') AS 월,memberid, COUNT(*) AS 결제건수,SUM(payamount) AS 결제총액
 		FROM PAYMENTHISTORY
@@ -29,7 +29,7 @@ PUBLIC "-//mybatis.org//DTD Mapper 3.0//EN"
 	</select>
 	
 	<!-- 월별 커뮤니티 -->
-	<select id="">
+	<select id="cc">
 		SELECT
 		wdate AS mon,
 		memberid,

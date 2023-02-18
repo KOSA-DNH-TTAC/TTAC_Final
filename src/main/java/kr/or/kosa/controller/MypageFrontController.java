@@ -86,7 +86,7 @@ public class MypageFrontController {
 		}
 		
 		@GetMapping("/mypage/mychart")
-		public String mychart() {
+		public String mychart(Model model) {
 			return "member/mypage/myChart";
 		}
 }

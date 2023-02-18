@@ -127,6 +127,7 @@
                 </ol>
                 <h2>나의 통계</h2>
                 <div class="row no-gutters" style="margin-top:10px; margin-bottom : 25px">
+                <div id="memberId" style="display:none">${user.memberId}</div>
 
 
                   <div class="col-lg-2">
@@ -191,6 +192,7 @@
 
       <script>
         $(document).ready(function(){
+        	
             var options = {
             chart: {
                 type: 'line'
@@ -208,6 +210,8 @@
 
             chart.render();
         })
+        
+        $('#chart').empty();
 
          $('.list-group-item').click(function (e) {
           e.preventDefault();
@@ -227,8 +231,30 @@
           $('#mptitle').text(menutitle) //content title 선택 메뉴로 바꿔줌
 
           //각 if문에서 ajax로 데이터 가져온 후
+          
+          
           //해당 내용에 맞는 뷰로 바꿔주기....
           if (menu == '외박') {
+        	  let memberId = $('#memberId').text();
+        	  
+        	  $.ajax({
+      			type: "post",
+      			url: "/mypage/sleepover",
+      			data: JSON.stringify({
+      				"memberId": memberId
+      			}),
+      			dataType: 'json',
+      			async: true, //비동기 여부
+      			contentType: "application/json",
+      			success: function (data) {
+      				console.log(data);
+      				replyContent();
+      			}
+      		})
+        	  
+        	$('#chart').empty();
+            $('#chart2').empty();
+        	  
 
             //월별 외박 건수
             var options = {
