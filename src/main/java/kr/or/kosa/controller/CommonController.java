@@ -85,8 +85,11 @@ public class CommonController {
 				}
 			}
 		} catch (Exception e) {
-			System.out.println("헤더 ajax에서 나는 에러...추후에 잡을 예정 : " + e.getMessage() );
-			
+//			System.out.println("헤더 ajax에서 나는 에러...추후에 잡을 예정 : " + e.getMessage() );
+			//여기서 나는 예외는 로그인 되어있지 않은데 헤더에서 ajax로 유저 정보를 호출하기 때문에
+			//user 가져오는데서 나는 예외임
+			//따라서 로그인돼있지 않으므로, 받은 쪽지도 없으므로 'N'을 리턴함
+			result="N";
 		}
 		
 		return result;
