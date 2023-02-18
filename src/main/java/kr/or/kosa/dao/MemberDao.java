@@ -25,4 +25,9 @@ public interface MemberDao {
 	//특정 회원이 쓴 글들
 	public List<Post> getPosts(String memberid);
 	
+	//회원 이메일 유효 체크
+	public Member getEmail(String email);
+	
+	//회원 비밀번호 초기화
+	public int insertPassword(String email);
 }
