@@ -2,6 +2,7 @@
     pageEncoding="UTF-8"%>
 <%@ taglib prefix="c" uri="http://java.sun.com/jsp/jstl/core"%>
 <%@ taglib prefix="fn" uri="http://java.sun.com/jsp/jstl/functions"%>
+<%@ taglib uri="http://www.springframework.org/security/tags" prefix="sec"%>
 <!DOCTYPE html>
 <html lang="en">
 
@@ -46,10 +47,17 @@
 
   <main id="main">
 
-   
-
+    <!-- 로그인 유저 정보 -->
+	<sec:authentication property="principal" var="prc"/>		
+	
     <div class="section-title">
-      <h2 style="margin-top:100px;">혜화관</h2>
+    <sec:authorize access="isAuthenticated()">
+      <h2 style="margin-top:100px;">${prc.domitoryName}</h2>
+      <p> ${prc.name}님 어서오세요</p>
+      </sec:authorize>
+      <sec:authorize access="isAnonymous()">
+      	<h2 style="margin-top:100px;">로그인해주세요</h2>
+      </sec:authorize>
       <!-- <p>Quisquam quos quisquam cupiditate. Et nemo qui impedit suscipit alias ea. Quia fugiat sit in iste officiis commodi quidem hic quas.</p> -->
     </div>
 

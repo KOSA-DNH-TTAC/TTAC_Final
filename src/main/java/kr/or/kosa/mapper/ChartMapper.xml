@@ -1,0 +1,70 @@
+<?xml version="1.0" encoding="UTF-8" ?>
+<!DOCTYPE mapper
+PUBLIC "-//mybatis.org//DTD Mapper 3.0//EN"
+"http://mybatis.org/dtd/mybatis-3-mapper.dtd">
+
+<mapper namespace="kr.or.kosa.dao.ChartDao">
+
+<!-- 마이페이지 통계 -->
+	<!-- 월별 외박횟수 -->
+	<select id="">
+		SELECT
+		DATE_FORMAT(startdate, '%Y-%m') AS month,
+		memberid,
+		COUNT(*) AS 외박횟수
+		FROM SLEEPOVERHISTORY
+		WHERE memberid = #{memberid}
+		GROUP BY DATE_FORMAT(startdate, '%Y-%m'), memberid
+		ORDER BY MONTH DESC
+	</select>
+	
+	<!-- 월별 결제 -->
+	<select id="">
+		SELECT
+		DATE_FORMAT(paydate, '%Y-%m') AS 월,memberid, COUNT(*) AS 결제건수,SUM(payamount) AS 결제총액
+		FROM PAYMENTHISTORY
+		WHERE memberid=#{memberid}
+		GROUP BY DATE_FORMAT(paydate, '%Y-%m'),memberid
+		ORDER BY 월, memberid;	
+	</select>
+	
+	<!-- 월별 커뮤니티 -->
+	<select id="">
+		SELECT
+		wdate AS mon,
+		memberid,
+		SUM(postcount) AS 게시글수,
+		SUM(replycount) AS 댓글수
+		FROM
+		(SELECT
+		memberid,
+		DATE_FORMAT(writedate, '%Y-%m') AS wdate,
+		COUNT(*) AS postcount,
+		0 AS replycount
+		FROM POST
+		GROUP BY memberid, DATE_FORMAT(wdate, '%Y-%m')
+		UNION ALL
+		SELECT
+		memberid,
+		DATE_FORMAT(REPLYDATE, '%Y-%m') AS wdate,
+		0 AS postcount,
+		COUNT(*) AS replycount
+		FROM REPLY
+		GROUP BY memberid, DATE_FORMAT(wdate, '%Y-%m')) AS temp
+		WHERE memberid=#{memberid}
+		GROUP BY mon, memberid
+	</select>
+	
+	<!-- 월별 벌점 -->
+	<select id="">
+		SELECT MEMBERID, DATE_FORMAT(DEMERITDATE, '%Y-%m') AS MONTH, SUM(DEMERIT) AS 총벌점
+		FROM DEMERITHISTORY
+		WHERE MEMBERID=#{memberid}
+		GROUP BY MONTH
+	</select>
+</mapper>
+
+
+
+
+
