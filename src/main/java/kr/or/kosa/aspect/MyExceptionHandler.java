@@ -7,13 +7,13 @@ import org.springframework.web.bind.annotation.RestControllerAdvice;
 import org.springframework.web.servlet.ModelAndView;
 import org.springframework.web.servlet.view.RedirectView;
 
-@RestControllerAdvice
+//@RestControllerAdvice
 public class MyExceptionHandler {
 	
 	@ExceptionHandler(Exception.class)
     public void handleMyException(Exception ex) {
         // 예외 처리 로직 수행
-        // ...
+        
 		
 		System.out.println("From RectControllerAdvice... : " + ex.getMessage());
     }

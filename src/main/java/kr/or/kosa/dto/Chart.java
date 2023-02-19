@@ -8,5 +8,10 @@ public class Chart {
 
 	private String month;
 	private String memberid;
-	private int count;
+	private int demeritTotal;
+	private int postCount;
+	private int replyCount;
+	private int sleepoverCount;
+	private int paymentCount;
+	private int paymentTotal;
 }

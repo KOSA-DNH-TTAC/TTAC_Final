@@ -3,6 +3,7 @@ package kr.or.kosa.controller;
 import java.security.Principal;
 
 import org.springframework.beans.factory.annotation.Autowired;
+import org.springframework.security.access.prepost.PreAuthorize;
 import org.springframework.security.core.context.SecurityContextHolder;
 import org.springframework.security.crypto.bcrypt.BCryptPasswordEncoder;
 import org.springframework.stereotype.Controller;
@@ -85,6 +86,7 @@ public class MypageFrontController {
 			return "/common/redirect";
 		}
 		
+		@PreAuthorize("isAuthenticated()")
 		@GetMapping("/mypage/mychart")
 		public String mychart(Model model) {
 			return "member/mypage/myChart";
