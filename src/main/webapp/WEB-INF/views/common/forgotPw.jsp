@@ -56,6 +56,9 @@
           }
 
           #contentBox {
+          	display:flex;
+          	flex-direction:column;
+          	justify-content:center;
             min-height: 50vh;
             padding: 15px 15px 15px 15px;
             text-align: center;
