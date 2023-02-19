@@ -62,4 +62,7 @@ public class ChartController_Rest {
 		map.put("list", list);
 		return new ResponseEntity<Map<String,Object>>(map, HttpStatus.OK);
 	}
+
 }
+
+
