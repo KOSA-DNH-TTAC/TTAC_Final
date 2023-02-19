@@ -128,7 +128,7 @@
                       </tr>
                       <tr>
                         <td colspan="2">
-                        	<textarea class="form-control" name="messageContent" placeholder="내용을 입력하세요" id="exampleFormControlTextarea1" rows="3"></textarea>
+                        	<textarea class="form-control" name="messageContent" placeholder="내용을 입력하세요" id="exampleFormControlTextarea1" rows="6"></textarea>
                         </td>
                       </tr>
                     </tbody>
