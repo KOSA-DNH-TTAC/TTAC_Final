@@ -111,22 +111,22 @@ public class CommonController {
       // MimeMessage 대신 SimpleMailMessage를 사용할 수도 있습니다.
       // 둘의 차이점은 MimeMessage의 경우 멀티파트 데이터를 처리 할 수 있고 SimpleMailMessage는 단순한 텍스트 데이터만
       // 전송이 가능합니다.
-
+      System.out.println("1 여기까지 실행이 됬는지?");
       MimeMessage message = mailSender.createMimeMessage(); // MimeMessage 객체를 이용해서 메시지를 구성한 뒤 메일 발송
-
+      System.out.println("2 여기까지 실행이 됬는지?");
       try {
          // MimeMessag를 이용해서 파일첨부가 가능하지만 복잡하고 힘들기에 MimeMessageHelper 도움받아 파일 첨부
          MimeMessageHelper helper = new MimeMessageHelper(message, true, "utf-8");// true는 멀티파트 메세지를 사용하겠다는 의미
-
+         System.out.println("3 여기까지 실행이 됬는지?");
          helper.setFrom("hjdo0211@naver.com"); // 보내는 사람 이메일
          // bean에 아이디 설정한 것은 단순히 smtp 인증을 받기 위해 사용 따라서 보내는이(setFrom())반드시 필요
          // 보내는이와 메일주소를 수신하는이가 볼때 모두 표기 되게 원하신다면 아래의 코드를 사용하시면 됩니다.
          // mailHelper.setFrom("보내는이 이름 <보내는이 아이디@도메인주소>");
-
+         System.out.println("4 여기까지 실행이 됬는지?");
          helper.setTo(email); // 수신자 이메일
          helper.setSubject("DOTO :: 개인정보 찾기 인증메일"); // 제목
          helper.setText(content, true); // 내용. true는 html을 사용하겠다는 의미
-
+         System.out.println("5 여기까지 실행이 됬는지?");
          // 아래는 helper안쓰고 그냥 했을 때 ...
          // message.setSubject("스프링으로 메일보내기");
          // message.setText("메일본문 : " + checkNum);
@@ -136,6 +136,7 @@ public class CommonController {
          // message.setFrom("hjdo0211@naver.com");
 
          mailSender.send(message);
+         System.out.println("6 여기까지 실행이 됬는지?");
          System.out.println("메일 보내기 성공");
       } catch (MessagingException e) {
          e.printStackTrace();
