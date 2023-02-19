@@ -17,11 +17,13 @@ import org.springframework.web.bind.annotation.RequestMapping;
 import org.springframework.web.bind.annotation.RequestParam;
 import org.springframework.web.bind.annotation.RestController;
 
+import kr.or.kosa.dto.DemeritHistory;
 import kr.or.kosa.dto.Member;
 import kr.or.kosa.dto.PaymentHistory;
 import kr.or.kosa.dto.Post;
 import kr.or.kosa.dto.SleepOverHistory;
 import kr.or.kosa.security.User;
+import kr.or.kosa.service.AdminService;
 import kr.or.kosa.service.BoardService;
 import kr.or.kosa.service.MemberService;
 import kr.or.kosa.service.PaymentService;
@@ -34,6 +36,12 @@ public class MypageController_Rest {
 	private MemberService memberservice;
 	private PaymentService paymentservice;
 	private SleepOverService sleepoverservice;
+	private AdminService adminservice;
+	
+	@Autowired
+	public void setAdminService(AdminService adminservice) {
+		this.adminservice = adminservice;
+	}
 	
 	@Autowired
     public void setMemberService(MemberService memberservice) {
@@ -114,6 +122,21 @@ public class MypageController_Rest {
 	}
 	
 	//내 벌점 조회
+	@GetMapping("/demerit")
+	public ResponseEntity<Map<String, Object>> getDemerit(){
+		User user = (User) SecurityContextHolder.getContext().getAuthentication().getPrincipal();
+		Map<String, Object> map = new HashMap<String, Object>();
+		
+		List<DemeritHistory> list = adminservice.memberDemeritHistory(user.getMemberId());
+		int total = 0;
+		for(DemeritHistory d : list) {
+			total += d.getDemerit();
+		}
+		
+		map.put("list", list);
+		map.put("total", total);
+		return new ResponseEntity<Map<String,Object>>(map, HttpStatus.OK);
+	}
 	
 	//내 결제내역 조회
 	@GetMapping("/payments")

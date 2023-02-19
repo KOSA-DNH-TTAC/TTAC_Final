@@ -6,7 +6,6 @@
 
       <head>
         <meta charset="utf-8">
-        <meta http-equiv="Content-Security-Policy" content="upgrade-insecure-requests"> 
         <meta content="width=device-width, initial-scale=1.0" name="viewport">
 
         <title>DOTO:기숙사통합관리시스템</title>
@@ -45,6 +44,9 @@
         <!-- Jquery -->
         <script src="http://code.jquery.com/jquery-latest.min.js"></script>
 
+        <!-- Apex Chart -->
+        <script src="https://cdn.jsdelivr.net/npm/apexcharts"></script>
+
         <!-- css -->
         <style>
           /* Sidebar */
@@ -81,10 +83,29 @@
           #content {
             margin-top: 5px;
           }
-          .table>:not(caption)>*>*{
-          	background-color: #F8F9FA;
-          	border:none;
+
+          .list-group-item.active {
+            /* <a href="#" class="list-group-item list-group-item-action active" aria-current="true">내 정보 조회</a> */
+            background-color: #ff7600 !important;
+            border-color: #ff7600 !important;
           }
+
+          #hjreply {
+            color: #bababa;
+          }
+
+          #searchTable {
+            border-collapse: collapse;
+            border-spacing: 0;
+          }
+          .hjtitle{
+            color : black;
+          }
+          .hjtitle:hover {
+            color: #e96b56;
+            transition: 0.3s;
+          }
+
         </style>
       </head>
 
@@ -101,48 +122,39 @@
 
                 <ol>
                   <li><a href="/">Home</a></li>
-                  <li><a href="/message">쪽지함</a></li>
-                  <li>쪽지쓰기</li>
+                  <li><a href="/mypage">마이페이지</a></li>
+                  <li>나의 통계</li>
                 </ol>
-                <h2>쪽지쓰기</h2>
+                <h2>나의 통계</h2>
+                <div class="row no-gutters" style="margin-top:10px; margin-bottom : 25px">
+                <div id="memberId" style="display:none">${user.memberId}</div>
 
-                <div class="row no-gutters" style="margin-top:10px; margin-bottom : 25px; ">
-                  <div id="contentBox" class="col-lg-6" style="margin: auto; background: #F8F9FA; box-shadow: 0 4px 16px rgb(0 0 0 / 10%); border-radius: 9px;">
-                    <h2 id="mptitle" style="margin :15px 0 20px 0">쪽지 작성</h2>
+
+                  <div class="col-lg-2">
+
+                    <!-- <div class="sidebar"> -->
+                    <div class="list-group">
+                      <a href="#" class="list-group-item list-group-item-action active" aria-current="true">외박</a>
+                      <a href="#" class="list-group-item list-group-item-action">결제</a>
+                      <a href="#" class="list-group-item list-group-item-action">커뮤니티</a>
+                      <a href="#" class="list-group-item list-group-item-action">벌점</a>
+                    </div>
+                    <!-- </div> -->
+                  </div>
+
+                  <div id="contentBox" class="col-lg-10" style="background:white">
+                    <h2 id="mptitle" style="margin :15px 0 20px 0">내 통계 보기</h2>
 
                     <!-- content start -->
                     <div id="content">
-                    <form action="/message/writing" method="POST">
-                    <table class="table table-warning" id='writingTable'>
-                    <tbody>
-                      <tr>
-                        <td><b>받는 사람 ID</b></td>
-                        <div class="col-lg-4">
-                        	<td><input type="text" name="rmemberId" class="form-control g-3" value="${receiver}"></td>
-                        </div>
-                      </tr>
-                      <tr>
-                        <td colspan="3">
-                        	<input class="form-control" name="messageTitle" maxlength='30' placeholder='제목을 입력하세요' exampleFormControlTextarea1" rows="1">
-                        </td>
-                      </tr>
-                      <tr>
-                        <td colspan="2">
-                        	<textarea class="form-control" name="messageContent" placeholder="내용을 입력하세요" id="exampleFormControlTextarea1" rows="3"></textarea>
-                        </td>
-                      </tr>
-                    </tbody>
-                  </table>
-                  <button type="submit" id="writing" style="width:130px; height:20; border-radius: 50px; padding:5px; border: none; background-color:#E96B56; color:white; margin-top:0px; margin-bottom:15px; font-size: large;">쪽지 보내기</button>
-                  </form>
-                  
-                      
+                        <div id="chart"></div>
+                        <div id="chart2"></div>
                     </div>
                     <!-- content end -->
-                  </div>
+                    </div>
                 </div>
 
-              </div>
+                </div>
             </section>
 
 
@@ -171,15 +183,117 @@
         src="${pageContext.request.contextPath}/resources/assets/vendor/waypoints/noframework.waypoints.js"></script>
       <script src="${pageContext.request.contextPath}/resources/assets/vendor/php-email-form/validate.js"></script>
 
+
+      <!--날짜변환-->
+      <!-- <script src="${pageContext.request.contextPath}/js/dateFormatter.js" type="application/js"></script> -->
+
       <!-- Template Main JS File -->
       <script src="${pageContext.request.contextPath}/resources/assets/js/main.js"></script>
-	
-	  <!-- bootstrap -->
+
+      <script>
+        $(document).ready(function(){
+        	
+            var options = {
+            chart: {
+                type: 'line'
+            },
+            series: [{
+                name: 'sales',
+                data: [30,40,35,50,49,60,70,91,125]
+            }],
+            xaxis: {
+                categories: [1991,1992,1993,1994,1995,1996,1997, 1998,1999]
+            }
+            }
+
+            var chart = new ApexCharts(document.querySelector("#chart"), options);
+
+            chart.render();
+        })
+        
+        $('#chart').empty();
+
+         $('.list-group-item').click(function (e) {
+          e.preventDefault();
+          var menu = $(this).text().trim(); //선택한 카테고리 메뉴 값 가져옴
+          console.log(menu);
+          //클릭한 메뉴 활성화
+          $that = $(this);
+          $that.addClass('active');
+          // 다른 active되어있는 a태그의 active를 제거
+          var el = $(e.target).closest('a');
+          el.siblings('a').removeClass("active");
+
+          $('#chart').empty();
+          $('#chart2').empty();
+        
+          let menutitle = "나의 " + menu + " 통계"
+          $('#mptitle').text(menutitle) //content title 선택 메뉴로 바꿔줌
+
+          //각 if문에서 ajax로 데이터 가져온 후
+          
+          
+          //해당 내용에 맞는 뷰로 바꿔주기....
+          if (menu == '외박') {
+        	  let memberId = $('#memberId').text();
+        	  
+        	  $.ajax({
+      			type: "post",
+      			url: "/mypage/sleepover",
+      			data: JSON.stringify({
+      				"memberId": memberId
+      			}),
+      			dataType: 'json',
+      			async: true, //비동기 여부
+      			contentType: "application/json",
+      			success: function (data) {
+      				console.log(data);
+      				replyContent();
+      			}
+      		})
+        	  
+        	$('#chart').empty();
+            $('#chart2').empty();
+        	  
+
+            //월별 외박 건수
+            var options = {
+            chart: {
+                type: 'bar'
+            },
+            series: [{
+                name: 'sleepover',
+                data: [30,40,35,50,49,60,70,91,125]
+            }],
+            xaxis: {
+                categories: ['1월','2월','3월','4월','5월','6월','7월', '8월','9월']
+            }
+            }
+
+            var chart = new ApexCharts(document.querySelector("#chart"), options);
+
+            chart.render();
+
+          }else if(menu == '결제'){
+
+            //월별 결제 건수
+
+            //월별 결제 금액
+
+          }else if(menu == '커뮤니티'){
+            
+            //월별 작성 글 + 댓글 수
+
+          }else if(menu == '벌점'){
+            
+            //월별 벌점
+
+          }
+         })
+      </script>
+    
       <script src="https://cdn.jsdelivr.net/npm/bootstrap@5.2.3/dist/js/bootstrap.bundle.min.js"
         integrity="sha384-kenU1KFdBIe4zVF0s0G1M5b4hcpxyD9F7jL+jjXkk+Q2h455rYXK/7HAuoJl+0I4"
         crossorigin="anonymous"></script>
 
-	<script>
-
-	</script>
- </html>
+      </html>

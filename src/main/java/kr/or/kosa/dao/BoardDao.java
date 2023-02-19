@@ -44,8 +44,11 @@ public interface BoardDao {
 	// 글 작성(파일첨부 x)
 	public int boardInsert(Post post) throws ClassNotFoundException, SQLException;
 
-	// 파일 글 작성
+	// 파일 글 작성(최신 idx)
 	public int fileInsert(File file) throws ClassNotFoundException, SQLException;
+	
+	// 파일 글 작성
+	public int fileWrite(File file) throws ClassNotFoundException, SQLException;
 	
 	// 거래 글 작성
 	public int productInsert(Product product) throws ClassNotFoundException, SQLException;
@@ -96,6 +99,12 @@ public interface BoardDao {
 	
 	// 파일 상세보기
 	public List<File> fileContent(String idx);
+	
+	// 파일 하나만 상세보기
+	public File fileDetailContent(String idx, String fileRealName);
+	
+	// 파일 상세보기
+	public int fileDelete(String idx, String fileName);
 	
 	// 거래게시글 상세보기
 	public Product productContent(String idx);

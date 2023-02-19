@@ -4,6 +4,7 @@ import java.util.Map;
 
 import org.apache.ibatis.session.SqlSession;
 import org.springframework.beans.factory.annotation.Autowired;
+import org.springframework.security.crypto.bcrypt.BCryptPasswordEncoder;
 import org.springframework.stereotype.Service;
 
 import kr.or.kosa.dao.MemberDao;
@@ -18,6 +19,9 @@ public class CommonService {
 	public void setSqlSession(SqlSession sqlSession) {
 		this.sqlSession = sqlSession;
 	}
+	//암호화
+	@Autowired
+	private BCryptPasswordEncoder bCryptPasswordEncoder;
 
 //  비밀번호 찾기 (초기화) 인증번호 대조
 	public Member compareNum(Map<String, String>persnalNum, int checkNum, String email) {
@@ -55,16 +59,20 @@ public class CommonService {
 			}
 		}
 		//이메일로 찾은 회원정보 row의 비밀번호 초기화
-		memberDao.insertPassword(memberemail);
+		String password = "1004";
+		String encodepassword = bCryptPasswordEncoder.encode(password);
+		System.out.println("encodepassword : "+encodepassword);
+		member.setPassword(encodepassword);
+		memberDao.insertPassword(member);
 		
 		Member member1 = memberDao.getEmail(email);
-		
-		return member1;
+		System.out.println("member1 : "+member1);
+		return member;
 	}
 	
-	public int insertPassword(String memberemail) {
+	public int insertPassword(Member member) {
 		MemberDao memberDao = sqlSession.getMapper(MemberDao.class);
-		int result = memberDao.insertPassword(memberemail);
+		int result = memberDao.insertPassword(member);
 		System.out.println("password 초기화된 member : "+result);
 		
 		return result;
