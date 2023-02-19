@@ -68,6 +68,9 @@
               <li><a href="/message">쪽지함<span id="msgbox"></span></a></li>
               <li><a href="/GPT">내 식권보기</a></li>
               <li><a href="/eveningCall"><b style="color:black">점호하기</b></a></li> <!-- #E96B56 -->
+              <sec:authorize access="hasRole('ROLE_ADMIN')">
+                <li><a href="/admin/adminMember"><b style="color:black">관리자페이지</b></a></li>
+              </sec:authorize>
               <li><a href="/logout">로그아웃</a></li>
              </sec:authorize>
 
