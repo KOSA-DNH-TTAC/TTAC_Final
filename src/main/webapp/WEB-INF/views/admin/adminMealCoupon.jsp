@@ -6,6 +6,7 @@
 <head>
 <title>관리자페이지</title>
 <meta charset="utf-8">
+<meta http-equiv="Content-Security-Policy" content="upgrade-insecure-requests"> 
 <meta name="viewport" content="width=1400px, user-scalable=yes"> <!--표준형-->
 <meta name="format-detection" content="telephone=no, address=no, email=no">
 <meta http-equiv="X-UA-Compatible" content="IE=edge"/>
@@ -60,11 +61,8 @@
 									<h1>기숙사 통합관리 솔루션</h1>
 								</a></li>
 							<li class="smenu"><a href="/admin/adminMember" class="msub ">회원관리</a>
-								<ul class="sub ">
-									<li><a href="/admin/adminMember">회원현황</a></li>
-									<li><a href="../sub01/sub01_02.php">벌점관리</a></li>
-								</ul>
 							</li>
+							<li class="smenu"><a href="/admin/board">커뮤니티관리</a>
 							<li class="smenu"><a href="/admin/coupon" class="msub on">식권관리</a></li>
 							<li class="smenu"><a href="/admin/popular">외박관리</a>
 								<ul class="sub ">
@@ -102,6 +100,7 @@ $(document).ready(function(){
 		return false;
 	});
 });
+
 </script>
 
 </div>	<div class="con">
@@ -136,14 +135,6 @@ $(document).ready(function(){
 <div class="ofh">
 <div class="halfcon mr">
 <div class="coupon">
-	<!-- <div class="ofh mb10">	
-		<select name="" class="dpi">
-			<option value="">10개씩보기</option>
-			<option value="">20개씩보기</option>
-			<option value="">30개씩 보기</option>
-			<option value="">50개씩 보기</option>
-		</select>
-	</div> -->
 	
 	<div class="bgtab bgtab2">
 		<div class="w70 fl">
@@ -172,13 +163,13 @@ $(document).ready(function(){
 			<col width="*"/>
 		</colgroup>
 		<tr>
-			<th>메뉴이름 <span class="blTxt">*</span></th>
-			<td style="padding:4px"><input type="text" class="w60"/></td>			
+			<th>메뉴 이름 <span class="blTxt">*</span></th>
+			<td style="padding:4px"><input type="text" class="w60" id="insertname"/></td>			
 		</tr>
 		<tr>
 			<th>금액 <span class="blTxt">*</span></th>
 			<td style="padding:4px">				
-				<input type="text"/> 원
+				<input type="text" id="insertprice"/> 원
 			</td>
 		</tr>	
 		
@@ -190,7 +181,7 @@ $(document).ready(function(){
 
 	<div class="ok_btn">
 		<ul>
-			<li><button type="button" class="btn_sumit2">식권생성</button></li>
+			<li><button type="button" class="btn_sumit2" id="insertMenu">식권 등록</button></li>
 		</ul>
 	</div>
 </div> 
@@ -215,7 +206,7 @@ $(document).ready(function(){
 
 	<div id="pageup">
 	</div>
-</div><!--wrap-->
+<!--wrap-->
 
 
 
@@ -229,31 +220,32 @@ $(document).ready(function() {
 	getAllMenuList();
 })
 
+// 메뉴 목록
 function getAllMenuList(){
 	$.ajax({
 			type: "get",
-			url: "/admin/cafeteria",
+			url: "/coupon/list",
 			success: function (result) {
 
 				$('#allMenuList').empty();
 				let contents = `<tbody>` +
 			`<tr>
-				<th width="20%">식권번호</th>
-				<th width="25%">메뉴이름</th>
-				<th width="25%">가격</th>
+				<th width="10%">번호</th>
+				<th width="20%">기숙사</th>
+				<th width="25%">메뉴</th>
+				<th width="15%">가격</th>
 				<th width="15%">수정</th>
 				<th width="15%">삭제</th>
 			</tr>`
 			
 			$.each(result, function(index, menu){
-				
-				console.log(menu.menuindex);
-				
+			
 				contents += `<tr class="menurow">
 					<td><b>` + (++index) +`</b><div class='menuidx' style="display:none">`
 					+ menu.menuidx
-					+ `</div></td>
-					<td class="menutd"><div class="menuname">` 
+					+ `</div></td><td class="menutd">`
+					+ menu.domitoryName
+					+ `<td class="menutd"><div class="menuname">` 
 					+ menu.menu + `</div></td>
 					<td class="menutd"><div class="menuprice">` + menu.menuPrice + `</div></td>
 					<td class="menuBtn"><div class='menuUpdate'>수정</div></td>
@@ -268,27 +260,92 @@ function getAllMenuList(){
 		})
 	}
 	
-// 메뉴 수정
+// 버튼 변경 이벤트
 $(document).on("click", ".menuUpdate", function() {
-  var row = $(this).closest(".menurow");
-  var idx = row.find(".menuidx").text();
-  console.log("idx: " + idx);
-  var name = row.find(".menuname").text();
-  var price = row.find(".menuprice").text();
-  row.find(".menuname").html("<input type='text' style='width:95%' class='nameInput' placeholder='" + name + "' value='" + name + "' />");
-  row.find(".menuprice").html("<input type='text' style='width:95%' class='priceInput' placeholder='" + price + "' value='" + price + "' />");
-  $(this).html("완료").removeClass("menuUpdate").addClass("menuComplete");
+	var row = $(this).closest(".menurow");
+	var idx = row.find(".menuidx").text();
+	var name = row.find(".menuname").text();
+	var price = row.find(".menuprice").text();
+	
+	row.find(".menuname").html("<input type='text' style='width:95%' class='nameInput' placeholder='" + name + "' value='" + name + "' />");
+	row.find(".menuprice").html("<input type='text' style='width:95%' class='priceInput' placeholder='" + price + "' value='" + price + "' />");
+	$(this).html("완료").removeClass("menuUpdate").addClass("menuComplete");
 });
 
+// 메뉴 수정
 $(document).on("click", ".menuComplete", function() {
-  var row = $(this).closest(".menurow");
-  var name = row.find(".nameInput").val();
-  var price = row.find(".priceInput").val();
-  row.find(".menuname").text(name);
-  row.find(".menuprice").text(price);
-  $(this).html("수정").removeClass("menuComplete").addClass("menuUpdate");
-}); // document.on end
-		
+	var row = $(this).closest(".menurow");
+	var name = row.find(".nameInput").val();
+	var price = row.find(".priceInput").val();
+	var idx = row.find(".menuidx").text();
+
+	row.find(".menuname").text(name);
+	row.find(".menuprice").text(price);
+	$(this).html("수정").removeClass("menuComplete").addClass("menuUpdate");
+	
+	$.ajax({
+		type: "post",
+		url: "/coupon/update",
+		data : {
+			"idx" : idx,
+			"name": name,
+			"price": price,
+		}, 
+		success: function(data) {
+			
+		}
+	})
+}); 
+
+$(document).on("click", ".menuDelete", function() {
+	var row = $(this).closest(".menurow");
+	var idx = row.find(".menuidx").text();	
+	
+	Swal.fire({
+		title: '삭제하시겠습니까?',
+		icon: 'warning',
+		showCancelButton: true,
+		confirmButtonColor: '#e96b56',
+		cancelButtonColor: 'grey',
+		confirmButtonText: 'DELETE'
+		}).then((result) => {
+		if (result.isConfirmed) {
+			$.ajax({
+				type: "get",
+				url: "/coupon/delete",
+				data: {
+					"idx": idx,
+				},
+				success: function(data) {
+					getAllMenuList();
+				}
+			}) // ajax end
+		}
+		})
+}) // document.on end
+
+// 메뉴 추가
+$(document).on("click", "#insertMenu", function() {
+	var name = $('#insertname').val();
+    var price = $('#insertprice').val();
+        
+    $.ajax({
+    	type: "post",
+    	url: "/coupon/insert",
+    	data: {
+    		"name": name,
+    		"price": price,
+    	},
+    	success: function (data) {
+    		getAllMenuList();
+    		document.getElementById('insertname').value = '';
+    		document.getElementById('insertprice').value = '';
+    	}
+    })
+}) // document.on end
+
+
+
 </script>
 	
 

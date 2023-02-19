@@ -23,40 +23,44 @@
   	<bean id="bcryptPasswordEncoder" class="org.springframework.security.crypto.bcrypt.BCryptPasswordEncoder"></bean>
   	
 	<security:http auto-config="true" use-expressions="true">
-	<!-- 링크 별 요구 권한 -->
-	<!-- <security:intercept-url pattern="/nightOver" access="permitAll" />
-	<security:intercept-url pattern="/mealticket" access="hasRole('ROLE_MEMBER')" />-->
-	<security:intercept-url pattern="/mypage" access="isAuthenticated()" /> 
-	<security:intercept-url pattern="/eveningCall" access="isAuthenticated()" /> 
-	<security:intercept-url pattern="/community" access="isAuthenticated()" /> 
-	<security:intercept-url pattern="/facility" access="isAuthenticated()" /> 
-    <security:intercept-url pattern="/board/*" access="isAuthenticated()" /> 
-    <security:intercept-url pattern="/memberCalendar" access="isAuthenticated()" /> 
-    <security:intercept-url pattern="/admin/*" access="isAuthenticated()" /> 
-    
-    
-	
-	<!-- 로그인
-	<security:form-login login-page="/userlogin" login-processing-url="/userlogin" default-target-url="/"/>
-	 -->
-	 <security:form-login login-page="/userlogin" />
-	<!-- 자동로그인 -->
-	<security:remember-me data-source-ref="driverManagerDataSource" token-validity-seconds="604800"/>
-	<!-- 로그아웃 -->
-	<security:logout logout-url="/logout" logout-success-url="/userlogin"  invalidate-session="true" delete-cookies="remember-me, JSESSION_ID, JSESSIONID"/>
-	
-	<!-- access-denied-handler -->
-	<security:access-denied-handler error-page="/error"/>
-	
-	<security:csrf disabled="true"/>
-	
-	<!-- 정적 자원에 대한 시큐리티 해제 -->
-	<security:intercept-url pattern="/resources/**" access="permitAll" />
+		<!-- 링크 별 요구 권한 -->
+		<!-- <security:intercept-url pattern="/nightOver" access="permitAll" />
+		<security:intercept-url pattern="/mealticket" access="hasRole('ROLE_MEMBER')" />-->
+		<security:intercept-url pattern="/mypage" access="isAuthenticated()" /> 
+		<security:intercept-url pattern="/eveningCall" access="isAuthenticated()" /> 
+		<security:intercept-url pattern="/community" access="isAuthenticated()" /> 
+		<security:intercept-url pattern="/facility" access="isAuthenticated()" /> 
+	    <security:intercept-url pattern="/board/*" access="isAuthenticated()" /> 
+	    <security:intercept-url pattern="/memberCalendar" access="isAuthenticated()" /> 
+	    <security:intercept-url pattern="/admin/*" access="isAuthenticated()" /> 
+	    <security:intercept-url pattern="/userlogin" access="permitAll()" />
+	    
+	    
+		
+		<!-- 로그인
+		<security:form-login login-page="/userlogin" login-processing-url="/userlogin" default-target-url="/"/>
+		 -->
+		 <security:form-login login-page="/userlogin" />
+		<!-- 자동로그인 -->
+		<security:remember-me data-source-ref="driverManagerDataSource" token-validity-seconds="604800"/>
+		<!-- 로그아웃 -->
+		<security:logout logout-url="/logout" logout-success-url="/userlogin"  invalidate-session="true" delete-cookies="remember-me, JSESSION_ID, JSESSIONID"/>
+		
+		<!-- access-denied-handler -->
+		<security:access-denied-handler error-page="/error"/>
+		
+		<security:csrf disabled="true"/>
+		
+		<!-- 정적 자원에 대한 시큐리티 해제 -->
+		<security:intercept-url pattern="/resources/**" access="permitAll" />
 
-</security:http>
+	</security:http>
+	
+	
+	
+	
 
-
-	<security:authentication-manager>
+	<security:authentication-manager id="myAuthenticationManager">
 
 		<security:authentication-provider
 			user-service-ref="customUserDetailsService">

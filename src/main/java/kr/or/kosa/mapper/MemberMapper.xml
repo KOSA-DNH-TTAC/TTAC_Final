@@ -54,13 +54,12 @@ PUBLIC "-//mybatis.org//DTD Mapper 3.0//EN"
 	
 	<!-- 특정 회원이 쓴 글들 -->
 	<select id="getPosts" parameterType="String" resultType="kr.or.kosa.dto.Post">
-	<!-- SELECT p.idx, p.boardidx, b.boardname, p.memberid, p.universitycode, p.title, p.content,
-	p.readnum, p.writedate, p.likenum, p.status
-	FROM POST p LEFT JOIN BOARD b ON p.boardidx = b.boardidx WHERE p.memberid=#{memberid}-->
-	SELECT COUNT(replyidx) replyCount, p.idx, p.boardidx, p.universitycode, b.boardname, p.memberid, p.writedate, p.likenum, p.content, p.title
-	FROM POST p LEFT OUTER JOIN BOARD b ON p.boardidx = b.boardidx
-	LEFT OUTER JOIN REPLY r ON p.idx = r.idx
+	SELECT  COUNT(DISTINCT r.replyidx) AS replyCount, p.idx, p.boardidx, p.universitycode, b.boardname, p.memberid, p.writedate, p.likenum, p.title, p.content, b.status
+	FROM POST p
+	LEFT JOIN BOARD b ON p.boardidx = b.boardidx AND b.status='21'
+	LEFT JOIN REPLY r ON p.idx = r.idx AND r.status='21'
 	WHERE p.memberid = #{memberid}
+	AND p.status='21' 
 	GROUP BY idx
 	ORDER BY p.writedate DESC
 	</select>
@@ -70,6 +69,20 @@ PUBLIC "-//mybatis.org//DTD Mapper 3.0//EN"
 		UPDATE MEMBER
 		SET password=#{password}, phone=#{phone}, parentsPhone=#{parentsPhone}
 		WHERE memberid=#{memberId}
+	</update>
+	
+	<!-- 회원의 이메일 조회 -->
+	<select id="getEmail" parameterType="String" resultType="kr.or.kosa.dto.Member">
+	 SELECT memberid, password, universitycode, NAME, major, email, gender, phone, parentsphone, domitoryname, room, memberpoint, demerit
+	 FROM MEMBER
+	 WHERE email = #{email}
+	</select>
+	
+	<!-- 회원 비밀번호 초기화 -->
+	<update id="insertPassword" parameterType="String">
+		UPDATE MEMBER
+		SET password= "1004"
+		WHERE email=#{email}
 	</update>
 	
 </mapper>

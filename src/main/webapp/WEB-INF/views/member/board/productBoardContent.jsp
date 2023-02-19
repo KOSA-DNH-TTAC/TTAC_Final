@@ -8,6 +8,7 @@
 
 <head>
 <meta charset="utf-8">
+<meta http-equiv="Content-Security-Policy" content="upgrade-insecure-requests"> 
 <meta content="width=device-width, initial-scale=1.0" name="viewport">
 
 <title>DOTO: 거래게시판</title>
@@ -405,7 +406,7 @@
 							replyContent +=
 								`<div class="hjreply" id="` + reply.replyIdx + `"  data-toggle="off">
 								<li class="ybreply2"><button class="toMessage"
-								seq="`+ reply.memberId + `data-replyIdx="` + reply.replyIdx+ '" data-parentReplyIdx="'+ reply.parentReplyIdx+ '">익명&ensp;</button></li>'
+								seq="`+ reply.memberId + `data-replyIdx="` + reply.replyIdx+ '" data-parentReplyIdx="'+ reply.parentReplyIdx+ '">' + reply.memberId + '&nbsp;</button></li>'
 								if(reply.memberId == currentId){
 									replyContent += `<button class="deleteReply" onclick="deleteClick(this)">삭제</button>`;
 								}

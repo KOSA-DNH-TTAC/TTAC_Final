@@ -6,6 +6,7 @@
 
       <head>
         <meta charset="utf-8">
+        <meta http-equiv="Content-Security-Policy" content="upgrade-insecure-requests"> 
         <meta content="width=device-width, initial-scale=1.0" name="viewport">
 
         <title>DOTO:기숙사통합관리시스템</title>
@@ -92,6 +93,18 @@
           .hjtitle:hover {
             color: #e96b56;
             transition: 0.3s;
+          }
+
+          .hjicon{
+            color: #e96b56;
+          }
+
+          .hjiconcheck{
+            color:rgb(40, 177, 97)
+          }
+
+          .hjiconopen{
+            color:grey;
           }
         </style>
       </head>
@@ -209,19 +222,25 @@
                       "<th>제목</th>"+
                       "<th>받은 날짜</th></tr></thead><tbody>";
                 $.each(result,function(index,msg){
-                  // console.log(msg);
+                  console.log(msg);
 
                   var title;                  
                   let dateformat = dateFormatter(msg.messageDate);
 
                   if((msg.messageTitle).length > 28){
-                    console.log("제목이길다")
+                    // console.log("제목이길다")
                     title = msg.messageTitle.substr(0, 28) + "..."
                   }else{
                     title = msg.messageTitle
                   }
                   opr += "<tr><td>"+msg.smemberId+
-                  "</td><td style='text-align:left'>"+"<a class='hjtitle' href='message/read/" + msg.messageIdx + "'>" +title+ "</a>" +
+                  "</td><td style='text-align:left'>"+"<a class='hjtitle' href='message/read/" + msg.messageIdx + "'>" +title
+                  if(msg.status=="N"){
+                    opr+= `&nbsp;<i class="bi bi-envelope-heart hjicon"></i>`
+                  }else{
+                    opr += `&nbsp;<i class="bi bi-envelope-open hjiconopen"></i>`
+                  }
+                  opr += "</a>" +
                   "</td><td>"+ dateformat +
                   "</td></tr>";
                  
@@ -267,23 +286,29 @@
                 var opr="<thead><tr>"+
                     "<th>받는 사람</th>"+
                       "<th>제목</th>"+
-                      "<th>보낸 날짜</th></tr></thead><tbody>";
+                      "<th>보낸 날짜</th>"+
+                      "<th>수신여부</th></tr></thead><tbody>";
                 $.each(result,function(index,msg){
-                  // console.log(msg);
+                  console.log(msg);
                   let dateformat = dateFormatter(msg.messageDate);
                   var title;
 
                   if((msg.messageTitle).length > 28){
-                    console.log("제목이길다")
                     title = msg.messageTitle.substr(0, 28) + "..."
                   }else{
                     title = msg.messageTitle
                   }
 
-                  opr += "<tr><td>"+msg.rmemberId+
-                  "</td><td style='text-align:left'>"+"<a class='hjtitle' href='message/read/" + msg.messageIdx + "'>" +title+ "</a>" +
-                  "</td><td>"+ dateformat +
-                  "</td></tr>";
+                  opr += `<tr><td>`+msg.rmemberId+
+                      `</td><td style='text-align:left'><a class='hjtitle' href='message/read/` + msg.messageIdx + `'>` +title+ `</a></td>
+                      <td>`+ dateformat +`</td>
+                      <td>`
+                    if(msg.status=='N')  {
+                      opr += `<i class="bi bi-x hjicon"></i>`
+                    }else if(msg.status='Y'){
+                      opr += `<i class="bi bi-check hjiconcheck"></i>`
+                    }
+                    opr += `</td></tr>`;
                   
                 });
                 $('#msgtable').empty();

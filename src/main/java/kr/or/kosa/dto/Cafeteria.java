@@ -10,5 +10,5 @@ public class Cafeteria {
 	private String universityCode;
 	private String menu;
 	private int menuPrice;
-	private String domitoryname;
+	private String domitoryName;
 }

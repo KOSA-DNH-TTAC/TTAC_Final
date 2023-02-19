@@ -43,6 +43,8 @@
 
         <!-- Jquery -->
         <script src="http://code.jquery.com/jquery-latest.min.js"></script>
+		<!-- Sweet Alert -->
+		<script src="https://cdn.jsdelivr.net/npm/sweetalert2@11"></script>
 
         <!-- css -->
         <style>
@@ -84,6 +86,22 @@
             color:green;
             font-size: small;
           }
+          
+          #info{
+          	width:400px;
+          	height:30px;
+          	display:flex;
+          	justify-content:center;
+          	font-weight : bold;
+          	margin-top:20px;
+          	color:green;
+            font-size: small;
+          }
+          
+          #afterMemberInfo{
+          	display : flex;
+          	justify-content: center;
+          }
         </style>
       </head>
 
@@ -104,10 +122,11 @@
 
                     <!-- content start -->
                     <div id="content">
+                    	<p id='sentMsg'>회원정보에 기재된 Email을 입력해 주세요.</p>
                         <div>
                             <label for="emailInput">이메일:</label>
-                            <input type="text" id="emailInput">
-                            <button id="sendEmailBtn">메일받기</button>
+                            <input type="text" id="email">
+                            <button onclick="sendMail()" id="sendEmailBtn">메일받기</button>
                         </div>
                         <div id="afterSent">
 
@@ -157,30 +176,19 @@
 
 	<script>
         function sendMail() {
-			var a =[];
-			email = $('.email').val();
-			$("input[name=email]").each(function(index, item){
-	              //a.push($(item).val());
-	              let txt = "";
-	              txt =( $(item).val());
-	              console.log("보낼 메일 주소 : "+txt)
-	              a.push(txt)
-	              //console.log($(item).val());
-	        });
-			 console.log("a배열 : "+ a);
-			 console.log("a배열 0 : "+ a[0]);
-			 console.log("a배열 1 : "+ a[1])
+			email = $('#email').val();
+	         console.log("보낼 메일 주소 : "+ email)
+
 			if (email == '') {
 				swal("Check!", " 이메일을 입력해 주세요.", "warning");
-				//alert("이메일을 입력해주세요.");
 				return false;
 			}
 
 			$.ajax({
 				type : "POST",
-				url : "emailAuth/",
+				url : "/emailAuth",
 				data : {
-					"email" : a
+					"email" : email,
 				}, 
 				success : function(data) {
 					swal("Check!", "메일이 발송되었습니다.", "success");
@@ -197,31 +205,47 @@
         
         $(document).ready(function(){
             $("#sendEmailBtn").click(function() {
-				var email = $("#emailInput").val();
+				var email = $("#email").val();
 				// 이메일 유효성 검사
 				if (email === '') {
 					alert('이메일을 입력해주세요.');
 					return;
 				}
-				// if (!isValidEmail(email)) {
-				// 	alert('올바른 이메일 주소를 입력해주세요.');
-				// 	return;
-				// }
-				// 인증메일을 보내는 로직
-				// sendVerificationEmail(email);
-
-                //
-
-                console.log("야호")
-
                 //인증메일 발송 ajax...
-
 				// 인증메일을 보냈다는 알림 출력
                 $('#sendEmailBtn').attr('style', 'display:none;');
-				$("#emailInput").after("<div id='sentMsg'>인증메일을 보냈습니다.</div>");
+				$("#email").after("<div id='sentMsg'>인증메일을 보냈습니다.</div>");
 				// 인증번호 입력창과 버튼 생성
-				$("#afterSent").append("<div><label for='verificationInput'>인증번호 입력:</label><input type='text' id='verificationInput'><button id='verifyBtn'>인증</button></div>");
+				$("#afterSent").append("<div><label for='verificationInput'>인증번호 입력:</label><input type='text' id='verifyNum'><button id='verifyBtn' onclick='verifyBtn()'>인증</button></div><div id='afterMemberInfo'></div>");
 			});
         })
+        
+        function verifyBtn(){
+        	var personalNum = $('#verifyNum').val();
+        	var email = $('#email').val();
+        	console.log("personalNum : "+personalNum);
+        	$.ajax({
+				type : "POST",
+				url : "/personalNum",
+				data : {
+					"personalNum" : personalNum,
+					"email" : email,
+				}, 
+				success : function(data) {
+					console.log("결과 : "+ data);
+					//swal("Check!", "인증번호 일치", "success");
+					$("#afterMemberInfo").append("<div id='info'>"+
+													"<span style='margin-left:10px;'>회원 ID : "+data.memberId+"</span><span style='margin-right:10px; margin-left:10px;'>비밀번호 초기화 : "+data.password+"</span>"+
+													"</div>");
+					alert("인증번호 일치 : 아래 정보로 다시 로그인 해 주세요.");
+					
+				},
+				error : function(data) {
+					console.log("결과 : "+ data);
+					//swal("Check!", "인증번호 불일치", "error");
+					alert("인증번호 불일치");
+				}
+			});
+        }
 	</script>
  </html>

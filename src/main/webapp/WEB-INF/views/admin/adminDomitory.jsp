@@ -6,6 +6,7 @@
 <head>
 <title>관리자페이지</title>
 <meta charset="utf-8">
+<meta http-equiv="Content-Security-Policy" content="upgrade-insecure-requests"> 
 <meta name="viewport" content="width=1400px, user-scalable=yes"> <!--표준형-->
 <meta name="format-detection" content="telephone=no, address=no, email=no">
 <meta http-equiv="X-UA-Compatible" content="IE=edge"/>

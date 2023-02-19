@@ -6,6 +6,7 @@
 
       <head>
         <meta charset="utf-8">
+        <meta http-equiv="Content-Security-Policy" content="upgrade-insecure-requests"> 
         <meta content="width=device-width, initial-scale=1.0" name="viewport">
 
         <title>DOTO:기숙사통합관리시스템</title>
@@ -139,7 +140,7 @@
                         </td>
                       </tr>
                       <tr>
-                        <td colspan="2" style="text-align : left"><button class="btn btn-dark">돌아가기</button></td>
+                        <td style="text-align : left"><button onclick="history.back()" class="btn btn-dark">돌아가기</button></td>
                       	<td colspan="2" style="text-align : right"><button id="hjbtn" class="btn btn-dark">답장하기</button></td>
                       </tr>
                     </tbody>
