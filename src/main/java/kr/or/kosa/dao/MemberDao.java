@@ -29,5 +29,5 @@ public interface MemberDao {
 	public Member getEmail(String email);
 	
 	//회원 비밀번호 초기화
-	public int insertPassword(String email);
+	public int insertPassword(Member member);
 }
