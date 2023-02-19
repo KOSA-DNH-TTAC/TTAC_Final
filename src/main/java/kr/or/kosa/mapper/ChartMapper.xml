@@ -7,34 +7,34 @@ PUBLIC "-//mybatis.org//DTD Mapper 3.0//EN"
 
 <!-- 마이페이지 통계 -->
 	<!-- 월별 외박횟수 -->
-	<select id="monthSleepover" parameterType="String" resultType="kr.or.kosa.dto.Chart">
+	<select id="monthlySleepover" parameterType="String" resultType="kr.or.kosa.dto.Chart">
 		SELECT
 		DATE_FORMAT(startdate, '%Y-%m') AS month,
 		memberid,
-		COUNT(*) AS 외박횟수
+		COUNT(*) AS sleepoverCount
 		FROM SLEEPOVERHISTORY
 		WHERE memberid = #{memberid}
 		GROUP BY DATE_FORMAT(startdate, '%Y-%m'), memberid
-		ORDER BY MONTH DESC
+		ORDER BY MONTH
 	</select>
 	
 	<!-- 월별 결제 -->
-	<select id="bb">
+	<select id="monthlyPayment" parameterType="String" resultType="kr.or.kosa.dto.Chart">
 		SELECT
-		DATE_FORMAT(paydate, '%Y-%m') AS 월,memberid, COUNT(*) AS 결제건수,SUM(payamount) AS 결제총액
+		DATE_FORMAT(paydate, '%Y-%m') AS month, memberid, COUNT(*) AS paymentCount, SUM(payamount) AS paymentTotal
 		FROM PAYMENTHISTORY
 		WHERE memberid=#{memberid}
 		GROUP BY DATE_FORMAT(paydate, '%Y-%m'),memberid
-		ORDER BY 월, memberid;	
+		ORDER BY month, memberid
 	</select>
 	
 	<!-- 월별 커뮤니티 -->
-	<select id="cc">
+	<select id="monthlyCommunity" parameterType="String" resultType="kr.or.kosa.dto.Chart">
 		SELECT
-		wdate AS mon,
+		wdate AS month,
 		memberid,
-		SUM(postcount) AS 게시글수,
-		SUM(replycount) AS 댓글수
+		SUM(postcount) AS postCount,
+		SUM(replycount) AS replyCount
 		FROM
 		(SELECT
 		memberid,
@@ -52,15 +52,15 @@ PUBLIC "-//mybatis.org//DTD Mapper 3.0//EN"
 		FROM REPLY
 		GROUP BY memberid, DATE_FORMAT(wdate, '%Y-%m')) AS temp
 		WHERE memberid=#{memberid}
-		GROUP BY mon, memberid
+		GROUP BY month, memberid
 	</select>
 	
 	<!-- 월별 벌점 -->
-	<select id="">
-		SELECT MEMBERID, DATE_FORMAT(DEMERITDATE, '%Y-%m') AS MONTH, SUM(DEMERIT) AS 총벌점
+	<select id="monthlyDemerit" parameterType="String" resultType="kr.or.kosa.dto.Chart">
+		SELECT MEMBERID, DATE_FORMAT(DEMERITDATE, '%Y-%m') AS month, SUM(DEMERIT) AS demeritTotal
 		FROM DEMERITHISTORY
 		WHERE MEMBERID=#{memberid}
-		GROUP BY MONTH
+		GROUP BY month
 	</select>
 </mapper>
 

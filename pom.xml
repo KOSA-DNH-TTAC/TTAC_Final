@@ -246,6 +246,12 @@
 			<version>${org.springframework-version}</version>
 		</dependency>
 
+		<!-- 엑셀 -->
+		<dependency>
+			<groupId>org.apache.poi</groupId>
+			<artifactId>poi-ooxml</artifactId>
+			<version>5.0.0</version>
+		</dependency>
 			
 			        
 	</dependencies>

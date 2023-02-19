@@ -7,6 +7,8 @@ import java.util.Random;
 
 import javax.mail.MessagingException;
 import javax.mail.internet.MimeMessage;
+import javax.servlet.http.HttpServletRequest;
+import javax.servlet.http.HttpServletResponse;
 
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.http.HttpStatus;
@@ -22,6 +24,7 @@ import org.springframework.web.bind.annotation.RequestMapping;
 import org.springframework.web.bind.annotation.RequestMethod;
 import org.springframework.web.bind.annotation.RequestParam;
 import org.springframework.web.bind.annotation.ResponseBody;
+import org.springframework.web.multipart.MultipartFile;
 
 import kr.or.kosa.dto.Member;
 import kr.or.kosa.dto.Message;
@@ -163,4 +166,15 @@ public class CommonController {
  			return new ResponseEntity<Member>(result, HttpStatus.BAD_REQUEST);
  		}
  	}
+ 	
+ 	
+ 	//엑셀 테스트
+ 	@RequestMapping(value = "/addExcel", method = RequestMethod.POST)
+ 	public ResponseEntity<String> addExcel(HttpServletRequest request,
+ 			HttpServletResponse response, MultipartFile file) {
+
+ 		commonService.addExcel(file);
+ 		return new ResponseEntity<String>("TEST", HttpStatus.OK);
+ 	};
+ 	
 }

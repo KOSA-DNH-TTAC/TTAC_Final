@@ -31,6 +31,7 @@
 	<context:component-scan base-package="kr.or.kosa.controller" />
 	<context:component-scan base-package="kr.or.kosa.dao" />
 	<context:component-scan base-package="kr.or.kosa.service" />
+	<context:component-scan base-package="kr.or.kosa.utils" />
 
 	<!-- Handles HTTP GET requests for /resources/** by efficiently serving up static resources in the ${webappRoot}/resources directory -->
 	<resources mapping="/resources/**" location="/resources/" />

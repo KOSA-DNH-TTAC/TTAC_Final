@@ -433,7 +433,7 @@
 										+ '" data=replyIdx="'
 										+ data.reReplyContent[index].replyIdx
 										+ '" data=parentReplyIdx"'
-										+ data.reReplyContent[index].parentReplyIdx+'">익명&ensp;</button></li>'
+										+ data.reReplyContent[index].parentReplyIdx+'">' + rere.memberId + '&ensp;</button></li>'
 										if(rere.memberId == currentId){
 											replyContent += `<button class="deleteReply" onclick="deleteClick(this)">삭제</button>`;
 										}
