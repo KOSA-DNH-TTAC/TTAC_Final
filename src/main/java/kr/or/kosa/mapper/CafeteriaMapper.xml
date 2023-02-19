@@ -5,23 +5,38 @@ PUBLIC "-//mybatis.org//DTD Mapper 3.0//EN"
 
 <mapper namespace="kr.or.kosa.dao.CafeteriaDao">
 
-<!-- 메뉴 데이터 인서트 -->
-<insert id="insertmenu" parameterType="String">
-INSERT INTO CAFETERIA (UNIVERSITYCODE,MENU,MENUPRICE,DOMITORYNAME) 
-VALUES(#{universitycode}, #{menu},#{menuPrice}, #{domitoryname});
-</insert>
+	<!-- 식당 메뉴 조회 -->
+	<select id="selectCafeteria" parameterType="String"
+		resultType="kr.or.kosa.dto.Cafeteria">
+		SELECT MENUIDX,UNIVERSITYCODE,MENU,MENUPRICE,DOMITORYNAME
+		FROM CAFETERIA
+		WHERE UNIVERSITYCODE = #{universitycode} AND
+		DOMITORYNAME = #{domitoryname}
+	</select>
 
-<!-- 리스트가져오기 -->
-<select id="selectCafeteria" parameterType="String" resultType="kr.or.kosa.dto.Cafeteria">
-SELECT MENUIDX,UNIVERSITYCODE,MENU,MENUPRICE,DOMITORYNAME 
-FROM CAFETERIA 
-WHERE UNIVERSITYCODE=#{universitycode}  AND DOMITORYNAME = #{domitoryname};
-</select>
+	<!-- 메뉴 추가 -->
+	<!-- <insert id="insertMenu" parameterType="String">
+		INSERT INTO CAFETERIA(UNIVERSITYCODE, MENU, MENUPRICE, DOMITORYNAME)
+		VALUES(#{universityCode}, #{menu}, #{menuPrice}, #{domitoryName})
+	</insert> -->
+	
+	<insert id="insertMenu" parameterType="hashmap">
+		INSERT INTO CAFETERIA(UNIVERSITYCODE, MENU, MENUPRICE, DOMITORYNAME)
+		VALUES(#{param1}, #{param2}, #{param3}, #{param4})
+	</insert>
 
-<!-- 메뉴삭제-->
-<delete id="deleteMenu" parameterType="Integer">
-	DELETE FROM CAFETERIA WHERE MENUIDX = #{menuidx};
-</delete>
+	<!-- 메뉴 수정 -->
+	<update id="updateMenu">
+		UPDATE CAFETERIA 
+		SET menu = #{menu}, domitoryName = #{domitoryName},	menuprice = #{menuPrice,jdbcType=INTEGER}
+		WHERE menuidx = #{menuidx}
+	</update>
+
+	<!-- 메뉴 삭제 -->
+	<delete id="deleteMenu" parameterType="Integer">
+		DELETE FROM CAFETERIA
+		WHERE MENUIDX = #{menuidx}
+	</delete>
 </mapper>
 
 

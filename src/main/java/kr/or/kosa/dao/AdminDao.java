@@ -16,7 +16,6 @@ public interface AdminDao {
 	
 	// 기숙사생 검색
 	public List<Member> searchMember(Map<String, Object> params);
-	// public List<Member> searchMember(@Param("universitycode")String universitycode, @Param("radio")String radio, @Param("search")String search);
 	
 	// 기숙사생 벌점
 	public void insertDemerit(DemeritHistory demerit);

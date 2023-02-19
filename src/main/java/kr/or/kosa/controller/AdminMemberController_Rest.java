@@ -83,17 +83,4 @@ public class AdminMemberController_Rest {
 		adminService.memberGetOut(memberId);
 	}
 	
-	// 식당 메뉴 조회
-	@RequestMapping("/admin/cafeteria")
-	public ResponseEntity<List<Cafeteria>> allMenuList() {
-		List<Cafeteria> list = adminService.allMenuList();
-		return new ResponseEntity<List<Cafeteria>>(list, HttpStatus.OK);
-	}
-	
-	// 식당 메뉴 수정
-	@RequestMapping("/admin/cafeteria/{menuname}/{menuprice}")
-	public void menuUpdate(@PathVariable("menuname") String menu,
-			@PathVariable("menuprice") String menuprice) {
-		int menuPrice = Integer.parseInt(menuprice);
-	}
 }

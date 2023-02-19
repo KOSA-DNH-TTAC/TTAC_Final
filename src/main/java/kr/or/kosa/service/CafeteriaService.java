@@ -1,13 +1,17 @@
 package kr.or.kosa.service;
 
+import java.util.HashMap;
 import java.util.List;
+import java.util.Map;
 
 import org.apache.ibatis.session.SqlSession;
 import org.springframework.beans.factory.annotation.Autowired;
+import org.springframework.security.core.context.SecurityContextHolder;
 import org.springframework.stereotype.Service;
 
 import kr.or.kosa.dao.CafeteriaDao;
 import kr.or.kosa.dto.Cafeteria;
+import kr.or.kosa.security.User;
 
 @Service
 public class CafeteriaService {
@@ -19,47 +23,37 @@ public class CafeteriaService {
 		this.sqlSession = sqlSession;
 	}
 
-//  DB에 메뉴 인서트
-	public List<Cafeteria> insertmenu(String universityCode, String menuname, String charge, String domitoryname) {
-		CafeteriaDao cafeteriaDao = sqlSession.getMapper(CafeteriaDao.class);
-		System.out.println("메뉴 인서트 서비스 옴?");
-		int  row = cafeteriaDao.insertmenu(universityCode, menuname, charge, domitoryname);
-		
-		if( row >=1) {
-			System.out.println("성공");
-		}
-		System.out.println("row : " + row);
-		//연간일정 목록 불러오기
-		List<Cafeteria> list = cafeteriaDao.selectCafeteria(universityCode,domitoryname);
-		
-		return list;
-	}
-	
-	//메뉴목록 조회
+	// 메뉴 조회
 	public List<Cafeteria> selectCafeteria(String universitycode, String domitoryname) {
-		
-		System.out.println("메뉴 셀렉트 서비스 옴? 1");
 		CafeteriaDao cafeteriaDao = sqlSession.getMapper(CafeteriaDao.class);
-		System.out.println("메뉴 셀렉트 서비스 옴?");
 		List<Cafeteria> Menulist = cafeteriaDao.selectCafeteria(universitycode, domitoryname);
-		
-		System.out.println("Menulist : " + Menulist);
-		
 		return Menulist;
 	}
-	
-	//외박 수정(update) : 사감이 승인을 했을 경우
-	public int deleteMenu(int idx) {
-		int result = 0;
-		
+
+	// 메뉴 추가
+	public void insertMenu(String menu, String price) {
 		CafeteriaDao cafeteriaDao = sqlSession.getMapper(CafeteriaDao.class);
-		result = cafeteriaDao.deleteMenu(idx);
-		if( result >=1) {
-			System.out.println("성공");
-		}
-		System.out.println("result : " + result);
+		User user = (User) SecurityContextHolder.getContext().getAuthentication().getPrincipal();
 		
-		return result;
+		int menuPrice = Integer.parseInt(price);
+		Map<String, Object> params = new HashMap<>();
+		params.put("param1", user.getUniversityCode());
+		params.put("param2", menu);
+		params.put("param3", menuPrice);
+		params.put("param4", user.getDomitoryName());
+		cafeteriaDao.insertMenu(params);
 	}
-	
+
+	// 메뉴 수정
+	public void updateMenu(Cafeteria cafeteria) {
+		CafeteriaDao cafeteriaDao = sqlSession.getMapper(CafeteriaDao.class);
+		cafeteriaDao.updateMenu(cafeteria);
+	}
+
+	// 메뉴 삭제
+	public void deleteMenu(int menuidx) {
+		CafeteriaDao cafeteriaDao = sqlSession.getMapper(CafeteriaDao.class);
+		cafeteriaDao.deleteMenu(menuidx);
+	}
+
 }
