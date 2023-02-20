@@ -19,8 +19,8 @@ public interface ExcellFileDao {
 	public int updateDeactivate(String universityCode, String domitoryName);
 	
 	//회원 상태값 업데이트 (기가입회원 상태값 활성화)
-	public int updateActivate(String universityCode, String domitoryName, String memberId);
+	public int updateActivate(String memberId);
 
 	//회원 아이디가 테이블에 있는지 확인
-	public int CountMember(String universityCode, String domitoryName, String memberId);
+	public int CountMember(String memberId);
 }
