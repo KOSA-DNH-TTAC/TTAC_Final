@@ -69,4 +69,9 @@ public class AdminController {
 	public String adminBoard() {
 		return "admin/adminBoard";
 	}
+	
+	@GetMapping("/file")
+	public String adminFile() {
+		return "admin/adminFile";
+	}
 }
