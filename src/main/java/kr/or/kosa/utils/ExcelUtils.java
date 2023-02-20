@@ -55,6 +55,8 @@ public class ExcelUtils {
 			
 			int rowIndex = 0;
 			int columnIndex = 0;
+			
+//			System.out.println("sheet.getLastRowNum() : " + sheet.getLastRowNum());
 
 			// 첫번째 행(0)은 컬럼 명이기 때문에 두번째 행(1) 부터 검색
 			for (rowIndex = startRowNum; rowIndex < sheet.getLastRowNum() + 1; rowIndex++) {

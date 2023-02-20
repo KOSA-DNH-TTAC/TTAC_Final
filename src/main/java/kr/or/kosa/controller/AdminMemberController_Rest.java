@@ -89,12 +89,16 @@ public class AdminMemberController_Rest {
 	}
 	
  	//엑셀
- 	@RequestMapping(value = "/addExcel", method = RequestMethod.POST)
- 	public ResponseEntity<String> addExcel(HttpServletRequest request,
+ 	@RequestMapping(value = "/admin/addExcel", method = RequestMethod.POST)
+ 	public ResponseEntity<Map<String, Object>> addExcel(HttpServletRequest request,
  			HttpServletResponse response, MultipartFile file) {
-
- 		adminService.addExcel(file);
- 		return new ResponseEntity<String>("TEST", HttpStatus.OK);
+ 		
+ 		List<Member> list = adminService.addExcel(file); 
+ 		
+ 		Map<String, Object> map = new HashMap<String, Object>();
+ 		map.put("list", list);
+ 		
+ 		return new ResponseEntity<Map<String,Object>>(map, HttpStatus.OK);
  	};
  	
 }
