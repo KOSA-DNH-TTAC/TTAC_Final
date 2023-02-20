@@ -11,7 +11,7 @@ INSERT INTO MEMBER (MEMBERID,UNIVERSITYCODE,PASSWORD,NAME,MAJOR,EMAIL,GENDER,PHO
 VALUE (#{memberId}, #{universityCode}, #{password}, #{name}, #{major}, #{email}, #{gender}, #{phone}, #{parentsPhone}, #{domitoryName}, #{room})
 </insert>
 
-<!-- 인서트된 리스트가져오기 -->
+<!-- 인서트된 엑셀 리스트가져오기 -->
 <select id="selectExcellData" parameterType="String" resultType="kr.or.kosa.dto.Member">
 SELECT MEMBERID,UNIVERSITYCODE,PASSWORD,NAME,MAJOR,EMAIL,GENDER,PHONE,PARENTSPHONE,DOMITORYNAME,ROOM,MEMBERPOINT,DEMERIT,`STATUS`,ENABLED 
 FROM MEMBER 
