@@ -93,7 +93,7 @@
 				<!-- content start -->
 				<div id="content">
 								<h2 style="margin :15px 0 20px 0">내 정보 수정</h2>
-								<form action="/mypage/modify" method="post">
+								<form action="/mypage/modify" method="post" enctype="multipart/form-data" accept-charset="UTF-8">
 									<table class="table">
 										<tbody>
                       <tr>
@@ -130,7 +130,7 @@
                       </tr>
                       <tr>
                         <th scope="row">사진변경</th>
-                        <td class="infoTd" id="demerit"><input type="file" name="file" id="file"></td>
+                        <td class="infoTd" id="demerit"><input type="file" name="file" id="file" accept=".jpg"></td>
                       </tr>
                     </tbody>
 									</table>

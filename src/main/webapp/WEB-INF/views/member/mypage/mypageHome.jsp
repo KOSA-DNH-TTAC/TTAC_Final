@@ -149,7 +149,7 @@
                       <div class="row">
                         <div class="col-lg-4" style="text-align : center">
                           <img style="text-align:center" width="230px"
-                            src="https://kosa-s3-bucket.s3.ap-northeast-2.amazonaws.com/${member.universityCode}/user/${member.memberId}/${member.memberId}.jpg" class="img-fluid"
+                            src="${url}" class="img-fluid"
                             alt="Responsive image">
                           <br>
                           <br>

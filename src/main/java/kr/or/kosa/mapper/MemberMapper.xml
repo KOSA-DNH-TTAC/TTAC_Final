@@ -67,7 +67,11 @@ PUBLIC "-//mybatis.org//DTD Mapper 3.0//EN"
 	<!-- 정보 수정 -->
 	<update id="updateMember" parameterType="kr.or.kosa.dto.Member">
 		UPDATE MEMBER
-		SET password=#{password}, phone=#{phone}, parentsPhone=#{parentsPhone}
+		SET 
+		<if test="password != ''">
+		password=#{password},
+		</if>		
+		 phone=#{phone}, parentsPhone=#{parentsPhone}
 		WHERE memberid=#{memberId}
 	</update>
 	
