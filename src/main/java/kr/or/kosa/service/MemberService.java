@@ -66,13 +66,12 @@ public class MemberService {
 		return list;
 	}
 	
-	//정보수정
+	//정보수정(파일 있는거)
 	public int editMember(Member member, MultipartFile multipartfile) throws IOException {
 		
 		
 		String rawpwd = member.getPassword();
 		if(!rawpwd.equals("")) {
-			System.out.println("여기타나용?");
 			String encodedpwd = bCryptPasswordEncoder.encode(rawpwd);
 			member.setPassword(encodedpwd);
 		}
@@ -90,5 +89,12 @@ public class MemberService {
 		int result = 0;
 		result = dao.updateMember(member);
 		return result;
+	}
+	
+	//포인트 수정
+	public int updatePoint(Member member) throws IOException {
+		
+		MemberDao dao = sqlsession.getMapper(MemberDao.class);
+		return dao.updatePoint(member);
 	}
 }

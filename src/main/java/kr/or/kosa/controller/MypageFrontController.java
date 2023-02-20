@@ -2,12 +2,10 @@ package kr.or.kosa.controller;
 
 import java.io.IOException;
 import java.security.Principal;
-import java.util.List;
 
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.security.access.prepost.PreAuthorize;
 import org.springframework.security.core.context.SecurityContextHolder;
-import org.springframework.security.crypto.bcrypt.BCryptPasswordEncoder;
 import org.springframework.stereotype.Controller;
 import org.springframework.ui.Model;
 import org.springframework.web.bind.annotation.GetMapping;
@@ -20,7 +18,6 @@ import kr.or.kosa.aws.AwsS3;
 import kr.or.kosa.dto.Member;
 import kr.or.kosa.security.User;
 import kr.or.kosa.service.MemberService;
-import lombok.Setter;
 
 
 @Controller

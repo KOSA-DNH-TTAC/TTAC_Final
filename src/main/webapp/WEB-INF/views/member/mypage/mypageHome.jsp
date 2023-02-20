@@ -150,7 +150,7 @@
                         <div class="col-lg-4" style="text-align : center">
                           <img style="text-align:center" width="230px"
                             src="${url}" class="img-fluid"
-                            alt="Responsive image">
+                            alt="이미지" onerror="this.src='/resources/assets/img/profile.png'">
                           <br>
                           <br>
                           <button class="btn btn-warning" onclick="location.href='/mypage/modify'">정보수정</button>
@@ -331,11 +331,11 @@
 
                 var contents = `<div class="row">
 					<div class="col-lg-4" style="text-align : center">
-							<img style="text-align:center" width="230px" src="https://kosa-s3-bucket.s3.ap-northeast-2.amazonaws.com/${member.universityCode}/user/${member.memberId}/${member.memberId}.jpg" class="img-fluid" alt="Responsive image">
+							<img style="text-align:center" width="230px" src="${url}" class="img-fluid" alt="이미지" onerror="this.src='/resources/assets/img/profile.png'">
 							<br>
 							<br>
 							<button class="btn btn-warning" onclick="location.href='/mypage/modify'">정보수정</button>
-							
+							 
 					</div>
 					<div class="col-lg-8">
 						<table class="table">
