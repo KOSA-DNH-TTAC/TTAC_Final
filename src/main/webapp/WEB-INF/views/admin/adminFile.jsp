@@ -129,14 +129,16 @@
 					<div class="ofh">
 						<div class="halfcon mr">
 							<h4 class="bgtab bgtab2">회원 엑셀 파일 업로드</h4>
+							<form action="/addExcel" method="POST" enctype="multipart/form-data">
 							<table id="nightoverN" class="comm_table tac bmb">
 								<tbody>
-									<tr>
-										<td><input class="form-control form-control-lg" id="formFileLg" type="file"></td>
-										
+									<tr>										
+										<td><input class="form-control form-control-lg" id="formFileLg" type="file"> <input type="submit" value="업로드"></td>
 									</tr>
 								</tbody>
+								
 							</table>
+							</form>
 
 
 						</div>
