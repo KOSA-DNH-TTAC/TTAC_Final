@@ -77,10 +77,9 @@
 					<li ><a href="../sub01/sub01_02.php">벌점관리</a></li>
 				</ul>	
 			</li>	
-			<li class="smenu"><a href="/admin/board">커뮤니티관리</a>
+			<li class="smenu"><a href="/admin/board">커뮤니티관리</a></li>
 			<li class="smenu"><a href="/admin/coupon" >식권관리</a></li>
-			<li class="smenu"><a href="/admin/popular" >외박관리</a>
-			</li>
+			<li class="smenu"><a href="/admin/popular" >외박관리</a></li>
 			<li class="smenu"><a href="#" class="msub on">시설관리</a>
 				<ul class="sub ">
 				   <li ><a href="/admin/analyze" class="msub on">시설물 신고내역</a></li>
@@ -90,6 +89,7 @@
 			 </li>
 	
 			<li class="smenu"><a href="/admin/calendar" >일정관리</a></li>
+			<li class="smenu"><a href="/admin/sail" >회원파일등록</a></li>
 			<li class="smenu"><a href="/admin/sail" >통계관리</a></li>
 		</ul>
 

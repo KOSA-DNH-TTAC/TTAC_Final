@@ -76,6 +76,7 @@
 			 </li>
 	
 			<li class="smenu"><a href="/admin/calendar" class="msub on">일정관리</a></li>
+			<li class="smenu"><a href="/admin/file" >회원파일등록</a></li>
 			<li class="smenu"><a href="/admin/sail" >통계관리</a></li>
 		</ul>
 

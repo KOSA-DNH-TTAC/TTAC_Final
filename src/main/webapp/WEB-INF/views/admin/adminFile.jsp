@@ -15,6 +15,7 @@
 		<link rel="shortcut icon" href="../img/favicon.png" type="image/x-icon" />
 		<link href="/resources/assets/css/font.css" rel="stylesheet">
 		<link href="/resources/assets/css/font-awesome.css" rel="stylesheet">
+		<!-- <link rel="stylesheet" href="https://kit.fontawesome.com/7da3227c91.css" crossorigin="anonymous"> -->
 		<link href="/resources/assets/css/style2.css" rel="stylesheet">
 		<link href="/resources/assets/css/program.css" rel="stylesheet">
 		<link href="/resources/assets/css/layout.css" rel="stylesheet">
@@ -72,7 +73,7 @@
 							<li class="smenu" style="background-color:#4D6794; color:white;"><a href="/admin/coupon">
 									<h1>기숙사 통합관리 솔루션</h1>
 								</a></li>
-							<li class="smenu"><a href="/admin/adminMember" class="msub ">회원관리</a>
+							<li class="smenu"><a href="/admin/adminMember">회원관리</a>
 								<ul class="sub ">
 									<li><a href="/admin/adminMember">회원현황</a></li>
 									<li><a href="../sub01/sub01_02.php">벌점관리</a></li>
@@ -80,7 +81,7 @@
 							</li>
 							<li class="smenu"><a href="/admin/board">커뮤니티관리</a>
 							<li class="smenu"><a href="/admin/coupon">식권관리</a></li>
-							<li class="smenu"><a href="/admin/popular" class="msub on">외박관리</a>
+							<li class="smenu"><a href="/admin/popular">외박관리</a>
 								<ul class="sub ">
 									<li><a href="/admin/popular">외박신청</a></li>
 									<li><a href="/admin/sleepOverHistory">외박이력</a></li>
@@ -93,7 +94,7 @@
 								</ul>
 							</li>
 							<li class="smenu"><a href="/admin/calendar">일정관리</a></li>
-							<li class="smenu"><a href="/admin/file" >회원파일등록</a></li>
+							<li class="smenu"><a href=/admin/file class="msub on">회원파일등록</a></li>
 							<li class="smenu"><a href="/admin/sail">통계관리</a></li>
 						</ul>
 
@@ -121,68 +122,18 @@
 
 				</div>
 				<div class="con">
-					<h3 class="sub_h3">외박관리 <span>외박 내역</span></h3>
+					<h3 class="sub_h3">회원파일등록 <span>엑셀파일등록</span></h3>
 
 
-					<div class="bmb">
-						<div class="bgtab">
-							<div class="w50 fl">
-								<h3 class="txtin">기간별 외박 조회</h3>
-							</div>
-							<div class="w50 fl tar">
-								<a class="btn_sumit2">엑셀다운로드</a>
-							</div>
-						</div>
-						<table class="srch_table mb20">
-							<colgroup>
-								<col width="네일아트%" />
-								<col width="20%" />
-								<col width="네일아트%" />
-								<col width="60%" />
-							</colgroup>
-							<tr>
-								<th>조회</th>
-								<td colspan="3">
-									<li><a href="#" id="todayHistory" onclick="getTodaysHistory()" class="btn_sumit">현
-											시각 외박현황 보기</a></li>
-								</td>
-							</tr>
-							<tr>
-								<th>기간별검색</th>
-								<td colspan="3">
-									<input class="form-select1" type="date" id="start" name="trip-start">
-									- <input class="form-select1" type="date" id="end" name="trip-end">&nbsp;&nbsp;
-								</td>
-							</tr>
-							<tr>
-								<th>회원 검색</th>
-								<td colspan="3">
-									<div class="form-group">
-										<label for="memberid">학번</label>
-										<input class="form-select1" type="text" id="memberid" name="memberid">
-									</div>
-								</td>
-							</tr>
-						</table>
-						<div class="ok_btn">
-							<ul>
-								<li><button type="button" class="btn_sumit2" onclick="getIntervalHistory()">검색</button>
-								</li>
-							</ul>
-						</div>
-					</div>
 
 					<div class="ofh">
 						<div class="halfcon mr">
-							<h4 class="bgtab bgtab2">외박이력</h4>
+							<h4 class="bgtab bgtab2">회원 엑셀 파일 업로드</h4>
 							<table id="nightoverN" class="comm_table tac bmb">
 								<tbody>
 									<tr>
-										<th>순번</th>
-										<th>외박일</th>
-										<th>복귀일</th>
-										<th>이름</th>
-										<th>사유</th>
+										<td><input class="form-control form-control-lg" id="formFileLg" type="file"></td>
+										
 									</tr>
 								</tbody>
 							</table>
@@ -190,17 +141,18 @@
 
 						</div>
 						<div class="halfcon">
-							<h4 class="bgtab bgtab2">무단 외박</h4>
+							<h4 class="bgtab bgtab2">업로드 데이터</h4>
 							<table id="nightoverY" class="comm_table tac bmb">
-								<tbody>
-									<tr>
-										<th>순번</th>
-										<th>외박일</th>
-										<th>복귀일</th>
-										<th>이름</th>
-										<th>사유</th>
-									</tr>
-								</tbody>
+							<tbody>
+								<tr>
+									<th>학번</th>
+									<th>학교코드</th>
+									<th>이름</th>
+									<th>성별</th>
+									<th>기숙사명</th>
+									<th>상태값</th>
+								</tr>
+							</tbody>
 							</table>
 						</div>
 					</div>
@@ -237,8 +189,7 @@
 	<!-- litebox -->
 
 
-	<script type="text/javascript">
-
+	<!-- <script type="text/javascript">
 		function dateFormatter(date) {
 			var wantDate = new Date(date);
 			// 년도 getFullYear()
@@ -256,15 +207,42 @@
 			var wantDateFormat = year + "-" + month + "-" + date;
 			return wantDateFormat;
 		}
+
 		$(document).ready(function () {
-			getAllHistory();
+			console.log("테스트")
+
+			getTodays();
 		})
 
+		function confirm(over) {
+			var tr = $(over).closest('tr')
+			// var datas = { idx: tr.children().html() };
+			let index = tr.find('input[type=hidden]').val();
+			let datas = { "idx": index };
+			console.log(datas);
 
-		function getAllHistory() {
+			//ajax로 업데이트 함 (confirm N->Y)
+			$.ajax({
+				type: "get",
+				url: "/adminPopular/update",
+				dataType: "json",
+				data: datas,
+				success: function (result) {
+					console.log(result);
+					//테이블에 append 해줌 (getTodays)
+					getTodays();
+				},
+				error: function (request, status, error) {
+					console.log("에러")
+					console.log("code:" + request.status + "\n" + "message:" + request.responseText + "\n" + "error:" + error);
+				}
+			})
+		}
+
+		function getTodays() {
 			$.ajax({
 				type: "GET",
-				url: "/adminPopular/getHistory",
+				url: "/adminPopular/getTodays",
 				success: function (result) {
 					console.log("성공");
 					console.log(result);
@@ -278,27 +256,50 @@
 										<th>복귀일</th>
 										<th>이름</th>
 										<th>사유</th>
+										<th>처리</th>
 									</tr>`
 					let Ycontents = Ncontents;
 
-					//아직 처리되지 않은 외박 신청
-					$.each(result.list, function (index, over) {
+					//외박 신청이 없을 경우
+					if (result.nlist.length == 0) {
+						Ncontents = "<tr><td col-span='6'>들어온 외박 신청이 없습니다.</td></tr>"
+					} else {
+						//아직 처리되지 않은 외박 신청
 
-						// let startdate = new Date(over.startDate);
-						// let enddate = new Date(over.endDate);
-						// let localeStart = startdate.toLocaleString("ko-KR");
-						// let localeEnd = enddate.toLocaleString("ko-KR");
-						let startdate = dateFormatter(over.startDate);
-						let enddate = dateFormatter(over.endDate);
-						Ncontents += "<tr><td>" + (++index) + "</td>"
-							+ "<td>" + startdate + "</td>"
-							+ "<td>" + enddate + "</td>"
-							+ "<td>" + over.username + "</td>"
-							+ "<td>" + over.sleepOverReason + "</td>"
-							+ "<input type='hidden' value='" + over.sleepOverIdx + "' ></tr>"
-					})
+						$.each(result.nlist, function (index, over) {
+							let startdate = dateFormatter(over.startDate);
+							let enddate = dateFormatter(over.endDate);
+							Ncontents += "<tr><td>" + (++index) + "</td>"
+								+ "<td>" + startdate + "</td>"
+								+ "<td>" + enddate + "</td>"
+								+ "<td>" + over.username + "</td>"
+								+ "<td>" + over.sleepOverReason + "</td>"
+								+ "<td><button onclick='confirm(this)'>승인</button></td>"
+								+ "<input type='hidden' value='" + over.idx + "' ></tr>"
+						})
+					}
+
 
 					$('#nightoverN').append(Ncontents);
+
+					if (result.ylist.length == 0) {
+						Ycontents = "<tr><td col-span='6'>승인된 외박신청이 없습니다.</td></tr>"
+					} else {
+						//처리된 외박 신청
+						$.each(result.ylist, function (index, over) {
+							let startdate = dateFormatter(over.startDate);
+							let enddate = dateFormatter(over.endDate);
+							Ycontents += "<tr><td>" + (++index) + "</td>"
+								+ "<td>" + startdate + "</td>"
+								+ "<td>" + enddate + "</td>"
+								+ "<td>" + over.username + "</td>"
+								+ "<td>" + over.sleepOverReason + "</td>"
+								+ "<td>승인완료</td></tr>"
+						})
+					}
+
+					$('#nightoverY').append(Ycontents);
+					// $('#content').append(contents)
 
 				},
 				error: function (request, status, error) {
@@ -307,109 +308,6 @@
 				}
 			})
 		}
-
-		function getTodaysHistory() {
-			$.ajax({
-				type: "GET",
-				url: "/adminPopular/getTodayHistory",
-				success: function (result) {
-					console.log(result);
-					$('#nightoverN').empty();
-					$('#nightoverY').empty();
-					let Ncontents = `<tbody>
-									<tr>
-										<th>번호</th>
-										<th>외박일</th>
-										<th>복귀일</th>
-										<th>이름</th>
-										<th>사유</th>
-									</tr>`
-					let Ycontents = Ncontents;
-
-					//아직 처리되지 않은 외박 신청
-					$.each(result.list, function (index, over) {
-						// let startdate = new Date(over.startDate);
-						// let enddate = new Date(over.endDate);
-						// let localeStart = startdate.toLocaleString("ko-KR");
-						// let localeEnd = enddate.toLocaleString("ko-KR");
-						let startdate = dateFormatter(over.startDate);
-						let enddate = dateFormatter(over.endDate);
-						Ncontents += "<tr><td>" + (++index) + "</td>"
-							+ "<td>" + startdate + "</td>"
-							+ "<td>" + enddate + "</td>"
-							+ "<td>" + over.username + "</td>"
-							+ "<td>" + over.sleepOverReason + "</td>"
-							+ "<input type='hidden' value='" + over.sleepOverIdx + "' ></tr>"
-					})
-
-					$('#nightoverN').append(Ncontents);
-
-				},
-				error: function (request, status, error) {
-					console.log("에러")
-					console.log("code:" + request.status + "\n" + "message:" + request.responseText + "\n" + "error:" + error);
-				}
-			})
-		}
-
-		function getIntervalHistory() {
-			// <th>기간</th>
-			// <td colspan="3">
-			// 	<input class="form-select1" type="date" id="start" name="trip-start">
-			// 	- <input class="form-select1" type="date" id="end" name="trip-end">&nbsp;&nbsp;
-			// </td>
-			let startString = $('#start').val();
-			let endString = $('#end').val();
-			let memberid = $('#memberid').val();
-
-			//날짜가 null이면 회원 학번으로 검색
-			//회원 학번이 null이면 날짜로 검색
-
-			$.ajax({
-				type: "GET",
-				url: "/adminPopular/getIntervalHistory",
-				data: {
-					"startdate": startString,
-					"enddate": endString,
-					"memberid": memberid,
-				},
-				contentType: "application/json; charset=UTF-8",
-				success: function (result) {
-					console.log(result);
-
-					$('#nightoverN').empty();
-					$('#nightoverY').empty();
-					let Ncontents = `<tbody>
-									<tr>
-										<th>번호</th>
-										<th>외박일</th>
-										<th>복귀일</th>
-										<th>이름</th>
-										<th>사유</th>
-									</tr>`
-					let Ycontents = Ncontents;
-
-					//아직 처리되지 않은 외박 신청
-					$.each(result.list, function (index, over) {
-						// let startdate = new Date(over.startDate);
-						// let enddate = new Date(over.endDate);
-						// let localeStart = startdate.toLocaleString("ko-KR");
-						// let localeEnd = enddate.toLocaleString("ko-KR");
-						let startdate = dateFormatter(over.startDate);
-						let enddate = dateFormatter(over.endDate);
-						Ncontents += "<tr><td>" + (++index) + "</td>"
-							+ "<td>" + startdate + "</td>"
-							+ "<td>" + enddate + "</td>"
-							+ "<td>" + over.username + "</td>"
-							+ "<td>" + over.sleepOverReason + "</td>"
-							+ "<input type='hidden' value='" + over.sleepOverIdx + "' ></tr>"
-					})
-
-					$('#nightoverN').append(Ncontents);
-				}
-			}
-			)
-		}
-	</script>
+	</script> -->
 
 	</html>
