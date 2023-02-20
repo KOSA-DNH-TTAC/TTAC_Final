@@ -1,6 +1,8 @@
 package kr.or.kosa.controller;
 
+import java.io.IOException;
 import java.security.Principal;
+import java.util.List;
 
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.security.access.prepost.PreAuthorize;
@@ -11,8 +13,10 @@ import org.springframework.ui.Model;
 import org.springframework.web.bind.annotation.GetMapping;
 import org.springframework.web.bind.annotation.PostMapping;
 import org.springframework.web.bind.annotation.RequestParam;
+import org.springframework.web.multipart.MultipartFile;
 import org.springframework.web.servlet.ModelAndView;
 
+import kr.or.kosa.aws.AwsS3;
 import kr.or.kosa.dto.Member;
 import kr.or.kosa.security.User;
 import kr.or.kosa.service.MemberService;
@@ -32,15 +36,20 @@ public class MypageFrontController {
 		//마이페이지
 		@GetMapping("/mypage")
 		public ModelAndView myPage() {
-			
+			User member = (User) SecurityContextHolder.getContext().getAuthentication().getPrincipal();
+			AwsS3 awsS3 = AwsS3.getInstance();
 			ModelAndView mv = new ModelAndView();
+			
+			String key = member.getUniversityCode()+"/user/"+member.getMemberId()+"/"+member.getMemberId() + ".jpg";
 			//여기서 내 정보 조회까지 작업해서 뷰에 올린다
 //			Member member = null;
 //			String memberid = principal.getName();
 //			member = memberservice.getMemberById(memberid);
-			User member = (User) SecurityContextHolder.getContext().getAuthentication().getPrincipal();
+			
+			String url = awsS3.searchIcon(key);
 			mv.setViewName("member/mypage/mypageHome");
 			mv.addObject("member", member);	
+			mv.addObject("url",url);
 			return mv;
 		}
 		
@@ -56,7 +65,8 @@ public class MypageFrontController {
 										@RequestParam("password") String password, 
 										@RequestParam("email") String email,
 										@RequestParam("phone") String phone,
-										@RequestParam("parentsPhone") String parentsPhone) {
+										@RequestParam("parentsPhone") String parentsPhone,
+										@RequestParam("file") MultipartFile multipartfile) throws IOException {
 			
 			User user = (User) SecurityContextHolder.getContext().getAuthentication().getPrincipal();
 			Member m = new Member(user);
@@ -65,8 +75,8 @@ public class MypageFrontController {
 			m.setPhone(phone);
 			m.setParentsPhone(parentsPhone);
 			System.out.println("정보제출 컨트롤러 : " + m);
-			int result = memberservice.editMember(m);
-		
+			int result = memberservice.editMember(m, multipartfile);
+			
 			
 			String msg = "";
 			String url = "";

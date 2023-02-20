@@ -113,6 +113,8 @@
         <!-- End Header -->
 
         <main id="main">
+        <!-- 로그인 유저 정보 -->
+        <sec:authentication property="principal" var="prc"/>
           <div id="container">
             <section id="breadcrumbs" class="breadcrumbs">
               <div class="container">
@@ -147,7 +149,7 @@
                       <div class="row">
                         <div class="col-lg-4" style="text-align : center">
                           <img style="text-align:center" width="230px"
-                            src="http://image.newsis.com/2022/04/07/NISI20220407_0000969087_web.jpg" class="img-fluid"
+                            src="${url}" class="img-fluid"
                             alt="Responsive image">
                           <br>
                           <br>
@@ -189,7 +191,7 @@
                               </tr>
                               <tr>
                                 <th scope="row">벌점</th>
-                                <td class="infoTd">${member.demerit} 점</td>
+                                <td class="infoTd">${member.demerit}점</td>
                               </tr>
                             </tbody>
                           </table>
@@ -302,6 +304,7 @@
           if (menu == '내 정보 조회') {
 
             var member;
+            
             $.ajax({
               type: "GET",
               url: "/mypage/myinfo",
@@ -328,10 +331,11 @@
 
                 var contents = `<div class="row">
 					<div class="col-lg-4" style="text-align : center">
-							<img style="text-align:center" width="230px" src="http://image.newsis.com/2022/04/07/NISI20220407_0000969087_web.jpg" class="img-fluid" alt="Responsive image">
+							<img style="text-align:center" width="230px" src="https://kosa-s3-bucket.s3.ap-northeast-2.amazonaws.com/${member.universityCode}/user/${member.memberId}/${member.memberId}.jpg" class="img-fluid" alt="Responsive image">
 							<br>
 							<br>
 							<button class="btn btn-warning" onclick="location.href='/mypage/modify'">정보수정</button>
+							
 					</div>
 					<div class="col-lg-8">
 						<table class="table">
