@@ -40,6 +40,9 @@
 		<!-- Jquery -->
 		<script src="http://code.jquery.com/jquery-latest.min.js"></script>
 
+		<!-- Sweet Alert -->
+		<script src="https://cdn.jsdelivr.net/npm/sweetalert2@11"></script>
+
 		<!-- Jquery for FORM -->
 		<!-- <script src="http://malsup.github.com/jquery.form.js" contentType="application/javascript"></script> -->
 
@@ -149,12 +152,17 @@
 						<div class="halfcon">
 							<h4 class="bgtab bgtab2">업로드 데이터</h4>
 							<table id="nightoverY" class="comm_table tac bmb">
-							
+
 							</table>
+							<span id="hjcount"></span>
 						</div>
 					</div>
-
-
+					<div id="div_load_image" style="position:absolute; top:50%; left:50%; filter:alpha(opacity=50); opacity:alpha*0.5; margin:auto; padding:0; text-align:center">
+						<img src="/resources/assets/img/loading.gif" style="width:100px; height:100px;">
+					</div>
+					<!-- <div id="div_load_image" style="position:absolute; top:50%; left:50%;width:0px;height:0px; z-index:9999; background:#f0f0f0; filter:alpha(opacity=50); opacity:alpha*0.5; margin:auto; padding:0; text-align:center">
+						<img src="/resources/assets/img/loading.gif" style="width:100px; height:100px;">
+					</div> -->
 
 				</div><!--con-->
 			</div><!--subcon-->
@@ -187,6 +195,30 @@
 
 
 	<script>
+		$(document).ready(function(){
+			$('#div_load_image').hide(); //로딩바 숨김
+		})
+		let uploadMember;
+		
+		function myclick(){
+			console.log("반영!!!!!!!!!!!!!")
+			console.log(uploadMember);
+
+			$.ajax({
+				type:"POST",
+				data: JSON.stringify(uploadMember),
+				contentType: "application/json; charset=UTF-8",
+				url: "/admin/updateExcel",
+				success: function(result){
+					console.log(result)
+					Swal.fire(
+						'반영 완료!',
+						'신규 기숙사생을 업데이트하였습니다.',
+						'success'
+						)
+				}
+			})
+		}
 
 		$('#excelForm').submit(function() { //submit이 발생하면
 			console.log("서브밋")
@@ -199,7 +231,7 @@
 			let form = $('#excelForm')[0];
 			const formData = new FormData(form);
 
-			// var formData = $("#excelForm").serialize();
+			$("#div_load_image").show(); //로딩바 보여줌
 
 			//ajax로 신규 기숙사생을 map에 넣어 리턴 받음
 			$.ajax({
@@ -209,21 +241,36 @@
 				data: formData,
 				url: "/admin/addExcel",
 				success: function(result){
-					console.log(result);
+					//ajax성공시 로딩바 다시 숨김
+					$("#div_load_image").hide();
 
+					console.log(result);
+					uploadMember = result.list;
 					$('#nightoverY').empty();
+					$('#hjcount').empty();
 					
+					let membercount =0 ;
+
 					let content = `<tbody>
+								<tr><th colspan='7'><button onclick="myclick()">반영하기</button><span> &nbsp;&nbsp;기존 회원은 휴면 해제, 신규 회원은 신규가입됩니다.</span></th></tr>
 								<tr>
 									<th>학번</th>
 									<th>이름</th>
 									<th>성별</th>
 									<th>학과</th>
 									<th>기숙사명</th>
+									<th>호실</th>
 									<th>신규입사여부</th>
 								</tr>
 							`
 					$.each(result.list, function(index, member){
+						membercount++;
+						let newjoin;
+						if(member.newjoin == 'Y'){
+							newjoin = "신규";
+						}else if(member.newjoin == 'N'){
+							newjoin = ""
+						}
 						content += `<tr>
 										<td>` + member.memberId + `</td>
 										<td>` + member.name  + `</td>
@@ -231,13 +278,15 @@
 										<td>` + member.major + `</td>
 										<td>` + member.domitoryName + `</td>
 										<td>` + member.room + `</td>
-										<td>` + member.newjoin + `</td>
-									</tr>`
+										<td>` + newjoin + `</td>
+									</tr>
+									`
 					})
-					content += `</tbody>`
+					content += `
+								</tbody>`
 
 					$('#nightoverY').append(content);
-
+					$('#hjcount').append(membercount + " 명")
 				},
 				error: function(res){
 					console.log("에러가 발생했습니다.")

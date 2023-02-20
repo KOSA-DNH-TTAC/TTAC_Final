@@ -170,7 +170,7 @@ public class AdminService {
 		}
 		// 리스트에 담은 VO를 DB에 저장
 		for (Member m : memberList){
-			System.out.println("엑셀에서 읽은 유저 : " + m);
+//			System.out.println("엑셀에서 읽은 유저 : " + m);
 			//여기서 dao 호출... 기존 회원인지 확인 (Count 구해서 0보다 크면 기존 회원)			
 			int count = 0;
 			count = dao.CountMember(m.getMemberId());
@@ -195,6 +195,50 @@ public class AdminService {
 
 		}
 		return memberList;
+	}
+	
+	@Transactional(rollbackFor = Exception.class)
+	public String updateNewSemester(List<Member> list) {
+		ExcellFileDao dao = sqlsession.getMapper(ExcellFileDao.class);
+		
+		int length = list.size();
+		int insertcount = 0;
+		int updatecount = 0;
+		
+		for(Member m : list) {
+			int count = 0;
+			count = dao.CountMember(m.getMemberId());
+
+			if(count > 0) {
+
+				int temp = dao.updateActivate(m.getMemberId());
+				System.out.println("실행 수 : " + temp);
+				updatecount += temp;
+
+			}else {
+				//해당 멤버가 없으면 insert (신규가입) (비밀번호 암호화해서)
+				String rawpwd = "1004";
+				String pwd = bCryptPasswordEncoder.encode(rawpwd);
+				m.setPassword(pwd);
+				
+				int temp = dao.insertExcellData(m);
+				insertcount += temp;
+			}
+		}
+		String result = "성공";
+		int total = insertcount + updatecount;
+		//update랑 insert결과가 length와 같으면 성공
+		//적으면 실패
+//		System.out.println(length);
+//		System.out.println(total);
+//		if(total == length) {
+//			result = "성공";
+//		}else {
+//			result = "실패";
+//		}
+		//인걸 하고 싶었는데~ update고 insert고 다 리턴값이 0으로 나오네 성공하면서 왤까?
+		
+		return result;
 	}
 	
 
