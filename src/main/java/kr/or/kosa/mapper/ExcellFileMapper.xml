@@ -1,0 +1,42 @@
+<?xml version="1.0" encoding="UTF-8" ?>
+<!DOCTYPE mapper
+PUBLIC "-//mybatis.org//DTD Mapper 3.0//EN"
+"http://mybatis.org/dtd/mybatis-3-mapper.dtd">
+
+<mapper namespace="kr.or.kosa.dao.ExcellFileDao">
+
+<!-- 엑셀데이터 데이터 인서트 -->
+<insert id="insertExcellData" parameterType="kr.or.kosa.dto.Member">
+INSERT INTO MEMBER (MEMBERID,UNIVERSITYCODE,PASSWORD,NAME,MAJOR,EMAIL,GENDER,PHONE,PARENTSPHONE,DOMITORYNAME,ROOM) 
+VALUE (#{memberId}, #{universityCode}, #{password}, #{name}, #{major}, #{email}, #{gender}, #{phone}, #{parentsPhone}, #{domitoryName}, #{room})
+</insert>
+
+<!-- 인서트된 리스트가져오기 -->
+<select id="selectExcellData" parameterType="String" resultType="kr.or.kosa.dto.Member">
+SELECT MEMBERID,UNIVERSITYCODE,PASSWORD,NAME,MAJOR,EMAIL,GENDER,PHONE,PARENTSPHONE,DOMITORYNAME,ROOM,MEMBERPOINT,DEMERIT,`STATUS`,ENABLED 
+FROM MEMBER 
+WHERE UNIVERSITYCODE =#{universityCode} AND DOMITORYNAME = #{domitoryName};
+</select>
+
+<!-- 회원 상태값 전체 update (휴면) -->
+<update id="updateDeactivate" parameterType="kr.or.kosa.dto.Member">
+UPDATE MEMBER SET STATUS=55 WHERE STATUS= 21 AND UNIVERSITYCODE = #{universityCode} AND DOMITORYNAME = #{domitoryName};
+</update>
+
+<!-- 회원 상태값 update (활성) -->
+<update id="updateActivate" parameterType="kr.or.kosa.dto.Member">
+UPDATE MEMBER SET STATUS=21 WHERE STATUS= 55 AND UNIVERSITYCODE = #{universityCode} AND DOMITORYNAME = #{domitoryName} AND MEMBERID = #{memberId};
+</update>
+
+<!-- 회원 아이디가 테이블에 있는지 확인-->
+<select id="CountMember" parameterType="kr.or.kosa.dto.Member">
+SELECT COUNT(MEMBERID) 
+FROM MEMBER 
+WHERE UNIVERSITYCODE = #{universityCode} AND DOMITORYNAME = #{domitoryName} AND MEMBERID = #{memberId};
+</select>
+</mapper>
+
+
+
+
+
