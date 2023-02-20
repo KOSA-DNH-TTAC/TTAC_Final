@@ -24,10 +24,6 @@ public class CommonService {
 		this.sqlSession = sqlSession;
 	}
 
-	
-	//엑셀
-	@Autowired
-	ExcelUtils excelUtil;
 
 	//암호화
 	@Autowired
@@ -91,32 +87,4 @@ public class CommonService {
 		
 	
 
-	
-	//엑셀 파일 읽어와서 memberDto로 만드는...
-	public List<Member> addExcel(MultipartFile file) {
-		
-		List<Member> memberList = new ArrayList<Member>();
-		
-		// 엑셀의 셀데이터를 가져와서 VO에 담기
-		List<Map<String, Object>> listMap = excelUtil.getListData(file, 1, 4); //파일, 시작행, 컬럼 개수
-		for (Map<String, Object> map : listMap) {
-			Member member = new Member();
-			// 각 셀의 데이터를 VO에 set한다.
-			member.setEmail((map.get("0").toString()));
-			member.setMemberId(map.get("1").toString());
-			member.setPassword(map.get("2").toString());
-			member.setName(map.get("3").toString());
-			memberList.add(member);
-		}
-		// 리스트에 담은 VO를 DB에 저장
-		for (Member m : memberList){
-			System.out.println("엑셀에서 읽은 유저 : " + m);
-			
-			//여기서 dao 호출... 기존 회원인지 확인 (Count 구해서 0보다 크면 기존 회원)
-			//해당 멤버가 이미 회원에 있으면 update (휴면 해제)
-			//해당 멤버가 없으면 insert (신규가입)
-		}
-		return memberList;
-	}
-	
 }
