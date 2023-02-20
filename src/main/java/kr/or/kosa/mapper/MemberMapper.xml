@@ -75,6 +75,13 @@ PUBLIC "-//mybatis.org//DTD Mapper 3.0//EN"
 		WHERE memberid=#{memberId}
 	</update>
 	
+	<!-- 회원 포인트 수정 -->
+	<update id="updatePoint" parameterType="kr.or.kosa.dto.Member">
+		UPDATE MEMBER
+		SET memberPoint=#{memberPoint}
+		WHERE MEMBERID=#{memberId}
+	</update>
+	
 	<!-- 회원의 이메일 조회 -->
 	<select id="getEmail" parameterType="String" resultType="kr.or.kosa.dto.Member">
 	 SELECT memberid, password, universitycode, NAME, major, email, gender, phone, parentsphone, domitoryname, room, memberpoint, demerit

@@ -36,10 +36,15 @@
 		<!--<script type="text/javascript" src="resources/assets/js/menu.js"></script>  Resource jQuery -->
 		<!-- <script type="text/javascript" src="resources/assets/js/modernizr.js"></script> Modernizr -->
 		<!--<script type="text/javascript" src="resources/assets/js/jquery.flot.min.js"></script> gap-->
-
+		
 		<!-- Jquery -->
 		<script src="http://code.jquery.com/jquery-latest.min.js"></script>
-
+		<!-- qrCode -->
+		<script type="text/javascript" src="/resources/assets/js/qrcode.js"></script>
+		
+		
+		
+	</head>
 	<body class="">
 		<div class="wrap">
 
@@ -52,9 +57,9 @@
 							<ul>
 
 								<li class="menu last">
-									<button class="btn_sumit ml네일아트"
+									<button class="btn_sumit ml"
 										onclick="document.location.href='/logout';">로그아웃</button><button
-										class="btn_sumit blbtn ml네일아트"
+										class="btn_sumit blbtn ml"
 										onclick="document.location.href='/';">홈페이지</button>
 								</li> <!--.menu.g1-->
 
@@ -81,7 +86,7 @@
 							</li>
 							<li class="smenu"><a href="/admin/board">커뮤니티관리</a>
 							<li class="smenu"><a href="/admin/coupon">식권관리</a></li>
-							<li class="smenu"><a href="/admin/popular" class="msub on">외박관리</a>
+							<li class="smenu"><a href="/admin/popular" >외박관리</a>
 								<ul class="sub ">
 									<li><a href="/admin/popular">외박신청</a></li>
 									<li><a href="/admin/sleepOverHistory">외박이력</a></li>
@@ -96,7 +101,7 @@
 							<li class="smenu"><a href="/admin/calendar">일정관리</a></li>
 							<li class="smenu"><a href=/admin/file >회원파일등록</a></li>
 							<li class="smenu"><a href="/admin/sail">통계관리</a></li>
-							<li class="smenu"><a href="/admin/qr">식권QR</a></li>
+							<li class="smenu"><a href="/admin/qr" class="msub on">식권QR</a></li>
 						</ul>
 
 					</nav>
@@ -123,35 +128,33 @@
 
 				</div>
 				<div class="con">
-					<h3 class="sub_h3">외박관리 <span>외박현황</span></h3>
+					<h3 class="sub_h3">식권가격 <span>QR 생성</span></h3>
 
 
 
-					<div class="ofh">
-						<div class="halfcon mr">
-							<h4 class="bgtab bgtab2">외박 신청</h4>
-							<table id="nightoverN" class="comm_table tac bmb">
-								
-							</table>
-
-
-						</div>
-						<div class="halfcon">
-							<h4 class="bgtab bgtab2">승인 완료</h4>
-							<table id="nightoverY" class="comm_table tac bmb">
-								
-							</table>
-						</div>
+				<div class="bgtab bgtab2">
+				   <div class="w50 fl">
+				       	<span>가격설정: </span><input id="text" type="number" name="text" value="0" min="0" max="1000000" step="100">&nbsp;&nbsp;
+				            <ul class="dpi_li dpi">
+				               <li><button class="btn_sumit"onclick="makeCode()">생성</button></li>
+				            </ul>
+				   </div>
+				   <div class="w50 fl tar">
+				      <ul class="dpi_li tar">         
+				         <li><button class="btn_sumit2"  id="button"  onclick="printPage()">프린트하기 </button></li>
+				      </ul>
+				   </div>
+				</div>
+<!--------------------------------------------------- 큐알 나오는곳 ------------------------------------------------------->
+ 
+				<div class="nmbox mb">
+					<div id="print" class="container">
+						<div id="qrcode" style="width:500px; height:500px; margin:auto; margin-top:40px;"></div>
 					</div>
-
-
-
+				<div class="nmbox mb">
+<!--------------------------------------------------- 큐알 끝나는곳 ------------------------------------------------------->
 				</div><!--con-->
 			</div><!--subcon-->
-
-
-
-
 
 			<div id="footer">
 				<p>Copyright(c)뷰티몰 쇼핑몰관리시스템. All rights reserved. supported by <a href="http://www.cmaru.com"
@@ -161,10 +164,6 @@
 			<div id="pageup">
 			</div>
 		</div><!--wrap-->
-
-
-
-
 	</body>
 	<!-- litebox -->
 	<!-- <script type="text/javascript" src="resources/assets/js/hs_draggable.js"></script> -->
@@ -177,124 +176,44 @@
 
 
 	<script type="text/javascript">
-		function dateFormatter(date) {
-			var wantDate = new Date(date);
-			// 년도 getFullYear()
-			var year = wantDate.getFullYear();
-			// 월 getMonth() (0~11로 1월이 0으로 표현되기 때문에 + 1을 해주어야 원하는 월을 구할 수 있다.)
-			var month = wantDate.getMonth() + 1
-			// 일 getDate()
-			var date = wantDate.getDate(); // 일
-			if (month < 10) {
-				month = "0" + month;
-			}
-			if (date < 10) {
-				date = "0" + date;
-			}
-			var wantDateFormat = year + "-" + month + "-" + date;
-			return wantDateFormat;
-		}
+	//qr코드 생성 
+	var qrcode = new QRCode(document.getElementById("qrcode"), { 
+	//가로, 세로 높이 조절 
+	width : 400, 
+	height : 400 }); 
 
-		$(document).ready(function () {
-			console.log("테스트")
+	//input:text에 들어있는 value를 qr코드로 바꿔주는 function 
+	function makeCode () { 
+		var elText = document.getElementById("text"); 
+	    qrcode.makeCode("https://bamjong.shop/payment/"+elText.value); 
+	} 
 
-			getTodays();
-		})
+	//위에 만든 function 실행 
+	makeCode(); 
 
-		function confirm(over) {
-			var tr = $(over).closest('tr')
-			// var datas = { idx: tr.children().html() };
-			let index = tr.find('input[type=hidden]').val();
-			let datas = { "idx": index };
-			console.log(datas);
-
-			//ajax로 업데이트 함 (confirm N->Y)
-			$.ajax({
-				type: "get",
-				url: "/adminPopular/update",
-				dataType: "json",
-				data: datas,
-				success: function (result) {
-					console.log(result);
-					//테이블에 append 해줌 (getTodays)
-					getTodays();
-				},
-				error: function (request, status, error) {
-					console.log("에러")
-					console.log("code:" + request.status + "\n" + "message:" + request.responseText + "\n" + "error:" + error);
-				}
-			})
-		}
-
-		function getTodays() {
-			$.ajax({
-				type: "GET",
-				url: "/adminPopular/getTodays",
-				success: function (result) {
-					console.log("성공");
-					console.log(result);
-
-					$('#nightoverN').empty();
-					$('#nightoverY').empty();
-					let Ncontents = `<tbody>
-									<tr>
-										<th>번호</th>
-										<th>외박일</th>
-										<th>복귀일</th>
-										<th>이름</th>
-										<th>사유</th>
-										<th>처리</th>
-									</tr>`
-					let Ycontents = Ncontents;
-
-					//외박 신청이 없을 경우
-					if (result.nlist.length == 0) {
-						Ncontents = "<tr><td col-span='6'>들어온 외박 신청이 없습니다.</td></tr>"
-					} else {
-						//아직 처리되지 않은 외박 신청
-
-						$.each(result.nlist, function (index, over) {
-							let startdate = dateFormatter(over.startDate);
-							let enddate = dateFormatter(over.endDate);
-							Ncontents += "<tr><td>" + (++index) + "</td>"
-								+ "<td>" + startdate + "</td>"
-								+ "<td>" + enddate + "</td>"
-								+ "<td>" + over.username + "</td>"
-								+ "<td>" + over.sleepOverReason + "</td>"
-								+ "<td><button onclick='confirm(this)'>승인</button></td>"
-								+ "<input type='hidden' value='" + over.idx + "' ></tr>"
-						})
-					}
-
-
-					$('#nightoverN').append(Ncontents);
-
-					if (result.ylist.length == 0) {
-						Ycontents = "<tr><td col-span='6'>승인된 외박신청이 없습니다.</td></tr>"
-					} else {
-						//처리된 외박 신청
-						$.each(result.ylist, function (index, over) {
-							let startdate = dateFormatter(over.startDate);
-							let enddate = dateFormatter(over.endDate);
-							Ycontents += "<tr><td>" + (++index) + "</td>"
-								+ "<td>" + startdate + "</td>"
-								+ "<td>" + enddate + "</td>"
-								+ "<td>" + over.username + "</td>"
-								+ "<td>" + over.sleepOverReason + "</td>"
-								+ "<td>승인완료</td></tr>"
-						})
-					}
-
-					$('#nightoverY').append(Ycontents);
-					// $('#content').append(contents)
-
-				},
-				error: function (request, status, error) {
-					console.log("에러")
-					console.log("code:" + request.status + "\n" + "message:" + request.responseText + "\n" + "error:" + error);
-				}
-			})
-		}
+	//텍스트 이벤트 감지 
+	$("#text")
+		.on("blur", function () { 
+		makeCode(); })
+	    .on("keydown", function (e) { 
+	    	if (e.keyCode == 13) { 
+	        makeCode();} 
+	    });
+	
+	//window.print() 영역설정하기
+	
+	function printPage(){
+	 var initBody;
+	 window.onbeforeprint = function(){
+	  initBody = document.body.innerHTML;
+	  document.body.innerHTML =  document.getElementById('print').innerHTML;
+	 };
+	 window.onafterprint = function(){
+	  document.body.innerHTML = initBody;
+	 };
+	 window.print();
+	 return false;
+	}
 	</script>
 
 	</html>

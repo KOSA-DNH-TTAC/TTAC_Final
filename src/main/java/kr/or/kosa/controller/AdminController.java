@@ -82,4 +82,9 @@ public class AdminController {
 		return "admin/adminFile";
 	}
 	
+	@GetMapping("/qr")
+	public String adminQr() {
+		return "admin/adminQr";
+	}
+	
 }
