@@ -180,14 +180,6 @@ $(document).ready(function(){
    </div>
 </div>
 
-
-<!-- 임시 엑셀 테스트를 위한 form -->
-<form action="/addExcel" method="POST" enctype="multipart/form-data">
-   <input class="file" id="file" name="file" type="file">
-   <input type="submit" value="제출">
-</form>
-<!-- form -->
-
 <table class="comm_table mb">
    <colgroup>
       <col width="*"/>
