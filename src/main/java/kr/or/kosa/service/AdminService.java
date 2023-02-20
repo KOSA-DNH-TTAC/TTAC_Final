@@ -212,7 +212,7 @@ public class AdminService {
 			if(count > 0) {
 
 				int temp = dao.updateActivate(m.getMemberId());
-				System.out.println("실행 수 : " + temp);
+//				System.out.println("실행 수 : " + temp); 이거 왜 계속 0으로 나올까?
 				updatecount += temp;
 
 			}else {

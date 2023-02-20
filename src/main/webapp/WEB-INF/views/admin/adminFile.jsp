@@ -203,7 +203,7 @@
 		function myclick(){
 			console.log("반영!!!!!!!!!!!!!")
 			console.log(uploadMember);
-
+			$('#div_load_image').show()
 			$.ajax({
 				type:"POST",
 				data: JSON.stringify(uploadMember),
@@ -211,6 +211,7 @@
 				url: "/admin/updateExcel",
 				success: function(result){
 					console.log(result)
+					$('#div_load_image').hide(); //로딩바 숨김
 					Swal.fire(
 						'반영 완료!',
 						'신규 기숙사생을 업데이트하였습니다.',
