@@ -30,6 +30,7 @@ public class User implements UserDetails {
 	private int memberPoint;
 	private int demerit;
 	private int status;
+	private String newjoin;
 	private String enabled;
 	private boolean isEnabled;
 	private boolean isAccountNonExpired;
@@ -217,6 +218,16 @@ public class User implements UserDetails {
 		this.authorities = authorities;
 	}
 	
+	
+	
+	public String getNewjoin() {
+		return newjoin;
+	}
+
+	public void setNewjoin(String newjoin) {
+		this.newjoin = newjoin;
+	}
+
 	public User(Member vo, Collection<GrantedAuthority> auth) {
 		
 		username = vo.getMemberId();

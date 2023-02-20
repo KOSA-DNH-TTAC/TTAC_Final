@@ -169,7 +169,7 @@
 				//const websocket = new WebSocket("ws://192.168.0.31:8090/chat");
 				//const websocket = new WebSocket("ws://3.35.70.249:8090/chat"); 톰캣 ??
 				// const websocket = new WebSocket("ws://" + location.host + "/chat/websocket");
-				const websocket = new WebSocket("wss://" + location.host + "/chat/websocket");
+				const websocket = new WebSocket("ws://" + location.host + "/chat/websocket");
 
 				websocket.onmessage = onMessage;
 				websocket.onopen = onOpen;

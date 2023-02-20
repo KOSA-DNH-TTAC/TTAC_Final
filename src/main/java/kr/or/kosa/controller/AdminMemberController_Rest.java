@@ -4,14 +4,20 @@ import java.util.HashMap;
 import java.util.List;
 import java.util.Map;
 
+import javax.servlet.http.HttpServletRequest;
+import javax.servlet.http.HttpServletResponse;
+
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.http.HttpStatus;
 import org.springframework.http.ResponseEntity;
 import org.springframework.security.core.context.SecurityContextHolder;
 import org.springframework.web.bind.annotation.GetMapping;
 import org.springframework.web.bind.annotation.PathVariable;
+import org.springframework.web.bind.annotation.RequestBody;
 import org.springframework.web.bind.annotation.RequestMapping;
+import org.springframework.web.bind.annotation.RequestMethod;
 import org.springframework.web.bind.annotation.RestController;
+import org.springframework.web.multipart.MultipartFile;
 
 import kr.or.kosa.dto.Cafeteria;
 import kr.or.kosa.dto.DemeritHistory;
@@ -83,4 +89,28 @@ public class AdminMemberController_Rest {
 		adminService.memberGetOut(memberId);
 	}
 	
+ 	//엑셀
+ 	@RequestMapping(value = "/admin/addExcel", method = RequestMethod.POST)
+ 	public ResponseEntity<Map<String, Object>> addExcel(HttpServletRequest request,
+ 			HttpServletResponse response, MultipartFile file) {
+ 		
+ 		List<Member> list = adminService.addExcel(file); 
+ 		
+ 		Map<String, Object> map = new HashMap<String, Object>();
+ 		map.put("list", list);
+ 		
+ 		return new ResponseEntity<Map<String,Object>>(map, HttpStatus.OK);
+ 	};
+ 	
+ 	//엑셀 반영
+ 	@RequestMapping(value = "/admin/updateExcel", method = RequestMethod.POST)
+ 	public ResponseEntity<Map<String, Object>> updateExcel(@RequestBody List<Member> list) {
+ 		
+// 		System.out.println(list);
+ 		Map<String, Object> map = new HashMap<String, Object>();
+ 		String result = adminService.updateNewSemester(list);
+ 		map.put("result", result);
+ 		
+ 		return new ResponseEntity<Map<String,Object>>(map, HttpStatus.OK);
+ 	};
 }
