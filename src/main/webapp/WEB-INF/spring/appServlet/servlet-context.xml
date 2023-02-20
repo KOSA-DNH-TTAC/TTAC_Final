@@ -42,11 +42,13 @@
 		<beans:property name="suffix" value=".jsp" />
 	</beans:bean>
 
+
+	<beans:bean id="chattingHandler" class="kr.or.kosa.chat.ChattingHandler"/>
 	<websocket:handlers>
 		<websocket:mapping handler="chattingHandler" path="/chat"/>
 		<websocket:sockjs></websocket:sockjs>
-		</websocket:handlers>
-	<beans:bean id="chattingHandler" class="kr.or.kosa.chat.ChattingHandler"/>
+	</websocket:handlers>
+
 	
 	<!-- @PreAuthorize @PostAutorize @Secured -->
 	<security:global-method-security pre-post-annotations="enabled" secured-annotations="enabled" />
