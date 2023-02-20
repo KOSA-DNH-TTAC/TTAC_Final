@@ -335,7 +335,7 @@
 							<br>
 							<br>
 							<button class="btn btn-warning" onclick="location.href='/mypage/modify'">정보수정</button>
-							
+							 
 					</div>
 					<div class="col-lg-8">
 						<table class="table">
