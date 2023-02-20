@@ -168,13 +168,4 @@ public class CommonController {
  	}
  	
  	
- 	//엑셀 테스트
- 	@RequestMapping(value = "/addExcel", method = RequestMethod.POST)
- 	public ResponseEntity<String> addExcel(HttpServletRequest request,
- 			HttpServletResponse response, MultipartFile file) {
-
- 		commonService.addExcel(file);
- 		return new ResponseEntity<String>("TEST", HttpStatus.OK);
- 	};
- 	
 }
