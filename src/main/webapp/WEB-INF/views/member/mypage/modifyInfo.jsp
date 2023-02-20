@@ -128,6 +128,10 @@
                         <th scope="row">벌점</th>
                         <td class="infoTd" id="demerit"></td>
                       </tr>
+                      <tr>
+                        <th scope="row">사진변경</th>
+                        <td class="infoTd" id="demerit"><input type="file" name="file" id="file"></td>
+                      </tr>
                     </tbody>
 									</table>
 									<button type="submit" class="btn btn-warning">수정완료</button>

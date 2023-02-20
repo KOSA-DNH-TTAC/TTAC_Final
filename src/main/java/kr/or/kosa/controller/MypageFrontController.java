@@ -1,6 +1,7 @@
 package kr.or.kosa.controller;
 
 import java.security.Principal;
+import java.util.List;
 
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.security.access.prepost.PreAuthorize;
@@ -11,6 +12,7 @@ import org.springframework.ui.Model;
 import org.springframework.web.bind.annotation.GetMapping;
 import org.springframework.web.bind.annotation.PostMapping;
 import org.springframework.web.bind.annotation.RequestParam;
+import org.springframework.web.multipart.MultipartFile;
 import org.springframework.web.servlet.ModelAndView;
 
 import kr.or.kosa.dto.Member;
@@ -56,7 +58,8 @@ public class MypageFrontController {
 										@RequestParam("password") String password, 
 										@RequestParam("email") String email,
 										@RequestParam("phone") String phone,
-										@RequestParam("parentsPhone") String parentsPhone) {
+										@RequestParam("parentsPhone") String parentsPhone,
+										@RequestParam("file") MultipartFile multipartfile) {
 			
 			User user = (User) SecurityContextHolder.getContext().getAuthentication().getPrincipal();
 			Member m = new Member(user);
@@ -66,6 +69,10 @@ public class MypageFrontController {
 			m.setParentsPhone(parentsPhone);
 			System.out.println("정보제출 컨트롤러 : " + m);
 			int result = memberservice.editMember(m);
+			
+			if(multipartfile.getSize() != 0) {
+				
+			}
 		
 			
 			String msg = "";
