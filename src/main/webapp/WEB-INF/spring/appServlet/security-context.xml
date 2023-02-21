@@ -34,6 +34,7 @@
 	    <security:intercept-url pattern="/memberCalendar" access="isAuthenticated()" /> 
 	    <security:intercept-url pattern="/admin/*" access="isAuthenticated()" /> 
 	    <security:intercept-url pattern="/payment/*" access="isAuthenticated()" /> 
+	     <security:intercept-url pattern="/mealticket" access="isAuthenticated()" /> 
 	    <security:intercept-url pattern="/userlogin" access="permitAll()" />
 	    
 	    
