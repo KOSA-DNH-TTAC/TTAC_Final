@@ -20,12 +20,12 @@ WHERE UNIVERSITYCODE =#{universityCode} AND DOMITORYNAME = #{domitoryName}
 
 <!-- 회원 상태값 전체 update (전체 휴면) -->
 <update id="updateDeactivate" parameterType="kr.or.kosa.dto.Member">
-UPDATE MEMBER SET STATUS=55 WHERE STATUS= 21 AND UNIVERSITYCODE = #{universityCode} AND DOMITORYNAME = #{domitoryName}
+UPDATE MEMBER SET STATUS=2 WHERE STATUS= 1 AND UNIVERSITYCODE = #{universityCode} AND DOMITORYNAME = #{domitoryName}
 </update>
 
 <!-- 회원 상태값 update (활성) -->
 <update id="updateActivate" parameterType="kr.or.kosa.dto.Member">
-UPDATE MEMBER SET STATUS=21 WHERE STATUS= 55 AND MEMBERID = #{memberId}
+UPDATE MEMBER SET STATUS=1 WHERE STATUS= 2 AND MEMBERID = #{memberId}
 </update>
 
 <!-- 회원 아이디가 테이블에 있는지 확인-->
