@@ -60,7 +60,7 @@
 							<li class="smenu" style="background-color:#4D6794; color:white;"><a href='javascript:void(0);'>
 									<h1>기숙사 통합관리 솔루션</h1>
 								</a></li>
-							<li class="smenu"><a href="/admin/adminMember" class="msub ">회원관리</a>
+							<li class="smenu"><a href="/admin/adminMember">회원관리</a>
 							</li>
 							<li class="smenu"><a href="/admin/board">커뮤니티관리</a>
 							<li class="smenu"><a href="/admin/coupon" class="msub on">식권관리</a></li>
@@ -203,7 +203,7 @@ $(document).ready(function(){
 
 
 		<div id="footer">
-		<p>Copyright(c) 기숙사 통합 관리 시스템. All rights reserved. supported by ttac.</a></p>
+		<p>Copyright(c) 기숙사 통합 관리 시스템. All rights reserved. supported by DOTO.</a></p>
 	</div>
 
 	<div id="pageup">
