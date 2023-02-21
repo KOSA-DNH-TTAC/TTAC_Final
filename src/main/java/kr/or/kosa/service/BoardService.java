@@ -45,6 +45,7 @@ public class BoardService {
 		System.out.println(user.getUniversityCode());
 		return boarddao.totalPostCount(boardname, user.getUniversityCode());
 	}
+	
 
 	// 게시판 리스트
 	public List<Board> categoryList() {
@@ -58,13 +59,16 @@ public class BoardService {
 	}
 
 	// 기본 제공 게시판 글 목록
-	public List<Post> allBoardList(String allBoard) {
+	public List<Post> allBoardList(String allBoard, Criteria cri) {
 		BoardDao boardDao = sqlSession.getMapper(BoardDao.class);
 		
 		User user = (User) SecurityContextHolder.getContext().getAuthentication().getPrincipal();
 		String universityCode = user.getUniversityCode();
 		
-		List<Post> allBoardList = boardDao.allBoardList(allBoard, universityCode);
+//		System.out.println("cri.getpage : " + cri.getPage()); //현재페이지
+//		System.out.println("pagepernum : " + cri.getPerPageNum()); //페이지크기
+//		System.out.println("cri.getstartpage : " + cri.getPageStart()); //페이징을 시작할 글 번호(순서)
+		List<Post> allBoardList = boardDao.allBoardList(allBoard, universityCode, cri.getPageStart(), cri.getPerPageNum());
 		Date nowDate = new Date();
 
 		SimpleDateFormat simpleDateFormat = new SimpleDateFormat("YYYY-MM-dd");

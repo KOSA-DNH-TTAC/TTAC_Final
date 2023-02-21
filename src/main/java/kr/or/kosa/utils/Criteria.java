@@ -6,7 +6,7 @@ import lombok.Data;
 public class Criteria {
 	//페이징을 위한 클래스
     private int page;
-    private int perPageNum;
+    private int perPageNum; //페이지 당 보여질 게시물의 수
  
     /* 사용자가 따로 전달한 값이 없을 경우
      * 기본 생성자를 통한 기본값 정의 */

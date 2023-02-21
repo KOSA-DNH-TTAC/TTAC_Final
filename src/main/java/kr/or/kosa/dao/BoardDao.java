@@ -22,13 +22,16 @@ public interface BoardDao {
 	public List<Board> categoryList(String universitycode);
 
 	// 기본 제공 게시판 글 목록
-	public List<Post> allBoardList(String boardName, String universitycode);
+	public List<Post> allBoardList(@Param("boardname")String boardName, @Param("universitycode")String universitycode, @Param("startpage")int startpage, @Param("pagepernum")int pagepernum);
 	
 	// 게시판 학교, 이름으로 boardidx 가져오기
 	public int selectBoardIdx(Board board) throws ClassNotFoundException, SQLException;
 	
 	//게시판 전체 글 수 구하기
 	public int totalPostCount(@Param("boardname")String boardname, @Param("universitycode")String universitycode);
+	
+	//글 페이징
+	public List<Post> listPage(Criteria cri);
 	
 	//검색한 글 수 구하기
 

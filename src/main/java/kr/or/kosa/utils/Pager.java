@@ -51,7 +51,7 @@ public class Pager {
 		}
 		
 		this.prev = startPage == 1? false : true;
-		this.next = (endPage * perPageNum) <= totalCount ? true : false;
+		this.next = (endPage * perPageNum) >= totalCount ? false : true;
 		
 		// 맨끝
 		// +1하는 이유는 저렇게 계산하면 맨끝에서 2번째 페이지가 출력되기때문.
