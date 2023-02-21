@@ -6,6 +6,7 @@
 
       <head>
         <meta charset="utf-8">
+        <meta http-equiv="Content-Security-Policy" content="upgrade-insecure-requests"> 
         <meta content="width=device-width, initial-scale=1.0" name="viewport">
 
         <title>DOTO:기숙사통합관리시스템</title>
@@ -331,7 +332,7 @@
 
                 var contents = `<div class="row">
 					<div class="col-lg-4" style="text-align : center">
-							<img style="text-align:center" width="230px" src="${url}" class="img-fluid" alt="이미지" onerror="this.src='/resources/assets/img/profile.png'">
+							<img style="text-align:center; width:230px; border-radius:30px; border:2px solid black;" src="${url}" class="img-fluid" alt="이미지" onerror="this.src='/resources/assets/img/profile.png'">
 							<br>
 							<br>
 							<button class="btn btn-warning" onclick="location.href='/mypage/modify'">정보수정</button>

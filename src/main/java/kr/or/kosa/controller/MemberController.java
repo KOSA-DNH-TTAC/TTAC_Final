@@ -144,12 +144,12 @@ public class MemberController {
 			url = "/";
 			
 		}else {
-			
+			User user = (User) SecurityContextHolder.getContext().getAuthentication().getPrincipal();
 			int point = member.getMemberPoint() - price;
 			member.setMemberPoint(point);
 			
 			result = memberservice.updatePoint(member);
-			
+			user.setMemberPoint(point);
 			if(result < 0) {
 				icon = "error";
 				msg = "결제실패..";

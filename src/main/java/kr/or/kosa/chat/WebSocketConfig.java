@@ -11,7 +11,6 @@ import lombok.RequiredArgsConstructor;
 	@Configuration
 	@RequiredArgsConstructor
 	@EnableWebSocket
-	@CrossOrigin(origins = "*")
 	public class WebSocketConfig implements WebSocketConfigurer{
 
 	    private final ChattingHandler chatHandler;
