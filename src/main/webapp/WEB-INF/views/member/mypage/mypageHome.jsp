@@ -148,7 +148,7 @@
                     <div id="content">
                       <div class="row">
                         <div class="col-lg-4" style="text-align : center">
-                          <img style="text-align:center" width="230px"
+                          <img style="text-align:center; width:230px; border-radius:30px; border:2px solid black;"
                             src="${url}" class="img-fluid"
                             alt="이미지" onerror="this.src='/resources/assets/img/profile.png'">
                           <br>
