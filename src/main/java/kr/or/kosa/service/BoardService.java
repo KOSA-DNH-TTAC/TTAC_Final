@@ -302,19 +302,54 @@ public class BoardService {
 		System.out.println("셀렉트받아온 domitory: " + domitory);
 		double domitoryLat = domitory.getDomitoryLatitude();
 		double domitoryLon = domitory.getDomitoryLogitude();
-
+		
+		
+		double dist = getDistance(domitoryLat, domitoryLon, lat, lon);
+		System.out.println("dist : "+ dist);
+		
 		String alert = "SUCCESS";
-		if (!((domitoryLat - lat) < 0.005)) {
+		if (!(dist < 0.0021) || (dist > -0.0021)) {
 			alert = "FAIL";
 			System.out.println("결과 : "+alert+"lat 계산 : "+(domitoryLat - lat));
 		}
-		if (!((domitoryLon - lon) < 0.005)) {
+		if (!((domitoryLon - lon) < 0.003) || ((domitoryLon - lon) > -0.003)) {
 			alert = "FAIL";
 			System.out.println("결과 : "+alert+"lon 계산 : "+(domitoryLon - lon));
 		}
+//		String alert = "SUCCESS";
+//		if (!((domitoryLat - lat) < 0.0000000000000005)) {
+//			alert = "FAIL";
+//			System.out.println("결과 : "+alert+"lat 계산 : "+(domitoryLat - lat));
+//		}
+//		if (!((domitoryLon - lon) < 0.0000000000000005)) {
+//			alert = "FAIL";
+//			System.out.println("결과 : "+alert+"lon 계산 : "+(domitoryLon - lon));
+//		}
 
 		return alert;
 	}
+	
+
+	// km 기준
+	private Double getDistance(Double lat, Double lnt, Double lat2, Double lnt2) {
+	    double theta = lnt - lnt2;
+	    double dist = Math.sin(deg2rad(lat))* Math.sin(deg2rad(lat2)) + Math.cos(deg2rad(lat))*Math.cos(deg2rad(lat2))*Math.cos(deg2rad(theta));
+	    dist = Math.acos(dist);
+	    dist = rad2deg(dist);
+	    dist = dist * 60*1.1515*1609.344;
+	    System.out.println("dist : "+ dist/1000);
+	    return dist / 1000;
+	}
+
+	//10진수를 radian(라디안)으로 변환
+	private static double deg2rad(double deg){
+	    return (deg * Math.PI/180.0);
+	}
+	//radian(라디안)을 10진수로 변환
+	private static double rad2deg(double rad){
+	    return (rad * 180 / Math.PI);
+	}
+	
 
 	// 점호완료시 DB에 회원 점호데이터 인서트
 			public String eveningCallInsert(String memberid, String universitycode) {

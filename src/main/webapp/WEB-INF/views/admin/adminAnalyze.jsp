@@ -377,12 +377,6 @@ function likesearch(){
 	<!-- <script type="text/javascript" src="resources/assets/js/backbone.js"></script> -->
 	<!-- <script type="text/javascript" src="resources/assets/js/images-loaded.min.js"></script> -->
 	<!-- litebox -->
-
-
-
-	<script type="text/javascript">
-		$("#pageup").pageup();
-	</script>
 	
 
 
