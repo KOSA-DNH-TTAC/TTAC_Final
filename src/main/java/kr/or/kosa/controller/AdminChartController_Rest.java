@@ -1,11 +1,13 @@
 package kr.or.kosa.controller;
 
+import java.util.HashMap;
 import java.util.List;
+import java.util.Map;
 
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.http.HttpStatus;
 import org.springframework.http.ResponseEntity;
-import org.springframework.web.bind.annotation.GetMapping;
+import org.springframework.web.bind.annotation.RequestMapping;
 import org.springframework.web.bind.annotation.RequestParam;
 import org.springframework.web.bind.annotation.RestController;
 
@@ -23,9 +25,16 @@ public class AdminChartController_Rest {
 	}
 	
 	//관리자 통계 그냥 외박
-	@GetMapping("/adminachart/sleepover")
-	public ResponseEntity<List<AdminChart>> mySleepOverChart(@RequestParam String year){		
-		List<AdminChart> list = adminchartservice.getMontlySleepover(year);
+	@RequestMapping("/adminachart/sleepover")
+	public ResponseEntity<List<AdminChart>> mySleepOverChart(@RequestParam HashMap<String,Object> year){
+		System.out.println("year : "+year);
+		Map<String, Object> map = new HashMap<String, Object>();
+		String years = (String)year.get("year");
+		System.out.println("years : "+years);
+		
+		int years1 = Integer.parseInt(years);
+		System.out.println("years1 : "+years1);
+		List<AdminChart> list = adminchartservice.getMontlySleepover(years1);
 		
 		return new ResponseEntity<List<AdminChart>>(list, HttpStatus.OK);
 	}

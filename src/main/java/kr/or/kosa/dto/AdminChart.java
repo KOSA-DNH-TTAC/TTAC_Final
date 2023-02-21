@@ -11,5 +11,7 @@ public class AdminChart {
 	private String universityCode;
 	private String month;
 	private int year;
+	private int status;
 	private int sleepoverCount;
+	private int longsleepoverCount;
 }
