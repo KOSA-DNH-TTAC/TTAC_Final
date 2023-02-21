@@ -14,7 +14,7 @@ PUBLIC "-//mybatis.org//DTD Mapper 3.0//EN"
 		AND STATUS='21'
 	</select>
 
-	<!-- 기본 제공 게시판 글 목록 -->
+	<!-- 기본 제공 게시판 글 목록 (+페이징) -->
 	<select id="allBoardList" resultType="kr.or.kosa.dto.Post">
 		SELECT COUNT(r.replyidx) AS replyCount, p.idx, p.boardidx, p.universitycode,
 		b.boardname,
@@ -26,6 +26,13 @@ PUBLIC "-//mybatis.org//DTD Mapper 3.0//EN"
 		p.universitycode=#{param2}
 		GROUP BY p.idx, p.boardidx, b.boardidx
 		ORDER BY p.writedate DESC
+	</select>
+	
+	<!-- 게시판 전체 글 수 -->
+	<select id="totalPostCount" resultType="int">
+		SELECT COUNT(boardidx)
+		from POST
+		WHERE boardname=#{boardname} AND universitycode=#{universitycode}
 	</select>
 	
 	<!-- 게시판 boardidx 가져오기 -->

@@ -25,6 +25,7 @@ import kr.or.kosa.dto.Product;
 import kr.or.kosa.dto.Reply;
 import kr.or.kosa.dto.RollCall;
 import kr.or.kosa.security.User;
+import kr.or.kosa.utils.Criteria;
 
 @Service
 public class BoardService {
@@ -34,6 +35,15 @@ public class BoardService {
 	@Autowired
 	public void setSqlSession(SqlSession sqlSession) {
 		this.sqlSession = sqlSession;
+	}
+	
+	//게시판 글 전체 개수(페이징을 위한)
+	public int totalCount(String boardname){
+		BoardDao boarddao = sqlSession.getMapper(BoardDao.class);
+		User user = (User) SecurityContextHolder.getContext().getAuthentication().getPrincipal();
+		System.out.println("totalCount boardname : " + boardname);
+		System.out.println(user.getUniversityCode());
+		return boarddao.totalPostCount(boardname, user.getUniversityCode());
 	}
 
 	// 게시판 리스트

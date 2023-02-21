@@ -14,6 +14,7 @@ import kr.or.kosa.dto.Post;
 import kr.or.kosa.dto.Product;
 import kr.or.kosa.dto.Reply;
 import kr.or.kosa.dto.RollCall;
+import kr.or.kosa.utils.Criteria;
 
 public interface BoardDao {
 
@@ -25,6 +26,11 @@ public interface BoardDao {
 	
 	// 게시판 학교, 이름으로 boardidx 가져오기
 	public int selectBoardIdx(Board board) throws ClassNotFoundException, SQLException;
+	
+	//게시판 전체 글 수 구하기
+	public int totalPostCount(@Param("boardname")String boardname, @Param("universitycode")String universitycode);
+	
+	//검색한 글 수 구하기
 
 	// 커스텀 생성 게시판
 	public List<Post> customBoardList(String boardName, String universitycode);

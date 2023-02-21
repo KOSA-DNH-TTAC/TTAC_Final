@@ -31,6 +31,8 @@ import kr.or.kosa.dto.Product;
 import kr.or.kosa.security.User;
 import kr.or.kosa.service.BoardService;
 import kr.or.kosa.service.MemberService;
+import kr.or.kosa.utils.Criteria;
+import kr.or.kosa.utils.Pager;
 
 // 페이지 이동 Controller
 @Controller
@@ -53,7 +55,7 @@ public class BoardController {
 
 	// 기본 제공 게시판
 	@GetMapping("/board/{allBoard}")
-	public String allBoardView(Model model, @PathVariable String allBoard) {
+	public String allBoardView(Model model, @PathVariable String allBoard, Criteria cri) {
 
 		String param = "";
 
@@ -69,8 +71,17 @@ public class BoardController {
 
 		String viewPage = "member/board/" + allBoard;
 
+		Pager pager = new Pager(cri);
+		int totalCount = boardService.totalCount(param);
+		System.out.println(totalCount);
+		pager.setTotalCount(totalCount);
+		
+		System.out.println(pager);
+		
 		List<Post> allBoardList = boardService.allBoardList(param);
 		model.addAttribute("allBoardList", allBoardList);
+		model.addAttribute("pager", pager);
+		model.addAttribute("boardname", allBoard);
 
 		return viewPage;
 	}

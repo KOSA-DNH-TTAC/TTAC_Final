@@ -117,27 +117,28 @@
 							</ul>
 						</div>
 
+
 						<div>
-							<c:if test="${cpage > 1}">
+							<c:if test="${pageMaker.prev}">
 								<a
-									href="boardList.user?boardname=${boardname}&cp=${cpage-1}&ps=${pagesize}&boardname=${boardname}">이전</a>
+									href="/boardList.user?boardname=${boardname}&cp=${pager.cri.page -1}&ps=${pagesize}">이전</a>
 							</c:if>
 							<!-- page 목록 나열하기 -->
-							<c:forEach var="i" begin="1" end="${pagecount}" step="1">
+							<c:forEach var="i" begin="${pager.startPage}" end="${pager.endPage}" step="1">
 								<c:choose>
-									<c:when test="${cpage==i}">
+									<c:when test="${pager.cri.page==i}">
 										<font color="red">[${i}]</font>
 									</c:when>
 									<c:otherwise>
 										<a
-											href="boardList.user?boardname=${boardname}&cp=${i}&ps=${pagesize}&boardname=${boardname}">[${i}]</a>
+											href="boardList.user?boardname=${boardname}&cp=${i}&ps=${pagesize}">[${i}]</a>
 									</c:otherwise>
 								</c:choose>
 							</c:forEach>
 							<!--다음 링크 -->
-							<c:if test="${cpage < pagecount}">
+							<c:if test="${pageMaker.next}">
 								<a
-									href="boardList.user?boardname=${boardname}&cp=${cpage+1}&ps=${pagesize}&boardname=${boardname}">다음</a>
+									href="/boardList.user?boardname=${boardname}&cp=${pager.cri.page +1}&ps=${pagesize}">다음</a>
 							</c:if>
 						</div>
 
