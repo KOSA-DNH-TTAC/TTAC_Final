@@ -84,7 +84,7 @@
             </div>
           </div>
 
-          <div class="col-lg-4 col-md-6 d-flex justify-content-center mt-4 mt-md-0" OnClick="location.href = '/error'" style="cursor:pointer;">
+          <div class="col-lg-4 col-md-6 d-flex justify-content-center mt-4 mt-md-0" OnClick="location.href = '/board/noticeList'" style="cursor:pointer;">
             <div class="icon-box">
               <div class="icon"><i class="bx bx-tachometer"></i></div>
               <h4>커뮤니티</a></h4>
