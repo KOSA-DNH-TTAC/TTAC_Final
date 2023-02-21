@@ -113,4 +113,14 @@ public class AdminMemberController_Rest {
  		
  		return new ResponseEntity<Map<String,Object>>(map, HttpStatus.OK);
  	};
+ 	
+ 	//엑셀 반영
+ 	@RequestMapping(value = "/admin/updateDeactivate", method = RequestMethod.POST, produces="application/text;charset=utf-8")
+ 	public ResponseEntity<String> updateDeactivate() {
+		User user = (User) SecurityContextHolder.getContext().getAuthentication().getPrincipal();
+		String domitoryname = user.getDomitoryName();
+ 		adminService.updateDeactivate(); 		
+ 		String success= "SUCCESS";
+ 		return new ResponseEntity<String>(domitoryname, HttpStatus.OK);
+ 	};
 }
