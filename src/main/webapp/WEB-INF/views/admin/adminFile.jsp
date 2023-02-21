@@ -45,7 +45,7 @@
 
 		<!-- Jquery for FORM -->
 		<!-- <script src="http://malsup.github.com/jquery.form.js" contentType="application/javascript"></script> -->
-
+	</head>
 	<body class="">
 		<div class="wrap">
 

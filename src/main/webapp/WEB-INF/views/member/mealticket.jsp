@@ -223,7 +223,7 @@ a {
   function test(meal, username){
 	  console.log("test 함수")
 	  let memberid = "${principal.memberId}";
-      let successurl =  "http://localhost:8090/payments?memberid="+memberid;
+      let successurl =  "httpㄴ://bamjong.shop/payments?memberid="+memberid;
       let failurl ="";
       let price = meal; // 왜 css가 이상해졋을까... 도와줘..찾아줘해결해줘~~~ 못생긴카테고리를쓰고싶지않아!~!~!!!~~~~!~!!~~!
           var clientKey = 'test_ck_D5GePWvyJnrK0W0k6q8gLzN97Eoq'
