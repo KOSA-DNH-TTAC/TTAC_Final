@@ -21,6 +21,8 @@
 <link href="/resources/assets/css/menu.css" rel="stylesheet">
 <link href="/resources/assets/css/category.css" rel="stylesheet">
 <link href="/resources/assets/css/graph.css" rel="stylesheet">
+ <!-- Apex Chart -->
+        <script src="https://cdn.jsdelivr.net/npm/apexcharts"></script>
 
 		<!-- <script type="text/javascript" src="resources/assets/js/pg_script.js"></script> -->
 		<!-- <script type="text/javascript" src="resources/assets/js/jquery-2.1.4.js"></script> -->
@@ -39,7 +41,67 @@
 		<!-- Jquery -->
 		<script src="http://code.jquery.com/jquery-latest.min.js"></script>
 
+<script>
+$(function(){
+	var longsleepoverCount= []; //관리자 통계 장기 외박
+	var sleepoverCount= []; 	//관리자 통계 그냥 외박
+	
+	$(document).ready(function(){		
+		$.ajax({
+			type: "get",
+			url: "/adminachart/sleepover",
+			contentType: "application/json",			
+			success: function (data) {
+				console.log(data);
+				$.each(data.list, function(index, adminchart){
+					//longsleepover.push(adminchart.month);
+					sleepoverCount.push(adminchart.sleepoverCount)
+                })
+                
+                var options = {	
+			        series: [{
+			        	name: "외박",
+			            data: sleepoverCount,
+			        },{
+			        	name: "장기외박",
+			            data: [11, 2, 3, 1, 10, 13, 7, 8, 21, 22, 3,9],
+			        }],
+			        xaxis: {
+			            categories: [1,2,3,4,5,6,7,8,9,10,11,12]
+			          },
+			        chart: {
+			            type: 'line',
+			            height: 350
+			        },
+			        stroke: {
+			            curve: 'smooth',
+			        },
+			        dataLabels: {
+			            enabled: false
+			        },
+			        title: {
+			            text: '월별 외박 신청 현황',
+			            align: 'left'
+			        },
+			        markers: {
+			            hover: {
+			                sizeOffset: 4
+			            }
+			        }
+			    };
+                
+			},
+			error: function (request, status, error) {
+				console.log("에러")
+				console.log("code:" + request.status + "\n" + "message:" + request.responseText + "\n" + "error:" + error);
+			}
+		})
+		});
 
+    var chart = new ApexCharts(document.querySelector("#chart"), options);
+    chart.render();
+});
+</script>
 <body class="">
 <div class="wrap">
          
@@ -134,10 +196,10 @@ $(document).ready(function(){
 <div class="nmbox mb">
    <div class="tit">
       <h3>월별 외박 신청 현황</h3>
-      <p>외박현황을 월별로 살펴볼 수 있으며, 차트를 통해 수치를 살펴볼 수 있습니다.</p>
+      <p>외박, 장기외박현황을 월별로 살펴볼 수 있으며, 차트를 통해 수치를 살펴볼 수 있습니다.</p>
    </div>
    <div class="contents">
-      <img src="/resources/assets/img/graph01.jpg" width="100%"/>
+      <div id="chart"></div>
    </div>
 </div>
 

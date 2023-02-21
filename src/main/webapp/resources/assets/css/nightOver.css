@@ -1,4 +1,6 @@
-
+Form{
+	width:100%;
+}
 
 #box {
 
@@ -75,8 +77,6 @@
 	display : flex;
 	justify-content: left;
 	align-items: center;
-	margin-left : 10px;
-	margin-right : 10px;
 	padding-bottom: 10px;
 }
 
