@@ -135,7 +135,7 @@
 
 					<div class="ofh">
 						<div class="halfcon mr">
-							<h4 class="bgtab bgtab2">회원 엑셀 파일 업로드</h4>
+							<h4 class="bgtab bgtab2">회원 엑셀 파일 업로드<button id="deactive" style="margin-left:20px;" onclick="deactive()">회원 전체 휴면처리</button></h4>
 							<form id="excelForm" action="/admin/addExcel" method="POST" enctype="multipart/form-data">
 							<table id="nightoverN" class="comm_table tac bmb">
 								<tbody>
@@ -146,7 +146,6 @@
 								
 							</table>
 							</form>
-
 
 
 						</div>
@@ -301,6 +300,21 @@
 
 			return false; //기본 동작인 submit의 동작을 막아 페이지 reload를 막는다.
 	});
+		
+		function deactive(){
+			$.ajax({
+				type:"POST",
+				url: "/admin/updateDeactivate",
+				success: function(result){
+					console.log(result)
+					Swal.fire(
+						result,
+						'기숙사생을 일괄 휴면처리하였습니다.',
+						'success'
+						)
+				}
+			})
+		}
 	</script>
 
 	</html>

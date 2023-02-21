@@ -241,5 +241,14 @@ public class AdminService {
 		return result;
 	}
 	
+	// 학기말 전체 휴면
+	public void updateDeactivate() {
+		ExcellFileDao dao = sqlsession.getMapper(ExcellFileDao.class);
+		User user = (User) SecurityContextHolder.getContext().getAuthentication().getPrincipal();
+		String universityCode = user.getUniversityCode();
+		String domitoryName = user.getDomitoryName();
+		dao.updateDeactivate(universityCode, domitoryName);
+	}
+	
 
 }
