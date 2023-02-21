@@ -19,6 +19,7 @@ import kr.or.kosa.security.User;
 @Service
 public class AdminChartService {
 	private SqlSession sqlsession;
+//	private AdminChart adminchart;
 	 
 	@Autowired
 	public void setSqlsession(SqlSession sqlsession) {
@@ -26,19 +27,24 @@ public class AdminChartService {
 	}
 	
 	//월별 외박 통계
-	public List<AdminChart> getMontlySleepover(String year){
+	public List<AdminChart> getMontlySleepover(int year){
 		User user = (User) SecurityContextHolder.getContext().getAuthentication().getPrincipal();
 		String universityCode = user.getUniversityCode();
 		String domitoryname = user.getDomitoryName();
 		AdminChartDao dao = sqlsession.getMapper(AdminChartDao.class);
 		
+		AdminChart adminChart = new AdminChart();
+		
+		System.out.println("기숙사" + domitoryname);
+		
 		List<AdminChart> list = new ArrayList<AdminChart>();
-		System.out.println("list : "+list);
+		adminChart.setDomitoryName(domitoryname);
+		adminChart.setUniversityCode(universityCode);
+		adminChart.setYear(year);
 		try {
-			list = dao.adminMonthlySleepover(year,universityCode,domitoryname);
-		} catch (ClassNotFoundException e) {
-			e.printStackTrace();
-		} catch (SQLException e) {
+			list = dao.adminMonthlySleepover(adminChart);
+			System.out.println("list : "+list);
+		} catch (Exception e) {
 			e.printStackTrace();
 		}
 		

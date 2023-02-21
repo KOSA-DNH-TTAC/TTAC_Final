@@ -43,19 +43,29 @@
 
 <script>
 $(function(){
+	
 	var longsleepoverCount= []; //관리자 통계 장기 외박
 	var sleepoverCount= []; 	//관리자 통계 그냥 외박
-	
-	$(document).ready(function(){		
+	var year = "2023";
+		
 		$.ajax({
-			type: "get",
+			type: "GET",
 			url: "/adminachart/sleepover",
-			contentType: "application/json",			
+			data: {
+	               "year": year,
+	            },
+			contentType: "application/json; charset=UTF-8",
 			success: function (data) {
 				console.log(data);
-				$.each(data.list, function(index, adminchart){
-					//longsleepover.push(adminchart.month);
-					sleepoverCount.push(adminchart.sleepoverCount)
+				
+				$.each(data, function(index, adminchart){
+					if(adminchart.status == 12){ //장기외박일 때
+						longsleepoverCount.push(adminchart.sleepoverCount);
+					}else if(adminchart.status == 11){ //외박일 때
+						sleepoverCount.push(adminchart.sleepoverCount);	
+					}
+					console.log("장기외박 :"+longsleepoverCount);
+					console.log("외박 : "+sleepoverCount);
                 })
                 
                 var options = {	
@@ -64,7 +74,7 @@ $(function(){
 			            data: sleepoverCount,
 			        },{
 			        	name: "장기외박",
-			            data: [11, 2, 3, 1, 10, 13, 7, 8, 21, 22, 3,9],
+			            data: longsleepoverCount,
 			        }],
 			        xaxis: {
 			            categories: [1,2,3,4,5,6,7,8,9,10,11,12]
@@ -89,6 +99,9 @@ $(function(){
 			            }
 			        }
 			    };
+				
+				 var chart = new ApexCharts(document.querySelector("#chart"), options);
+				    chart.render();
                 
 			},
 			error: function (request, status, error) {
@@ -96,11 +109,11 @@ $(function(){
 				console.log("code:" + request.status + "\n" + "message:" + request.responseText + "\n" + "error:" + error);
 			}
 		})
-		});
-
-    var chart = new ApexCharts(document.querySelector("#chart"), options);
-    chart.render();
 });
+
+
+   /*  var chart = new ApexCharts(document.querySelector("#chart"), options);
+    chart.render(); */
 </script>
 <body class="">
 <div class="wrap">

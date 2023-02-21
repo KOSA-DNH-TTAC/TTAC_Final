@@ -7,12 +7,12 @@ PUBLIC "-//mybatis.org//DTD Mapper 3.0//EN"
 
 <!-- 마이페이지 통계 -->
 	<!-- 월별 외박횟수 -->
-	<select id="adminMonthlySleepover" parameterType="String" resultType="kr.or.kosa.dto.AdminChart">
-		select DATE_FORMAT(startdate, '%Y') AS YEAR, DATE_FORMAT(startdate, '%m') AS MONTH,
+	<select id="adminMonthlySleepover" parameterType="kr.or.kosa.dto.AdminChart" resultType="kr.or.kosa.dto.AdminChart">
+	  select DATE_FORMAT(startdate, '%Y') AS YEAR, DATE_FORMAT(startdate, '%m') AS MONTH, STATUS, 
       COUNT(*) AS sleepoverCount
       FROM SLEEPOVERHISTORY
-      WHERE `STATUS`=11 AND DATE_FORMAT(startdate, '%Y')=#{param1} AND UNIVERSITYCODE=${parma2} AND DOMITORYNAME = #{param3} 
-      GROUP BY month
+      WHERE DATE_FORMAT(startdate, '%Y')=#{year} AND UNIVERSITYCODE=#{universityCode} AND DOMITORYNAME = #{domitoryName} 
+      GROUP BY MONTH, STATUS 
       ORDER BY MONTH;
 	</select>
 	
