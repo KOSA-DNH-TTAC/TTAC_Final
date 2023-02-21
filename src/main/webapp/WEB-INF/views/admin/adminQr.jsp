@@ -57,9 +57,9 @@
 							<ul>
 
 								<li class="menu last">
-									<button class="btn_sumit ml"
+									<button class="btn_sumit ml네일아트"
 										onclick="document.location.href='/logout';">로그아웃</button><button
-										class="btn_sumit blbtn ml"
+										class="btn_sumit blbtn ml네일아트"
 										onclick="document.location.href='/';">홈페이지</button>
 								</li> <!--.menu.g1-->
 
@@ -86,7 +86,7 @@
 							</li>
 							<li class="smenu"><a href="/admin/board">커뮤니티관리</a>
 							<li class="smenu"><a href="/admin/coupon">식권관리</a></li>
-							<li class="smenu"><a href="/admin/popular" >외박관리</a>
+							<li class="smenu"><a href="/admin/popular">외박관리</a>
 								<ul class="sub ">
 									<li><a href="/admin/popular">외박신청</a></li>
 									<li><a href="/admin/sleepOverHistory">외박이력</a></li>
@@ -99,7 +99,7 @@
 								</ul>
 							</li>
 							<li class="smenu"><a href="/admin/calendar">일정관리</a></li>
-							<li class="smenu"><a href=/admin/file >회원파일등록</a></li>
+							<li class="smenu"><a href=/admin/file>회원파일등록</a></li>
 							<li class="smenu"><a href="/admin/sail">통계관리</a></li>
 							<li class="smenu"><a href="/admin/qr" class="msub on">식권QR</a></li>
 						</ul>
@@ -132,29 +132,32 @@
 
 
 
-				<div class="bgtab bgtab2">
-				   <div class="w50 fl">
-				       	<span>가격설정: </span><input id="text" type="number" name="text" value="0" min="0" max="1000000" step="100">&nbsp;&nbsp;
-				            <ul class="dpi_li dpi">
-				               <li><button class="btn_sumit"onclick="makeCode()">생성</button></li>
-				            </ul>
-				   </div>
-				   <div class="w50 fl tar">
-				      <ul class="dpi_li tar">         
-				         <li><button class="btn_sumit2"  id="button"  onclick="printPage()">프린트하기 </button></li>
-				      </ul>
-				   </div>
-				</div>
-<!--------------------------------------------------- 큐알 나오는곳 ------------------------------------------------------->
- 
-				<div class="nmbox mb">
-					<div id="print" class="container">
-						<div id="qrcode" style="width:500px; height:500px; margin:auto; margin-top:40px;"></div>
+					<div class="ofh">
+						<div class="bgtab bgtab2">
+						   <div class="w50 fl">
+						       	<span>가격설정: </span><input id="text" type="number" name="text" value="3000" min="100" max="1000000" step="100">&nbsp;&nbsp;
+						            <ul class="dpi_li dpi">
+						               <li><button class="btn_sumit"onclick="makeCode()">생성</button></li>
+						            </ul>
+						   </div>
+						   <div class="w50 fl tar">
+						      <ul class="dpi_li tar">         
+						         <li><button class="btn_sumit2"  id="button"  onclick="printPage()">프린트하기 </button></li>
+						      </ul>
+						   </div>
+						</div>
 					</div>
-				<div class="nmbox mb">
-<!--------------------------------------------------- 큐알 끝나는곳 ------------------------------------------------------->
+					<div class="nmbox mb">
+						<div id="print" class="container">
+							<div id="qrcode" style="width:500px; height:500px; margin:auto; margin-top:40px;"></div>
+						</div>
+					</div>
 				</div><!--con-->
 			</div><!--subcon-->
+
+
+
+
 
 			<div id="footer">
 		<p>Copyright(c) 기숙사 통합 관리 시스템. All rights reserved. supported by DOTO.</a></p>
@@ -164,6 +167,10 @@
 			<div id="pageup">
 			</div>
 		</div><!--wrap-->
+
+
+
+
 	</body>
 	<!-- litebox -->
 	<!-- <script type="text/javascript" src="resources/assets/js/hs_draggable.js"></script> -->

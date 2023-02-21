@@ -4,6 +4,7 @@
 <%@ taglib prefix="fn" uri="http://java.sun.com/jsp/jstl/functions"%>
 <meta content="" name="description">
 <meta content="" name="keywords">
+<meta http-equiv="Content-Security-Policy" content="upgrade-insecure-requests"> 
 <script src="https://ajax.googleapis.com/ajax/libs/jquery/3.3.1/jquery.min.js"></script>
 
 <!-- Favicons -->
