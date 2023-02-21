@@ -21,12 +21,15 @@ import org.springframework.web.bind.annotation.RequestMapping;
 import org.springframework.web.bind.annotation.RequestParam;
 import org.springframework.web.multipart.MultipartFile;
 
+import kr.or.kosa.dao.CafeteriaDao;
+import kr.or.kosa.dto.Cafeteria;
 import kr.or.kosa.dto.Member;
 import kr.or.kosa.dto.PaymentHistory;
 import kr.or.kosa.dto.SleepOver;
 import kr.or.kosa.security.CustomUser;
 import kr.or.kosa.security.CustomUserDetailService;
 import kr.or.kosa.security.User;
+import kr.or.kosa.service.CafeteriaService;
 import kr.or.kosa.service.MemberService;
 import kr.or.kosa.service.PaymentService;
 import kr.or.kosa.service.SleepOverService;
@@ -42,6 +45,9 @@ public class MemberController {
 	
 	@Autowired
 	SleepOverService sleepoverService;
+	
+	@Autowired
+	CafeteriaService service;
 	
 	private static final Logger logger = LoggerFactory.getLogger(FrontController.class);
 	
@@ -82,8 +88,13 @@ public class MemberController {
 	}
 	
 	@GetMapping("/mealticket")
-	public String mealticket() {
-		
+	public String mealticket(Model model) {
+		User user = (User) SecurityContextHolder.getContext().getAuthentication().getPrincipal();
+		String unicode = user.getUniversityCode();
+		String domitoryname = user.getDomitoryName();
+		List<Cafeteria> mealList = service.selectCafeteria(unicode, domitoryname);
+		System.out.println("mealList : "+mealList);
+		model.addAttribute("mealList", mealList);
 		return "member/mealticket";
 	}
 	// 충전할때
