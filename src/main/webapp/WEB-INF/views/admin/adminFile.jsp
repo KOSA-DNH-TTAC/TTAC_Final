@@ -40,6 +40,12 @@
 		<!-- Jquery -->
 		<script src="http://code.jquery.com/jquery-latest.min.js"></script>
 
+		<!-- Sweet Alert -->
+		<script src="https://cdn.jsdelivr.net/npm/sweetalert2@11"></script>
+
+		<!-- Jquery for FORM -->
+		<!-- <script src="http://malsup.github.com/jquery.form.js" contentType="application/javascript"></script> -->
+
 	<body class="">
 		<div class="wrap">
 
@@ -70,7 +76,7 @@
 				<div class="leftcon">
 					<nav id="sidemenu">
 						<ul class="submenu">
-							<li class="smenu" style="background-color:#4D6794; color:white;"><a href="/admin/coupon">
+							<li class="smenu" style="background-color:#4D6794; color:white;"><a href='javascript:void(0);'>
 									<h1>기숙사 통합관리 솔루션</h1>
 								</a></li>
 							<li class="smenu"><a href="/admin/adminMember">회원관리</a>
@@ -96,6 +102,7 @@
 							<li class="smenu"><a href="/admin/calendar">일정관리</a></li>
 							<li class="smenu"><a href=/admin/file class="msub on">회원파일등록</a></li>
 							<li class="smenu"><a href="/admin/sail">통계관리</a></li>
+							<li class="smenu"><a href="/admin/qr">식권QR</a></li>
 						</ul>
 
 					</nav>
@@ -129,11 +136,11 @@
 					<div class="ofh">
 						<div class="halfcon mr">
 							<h4 class="bgtab bgtab2">회원 엑셀 파일 업로드</h4>
-							<form action="/admin/addExcel" method="POST" enctype="multipart/form-data">
+							<form id="excelForm" action="/admin/addExcel" method="POST" enctype="multipart/form-data">
 							<table id="nightoverN" class="comm_table tac bmb">
 								<tbody>
 									<tr>										
-										<td><input class="form-control form-control-lg" id="formFileLg" type="file"> <input type="submit" value="업로드"></td>
+										<td><input class="form-control form-control-lg" id="formFileLg" name="file" type="file" accept=".xlsx, .xls"> <input type="submit" value="업로드"></td>
 									</tr>
 								</tbody>
 								
@@ -141,25 +148,22 @@
 							</form>
 
 
+
 						</div>
 						<div class="halfcon">
 							<h4 class="bgtab bgtab2">업로드 데이터</h4>
 							<table id="nightoverY" class="comm_table tac bmb">
-							<tbody>
-								<tr>
-									<th>학번</th>
-									<th>학교코드</th>
-									<th>이름</th>
-									<th>성별</th>
-									<th>기숙사명</th>
-									<th>상태값</th>
-								</tr>
-							</tbody>
+
 							</table>
+							<span id="hjcount"></span>
 						</div>
 					</div>
-
-
+					<div id="div_load_image" style="position:absolute; top:50%; left:50%; filter:alpha(opacity=50); opacity:alpha*0.5; margin:auto; padding:0; text-align:center">
+						<img src="/resources/assets/img/loading.gif" style="width:100px; height:100px;">
+					</div>
+					<!-- <div id="div_load_image" style="position:absolute; top:50%; left:50%;width:0px;height:0px; z-index:9999; background:#f0f0f0; filter:alpha(opacity=50); opacity:alpha*0.5; margin:auto; padding:0; text-align:center">
+						<img src="/resources/assets/img/loading.gif" style="width:100px; height:100px;">
+					</div> -->
 
 				</div><!--con-->
 			</div><!--subcon-->
@@ -191,125 +195,112 @@
 	<!-- litebox -->
 
 
-	<!-- <script type="text/javascript">
-		function dateFormatter(date) {
-			var wantDate = new Date(date);
-			// 년도 getFullYear()
-			var year = wantDate.getFullYear();
-			// 월 getMonth() (0~11로 1월이 0으로 표현되기 때문에 + 1을 해주어야 원하는 월을 구할 수 있다.)
-			var month = wantDate.getMonth() + 1
-			// 일 getDate()
-			var date = wantDate.getDate(); // 일
-			if (month < 10) {
-				month = "0" + month;
-			}
-			if (date < 10) {
-				date = "0" + date;
-			}
-			var wantDateFormat = year + "-" + month + "-" + date;
-			return wantDateFormat;
-		}
-
-		$(document).ready(function () {
-			console.log("테스트")
-
-			getTodays();
+	<script>
+		$(document).ready(function(){
+			$('#div_load_image').hide(); //로딩바 숨김
 		})
-
-		function confirm(over) {
-			var tr = $(over).closest('tr')
-			// var datas = { idx: tr.children().html() };
-			let index = tr.find('input[type=hidden]').val();
-			let datas = { "idx": index };
-			console.log(datas);
-
-			//ajax로 업데이트 함 (confirm N->Y)
+		let uploadMember;
+		
+		function myclick(){
+			console.log("반영!!!!!!!!!!!!!")
+			console.log(uploadMember);
+			$('#div_load_image').show()
 			$.ajax({
-				type: "get",
-				url: "/adminPopular/update",
-				dataType: "json",
-				data: datas,
-				success: function (result) {
-					console.log(result);
-					//테이블에 append 해줌 (getTodays)
-					getTodays();
-				},
-				error: function (request, status, error) {
-					console.log("에러")
-					console.log("code:" + request.status + "\n" + "message:" + request.responseText + "\n" + "error:" + error);
+				type:"POST",
+				data: JSON.stringify(uploadMember),
+				contentType: "application/json; charset=UTF-8",
+				url: "/admin/updateExcel",
+				success: function(result){
+					console.log(result)
+					$('#div_load_image').hide(); //로딩바 숨김
+					Swal.fire(
+						'반영 완료!',
+						'신규 기숙사생을 업데이트하였습니다.',
+						'success'
+						)
 				}
 			})
 		}
 
-		function getTodays() {
-			$.ajax({
-				type: "GET",
-				url: "/adminPopular/getTodays",
-				success: function (result) {
-					console.log("성공");
-					console.log(result);
+		$('#excelForm').submit(function() { //submit이 발생하면
+			console.log("서브밋")
 
-					$('#nightoverN').empty();
+			let formFile = $('#formFileLg')[0];
+			if(formFile.files.length === 0){
+				alert("파일을 선택해주세요");
+				return false;
+			}
+			let form = $('#excelForm')[0];
+			const formData = new FormData(form);
+
+			$("#div_load_image").show(); //로딩바 보여줌
+
+			//ajax로 신규 기숙사생을 map에 넣어 리턴 받음
+			$.ajax({
+				type:"POST",
+				processData: false,
+				contentType: false,
+				data: formData,
+				url: "/admin/addExcel",
+				success: function(result){
+					//ajax성공시 로딩바 다시 숨김
+					$("#div_load_image").hide();
+
+					console.log(result);
+					uploadMember = result.list;
 					$('#nightoverY').empty();
-					let Ncontents = `<tbody>
-									<tr>
-										<th>번호</th>
-										<th>외박일</th>
-										<th>복귀일</th>
-										<th>이름</th>
-										<th>사유</th>
-										<th>처리</th>
-									</tr>`
-					let Ycontents = Ncontents;
+					$('#hjcount').empty();
+					
+					let membercount =0 ;
 
-					//외박 신청이 없을 경우
-					if (result.nlist.length == 0) {
-						Ncontents = "<tr><td col-span='6'>들어온 외박 신청이 없습니다.</td></tr>"
-					} else {
-						//아직 처리되지 않은 외박 신청
+					let content = `<tbody>
+								<tr><th colspan='7'><button onclick="myclick()">반영하기</button><span> &nbsp;&nbsp;기존 회원은 휴면 해제, 신규 회원은 신규가입됩니다.</span></th></tr>
+								<tr>
+									<th>학번</th>
+									<th>이름</th>
+									<th>성별</th>
+									<th>학과</th>
+									<th>기숙사명</th>
+									<th>호실</th>
+									<th>신규입사여부</th>
+								</tr>
+							`
+					$.each(result.list, function(index, member){
+						membercount++;
+						let newjoin;
+						if(member.newjoin == 'Y'){
+							newjoin = "신규";
+						}else if(member.newjoin == 'N'){
+							newjoin = ""
+						}
+						content += `<tr>
+										<td>` + member.memberId + `</td>
+										<td>` + member.name  + `</td>
+										<td>` + member.gender + `</td>
+										<td>` + member.major + `</td>
+										<td>` + member.domitoryName + `</td>
+										<td>` + member.room + `</td>
+										<td>` + newjoin + `</td>
+									</tr>
+									`
+					})
+					content += `
+								</tbody>`
 
-						$.each(result.nlist, function (index, over) {
-							let startdate = dateFormatter(over.startDate);
-							let enddate = dateFormatter(over.endDate);
-							Ncontents += "<tr><td>" + (++index) + "</td>"
-								+ "<td>" + startdate + "</td>"
-								+ "<td>" + enddate + "</td>"
-								+ "<td>" + over.username + "</td>"
-								+ "<td>" + over.sleepOverReason + "</td>"
-								+ "<td><button onclick='confirm(this)'>승인</button></td>"
-								+ "<input type='hidden' value='" + over.idx + "' ></tr>"
-						})
-					}
-
-
-					$('#nightoverN').append(Ncontents);
-
-					if (result.ylist.length == 0) {
-						Ycontents = "<tr><td col-span='6'>승인된 외박신청이 없습니다.</td></tr>"
-					} else {
-						//처리된 외박 신청
-						$.each(result.ylist, function (index, over) {
-							let startdate = dateFormatter(over.startDate);
-							let enddate = dateFormatter(over.endDate);
-							Ycontents += "<tr><td>" + (++index) + "</td>"
-								+ "<td>" + startdate + "</td>"
-								+ "<td>" + enddate + "</td>"
-								+ "<td>" + over.username + "</td>"
-								+ "<td>" + over.sleepOverReason + "</td>"
-								+ "<td>승인완료</td></tr>"
-						})
-					}
-
-					$('#nightoverY').append(Ycontents);
-					// $('#content').append(contents)
-
+					$('#nightoverY').append(content);
+					$('#hjcount').append(membercount + " 명")
 				},
-				error: function (request, status, error) {
-					console.log("에러")
-					console.log("code:" + request.status + "\n" + "message:" + request.responseText + "\n" + "error:" + error);
+				error: function(res){
+					console.log("에러가 발생했습니다.")
 				}
 			})
-		}
-	</script> -->
+
+			//업로드 데이터 테이블에 이 기숙사생 띄우고
+
+			//아래에 리셋 버튼 / 최종 반영 버튼
+
+			return false; //기본 동작인 submit의 동작을 막아 페이지 reload를 막는다.
+	});
+	</script>
 
 	</html>

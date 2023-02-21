@@ -1,16 +1,21 @@
 package kr.or.kosa.service;
 
+import java.io.IOException;
 import java.util.ArrayList;
 import java.util.List;
 
 import org.apache.ibatis.session.SqlSession;
 import org.springframework.beans.factory.annotation.Autowired;
+import org.springframework.security.core.context.SecurityContextHolder;
 import org.springframework.security.crypto.bcrypt.BCryptPasswordEncoder;
 import org.springframework.stereotype.Service;
+import org.springframework.web.multipart.MultipartFile;
 
+import kr.or.kosa.aws.AwsS3;
 import kr.or.kosa.dao.MemberDao;
 import kr.or.kosa.dto.Member;
 import kr.or.kosa.dto.Post;
+import kr.or.kosa.security.User;
 
 @Service
 public class MemberService {
@@ -61,14 +66,35 @@ public class MemberService {
 		return list;
 	}
 	
-	//정보수정
-	public int editMember(Member member) {
+	//정보수정(파일 있는거)
+	public int editMember(Member member, MultipartFile multipartfile) throws IOException {
+		
+		
 		String rawpwd = member.getPassword();
-		String encodedpwd = bCryptPasswordEncoder.encode(rawpwd);
-		member.setPassword(encodedpwd);
+		if(!rawpwd.equals("")) {
+			String encodedpwd = bCryptPasswordEncoder.encode(rawpwd);
+			member.setPassword(encodedpwd);
+		}
+		
+		//파일이 있으면 실행
+		if(multipartfile.getSize() != 0) {
+			User user = (User) SecurityContextHolder.getContext().getAuthentication().getPrincipal();
+			AwsS3 awsS3 = AwsS3.getInstance();
+			String key = user.getUniversityCode() + "/user/" + user.getMemberId()+"/"+multipartfile.getOriginalFilename();
+			
+			awsS3.upload(multipartfile, key);
+		}
+	
 		MemberDao dao = sqlsession.getMapper(MemberDao.class);
 		int result = 0;
 		result = dao.updateMember(member);
 		return result;
+	}
+	
+	//포인트 수정
+	public int updatePoint(Member member) throws IOException {
+		
+		MemberDao dao = sqlsession.getMapper(MemberDao.class);
+		return dao.updatePoint(member);
 	}
 }

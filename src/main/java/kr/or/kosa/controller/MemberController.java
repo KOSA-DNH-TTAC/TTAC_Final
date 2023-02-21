@@ -1,5 +1,6 @@
 package kr.or.kosa.controller;
 
+import java.io.IOException;
 import java.security.Principal;
 import java.text.ParseException;
 import java.util.ArrayList;
@@ -85,7 +86,7 @@ public class MemberController {
 		
 		return "member/mealticket";
 	}
-	
+	// 충전할때
 	@RequestMapping("/payments")
 	public String mealticketPayment(@RequestParam("memberid") String memberid, @RequestParam("amount")String amount, Model model) {
 		System.out.println("파라미터로 들어온 ... : " + memberid + " " + amount);
@@ -110,6 +111,57 @@ public class MemberController {
 			msg = "문제가 발생했어요";
 			url = "/";
 		}
+		model.addAttribute("msg", msg);
+		model.addAttribute("url", url);
+		model.addAttribute("icon", icon);
+		return "/common/redirect";
+	}
+	
+	//qr로 결제할때
+	@RequestMapping("/payment/{price}")
+	public String mealticketPayment(Principal principal,@PathVariable("price") int price, Model model) throws IOException {
+		Member member = null;
+		String memberid = principal.getName();
+		member = memberservice.getMemberById(memberid);
+		
+		String msg = "";
+		String url = "";
+		String icon = "";
+		int result = 0;
+		
+		//회원 포인트가 0보다 작으면
+		if(member.getMemberPoint() < 0) {
+			
+			icon = "error";
+			msg = "포인트 오류입니다.";
+			url = "/";
+			
+		//결제값이 회원포인트보다 크면
+		}else if(member.getMemberPoint() < price) {
+			
+			icon = "error";
+			msg = "포인트를 충전해주세요.";
+			url = "/";
+			
+		}else {
+			
+			int point = member.getMemberPoint() - price;
+			member.setMemberPoint(point);
+			
+			result = memberservice.updatePoint(member);
+			
+			if(result < 0) {
+				icon = "error";
+				msg = "결제실패..";
+				url = "/";
+			} else {
+				icon = "success";
+				msg = "사용완료! " + point + "원 남았습니다.";
+				url = "/";
+			}
+		}
+		
+	
 		model.addAttribute("msg", msg);
 		model.addAttribute("url", url);
 		model.addAttribute("icon", icon);

@@ -77,7 +77,7 @@
 	<div class="leftcon">
 	<nav id="sidemenu" style="text-align:left">
 						<ul class="submenu">
-							<li class="smenu" style="background-color:#4D6794; color:white;"><a href="/admin/coupon">
+							<li class="smenu" style="background-color:#4D6794; color:white;"><a href='javascript:void(0);'>
 									<h1>기숙사 통합관리 솔루션</h1>
 								</a></li>
 							<li class="smenu"><a href="/admin/adminMember" class="msub on">회원관리</a>
@@ -100,6 +100,7 @@
 							<li class="smenu"><a href="/admin/calendar">일정관리</a></li>
 							<li class="smenu"><a href="/admin/file" >회원파일등록</a></li>
 							<li class="smenu"><a href="/admin/sail">통계관리</a></li>
+							<li class="smenu"><a href="/admin/qr">식권QR</a></li>
 						</ul>
 
 					</nav>
