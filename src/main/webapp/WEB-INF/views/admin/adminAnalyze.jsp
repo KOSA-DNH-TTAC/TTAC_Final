@@ -253,30 +253,6 @@ function likesearch(){
 </div>	<div class="con">
 		<h3 class="sub_h3">시설관리 <span>시설물 신고내역</span></h3>	
 
-<div class="info_detail list06 mb">
-	<dl>
-		<dt>이번 주 신고건수</dt>
-		<dd>80 <span> 건</span></dd>
-		<dd class="txt">지난 주 40건</dd>
-	</dl>	
-	<dl>
-		<dt>이번 딜 신고건수</dt>
-		<dd>90 <span> 건</span></dd>
-		<dd class="txt">지난 달 150건</dd>
-	</dl>
-	<dl>
-		<dt>주 고장 품목</dt>
-		<dd><span> 세탁기</span></dd>
-		<dd class="txt">지난 달 20건</dd>
-	</dl>	
-	<dl>
-		<dt>주 고장 품목</dt>
-		<dd><span> 변기</span></dd>
-		<dd class="txt">지난 달 15건</dd>
-	</dl>	
-
-</div>
-
 <div class="bmb">
 	<div class="bgtab">
 		<h3 class="txtin">시설물 신고 내역 조회</h3>	
@@ -382,7 +358,7 @@ function likesearch(){
 
 
 		<div id="footer">
-		<p>Copyright(c)뷰티몰 쇼핑몰관리시스템. All rights reserved. supported by <a href="http://www.cmaru.com" target="_blank">크리에이티브마루.</a></p>
+		<p>Copyright(c) 기숙사 통합 관리 시스템. All rights reserved. supported by DOTO.</a></p>
 	</div>
 
 	<div id="pageup">
