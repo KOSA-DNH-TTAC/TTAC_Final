@@ -172,8 +172,8 @@
 
 
 			<div id="footer">
-				<p>Copyright(c)뷰티몰 쇼핑몰관리시스템. All rights reserved. supported by <a href="http://www.cmaru.com"
-						target="_blank">크리에이티브마루.</a></p>
+		<p>Copyright(c) 기숙사 통합 관리 시스템. All rights reserved. supported by DOTO.</a></p>
+
 			</div>
 
 			<div id="pageup">
