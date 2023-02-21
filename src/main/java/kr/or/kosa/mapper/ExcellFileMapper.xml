@@ -15,17 +15,17 @@ VALUE (#{memberId}, #{universityCode}, #{password}, #{name}, #{major}, #{email},
 <select id="selectExcellData" parameterType="String" resultType="kr.or.kosa.dto.Member">
 SELECT MEMBERID,UNIVERSITYCODE,PASSWORD,NAME,MAJOR,EMAIL,GENDER,PHONE,PARENTSPHONE,DOMITORYNAME,ROOM,MEMBERPOINT,DEMERIT,`STATUS`,ENABLED 
 FROM MEMBER 
-WHERE UNIVERSITYCODE =#{universityCode} AND DOMITORYNAME = #{domitoryName} AND STATUS = 1;
+WHERE UNIVERSITYCODE =#{universityCode} AND DOMITORYNAME = #{domitoryName};
 </select>
 
 <!-- 회원 상태값 전체 update (휴면) -->
 <update id="updateDeactivate" parameterType="kr.or.kosa.dto.Member">
-UPDATE MEMBER SET STATUS= 2 WHERE STATUS= 1 AND UNIVERSITYCODE = #{universityCode} AND DOMITORYNAME = #{domitoryName};
+UPDATE MEMBER SET STATUS=55 WHERE STATUS= 21 AND UNIVERSITYCODE = #{universityCode} AND DOMITORYNAME = #{domitoryName};
 </update>
 
 <!-- 회원 상태값 update (활성) -->
 <update id="updateActivate" parameterType="kr.or.kosa.dto.Member">
-UPDATE MEMBER SET STATUS=1 WHERE STATUS= 2 AND UNIVERSITYCODE = #{universityCode} AND DOMITORYNAME = #{domitoryName} AND MEMBERID = #{memberId};
+UPDATE MEMBER SET STATUS=21 WHERE STATUS= 55 AND UNIVERSITYCODE = #{universityCode} AND DOMITORYNAME = #{domitoryName} AND MEMBERID = #{memberId};
 </update>
 
 <!-- 회원 아이디가 테이블에 있는지 확인-->

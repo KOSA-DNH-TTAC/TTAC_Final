@@ -15,7 +15,6 @@ import org.springframework.web.multipart.MultipartFile;
 import kr.or.kosa.dao.AdminDao;
 import kr.or.kosa.dto.Cafeteria;
 import kr.or.kosa.dao.BoardDao;
-import kr.or.kosa.dao.ExcellFileDao;
 import kr.or.kosa.dto.Board;
 import kr.or.kosa.dto.DemeritHistory;
 import kr.or.kosa.dto.Member;
@@ -133,12 +132,8 @@ public class AdminService {
 	
 	//엑셀 파일 읽어와서 memberDto로 만드는...
 	public List<Member> addExcel(MultipartFile file) {
-		ExcellFileDao excellFileDao = sqlsession.getMapper(ExcellFileDao.class);
+		
 		List<Member> memberList = new ArrayList<Member>();
-		User user = (User) SecurityContextHolder.getContext().getAuthentication().getPrincipal();
-		String universityCode = user.getUniversityCode();
-		String domitoryName = user.getDomitoryName();
-		System.out.println("domitoryName : "+domitoryName);
 		
 		// 엑셀의 셀데이터를 가져와서 VO에 담기
 		List<Map<String, Object>> listMap = excelUtil.getListData(file, 1, 4); //파일, 시작행, 컬럼 개수
@@ -154,10 +149,6 @@ public class AdminService {
 		// 리스트에 담은 VO를 DB에 저장
 		for (Member m : memberList){
 			System.out.println("엑셀에서 읽은 유저 : " + m);
-			
-			//인서트된 엑셀 데이터 리스트 받아오기 (status = 21)
-			List<Member> memberlist = excellFileDao.selectExcellData(universityCode, domitoryName);
-			
 			
 			//여기서 dao 호출... 기존 회원인지 확인 (Count 구해서 0보다 크면 기존 회원)
 			//해당 멤버가 이미 회원에 있으면 update (휴면 해제)

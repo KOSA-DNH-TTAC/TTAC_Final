@@ -2,7 +2,10 @@ package kr.or.kosa.dao;
 
 import java.util.List;
 
+import org.apache.ibatis.annotations.Param;
+
 import kr.or.kosa.dto.Member;
+import kr.or.kosa.dto.Schedule;
 
 public interface ExcellFileDao {
 	
