@@ -63,12 +63,12 @@ public class AdminChartService {
 	}
 	
 	//월별 커뮤니티
-	public List<Chart> getMonthlyCommunity(){
+	public List<AdminChart> getMonthlyCommunity(String year){
 		User user = (User) SecurityContextHolder.getContext().getAuthentication().getPrincipal();
 		
-		ChartDao dao = sqlsession.getMapper(ChartDao.class);
-		List<Chart> list = new ArrayList<Chart>();
-		list = dao.monthlyCommunity(user.getMemberId());
+		AdminChartDao dao = sqlsession.getMapper(AdminChartDao.class);
+		List<AdminChart> list = new ArrayList<AdminChart>();
+		list = dao.monthlyCommunity(user.getUniversityCode(), year);
 		
 		return list;
 	}
