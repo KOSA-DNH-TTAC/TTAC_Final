@@ -53,6 +53,12 @@ PUBLIC "-//mybatis.org//DTD Mapper 3.0//EN"
 	<update id="memberGetOut">
 	UPDATE MEMBER SET STATUS='88' WHERE memberid=#{param}
 	</update>
+	
+	<!-- 점호 회원 리스트  보기 -->
+	<select id="getAllRollCallMember" parameterType="String" resultType="kr.or.kosa.dto.RollCall">
+		SELECT * FROM RollCall
+		WHERE UNIVERSITYCODE=#{param1} AND DOMITORYNAME = #{param2} AND ROLLCALLDATE= #{param3} 
+	</select>
 
 </mapper>
 
