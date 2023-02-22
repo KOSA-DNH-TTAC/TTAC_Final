@@ -154,7 +154,7 @@ function search(){
 		url : "/admin/allRollCallMember?date=" + start,
 		success : function(result) {
 			console.log("성공");
-			console.log(result);
+			// console.log(result);
 
 			$('#whichdate').empty();
 			$('#whichdate').append("검색 날짜 [" + start + "]");
@@ -177,6 +177,63 @@ function search(){
 			console.log("실패")
 		}
 	});
+}
+
+let notCallMembers;
+
+//점호 안한 놈
+function notcall(){
+	var start = $('#start').val();
+	$.ajax({
+		type : "GET",
+		url : "/admin/notRollCall?date=" + start,
+		success : function(result) {
+			console.log("성공");
+			// console.log(result);
+			notCallMembers = result;
+			$('#nottable').empty();
+			let contents = '';
+
+			$.each(result, function(index, m){
+				// console.log(m);
+				contents += `<tr>
+								<td  style="text-align: center">` + m.memberId  + `</td>
+								<td style="text-align: center">` + m.name + `</td>
+								<td style="text-align: center">` + m.domitoryName + " " + m.room + "호" + `</td>
+							</tr>`
+			})
+			$('#nottable').append(contents);
+		},
+		error : function(data) {
+			console.log("실패")
+		}
+	});
+}
+
+function execution(){
+	//벌점 부여 ajax
+	console.log(notCallMembers);
+	let data = []
+	$.each(notCallMembers, function(index, m){
+		data.push(m.memberId);
+	})
+	console.log(data);
+	$.ajax({
+		type: "POST",
+            url: "/admin/execution",
+            data: {data:data},
+			success:function(result){
+				console.log(result)
+				$('#execution').remove();
+				$('#hjmsg').append("벌점 부여 완료")
+
+
+			},
+			error:function(e){
+				console.log("에러")
+			}
+
+	})
 }
 
 
@@ -215,7 +272,7 @@ function search(){
 				<input class="form-select1" type="date" id="start" name="trip-start" value="연도-월-일">
 				<ul class="dpi_li dpi">
 					<li><button id="today" onclick="todaysearch()" class="btn_sumit">오늘 날짜</button></li>
-					<li><button type="button" class="btn_sumit2" onclick="search()">검색</button></li>
+					<li><button type="button" class="btn_sumit2" onclick="search(); notcall()">검색</button></li>
 				</ul>
 			</td>				
 		</tr>
@@ -227,11 +284,7 @@ function search(){
 	</div>	
 </div>
 
-
-<div><!--날짜지정검색시-->
-	<div class="bgtab bgtab2 ofh">
-		<div class="w50 fl">
-		<%
+<%
 		// 현재 날짜/시간
 		Date now = new Date();
 		// 포맷팅 정의
@@ -239,25 +292,37 @@ function search(){
 		// 포맷팅 적용
 		String date = formatter.format(now);
 		%>		
-		<input type="hidden" value="<%=date%>" id="nowdate">	
-			<p id="whichdate" class="txtin wtTxt fsbb">오늘 날짜 [<%=date%>]</p>
-		</div>
-		
+<div class="ofh">
+	<div class="halfcon mr">
+		<h4 class="bgtab bgtab2">외박이력	<p id="whichdate" class="txtin wtTxt fsbb">오늘 <%=date%> </p></h4>
+			<table class="comm_table mb">
+				<thead>
+					<tr>
+						<th>점호 일자</th>
+						<th>회원 ID</th>
+						<th>기숙사</th>					
+					</tr>
+				</thead>
+				<tbody id="table">
+				</tbody>
+			</table>
 	</div>
-</div><!--날짜지정검색시 e-->
+	<div class="halfcon">
+		<h4 class="bgtab bgtab2">무단 외박 <button id="execution" onclick="execution()">일괄벌점부여</button><small id="hjmsg" sytle="color:blue;"></small></h4>
+		<table id="nightoverY" class="comm_table tac bmb">
+			<thead>
+				<tr>
+					<th>회원 ID</th>
+					<th>이름</th>
+					<th>기숙사</th>
+				</tr>
+			</thead>
+			<tbody id="nottable">
 
-
-<table class="comm_table mb">
-	<thead>
-		<tr>
-			<th>점호 일자</th>
-			<th>회원 ID</th>
-			<th>기숙사</th>					
-		</tr>
-	</thead>
-	<tbody id="table">
-	</tbody>
-</table>
+			</tbody>
+		</table>
+	</div>
+</div>
 
 
 

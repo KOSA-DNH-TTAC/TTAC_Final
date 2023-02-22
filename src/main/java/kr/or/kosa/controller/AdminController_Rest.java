@@ -277,7 +277,7 @@ public class AdminController_Rest {
 	
 	// 관리자 점호 회원  조회
 		@RequestMapping("/admin/allRollCallMember")
-		public ResponseEntity<List<RollCall>> getAllRollCallMember() {
+		public ResponseEntity<List<RollCall>> getAllRollCallMember(@RequestParam String date) {
 			System.out.println("점호 컨트롤러");
 			User user = (User) SecurityContextHolder.getContext().getAuthentication().getPrincipal();
 			String universitycode = user.getUniversityCode();
@@ -291,4 +291,37 @@ public class AdminController_Rest {
 				return new ResponseEntity<List<RollCall>>(list, HttpStatus.BAD_REQUEST);
 			}
 		}
+		
+	//점호 안한 놈 조회
+	@RequestMapping("/admin/notRollCall")
+	public ResponseEntity<List<Member>> getNotRollCall(@RequestParam String date) {
+		System.out.println("점호안한놈");
+		User user = (User) SecurityContextHolder.getContext().getAuthentication().getPrincipal();
+		String universitycode = user.getUniversityCode();
+		String domitoryName = user.getDomitoryName();
+		System.out.println("날짜 : " + date);
+		
+		List<Member> list = adminService.getNotRollCall(universitycode, domitoryName, date);
+		try {
+			return new ResponseEntity<List<Member>>(list, HttpStatus.OK);
+		} catch (Exception e) {
+			return new ResponseEntity<List<Member>>(list, HttpStatus.BAD_REQUEST);
+		}
+	}
+	
+	//일괄 벌점 부여(무단외박)
+	@RequestMapping(value="/admin/execution", produces = "application/text; charset=UTF-8")
+	public ResponseEntity<String> execution(@RequestParam(value="data[]") List<String> data){
+		System.out.println("처형!!");
+		System.out.println(data);
+		try {
+			for(String s : data) {
+				adminService.memberDemerit(s, "5", "무단외박");
+			}
+			return new ResponseEntity<String>("벌점부여 성공", HttpStatus.OK);
+		} catch (Exception e) {
+			return new ResponseEntity<String>("벌점부여 실패", HttpStatus.BAD_REQUEST);
+		}
+		
+	}
 }
