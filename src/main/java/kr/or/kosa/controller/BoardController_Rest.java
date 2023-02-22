@@ -167,6 +167,7 @@ public class BoardController_Rest {
 		User user = (User) SecurityContextHolder.getContext().getAuthentication().getPrincipal();
 		String memberId = user.getMemberId();
 		String unicode = user.getUniversityCode();
+		String domitoryName = user.getDomitoryName();
 
 		System.out.println("memberid : " + memberId);
 		double lat = report[0];
@@ -189,7 +190,7 @@ public class BoardController_Rest {
 		System.out.println("중복 체크 결과 : " + result2);
 		String result3 = result2 + " : 이미 점호 완료한 회원입니다.";
 		if (result2.equals("SUCCESS")) {
-			boardService.eveningCallInsert(memberId, unicode);
+			boardService.eveningCallInsert(memberId, unicode,domitoryName);
 			result3 = result2 + " : 점호가 완료되었습니다.";
 			System.out.println("result3 : " + result3);
 		}

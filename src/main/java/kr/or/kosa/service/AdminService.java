@@ -14,12 +14,13 @@ import org.springframework.transaction.annotation.Transactional;
 import org.springframework.web.multipart.MultipartFile;
 
 import kr.or.kosa.dao.AdminDao;
-import kr.or.kosa.dto.Cafeteria;
 import kr.or.kosa.dao.BoardDao;
 import kr.or.kosa.dao.ExcellFileDao;
+import kr.or.kosa.dao.MemberDao;
 import kr.or.kosa.dto.Board;
 import kr.or.kosa.dto.DemeritHistory;
 import kr.or.kosa.dto.Member;
+import kr.or.kosa.dto.RollCall;
 import kr.or.kosa.security.User;
 import kr.or.kosa.utils.ExcelUtils;
 
@@ -249,5 +250,12 @@ public class AdminService {
 		dao.updateDeactivate(universityCode, domitoryName);
 	}
 	
+	//일일 점호한 회원조회
+	public List<RollCall> getAllRollCallMember(String universitycode, String domitoryName,String rollCallDate){
+		List<RollCall> list = new ArrayList<RollCall>();
+		AdminDao dao = sqlsession.getMapper(AdminDao.class);
+		list = dao.getAllRollCallMember(universitycode,domitoryName,rollCallDate);
+		return list;
+	}
 
 }

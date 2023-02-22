@@ -92,7 +92,7 @@ public interface BoardDao {
 	public Domitory eveningCall(String domitoryname);
 	
 	//점호데이터 넣기
-	public int eveningCallInsert(String memberId, String universitycode);
+	public int eveningCallInsert(String memberId, String universitycode,String domitiryName);
 	
 	//점호 데이터 중복 체킹
 	public RollCall eveningCallCompare(String memberId, String universitycode, String date);

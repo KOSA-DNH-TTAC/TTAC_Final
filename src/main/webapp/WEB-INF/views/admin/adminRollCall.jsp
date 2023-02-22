@@ -117,24 +117,21 @@ $(document).ready(function () {
 });
 
 
-//화면 로딩시 신고 리스트 출력
+//화면 로딩시 점호 리스트 출력
 $(document).ready(function(){
 	var tabledata = "";
 	$.ajax({
 		type : "POST",
-		url : "/facility/print",
+		url : "/admin/allRollCallMember",
 		contentType: "application/json; charset=UTF-8",
 		success : function(data) {
 			console.log("data : "+data);
 			 $.each(data, function(index) {
 	                tabledata +=
 	                	'<tr class="tar">'+
-			    			'<td class="tac bgc">'+data[index].facilityDate+'</td>'+
+			    			'<td class="tac bgc">'+data[index].rollCallDate+'</td>'+
+			    			'<td style="text-align: center;">'+data[index].memberId+'</td>'+
 			    			'<td style="text-align: center;">'+data[index].domitoryName+'</td>'+
-			    			'<td style="text-align: center;">'+data[index].domitoryFloor+'</td>'+
-			    			'<td style="text-align: center;">'+data[index].facilityName+'</td>'+
-			    			'<td style="text-align: center;">'+data[index].name+'</td>'+
-			    			'<td style="text-align: center;">'+data[index].facilityReport+' </td>'+
 			    		'</tr>'
 	                    })
 			$('#table').empty();
@@ -252,11 +249,11 @@ function likesearch(){
 
 
 </div>	<div class="con">
-		<h3 class="sub_h3">시설관리 <span>시설물 신고내역</span></h3>	
+		<h3 class="sub_h3">점호관리 <span>점호 회원</span></h3>	
 
 <div class="bmb">
 	<div class="bgtab">
-		<h3 class="txtin">시설물 신고 내역 조회</h3>	
+		<h3 class="txtin">점호 회원 조회</h3>	
 	</div>
 	<table class="srch_table mb20">	
 		<colgroup>
@@ -269,9 +266,7 @@ function likesearch(){
 			<th>검색어</th>
 			<td colspan="3">
 				<select name="search_type" class="fSelect">
-					<option value="name">시설물 명</option>
-					<!-- <option value="phone">브랜드코드</option>
-					<option value="mobile">제품코드</option> -->
+					<option value="name">회원 명</option>
 				</select>
 				<input type="text" id="likesearch" class="w60" style="width:233px;"/>
 				<ul class="dpi_li dpi">
@@ -283,7 +278,6 @@ function likesearch(){
 			<th>기간</th>
 			<td colspan="3">
 				<input class="form-select1" type="date" id="start" name="trip-start" value="연도-월-일">
-				 - <input class="form-select1" type="date" id="end" name="trip-start" value="연도-월-일">&nbsp;&nbsp;
 				<ul class="dpi_li dpi">
 					<li><button id="today" onclick="todaysearch()" class="btn_sumit">오늘 날짜</button></li>
 					<li><button type="button" class="btn_sumit2" onclick="search()">검색</button></li>
@@ -318,29 +312,11 @@ function likesearch(){
 
 
 <table class="comm_table mb">
-<!-- 	<colgroup>
-		<col width="16.66%">
-		<col width="10%">
-		<col width="10%">
-		<col width="10%">
-		<col width="10%">
-		<col width="10%">
-		<col width="33.32%">
-
-	</colgroup> -->
 	<thead>
 		<tr>
-			<th rowspan="2">일자</th>
-			<th colspan="4">상세내역</th>
-			<th rowspan="3">상세 사유</th>					
-		</tr>
-		<tr>
-			<th>기숙사 동</th>
-			<th>기숙사 층</th>
-			<th>시설물</th>
-			<th>신고자 (학번)</th>
-			
-			
+			<th>점호 일자</th>
+			<th>회원 ID</th>
+			<th>기숙사</th>					
 		</tr>
 	</thead>
 	<tbody id="table">

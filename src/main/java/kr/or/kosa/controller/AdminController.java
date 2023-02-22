@@ -33,6 +33,11 @@ public class AdminController {
 		
 		return "admin/adminAnalyze";
 	}
+	@GetMapping("/RollCall")
+	public String adminRollCall() {
+		
+		return "admin/adminRollCall";
+	}
 	
 	@GetMapping("/sail")
 	public String adminSail() {

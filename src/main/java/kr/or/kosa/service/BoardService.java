@@ -366,10 +366,10 @@ public class BoardService {
 	
 
 	// 점호완료시 DB에 회원 점호데이터 인서트
-			public String eveningCallInsert(String memberid, String universitycode) {
+			public String eveningCallInsert(String memberid, String universitycode,String domitoryName) {
 				BoardDao boardDao = sqlSession.getMapper(BoardDao.class);
 				System.out.println("memberid 서비스 옴?");
-				int  rollcall = boardDao.eveningCallInsert(memberid, universitycode);
+				int  rollcall = boardDao.eveningCallInsert(memberid, universitycode,domitoryName);
 
 				if( rollcall >=1) {
 					System.out.println("성공");

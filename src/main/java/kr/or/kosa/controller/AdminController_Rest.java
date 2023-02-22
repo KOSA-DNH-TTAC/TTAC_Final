@@ -16,11 +16,15 @@ import org.springframework.web.bind.annotation.RequestMapping;
 import org.springframework.web.bind.annotation.RequestParam;
 import org.springframework.web.bind.annotation.RestController;
 
+import kr.or.kosa.dto.Board;
 import kr.or.kosa.dto.Cafeteria;
 import kr.or.kosa.dto.Domitory;
+import kr.or.kosa.dto.Member;
 import kr.or.kosa.dto.Report;
+import kr.or.kosa.dto.RollCall;
 import kr.or.kosa.dto.Schedule;
 import kr.or.kosa.security.User;
+import kr.or.kosa.service.AdminService;
 import kr.or.kosa.service.BoardService;
 import kr.or.kosa.service.CafeteriaService;
 import kr.or.kosa.service.FacilityService;
@@ -33,7 +37,8 @@ public class AdminController_Rest {
 	FacilityService facilityService;
 	calendarService calendarService;
 	CafeteriaService cafeteriaService;
-
+	AdminService adminService;
+	
 	@Autowired
 	public void setBoardService(BoardService boardService) {
 		this.boardService = boardService;
@@ -52,6 +57,10 @@ public class AdminController_Rest {
 	@Autowired
 	public void setcafeteriaService(CafeteriaService cafeteriaService) {
 		this.cafeteriaService = cafeteriaService;
+	}
+	@Autowired
+	public void setAdminService(AdminService adminService) {
+		this.adminService = adminService;
 	}
 
 	// 기숙사 건물 DB 인서트
@@ -265,4 +274,18 @@ public class AdminController_Rest {
 		int menuidx = Integer.parseInt(idx);
 		cafeteriaService.deleteMenu(menuidx);
 	}
+	
+	// 관리자 점호 회원  조회
+		@RequestMapping("/admin/allRollCallMember")
+		public ResponseEntity<List<RollCall>> getAllRollCallMember(@RequestParam String date) {
+			User user = (User) SecurityContextHolder.getContext().getAuthentication().getPrincipal();
+			String universitycode = user.getUniversityCode();
+			String domitoryName = user.getDomitoryName();
+			List<RollCall> list = adminService.getAllRollCallMember(universitycode,domitoryName,date);
+			try {
+				return new ResponseEntity<List<RollCall>>(list, HttpStatus.OK);
+			} catch (Exception e) {
+				return new ResponseEntity<List<RollCall>>(list, HttpStatus.BAD_REQUEST);
+			}
+		}
 }
