@@ -97,7 +97,39 @@ ORDER BY MONTH;
 	    month
     </select>
 	
+	<!-- 월별 포인트 통계 -->
+	<select id="getMontlyPoint" resultType="kr.or.kosa.dto.AdminChart">
+	SELECT 
+    YEAR, 
+    MONTH, 
+    SUM(chargeCount) AS chargeCount, 
+    SUM(payCount) AS payCount, 
+    SUM(PAYMOUNT) AS PAYMOUNT, 
+	SUM(CHARGEMOUNT) AS CHARGEMOUNT
+FROM 
+    (
+        SELECT DATE_FORMAT(PAYDATE, '%Y') AS YEAR, DATE_FORMAT(PAYDATE, '%m') AS MONTH, 
+	      COUNT(*) AS chargeCount, 0 AS payCount, SUM(PAYAMOUNT) AS CHARGEMOUNT, 0 AS PAYMOUNT
+	      FROM PAYMENTHISTORY
+	      WHERE DATE_FORMAT(PAYDATE, '%Y')=#{year} AND PAYKINDS = "충전"	
+	      AND UNIVERSITYCODE=#{universityCode} 
+            AND DOMITORYNAME = #{domitoryName} 
+	      GROUP BY YEAR, MONTH
+        UNION ALL
+        SELECT DATE_FORMAT(PAYDATE, '%Y') AS YEAR, DATE_FORMAT(PAYDATE, '%m') AS MONTH, 
+	      0 AS chargeCount, COUNT(*) AS payCount, 0 AS CHARGEMOUNT, SUM(PAYAMOUNT) AS PAYMOUNT
+	      FROM PAYMENTHISTORY
+	      WHERE DATE_FORMAT(PAYDATE, '%Y')=#{year} AND PAYKINDS = "사용" 
+	      AND UNIVERSITYCODE=#{universityCode} 
+            AND DOMITORYNAME = #{domitoryName} 
+	      GROUP BY YEAR, MONTH
+    ) AS temp
+GROUP BY 
+    YEAR, 
+    MONTH
+ORDER BY MONTH;
 	
+	</select>
 </mapper>
 
 

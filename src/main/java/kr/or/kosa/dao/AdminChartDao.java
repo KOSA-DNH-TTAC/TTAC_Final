@@ -14,7 +14,7 @@ public interface AdminChartDao {
 	public List<AdminChart> adminMonthlySleepover(AdminChart adminchart);
 	
 	//월별 결제
-	//public List<AdminChart> monthlyPayment(String memberid);
+	public List<AdminChart> getMontlyPoint(AdminChart adminchart);
 	
 	//월별 커뮤니티
 	public List<AdminChart> monthlyCommunity(@Param("universitycode")String universitycode, @Param("year")String year);

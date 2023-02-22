@@ -43,14 +43,29 @@ public class AdminChartController_Rest {
 	//관리자 통계 포인트 관련
 		@RequestMapping("/adminachart/point")
 		public ResponseEntity<List<AdminChart>> pointChart(@RequestParam HashMap<String,Object> year){
-			System.out.println("year : "+year);
+			System.out.println("포인트year : "+year);
 			Map<String, Object> map = new HashMap<String, Object>();
-			String years = (String)year.get("year");
-			System.out.println("years : "+years);
+			String years = (String)year.get("pointyear");
+			System.out.println("포인트years : "+years);
 			
 			int years1 = Integer.parseInt(years);
-			System.out.println("years1 : "+years1);
-			List<AdminChart> list = adminchartservice.getMontlySleepover(years1);
+			System.out.println("포인트years1 : "+years1);
+			List<AdminChart> list = adminchartservice.getMontlyPoint(years1);
+			
+			return new ResponseEntity<List<AdminChart>>(list, HttpStatus.OK);
+		}
+		
+		//관리자 통계 포인트 관련
+		@RequestMapping("/adminachart/pointmember")
+		public ResponseEntity<List<AdminChart>> pointmemberChart(@RequestParam HashMap<String,Object> year){
+			System.out.println("포인트year : "+year);
+			Map<String, Object> map = new HashMap<String, Object>();
+			String years = (String)year.get("memberpointyear");
+			System.out.println("포인트years : "+years);
+			
+			int years1 = Integer.parseInt(years);
+			System.out.println("포인트years1 : "+years1);
+			List<AdminChart> list = adminchartservice.getMontlyPoint(years1);
 			
 			return new ResponseEntity<List<AdminChart>>(list, HttpStatus.OK);
 		}
