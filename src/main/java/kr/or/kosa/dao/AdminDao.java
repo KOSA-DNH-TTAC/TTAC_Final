@@ -6,6 +6,7 @@ import java.util.Map;
 import kr.or.kosa.dto.Cafeteria;
 import kr.or.kosa.dto.DemeritHistory;
 import kr.or.kosa.dto.Member;
+import kr.or.kosa.dto.RollCall;
 
 public interface AdminDao {
 	
@@ -29,6 +30,9 @@ public interface AdminDao {
 	
 	// 식당 메뉴 조회
 	public List<Cafeteria> allMenuList(String universitycode);
+	
+	// 일일 점호 회원 조회
+	public List<RollCall> getAllRollCallMember(String universitycode,String domitoryName, String rollCallDate);
 	
 	
 	

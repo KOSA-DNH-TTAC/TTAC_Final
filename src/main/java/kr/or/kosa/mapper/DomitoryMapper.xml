@@ -27,9 +27,10 @@ SELECT UNIVERSITYCODE,DOMITORYIDX,DOMITORYNAME,DOMITORYFLOOR,DOMITORYLATITUDE,DO
  FROM DOMITORY;
 </select>
 
+<!-- 점호데이터 인서트 -->
 <insert id="eveningCallInsert" parameterType="kr.or.kosa.dto.RollCall">
-INSERT INTO ROLLCALL (MEMBERID,UNIVERSITYCODE,ROLLCALLDATE)
- VALUES(#{param1},#{param2},NOW());
+INSERT INTO ROLLCALL (MEMBERID,UNIVERSITYCODE,ROLLCALLDATE,DOMITORYNAME)
+ VALUES(#{param1},#{param2},NOW(),#{param3});
 </insert>
 
 <!-- 회원 점호 이력 읽어오기 -->
