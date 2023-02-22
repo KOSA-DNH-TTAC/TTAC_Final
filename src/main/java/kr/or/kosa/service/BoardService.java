@@ -445,8 +445,8 @@ public class BoardService {
 				File fileOne = new File();
 				
 				String fileName = post.getUniversityCode()+"/"+ "board" + "/" + idx + "/" + uuid.toString()+"_"+multipartfile.getOriginalFilename();
-				
-				fileUrl = awsS3.searchIcon(fileName);
+				fileUrl = "https://d37qu1avlirbuh.cloudfront.net/" + fileName;
+				System.out.println("파일유아ㅑㄹ엘"+fileUrl);
 				fileOne.setIdx(idx);
 				fileOne.setFileUrl(fileUrl);
 				fileOne.setFileName(fileName);
@@ -488,7 +488,7 @@ public class BoardService {
 				
 				String fileName = post.getUniversityCode()+"/"+ "board" + "/" + idx + "/" + uuid.toString()+"_"+multipartfile.getOriginalFilename();
 				
-				fileUrl = awsS3.searchIcon(fileName);
+				fileUrl = "https://d37qu1avlirbuh.cloudfront.net/" + fileName;
 				fileOne.setFileUrl(fileUrl);
 				fileOne.setFileName(fileName);
 				fileOne.setFileRealName(multipartfile.getOriginalFilename());
@@ -530,7 +530,7 @@ public class BoardService {
 			
 			for (File file : fileDTO) {
 				url = postDTO.getUniversityCode()+"/"+ "board" + "/" + idx + "/" + file.getFileRealName();
-				fileUrl = awsS3.searchIcon(url);
+				fileUrl = "https://d37qu1avlirbuh.cloudfront.net/" + url;
 				file.setFileUrl(fileUrl);
 				this.fileWrite(file);
 			}

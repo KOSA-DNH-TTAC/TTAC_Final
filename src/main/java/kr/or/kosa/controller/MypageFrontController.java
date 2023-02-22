@@ -43,10 +43,10 @@ public class MypageFrontController {
 //			String memberid = principal.getName();
 //			member = memberservice.getMemberById(memberid);
 			
-			String url = awsS3.searchIcon(key);
+			String fileUrl = "https://d37qu1avlirbuh.cloudfront.net/" + key;
 			mv.setViewName("member/mypage/mypageHome");
 			mv.addObject("member", member);	
-			mv.addObject("url",url);
+			mv.addObject("url",fileUrl);
 			return mv;
 		}
 		

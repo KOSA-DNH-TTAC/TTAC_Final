@@ -399,7 +399,7 @@ public class BoardController {
 										   @PathVariable("boardName") String boardName,
 										   @RequestParam("title") String title,
 										   @RequestParam("content") String content,
-										   @RequestParam("sold") int sold,
+										   @RequestParam(name = "sold", required = false) String sold,
 										   @RequestParam("file") List<MultipartFile> files) throws ClassNotFoundException, SQLException, IOException {
 		
 		User user = (User) SecurityContextHolder.getContext().getAuthentication().getPrincipal();
@@ -417,7 +417,7 @@ public class BoardController {
 		
 		if(boardName.equals("productBoardList")) {
 			
-			boardContent.setLikeNum(sold);
+			boardContent.setLikeNum(Integer.parseInt(sold));
 			System.out.println("솔드 값: " + sold);
 			System.out.println("보드컨텐츠: " +  boardContent);
 			System.out.println("보드네임: " +  boardName);
@@ -566,7 +566,7 @@ public class BoardController {
 				File fileOne = new File();
 				
 				UUID uuid = UUID.randomUUID();
-				fileName = uuid.toString()+"_"+multipartfile.getOriginalFilename();
+				fileName = "https://d37qu1avlirbuh.cloudfront.net/" + uuid.toString()+"_"+multipartfile.getOriginalFilename();
 				fileOne.setFileName(fileName);
 				fileOne.setFileRealName(multipartfile.getOriginalFilename());
 				fileOne.setFileSize(multipartfile.getSize());
