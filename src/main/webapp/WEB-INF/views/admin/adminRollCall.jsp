@@ -120,13 +120,11 @@ $(document).ready(function () {
 //화면 로딩시 점호 리스트 출력
 $(document).ready(function(){
 	var tabledata = "";
-	var date = $('#date').val();
+	var date = $('#nowdate').attr('value');
 	console.log("date :"+date);
 	$.ajax({
 		type : "POST",
 		url : "/admin/allRollCallMember",
-		contentType: "application/json; charset=UTF-8",
-		data: date,
 		success : function(data) {
 			console.log("data : "+data);
 			 $.each(data, function(index) {
@@ -306,8 +304,9 @@ function likesearch(){
 		SimpleDateFormat formatter = new SimpleDateFormat("yyyy-MM-dd");
 		// 포맷팅 적용
 		String date = formatter.format(now);
-		%>			
-			<p id="whichdate" class="txtin wtTxt fsbb">오늘 날짜 [<span id="date"><%=date%></span>]</p>
+		%>		
+		<input type="hidden" value="<%=date%>" id="nowdate">	
+			<p id="whichdate" class="txtin wtTxt fsbb">오늘 날짜 [<%=date%>]</p>
 		</div>
 		
 	</div>

@@ -32,7 +32,7 @@ public interface AdminDao {
 	public List<Cafeteria> allMenuList(String universitycode);
 	
 	// 일일 점호 회원 조회
-	public List<RollCall> getAllRollCallMember(String universitycode,String domitoryName, String rollCallDate);
+	public List<RollCall> getAllRollCallMember(RollCall rollcall);
 	
 	
 	
