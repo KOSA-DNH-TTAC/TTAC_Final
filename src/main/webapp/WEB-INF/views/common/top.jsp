@@ -43,7 +43,7 @@
         <!-- <a href="index.html"><img src="assets/img/logo.png" alt="" class="img-fluid"></a>-->
       </div>
 
-<sec:authentication property="principal" var="principal"/>
+<sec:authentication property="principal" var="principal"/> 
 
       <nav id="navbar" class="navbar">
         <ul>
