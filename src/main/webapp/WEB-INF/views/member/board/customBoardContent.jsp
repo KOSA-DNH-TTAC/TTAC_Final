@@ -93,7 +93,7 @@
                     <div id="boardName" style="display:none">${custom.boardName}</div>
 					<div id="idx" style="display:none">${custom.idx}</div>
                     <ul>
-                    	<li class="d-flex align-items-center"><i class="bi bi-person"></i><a value="${custom.memberId}">익명</a></li>
+                    	<li class="d-flex align-items-center"><i class="bi bi-person"></i>익명</li>
                     	<li class="d-flex align-items-center"><i class="bi bi-clock"></i>${custom.writeDate}</li>
                     	<li class="d-flex align-items-center"><button id="postLike"><i class="bi-hand-thumbs-up"></i></button><div id="likenum">${custom.likeNum}</div></li>
                     </ul>

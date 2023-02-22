@@ -9,11 +9,14 @@ import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.security.core.context.SecurityContextHolder;
 import org.springframework.security.crypto.bcrypt.BCryptPasswordEncoder;
 import org.springframework.stereotype.Service;
+import org.springframework.transaction.annotation.Transactional;
 import org.springframework.web.multipart.MultipartFile;
 
 import kr.or.kosa.aws.AwsS3;
 import kr.or.kosa.dao.MemberDao;
+import kr.or.kosa.dao.PaymentHistoryDao;
 import kr.or.kosa.dto.Member;
+import kr.or.kosa.dto.PaymentHistory;
 import kr.or.kosa.dto.Post;
 import kr.or.kosa.security.User;
 
@@ -91,10 +94,35 @@ public class MemberService {
 		return result;
 	}
 	
-	//포인트 수정
-	public int updatePoint(Member member) throws IOException {
-		
+	//memberDAO 포인트 사용 DTO
+	public int updatePoint(Member member, int price) throws IOException {
+		int result = member.getMemberPoint() - price;
+
+		member.setMemberPoint(result);
 		MemberDao dao = sqlsession.getMapper(MemberDao.class);
 		return dao.updatePoint(member);
 	}
+	
+	//결제 히스토리 남기기
+	public int paymentHistory(Member member, int price) throws IOException {
+		User user = (User) SecurityContextHolder.getContext().getAuthentication().getPrincipal();
+		PaymentHistory payment = new PaymentHistory();
+		payment.setMemberId(user.getMemberId());
+		payment.setPayAmount(price);
+		payment.setPayKinds("사용");
+		
+		PaymentHistoryDao dao = sqlsession.getMapper(PaymentHistoryDao.class);
+		return dao.insertPayment(payment);
+	}
+	
+	//포인트 사용할때 (트렌잭션)
+	@Transactional(rollbackFor = Exception.class)
+	public int usePoint(Member member, int price) throws IOException {
+		int result = 0;
+		result = this.updatePoint(member, price);
+		result = this.paymentHistory(member, price);
+		return result;
+	}
+	
+	
 }

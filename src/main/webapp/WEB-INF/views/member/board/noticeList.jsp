@@ -80,8 +80,8 @@
 
 											<div class="entry-meta">
 												<ul>
-													<li class="d-flex align-items-center"><i class="bi bi-person"></i>관리자</a></li>
-													<li class="d-flex align-items-center"><i class="bi bi-clock"></i>${notice.writeDate}</a></li>
+													<li class="d-flex align-items-center"><i class="bi bi-person"></i>관리자</li>
+													<li class="d-flex align-items-center"><i class="bi bi-clock"></i>${notice.writeDate}</li>
 												</ul>
 											</div>
 

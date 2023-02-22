@@ -83,16 +83,15 @@
 
 					<div id="contentsDiv" class="col-lg-8 entries">
 						<c:forEach items="${boardContent}" var="boardContent">
-						<!--  -->
 						<div class="container" data-aos="fade-up"><div class="row">
 						<div class="col-lg-12 entries">
 					
 					<article class="entry">
 					<h2 class="entry-title">          
 					<c:choose>
-						<c:when test="${productContent.productSold eq '판매중'}"><span id="sold">판매중</span>&nbsp; ${boardContent.title}</c:when>
-						<c:when test="${productContent.productSold eq '거래완료'}"><span id="sold">거래완료</span>&nbsp; ${boardContent.title}</c:when>
-						<c:when test="${productContent.productSold eq '예약중'}"><span id="sold">예약중</span>&nbsp; ${boardContent.title}</c:when>
+						<c:when test="${boardContent.likeNum eq 0}"><span id="sell">판매중</span>&nbsp; ${boardContent.title}</c:when>
+						<c:when test="${boardContent.likeNum eq 1}"><span id="sold">거래완료</span>&nbsp; ${boardContent.title}</c:when>
+						<c:when test="${boardContent.likeNum eq 2}"><span id="reserve">예약중</span>&nbsp; ${boardContent.title}</c:when>
 					</c:choose> 
                     
                     </h2>
@@ -100,9 +99,8 @@
                     <div id="boardName" style="display:none">${boardContent.boardName}</div>
 					<div id="idx" style="display:none">${boardContent.idx}</div>
                     <ul>
-                    	<li class="d-flex align-items-center"><i class="bi bi-person"></i><a href="blog-single.html" value="${boardContent.memberId}">${boardContent.memberId}</a></li>
+                    	<li class="d-flex align-items-center"><i class="bi bi-person"></i>${boardContent.memberId}</li>
                     	<li class="d-flex align-items-center"><i class="bi bi-clock"></i>${boardContent.writeDate}</li>
-                    	<li class="d-flex align-items-center"><i class="bi-hand-thumbs-up"></i>${boardContent.likeNum}</li>
                     </ul>
                     </div>
                     <article class="entry" style="padding-top: 15px">

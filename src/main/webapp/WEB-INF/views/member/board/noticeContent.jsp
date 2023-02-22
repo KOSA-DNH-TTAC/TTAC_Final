@@ -87,7 +87,7 @@
                     <div id="boardName" style="display:none">${boardContent.boardName}</div>
 					<div id="idx" style="display:none">${boardContent.idx}</div>
                     <ul>
-                    	<li class="d-flex align-items-center"><i class="bi bi-person"></i><a href="blog-single.html" value="${boardContent.memberId}">익명</a></li>
+                    	<li class="d-flex align-items-center"><i class="bi bi-person"></i>관리자</li>
                     	<li class="d-flex align-items-center"><i class="bi bi-clock"></i>${boardContent.writeDate}</li>
                     	<li class="d-flex align-items-center"><i class="bi-hand-thumbs-up"></i>${boardContent.likeNum}</li>
                     </ul>

@@ -349,6 +349,7 @@ public class BoardController {
 										   @PathVariable("boardName") String boardName,
 										   @RequestParam("title") String title,
 										   @RequestParam("content") String content,
+										   @RequestParam("sold") int sold,
 										   @RequestParam("file") List<MultipartFile> files) throws ClassNotFoundException, SQLException, IOException {
 		
 		User user = (User) SecurityContextHolder.getContext().getAuthentication().getPrincipal();
@@ -363,6 +364,14 @@ public class BoardController {
 		//글 제목, 내용 수정
 		boardContent.setTitle(title);
 		boardContent.setContent(content);
+		
+		if(boardName.equals("productBoardList")) {
+			
+			boardContent.setLikeNum(sold);
+			System.out.println("솔드 값: " + sold);
+			System.out.println("보드컨텐츠: " +  boardContent);
+			System.out.println("보드네임: " +  boardName);
+		}
 		
 		result = boardService.boardContentEdit(boardContent, files);
 		
