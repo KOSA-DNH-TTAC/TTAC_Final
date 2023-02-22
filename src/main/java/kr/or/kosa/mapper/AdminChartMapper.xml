@@ -16,6 +16,51 @@ PUBLIC "-//mybatis.org//DTD Mapper 3.0//EN"
       ORDER BY MONTH;
 	</select>
 	
+	<!-- 월별 커뮤니티 -->
+	<select id="monthlyCommunity" resultType="kr.or.kosa.dto.AdminChart">
+	SELECT 
+    year, 
+    month, 
+    SUM(postcount) AS postcount, 
+    SUM(replycount) AS replycount 
+	FROM 
+	    (
+	        SELECT 
+	            DATE_FORMAT(writedate, '%Y') AS year, 
+	            DATE_FORMAT(writedate, '%m') AS month,
+	            COUNT(*) AS postcount, 
+	            0 AS replycount
+	        FROM 
+	            POST
+	        WHERE 
+	            STATUS=21
+	            AND universitycode = #{universitycode}
+	            AND YEAR(writedate) = #{year}
+	        GROUP BY 
+	            YEAR, 
+	            MONTH
+	        UNION ALL
+	        SELECT 
+	            DATE_FORMAT(r.replydate, '%Y') AS year, 
+	            DATE_FORMAT(r.replydate, '%m') AS month,
+	            0 AS postcount,
+	            COUNT(*) AS replycount
+	        FROM 
+	            REPLY r
+	            INNER JOIN POST p ON r.idx = p.idx
+	        WHERE 
+	            r.STATUS=21
+	            AND p.universitycode = #{universitycode}
+	            AND YEAR(r.replydate) = #{year}
+	        GROUP BY 
+	            YEAR, 
+	            MONTH
+	    ) AS temp
+	GROUP BY 
+	    year, 
+	    month
+    </select>
+	
 	
 </mapper>
 

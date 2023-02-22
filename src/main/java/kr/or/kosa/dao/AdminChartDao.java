@@ -2,6 +2,8 @@ package kr.or.kosa.dao;
 
 import java.util.List;
 
+import org.apache.ibatis.annotations.Param;
+
 import kr.or.kosa.dto.AdminChart;
 
 public interface AdminChartDao {
@@ -15,7 +17,7 @@ public interface AdminChartDao {
 	//public List<AdminChart> monthlyPayment(String memberid);
 	
 	//월별 커뮤니티
-	//public List<AdminChart> monthlyCommunity(String memberid);
+	public List<AdminChart> monthlyCommunity(@Param("universitycode")String universitycode, @Param("year")String year);
 	
 	//월별 벌점
 	//public List<AdminChart> monthlyDemerit(String memberid);

@@ -14,4 +14,6 @@ public class AdminChart {
 	private int status;
 	private int sleepoverCount;
 	private int longsleepoverCount;
+	private int postCount;
+	private int replyCount;
 }
