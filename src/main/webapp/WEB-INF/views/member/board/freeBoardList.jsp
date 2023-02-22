@@ -121,9 +121,13 @@
 						<div class="blog-pagination">
 							<ul class="justify-content-center">
 								<c:if test="${pager.prev}">
-									<a href="/board/${boardname}?cpage=${pager.cri.page -1}">
-										<i class="bi bi-caret-left-square-fill"></i>
-									</a>
+									<li>
+										<a href="/board/${boardname}?cpage=${pager.cri.page -1}">
+										<!-- <i class="bi bi-caret-left-square-fill"></i> -->
+											<!-- <i class="bi bi-caret-left"></i> -->
+											<i class="bi bi-caret-left-fill"></i>
+										</a>
+									</li>
 								</c:if>
 								<!-- page 목록 나열하기 -->
 								<c:forEach var="i" begin="${pager.startPage}" end="${pager.endPage}" step="1">
@@ -138,12 +142,15 @@
 								</c:forEach>
 								<!--다음 링크 -->
 								<c:if test="${pager.next}">
-									<a href="/board/${boardname}?cpage=${pager.cri.page +1}">
-										<i class="bi bi-caret-right-square-fill"></i>
+									<li>
+										<a href="/board/${boardname}?cpage=${pager.cri.page +1}">
+											<i class="bi bi-caret-right-fill"></i>
+										<!-- <i class="bi bi-caret-right-square-fill"></i> -->
 										<!-- <svg xmlns="http://www.w3.org/2000/svg" width="16" height="16" fill="currentColor" class="bi bi-caret-right-square-fill" viewBox="0 0 16 16">
 											<path d="M0 2a2 2 0 0 1 2-2h12a2 2 0 0 1 2 2v12a2 2 0 0 1-2 2H2a2 2 0 0 1-2-2V2zm5.5 10a.5.5 0 0 0 .832.374l4.5-4a.5.5 0 0 0 0-.748l-4.5-4A.5.5 0 0 0 5.5 4v8z"/>
 										  </svg> -->
-									</a>
+										</a>
+									</li>
 								</c:if>
 							</ul>
 						</div>
