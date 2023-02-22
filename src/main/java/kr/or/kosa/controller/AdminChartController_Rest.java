@@ -40,6 +40,22 @@ public class AdminChartController_Rest {
 	}
 	
 	
+	//관리자 통계 포인트 관련
+		@RequestMapping("/adminachart/point")
+		public ResponseEntity<List<AdminChart>> pointChart(@RequestParam HashMap<String,Object> year){
+			System.out.println("year : "+year);
+			Map<String, Object> map = new HashMap<String, Object>();
+			String years = (String)year.get("year");
+			System.out.println("years : "+years);
+			
+			int years1 = Integer.parseInt(years);
+			System.out.println("years1 : "+years1);
+			List<AdminChart> list = adminchartservice.getMontlySleepover(years1);
+			
+			return new ResponseEntity<List<AdminChart>>(list, HttpStatus.OK);
+		}
+	
+	
 
 }
 

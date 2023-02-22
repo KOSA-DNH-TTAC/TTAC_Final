@@ -51,36 +51,28 @@ public class AdminChartService {
 		return list;
 	}
 	
-	//월별 결제
-	public List<Chart> getMonthlyPayments(){
-		User user = (User) SecurityContextHolder.getContext().getAuthentication().getPrincipal();
-		
-		ChartDao dao = sqlsession.getMapper(ChartDao.class);
-		List<Chart> list = new ArrayList<Chart>();
-		list = dao.monthlyPayment(user.getMemberId());
-		
-		return list;
-	}
-	
-	//월별 커뮤니티
-	public List<Chart> getMonthlyCommunity(){
-		User user = (User) SecurityContextHolder.getContext().getAuthentication().getPrincipal();
-		
-		ChartDao dao = sqlsession.getMapper(ChartDao.class);
-		List<Chart> list = new ArrayList<Chart>();
-		list = dao.monthlyCommunity(user.getMemberId());
-		
-		return list;
-	}
-	
-	//월별 벌점
-	public List<Chart> getMonthlyDemerit(){
-		User user = (User) SecurityContextHolder.getContext().getAuthentication().getPrincipal();
-		
-		ChartDao dao = sqlsession.getMapper(ChartDao.class);
-		List<Chart> list = new ArrayList<Chart>();
-		list = dao.monthlyDemerit(user.getMemberId());
-		
-		return list;
-	}
+	//월별 외박 통계
+		public List<AdminChart> getMontlyPoint(int year){
+			User user = (User) SecurityContextHolder.getContext().getAuthentication().getPrincipal();
+			String universityCode = user.getUniversityCode();
+			String domitoryname = user.getDomitoryName();
+			AdminChartDao dao = sqlsession.getMapper(AdminChartDao.class);
+			
+			AdminChart adminChart = new AdminChart();
+			
+			System.out.println("기숙사" + domitoryname);
+			
+			List<AdminChart> list = new ArrayList<AdminChart>();
+			adminChart.setDomitoryName(domitoryname);
+			adminChart.setUniversityCode(universityCode);
+			adminChart.setYear(year);
+			try {
+				list = dao.adminMonthlySleepover(adminChart);
+				System.out.println("list : "+list);
+			} catch (Exception e) {
+				e.printStackTrace();
+			}
+			
+			return list;
+		}
 }

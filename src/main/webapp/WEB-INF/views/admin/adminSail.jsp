@@ -46,7 +46,9 @@ $(function(){
 	
 	var longsleepoverCount= []; //관리자 통계 장기 외박
 	var sleepoverCount= []; 	//관리자 통계 그냥 외박
+	var sleepoverMonth= []; 	//관리자 통계 외박 달
 	var year = $('#selectyear').val();
+	var year1 = $('#selectyear1').val();
 		
 		$.ajax({
 			type: "GET",
@@ -59,25 +61,28 @@ $(function(){
 				console.log(data);
 				
 				$.each(data, function(index, adminchart){
-					if(adminchart.status == 12){ //장기외박일 때
-						longsleepoverCount.push(adminchart.sleepoverCount);
-					}else if(adminchart.status == 11){ //외박일 때
+
+						longsleepoverCount.push(adminchart.longsleepoverCount);
+
 						sleepoverCount.push(adminchart.sleepoverCount);	
-					}
+
+					sleepoverMonth.push(adminchart.month);
 					console.log("장기외박 :"+longsleepoverCount);
 					console.log("외박 : "+sleepoverCount);
+					console.log("sleepoverMonth : "+sleepoverMonth);
                 })
                 
                 var options = {	
 			        series: [{
 			        	name: "외박",
 			            data: sleepoverCount,
-			        },{
+			        },
+			        {
 			        	name: "장기외박",
 			            data: longsleepoverCount,
 			        }],
 			        xaxis: {
-			            categories: [1,2,3,4,5,6,7,8,9,10,11,12]
+			            categories: sleepoverMonth,
 			          },
 			        chart: {
 			            type: 'line',
@@ -90,7 +95,7 @@ $(function(){
 			            enabled: false
 			        },
 			        title: {
-			            text: '월별 외박 신청 현황',
+			            text: data[0].year+' 월별 외박 신청 현황',
 			            align: 'left'
 			        },
 			        markers: {
@@ -109,7 +114,140 @@ $(function(){
 				console.log("code:" + request.status + "\n" + "message:" + request.responseText + "\n" + "error:" + error);
 			}
 		})
+		/* 월별 외박 통계 END */
+		
+		/* 포인트 결제 차트 */
+		/* $.ajax({
+			type: "GET",
+			url: "/adminachart/point",
+			data: {
+	               "year": year1,
+	            },
+			contentType: "application/json; charset=UTF-8",
+			success: function (data) {
+				console.log(data);
+				
+				$.each(data, function(index, adminchart){
+					if(adminchart.status == 12){ //장기외박일 때
+						longsleepoverCount.push(adminchart.sleepoverCount);
+					}else if(adminchart.status == 11){ //외박일 때
+						sleepoverCount.push(adminchart.sleepoverCount);	
+					}
+					console.log("결제자 수 :"+longsleepoverCount);
+					console.log("총 결제금액 : "+sleepoverCount);
+                })
+                
+                var options = {	
+			        series: [{
+			        	name: "결제자 수",
+			            data: sleepoverCount,
+			        },{
+			        	name: "결제금액",
+			            data: longsleepoverCount,
+			        }],
+			        xaxis: {
+			            categories: [1,2,3,4,5,6,7,8,9,10,11,12]
+			          },
+			        chart: {
+			            type: 'line',
+			            height: 350
+			        },
+			        stroke: {
+			            curve: 'smooth',
+			        },
+			        dataLabels: {
+			            enabled: false
+			        },
+			        title: {
+			            text: data[0].year+' 월별 포인트 결제자 수 및 월별 결제금액',
+			            align: 'left'
+			        },
+			        markers: {
+			            hover: {
+			                sizeOffset: 4
+			            }
+			        }
+			    };
+				
+				 var pointchart = new ApexCharts(document.querySelector("#pointchart"), options);
+				 pointchart.render();
+                
+			},
+			error: function (request, status, error) {
+				console.log("에러")
+				console.log("code:" + request.status + "\n" + "message:" + request.responseText + "\n" + "error:" + error);
+			}
+		}) */
 });
+
+function sleepoverchart(){
+	var longsleepoverCount= []; //관리자 통계 장기 외박
+	var sleepoverCount= []; 	//관리자 통계 그냥 외박
+	var sleepoverMonth= []; 	//관리자 통계 외박 달
+	var year = $('#selectyear').val();
+	$.ajax({
+		type: "GET",
+		url: "/adminachart/sleepover",
+		data: {
+               "year": year,
+            },
+		contentType: "application/json; charset=UTF-8",
+		success: function (data) {
+			console.log(data);
+			$('#chart').empty();
+			
+			$.each(data, function(index, adminchart){
+
+					longsleepoverCount.push(adminchart.longsleepoverCount);
+
+					sleepoverCount.push(adminchart.sleepoverCount);	
+
+				console.log("장기외박 :"+longsleepoverCount);
+				console.log("외박 : "+sleepoverCount);
+            })
+            
+            var options = {	
+		        series: [{
+		        	name: "외박",
+		            data: sleepoverCount,
+		        },{
+		        	name: "장기외박",
+		            data: longsleepoverCount,
+		        }],
+		        xaxis: {
+		            categories: sleepoverMonth
+		          },
+		        chart: {
+		            type: 'line',
+		            height: 350
+		        },
+		        stroke: {
+		            curve: 'smooth',
+		        },
+		        dataLabels: {
+		            enabled: false
+		        },
+		        title: {
+		            text: data[0].year+' 월별 외박 신청 현황',
+		            align: 'left'
+		        },
+		        markers: {
+		            hover: {
+		                sizeOffset: 4
+		            }
+		        }
+		    };
+			
+			 var chart = new ApexCharts(document.querySelector("#chart"), options);
+			    chart.render();
+            
+		},
+		error: function (request, status, error) {
+			console.log("에러")
+			console.log("code:" + request.status + "\n" + "message:" + request.responseText + "\n" + "error:" + error);
+		}
+	})
+}
 
 
    /*  var chart = new ApexCharts(document.querySelector("#chart"), options);
@@ -214,6 +352,7 @@ $(document).ready(function(){
       	<option value="2023" selected>2023</option>
       	<option value="2022">2022</option>
       </select>
+      <button id="yearsubmit" class="btn_sumit" onclick="sleepoverchart()">선택</button>
    </div>
    <div class="contents">
       <div id="chart"></div>
@@ -224,9 +363,14 @@ $(document).ready(function(){
    <div class="tit">
       <h3>월별 포인트 결제자 수 및 결제 금액</h3>
       <p>결제자 수와 결제 금액을 월 별로 살펴볼 수 있습니다.</p>
+       연도 선택 : <select id="selectyear1" style="text-align:center; width:100px;">
+      	<option value="2023" selected>2023</option>
+      	<option value="2022">2022</option>
+      </select>
+      <button id="yearsubmit" class="btn_sumit" onclick="sleepoverchart()">선택</button>
    </div>
    <div class="contents">
-      <img src="/resources/assets/img/graph02.jpg" width="100%"/>
+      <div id="pointchart"></div>
    </div>
 </div>
 
