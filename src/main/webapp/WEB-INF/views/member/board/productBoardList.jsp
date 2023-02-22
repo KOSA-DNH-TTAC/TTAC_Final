@@ -103,37 +103,45 @@
 
 									</c:forEach>
 
-									<div class="blog-pagination">
+									<!-- <div class="blog-pagination">
 										<ul class="justify-content-center">
 											<li><a href="#">1</a></li>
 											<li class="active"><a href="#">2</a></li>
 											<li><a href="#">3</a></li>
 											<li><a href="#">4</a></li>
 										</ul>
-									</div>
+									</div> -->
 									
-									<div>
-										<c:if test="${cpage > 1}">
-											<a
-												href="boardList.user?boardname=${boardname}&cp=${cpage-1}&ps=${pagesize}&boardname=${boardname}">이전</a>
-										</c:if>
-										<!-- page 목록 나열하기 -->
-										<c:forEach var="i" begin="1" end="${pagecount}" step="1">
-											<c:choose>
-												<c:when test="${cpage==i}">
-													<font color="red">[${i}]</font>
-												</c:when>
-												<c:otherwise>
-													<a
-														href="boardList.user?boardname=${boardname}&cp=${i}&ps=${pagesize}&boardname=${boardname}">[${i}]</a>
-												</c:otherwise>
-											</c:choose>
-										</c:forEach>
-										<!--다음 링크 -->
-										<c:if test="${cpage < pagecount}">
-											<a
-												href="boardList.user?boardname=${boardname}&cp=${cpage+1}&ps=${pagesize}&boardname=${boardname}">다음</a>
-										</c:if>
+									<!--페이징-->
+									<div class="blog-pagination">
+										<ul class="justify-content-center">
+											<c:if test="${pager.prev}">
+												<li>
+													<a href="/board/${boardname}?cpage=${pager.cri.page -1}">
+														<i class="bi bi-caret-left-fill"></i>
+													</a>
+												</li>
+											</c:if>
+											<!-- page 목록 나열하기 -->
+											<c:forEach var="i" begin="${pager.startPage}" end="${pager.endPage}" step="1">
+												<c:choose>
+													<c:when test="${pager.cri.page==i}">
+														<li class="active"><a href="#">${i}</a></li>
+													</c:when>
+													<c:otherwise>
+														<li><a href="/board/${boardname}?cpage=${i}">${i}</a></li>
+													</c:otherwise>
+												</c:choose>
+											</c:forEach>
+											<!--다음 링크 -->
+											<c:if test="${pager.next}">
+												<li>
+													<a href="/board/${boardname}?cpage=${pager.cri.page +1}">
+														<i class="bi bi-caret-right-fill"></i>
+													</a>
+												</li>
+											</c:if>
+										</ul>
 									</div>
 
 								</div>

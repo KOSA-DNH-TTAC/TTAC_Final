@@ -95,14 +95,45 @@
 
 									</c:forEach>
 
-									<div class="blog-pagination">
+									<!-- <div class="blog-pagination">
 										<ul class="justify-content-center">
 											<li><a href="#">1</a></li>
 											<li class="active"><a href="#">2</a></li>
 											<li><a href="#">3</a></li>
 										</ul>
+									</div> -->
+									<!--페이징-->
+									<div class="blog-pagination">
+										<ul class="justify-content-center">
+											<c:if test="${pager.prev}">
+												<li>
+													<a href="/board/${boardname}?cpage=${pager.cri.page -1}">
+														<i class="bi bi-caret-left-fill"></i>
+													</a>
+												</li>
+											</c:if>
+											<!-- page 목록 나열하기 -->
+											<c:forEach var="i" begin="${pager.startPage}" end="${pager.endPage}" step="1">
+												<c:choose>
+													<c:when test="${pager.cri.page==i}">
+														<li class="active"><a href="#">${i}</a></li>
+													</c:when>
+													<c:otherwise>
+														<li><a href="/board/${boardname}?cpage=${i}">${i}</a></li>
+													</c:otherwise>
+												</c:choose>
+											</c:forEach>
+											<!--다음 링크 -->
+											<c:if test="${pager.next}">
+												<li>
+													<a href="/board/${boardname}?cpage=${pager.cri.page +1}">
+														<i class="bi bi-caret-right-fill"></i>
+													</a>
+												</li>
+											</c:if>
+										</ul>
 									</div>
-									
+
 									<div class="d-grid gap-2 d-md-flex justify-content-md-end">
 									  <button type="submit" onclick="location.href='/boardWrite'" style="width:130px; height:20; border-radius: 50px; padding:5px; border: none; background-color:#E96B56; color:white; margin-top:10px; font-size: large;">글쓰기</button>
 									</div>

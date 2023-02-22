@@ -17,6 +17,7 @@ import org.springframework.security.core.context.SecurityContextHolder;
 import org.springframework.stereotype.Controller;
 import org.springframework.ui.Model;
 import org.springframework.web.bind.annotation.GetMapping;
+import org.springframework.web.bind.annotation.ModelAttribute;
 import org.springframework.web.bind.annotation.PathVariable;
 import org.springframework.web.bind.annotation.PostMapping;
 import org.springframework.web.bind.annotation.RequestParam;
@@ -31,6 +32,8 @@ import kr.or.kosa.dto.Product;
 import kr.or.kosa.security.User;
 import kr.or.kosa.service.BoardService;
 import kr.or.kosa.service.MemberService;
+import kr.or.kosa.utils.Criteria;
+import kr.or.kosa.utils.Pager;
 
 // 페이지 이동 Controller
 @Controller
@@ -53,8 +56,23 @@ public class BoardController {
 
 	// 기본 제공 게시판
 	@GetMapping("/board/{allBoard}")
-	public String allBoardView(Model model, @PathVariable String allBoard) {
+	public String allBoardView(Model model, @PathVariable String allBoard, @RequestParam(value="cpage", required=false, defaultValue= "0") String cpage) {
 
+		//널일 경우엔 그냥 default값으로 생성
+		//널 아니면 그 값으로 set 해서 사용
+		
+		//페이지 사이즈는 어차피 cri에서 고정이고
+		//파라미터로 현재 페이지만 받음
+		
+		Criteria cri = new Criteria();
+		//cp가 널이 아니면 cri에서 해당 페이지를 셋 함(page에)
+
+		if(!cpage.equals("0")) {
+			cri.setPage(Integer.parseInt(cpage));
+		}
+		System.out.println("cpage : " + cpage);
+		System.out.println(cri);
+		
 		String param = "";
 
 		if (allBoard.equals("noticeList")) {
@@ -69,18 +87,48 @@ public class BoardController {
 
 		String viewPage = "member/board/" + allBoard;
 
-		List<Post> allBoardList = boardService.allBoardList(param);
+		Pager pager = new Pager(cri);
+		int totalCount = boardService.totalCount(param);
+		System.out.println(totalCount);
+		pager.setTotalCount(totalCount);
+		
+//		System.out.println(pager);
+		
+		List<Post> allBoardList = boardService.allBoardList(param, cri);
 		model.addAttribute("allBoardList", allBoardList);
+		model.addAttribute("pager", pager);
+		model.addAttribute("boardname", allBoard);
 
 		return viewPage;
 	}
 
-	// 커스텀 생성 게시판
+
+//	 커스텀 생성 게시판
 	@GetMapping("/board/custom/{boardName}")
-	public String boardList(Model model, @PathVariable String boardName) {
-		List<Post> boardList = boardService.allBoardList(boardName);
+	public String boardList(Model model, @PathVariable String boardName, @RequestParam(value="cpage", required=false, defaultValue= "0") String cpage) {
+		
+		Criteria cri = new Criteria();
+		//cp가 널이 아니면 cri에서 해당 페이지를 셋 함(page에)
+
+		if(!cpage.equals("0")) {
+			cri.setPage(Integer.parseInt(cpage));
+		}
+		System.out.println("cpage : " + cpage);
+		System.out.println(cri);
+		
+		Pager pager = new Pager(cri);
+		int totalCount = boardService.totalCount(boardName);
+		System.out.println(totalCount);
+		pager.setTotalCount(totalCount);
+		
+		System.out.println(pager);
+		
+		
+		List<Post> boardList = boardService.allBoardList(boardName, cri);
 		model.addAttribute("boardList", boardList);
 		model.addAttribute("boardName", boardName);
+		model.addAttribute("pager", pager);
+		model.addAttribute("boardname", boardName); //페이징을 위한 이름
 
 		return "member/board/customBoardList";
 	}
@@ -237,10 +285,12 @@ public class BoardController {
 		
 		User user = (User) SecurityContextHolder.getContext().getAuthentication().getPrincipal();
 //		String param = "";
+		
 		String path = "";
 		String extension = "";
 		String url = "";
-		System.out.println("보드네임 : " + boardName);
+//		System.out.println("보드네임 : " + boardName);
+//		System.out.println("idx : " + idx);
 		List<Post> boardContent = boardService.boardContent(idx);
 		List<File> fileContent = boardService.fileContent(idx);
 		Product productContent = boardService.productContent(idx);

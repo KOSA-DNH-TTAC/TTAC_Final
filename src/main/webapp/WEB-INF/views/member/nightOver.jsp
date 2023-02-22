@@ -72,7 +72,6 @@
           <label class="label" for="start">시작 날짜</label>
           <label class="label" for="end">종료 날짜</label>
           <label class="label" for="end">신청 구분</label>
-          <label class="label" for="end">증빙 첨부</label>
         </div>
         <div id="select">
         <input class="form-select1 datepick" type="date" id="start" name="startDate" value="2000-10-04">
@@ -81,8 +80,6 @@
           <option value="11" selected>외박</option>
           <option value="12">장기외박</option>
         </select>
-        <label class="form-select1" for="file" style="background-color:#FFC107; border-radius: 9px; cursor: pointer; justify-content: center;">파일 업로드</label>
-        <input class="file" id="file" name="file" type="file" style="display:none;">
         </div>
         <div id="reason">
           <div class="form-floating">
@@ -90,7 +87,9 @@
           <label for="floatingTextarea2">외박 사유를 적어주세요.</label>
         </div>
         </div>
-        <button type="submit" class="btn btn-warning">신청하기</button>
+        <div style="display:flex; justify-content:center;">
+                <button type="submit" style="width:130px; height:20; border-radius: 50px; padding:5px; border: none; background-color:#E96B56; color:white; margin-top:30px; font-size: large;">신청하기</button>        
+        </div>
       </form>
       </div>
   </div>

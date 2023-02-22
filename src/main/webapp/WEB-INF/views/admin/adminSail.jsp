@@ -21,6 +21,8 @@
 <link href="/resources/assets/css/menu.css" rel="stylesheet">
 <link href="/resources/assets/css/category.css" rel="stylesheet">
 <link href="/resources/assets/css/graph.css" rel="stylesheet">
+ <!-- Apex Chart -->
+        <script src="https://cdn.jsdelivr.net/npm/apexcharts"></script>
 
 		<!-- <script type="text/javascript" src="resources/assets/js/pg_script.js"></script> -->
 		<!-- <script type="text/javascript" src="resources/assets/js/jquery-2.1.4.js"></script> -->
@@ -39,7 +41,80 @@
 		<!-- Jquery -->
 		<script src="http://code.jquery.com/jquery-latest.min.js"></script>
 
+<script>
+$(function(){
+	
+	var longsleepoverCount= []; //관리자 통계 장기 외박
+	var sleepoverCount= []; 	//관리자 통계 그냥 외박
+	var year = $('#selectyear').val();
+		
+		$.ajax({
+			type: "GET",
+			url: "/adminachart/sleepover",
+			data: {
+	               "year": year,
+	            },
+			contentType: "application/json; charset=UTF-8",
+			success: function (data) {
+				console.log(data);
+				
+				$.each(data, function(index, adminchart){
+					if(adminchart.status == 12){ //장기외박일 때
+						longsleepoverCount.push(adminchart.sleepoverCount);
+					}else if(adminchart.status == 11){ //외박일 때
+						sleepoverCount.push(adminchart.sleepoverCount);	
+					}
+					console.log("장기외박 :"+longsleepoverCount);
+					console.log("외박 : "+sleepoverCount);
+                })
+                
+                var options = {	
+			        series: [{
+			        	name: "외박",
+			            data: sleepoverCount,
+			        },{
+			        	name: "장기외박",
+			            data: longsleepoverCount,
+			        }],
+			        xaxis: {
+			            categories: [1,2,3,4,5,6,7,8,9,10,11,12]
+			          },
+			        chart: {
+			            type: 'line',
+			            height: 350
+			        },
+			        stroke: {
+			            curve: 'smooth',
+			        },
+			        dataLabels: {
+			            enabled: false
+			        },
+			        title: {
+			            text: '월별 외박 신청 현황',
+			            align: 'left'
+			        },
+			        markers: {
+			            hover: {
+			                sizeOffset: 4
+			            }
+			        }
+			    };
+				
+				 var chart = new ApexCharts(document.querySelector("#chart"), options);
+				    chart.render();
+                
+			},
+			error: function (request, status, error) {
+				console.log("에러")
+				console.log("code:" + request.status + "\n" + "message:" + request.responseText + "\n" + "error:" + error);
+			}
+		})
+});
 
+
+   /*  var chart = new ApexCharts(document.querySelector("#chart"), options);
+    chart.render(); */
+</script>
 <body class="">
 <div class="wrap">
          
@@ -134,10 +209,14 @@ $(document).ready(function(){
 <div class="nmbox mb">
    <div class="tit">
       <h3>월별 외박 신청 현황</h3>
-      <p>외박현황을 월별로 살펴볼 수 있으며, 차트를 통해 수치를 살펴볼 수 있습니다.</p>
+      <p>외박, 장기외박현황을 월별로 살펴볼 수 있으며, 차트를 통해 수치를 살펴볼 수 있습니다.</p>
+      연도 선택 : <select id="selectyear" style="text-align:center; width:100px;">
+      	<option value="2023" selected>2023</option>
+      	<option value="2022">2022</option>
+      </select>
    </div>
    <div class="contents">
-      <img src="/resources/assets/img/graph01.jpg" width="100%"/>
+      <div id="chart"></div>
    </div>
 </div>
 
@@ -269,19 +348,4 @@ $(document).ready(function(){
 
 
 </body>
-<!-- litebox 
-		<script type="text/javascript" src="resources/assets/js/hs_draggable.js"></script>
-		<script type="text/javascript" src="resources/assets/js/jquery-ui.min.js"></script>
-		<link rel="stylesheet" media="all" href="/resources/assets/css/litebox.css" />
-		<script type="text/javascript" src="resources/assets/js/litebox.js"></script>
-		<script type="text/javascript" src="resources/assets/js/backbone.js"></script>
-		<script type="text/javascript" src="resources/assets/js/images-loaded.min.js"></script>
-		<script type="text/javascript">
-			$('.litebox').liteBox();
-		</script>
- litebox -->
-   
-   
-
-
 </html>
