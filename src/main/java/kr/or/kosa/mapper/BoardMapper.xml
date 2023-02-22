@@ -33,7 +33,7 @@ PUBLIC "-//mybatis.org//DTD Mapper 3.0//EN"
 	<select id="totalPostCount" resultType="int">
 		SELECT COUNT(boardidx)
 		from POST
-		WHERE boardname=#{boardname} AND universitycode=#{universitycode}
+		WHERE boardname=#{boardname} AND universitycode=#{universitycode} AND status='21'
 	</select>
 	
 	<!-- 게시판 boardidx 가져오기 -->
