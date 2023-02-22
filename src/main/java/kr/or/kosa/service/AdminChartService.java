@@ -51,7 +51,7 @@ public class AdminChartService {
 		return list;
 	}
 	
-	//월별 외박 통계
+	//월별 사용자 포인트 충전 통계
 		public List<AdminChart> getMontlyPoint(int year){
 			User user = (User) SecurityContextHolder.getContext().getAuthentication().getPrincipal();
 			String universityCode = user.getUniversityCode();
@@ -67,7 +67,7 @@ public class AdminChartService {
 			adminChart.setUniversityCode(universityCode);
 			adminChart.setYear(year);
 			try {
-				list = dao.adminMonthlySleepover(adminChart);
+				list = dao.getMontlyPoint(adminChart);
 				System.out.println("list : "+list);
 			} catch (Exception e) {
 				e.printStackTrace();

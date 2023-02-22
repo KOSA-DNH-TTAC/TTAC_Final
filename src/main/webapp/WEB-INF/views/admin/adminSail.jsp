@@ -48,7 +48,6 @@ $(function(){
 	var sleepoverCount= []; 	//관리자 통계 그냥 외박
 	var sleepoverMonth= []; 	//관리자 통계 외박 달
 	var year = $('#selectyear').val();
-	var year1 = $('#selectyear1').val();
 		
 		$.ajax({
 			type: "GET",
@@ -59,7 +58,7 @@ $(function(){
 			contentType: "application/json; charset=UTF-8",
 			success: function (data) {
 				// console.log(data);
-				
+				$('#chart').empty();
 				$.each(data, function(index, adminchart){
 
 						longsleepoverCount.push(adminchart.longsleepoverCount);
@@ -117,36 +116,44 @@ $(function(){
 		/* 월별 외박 통계 END */
 		
 		/* 포인트 결제 차트 */
-		/* $.ajax({
+		var pointyear = $('#selectyear1').val();
+		var payCount =[];
+		var chargeCount = [];
+		var chargeMember = [];
+		var payMonth= []; 
+		 $.ajax({
 			type: "GET",
 			url: "/adminachart/point",
 			data: {
-	               "year": year1,
+	               "pointyear": pointyear,
 	            },
 			contentType: "application/json; charset=UTF-8",
 			success: function (data) {
 				console.log(data);
-				
+				$('#pointchart').empty();
 				$.each(data, function(index, adminchart){
-					if(adminchart.status == 12){ //장기외박일 때
-						longsleepoverCount.push(adminchart.sleepoverCount);
-					}else if(adminchart.status == 11){ //외박일 때
-						sleepoverCount.push(adminchart.sleepoverCount);	
-					}
-					console.log("결제자 수 :"+longsleepoverCount);
-					console.log("총 결제금액 : "+sleepoverCount);
+
+					chargeCount.push(adminchart.chargeMount);
+					chargeMember.push(adminchart.chargeCount);
+					payCount.push(adminchart.payMount);	
+					payMonth.push(adminchart.month);
+					console.log("충전금액 :"+chargeCount);
+					console.log("사용금액 : "+payCount);
                 })
                 
                 var options = {	
 			        series: [{
-			        	name: "결제자 수",
-			            data: sleepoverCount,
+			        	name: "충전금액",
+			            data: chargeCount,
 			        },{
-			        	name: "결제금액",
-			            data: longsleepoverCount,
+			        	name: "사용금액",
+			            data: payCount,
+			        },{
+			        	name: "포인트충전 횟수",
+			            data: chargeMember,
 			        }],
 			        xaxis: {
-			            categories: [1,2,3,4,5,6,7,8,9,10,11,12]
+			            categories: payMonth,
 			          },
 			        chart: {
 			            type: 'line',
@@ -177,8 +184,68 @@ $(function(){
 				console.log("에러")
 				console.log("code:" + request.status + "\n" + "message:" + request.responseText + "\n" + "error:" + error);
 			}
-		}) */
+		}) 
+		/* 포인트결제 차트 END */
+	
+		/* 포인트 충전자 수 */
+		var memberpointyear = $('#selectyear2').val();
+		var chargeMember2= [];
+		var paymemberMonth= []; 
+		 $.ajax({
+			type: "GET",
+			url: "/adminachart/pointmember",
+			data: {
+	               "memberpointyear": memberpointyear,
+	            },
+			contentType: "application/json; charset=UTF-8",
+			success: function (data) {
+				console.log(data);
+				$('#memberpointchart').empty();
+				$.each(data, function(index, adminchart){
 
+					chargeMember2.push(adminchart.chargeCount);
+					paymemberMonth.push(adminchart.month);
+                })
+                
+                var options = {	
+			        series: [{
+			        	name: "결제자 수",
+			            data: chargeMember2,
+			        }],
+			        xaxis: {
+			            categories: paymemberMonth,
+			          },
+			        chart: {
+			            type: 'line',
+			            height: 350
+			        },
+			        stroke: {
+			            curve: 'smooth',
+			        },
+			        dataLabels: {
+			            enabled: false
+			        },
+			        title: {
+			            text: data[0].year+' 월별 포인트 결제자 수',
+			            align: 'left'
+			        },
+			        markers: {
+			            hover: {
+			                sizeOffset: 4
+			            }
+			        }
+			    };
+				
+				 var memberpointchart = new ApexCharts(document.querySelector("#memberpointchart"), options);
+				 memberpointchart.render();
+                
+			},
+			error: function (request, status, error) {
+				console.log("에러")
+				console.log("code:" + request.status + "\n" + "message:" + request.responseText + "\n" + "error:" + error);
+			}
+		}) 
+		
       //커뮤니티
 
       let month = [];
@@ -194,7 +261,7 @@ $(function(){
 			contentType: "application/json; charset=UTF-8",
 			success: function (result) {
 				console.log(result);
-				
+				$('#chartHj').empty();
             $.each(result, function(index, adminchart){
                month.push(adminchart.month);
                postCount.push(adminchart.postCount);
@@ -336,9 +403,225 @@ function sleepoverchart(){
 	})
 }
 
+function pointChart(){
+	var pointyear = $('#selectyear1').val();
+	var payCount =[];
+	var chargeCount = [];
+	var chargeMember = [];
+	var payMonth= []; 
+	 $.ajax({
+		type: "GET",
+		url: "/adminachart/point",
+		data: {
+               "pointyear": pointyear,
+            },
+		contentType: "application/json; charset=UTF-8",
+		success: function (data) {
+			console.log(data);
+			$('#pointchart').empty();
+			$.each(data, function(index, adminchart){
 
-   /*  var chart = new ApexCharts(document.querySelector("#chart"), options);
-    chart.render(); */
+				chargeCount.push(adminchart.chargeMount);
+				chargeMember.push(adminchart.chargeCount);
+				payCount.push(adminchart.payMount);	
+				payMonth.push(adminchart.month);
+				console.log("충전금액 :"+chargeCount);
+				console.log("사용금액 : "+payCount);
+            })
+            
+            var options = {	
+		        series: [{
+		        	name: "충전금액",
+		            data: chargeCount,
+		        },{
+		        	name: "사용금액",
+		            data: payCount,
+		        }],
+		        xaxis: {
+		            categories: payMonth,
+		          },
+		        chart: {
+		            type: 'line',
+		            height: 350
+		        },
+		        stroke: {
+		            curve: 'smooth',
+		        },
+		        dataLabels: {
+		            enabled: false
+		        },
+		        title: {
+		            text: data[0].year+' 월별 포인트 결제자 수 및 월별 결제금액',
+		            align: 'left'
+		        },
+		        markers: {
+		            hover: {
+		                sizeOffset: 4
+		            }
+		        }
+		    };
+			
+			 var pointchart = new ApexCharts(document.querySelector("#pointchart"), options);
+			 pointchart.render();
+            
+		},
+		error: function (request, status, error) {
+			console.log("에러")
+			console.log("code:" + request.status + "\n" + "message:" + request.responseText + "\n" + "error:" + error);
+		}
+	})
+}
+
+//포인트 충전자 수
+function memberpointchart(){
+	var memberpointyear = $('#selectyear2').val();
+	var chargeMember = [];
+	var payMonth= []; 
+	 $.ajax({
+		type: "GET",
+		url: "/adminachart/pointmember",
+		data: {
+               "memberpointyear": memberpointyear,
+            },
+		contentType: "application/json; charset=UTF-8",
+		success: function (data) {
+			console.log(data);
+			$('#memberpointchart').empty();
+			$.each(data, function(index, adminchart){
+
+				chargeMember.push(adminchart.chargeCount);
+				payMonth.push(adminchart.month);
+            })
+            
+            var options = {	
+		        series: [{
+		        	name: "결제자 수",
+		            data: chargeMember,
+		        }],
+		        xaxis: {
+		            categories: payMonth,
+		          },
+		        chart: {
+		            type: 'line',
+		            height: 350
+		        },
+		        stroke: {
+		            curve: 'smooth',
+		        },
+		        dataLabels: {
+		            enabled: false
+		        },
+		        title: {
+		            text: data[0].year+' 월별 포인트 결제자 수',
+		            align: 'left'
+		        },
+		        markers: {
+		            hover: {
+		                sizeOffset: 4
+		            }
+		        }
+		    };
+			
+			 var memberpointchart = new ApexCharts(document.querySelector("#memberpointchart"), options);
+			 memberpointchart.render();
+            
+		},
+		error: function (request, status, error) {
+			console.log("에러")
+			console.log("code:" + request.status + "\n" + "message:" + request.responseText + "\n" + "error:" + error);
+		}
+	}) 
+}
+
+//커뮤니티 통계
+function community(){
+	let month = [];
+    let postCount = [];
+    let replyCount = [];
+    var communityyear = $('#selectyear3').val();
+
+    $.ajax({
+			type: "GET",
+			url: "/adminchart/community",
+			data: {
+	               "year": communityyear,
+	            },
+			contentType: "application/json; charset=UTF-8",
+			success: function (result) {
+				console.log(result);
+				$('#chartHj').empty();
+          $.each(result, function(index, adminchart){
+             month.push(adminchart.month);
+             postCount.push(adminchart.postCount);
+             replyCount.push(adminchart.replyCount);
+          })
+				
+          var options = {	
+                   series: [{
+                      name: "글",
+                      data: postCount,
+                      type: 'bar',
+                   },{
+                      name: "댓글",
+                      data: replyCount,
+                      type: 'line',
+                   }],
+                   xaxis: {
+                      categories: month
+                   },
+                   chart: {
+                      height: 350
+                   },
+                   stroke: {
+                      curve: 'smooth',
+                      width: [0, 4]
+                   },
+                   dataLabels: {
+                      enabled: false
+                   },
+                   title: {
+                      text: '월별 커뮤니티 현황',
+                      align: 'left'
+                   },
+                   markers: {
+                      hover: {
+                            sizeOffset: 4
+                      }
+                   },
+                   plotOptions: {
+                      bar: {
+                            columnWidth: '50%',
+                            endingShape: 'flat',
+                            colors: {
+                            ranges: [{
+                               from: 0,
+                               to: 0,
+                               color: '#008FFB'
+                            }]
+                            },
+                            dataLabels: {
+                               position: 'top',
+                            },
+                            border: {
+                               width: 0,
+                               radius: 4
+                            },
+                      }
+                   }
+                };
+
+
+				 var chart = new ApexCharts(document.querySelector("#chartHj"), options);
+				 chart.render();
+              
+			},
+			error: function (request, status, error) {
+				console.log("에러")
+				console.log("code:" + request.status + "\n" + "message:" + request.responseText + "\n" + "error:" + error);
+			}
+		})
+}
+
 </script>
 <body class="">
 <div class="wrap">
@@ -421,15 +704,7 @@ $(document).ready(function(){
 </div>   <div class="con">
       <h3 class="sub_h3">통계관리 <span>통계자료</span></h3>
 
-<div class="bgtab bgtab2">
-   <div class="w50 fl">
-            <input class="form-select1" type="date" id="start" name="trip-start" value="2000-10-04">
-             - <input class="form-select1" type="date" id="end" name="trip-start" value="2000-10-04">&nbsp;&nbsp;
-            <ul class="dpi_li dpi">
-               <li><a href="#" class="btn_sumit">전체</a></li>
-            </ul>
-   </div>
-</div>
+
 
 <div class="nmbox mb">
    <div class="tit">
@@ -454,7 +729,7 @@ $(document).ready(function(){
       	<option value="2023" selected>2023</option>
       	<option value="2022">2022</option>
       </select>
-      <button id="yearsubmit" class="btn_sumit" onclick="sleepoverchart()">선택</button>
+      <button id="yearsubmit" class="btn_sumit" onclick="pointChart()">선택</button>
    </div>
    <div class="contents">
       <div id="pointchart"></div>
@@ -463,11 +738,16 @@ $(document).ready(function(){
 
 <div class="nmbox mb">
    <div class="tit">
-      <h3>일별 사용율</h3>
-      <p>포인트 및 사용율을 일별로 살펴볼 수 있습니다.</p>
+      <h3>월별 포인트 결제 사용자 수</h3>
+      <p>포인트 충전자 수를 월별로 살펴볼 수 있습니다.</p>
+       연도 선택 : <select id="selectyear2" style="text-align:center; width:100px;">
+      	<option value="2023" selected>2023</option>
+      	<option value="2022">2022</option>
+      </select>
+      <button id="yearsubmit" class="btn_sumit" onclick="memberpointchart()">선택</button>
    </div>
    <div class="contents">
-      <img src="/resources/assets/img/graph03.jpg" width="100%"/>
+      <div id="memberpointchart"></div>
    </div>
 </div>
 
@@ -475,6 +755,11 @@ $(document).ready(function(){
    <div class="tit">
       <h3>월별 커뮤니티</h3>
       <p>우리학교 게시판에 올라온 글 수와 댓글 수를 월 별로 살펴볼 수 있습니다.</p>
+       연도 선택 : <select id="selectyear3" style="text-align:center; width:100px;">
+      	<option value="2023" selected>2023</option>
+      	<option value="2022">2022</option>
+      </select>
+      <button id="yearsubmit" class="btn_sumit" onclick="community()">선택</button>
    </div>
    <div class="contents">
       <div id="chartHj"></div>
