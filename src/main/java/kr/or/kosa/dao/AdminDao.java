@@ -3,6 +3,8 @@ package kr.or.kosa.dao;
 import java.util.List;
 import java.util.Map;
 
+import org.apache.ibatis.annotations.Param;
+
 import kr.or.kosa.dto.Cafeteria;
 import kr.or.kosa.dto.DemeritHistory;
 import kr.or.kosa.dto.Member;
@@ -34,6 +36,8 @@ public interface AdminDao {
 	// 일일 점호 회원 조회
 	public List<RollCall> getAllRollCallMember(RollCall rollcall);
 	
+	// 일일 점호 안한 회원 조회
+	public List<Member> getNotRollCall(@Param("date")String date, @Param("universitycode")String universitycode, @Param("domitoryname")String domitoryname);
 	
 	
 	// 시설 조회

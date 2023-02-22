@@ -261,5 +261,14 @@ public class AdminService {
 		list = dao.getAllRollCallMember(rollCall);
 		return list;
 	}
+	
+	//일일 점호 안한 놈
+	public List<Member> getNotRollCall(String universitycode, String domitoryName,String rollCallDate){
+		List<Member> list = new ArrayList<Member>();
+		AdminDao dao = sqlsession.getMapper(AdminDao.class);
+		list = dao.getNotRollCall(rollCallDate, universitycode, domitoryName);
+		return list;
+	}
+	
 
 }
