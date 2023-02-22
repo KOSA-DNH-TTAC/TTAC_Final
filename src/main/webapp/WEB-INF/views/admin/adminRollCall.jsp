@@ -147,34 +147,15 @@ $(document).ready(function(){
 function search(){
 	/* 선택한 날짜 값 가져오기 */
 	var start = $('#start').val();
-	var end = $('#end').val();
-	var data = [start,end];
-	var tabledata = "";
-	console.log(start+"/"+end);
+	console.log(start);
 	$.ajax({
-		type : "POST",
-		url : "/adminAnalyze/searchDate",
-		//contentType: "application/x-www-form-urlencoded; charset=UTF-8",
-		data : {
-			"data" : data,
-		}, 
-		success : function(data) {
-			 $.each(data, function(index) {
-	                tabledata +=
-	                	'<tr class="tar">'+
-		    			'<td class="tac bgc">'+data[index].facilityDate+'</td>'+
-		    			'<td style="text-align: center;">'+data[index].domitoryName+'</td>'+
-		    			'<td style="text-align: center;">'+data[index].domitoryFloor+'</td>'+
-		    			'<td style="text-align: center;">'+data[index].facilityName+'</td>'+
-		    			'<td style="text-align: center;">'+data[index].name+'</td>'+
-		    			'<td style="text-align: center;">'+data[index].facilityReport+' </td>'+
-		    		'</tr>'
-	                    })
-			$('#table').empty();
-			$('#table').append(tabledata);
+		type : "GET",
+		url : "/admin/allRollCallMember?date=" + start,
+		success : function(result) {
+			result;
 		},
 		error : function(data) {
-			alert("시설물 신고 데이터 불러오기 실패");
+			console.log("실패")
 		}
 	});
 }
