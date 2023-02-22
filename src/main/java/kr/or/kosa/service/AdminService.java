@@ -254,7 +254,11 @@ public class AdminService {
 	public List<RollCall> getAllRollCallMember(String universitycode, String domitoryName,String rollCallDate){
 		List<RollCall> list = new ArrayList<RollCall>();
 		AdminDao dao = sqlsession.getMapper(AdminDao.class);
-		list = dao.getAllRollCallMember(universitycode,domitoryName,rollCallDate);
+		RollCall rollCall = new RollCall();
+		rollCall.setDomitoryName(domitoryName);
+		rollCall.setUniversityCode(universitycode);
+		rollCall.setRollCallDate(rollCallDate);
+		list = dao.getAllRollCallMember(rollCall);
 		return list;
 	}
 
