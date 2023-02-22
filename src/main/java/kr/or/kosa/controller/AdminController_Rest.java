@@ -275,6 +275,36 @@ public class AdminController_Rest {
 		cafeteriaService.deleteMenu(menuidx);
 	}
 	
+	
+	
+	// 관리자 점호 회원  조회
+	@RequestMapping("/admin/onallRollCallMember")
+	public ResponseEntity<List<RollCall>> getOnAllRollCallMember() {
+		System.out.println("점호 컨트롤러");
+		User user = (User) SecurityContextHolder.getContext().getAuthentication().getPrincipal();
+		String universitycode = user.getUniversityCode();
+		String domitoryName = user.getDomitoryName();
+		System.out.println("sㄴㅇㄹㄴㅇㄹ 2");
+		System.out.println("기숙사 : "+domitoryName);
+		
+		// 현재 날짜/시간
+		Date now = new Date();
+		// 포맷팅 정의
+		SimpleDateFormat formatter = new SimpleDateFormat("yyyy-MM-dd");
+		// 포맷팅 적용
+		String date = formatter.format(now);
+		System.out.println("date : "+date);
+		
+		List<RollCall> list = adminService.getAllRollCallMember(universitycode,domitoryName,date);
+		System.out.println("list : "+list);
+		try {
+			return new ResponseEntity<List<RollCall>>(list, HttpStatus.OK);
+		} catch (Exception e) {
+			return new ResponseEntity<List<RollCall>>(list, HttpStatus.BAD_REQUEST);
+		}
+	}
+	
+	
 	// 관리자 점호 회원  조회
 		@RequestMapping("/admin/allRollCallMember")
 		public ResponseEntity<List<RollCall>> getAllRollCallMember(@RequestParam String date) {

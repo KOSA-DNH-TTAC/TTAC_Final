@@ -14,7 +14,6 @@
 <meta http-equiv="X-UA-Compatible" content="IE=edge"/>
 <meta http-equiv="Expires" content="-1" /> 
 
-<link rel="shortcut icon" href="../img/favicon.png" type="image/x-icon" />
 <link href="/resources/assets/css/font.css" rel="stylesheet">
 <link href="/resources/assets/css/font-awesome.css" rel="stylesheet">
 <link href="/resources/assets/css/style2.css" rel="stylesheet">
@@ -120,13 +119,11 @@ $(document).ready(function () {
 //화면 로딩시 점호 리스트 출력
 $(document).ready(function(){
 	var tabledata = "";
-	var date = $('#nowdate').attr('value');
-	console.log("date :"+date);
 	$.ajax({
 		type : "POST",
-		url : "/admin/allRollCallMember",
+		url : "/admin/onallRollCallMember",
 		success : function(data) {
-			console.log("data : "+data);
+			console.log("ondata : "+data);
 			 $.each(data, function(index) {
 	                tabledata +=
 	                	'<tr class="tar">'+
@@ -142,6 +139,7 @@ $(document).ready(function(){
 			alert(data+": 로드 실패");
 		}
 	});
+	notcall();
 });
 
 //날짜별로 검색
@@ -210,6 +208,35 @@ function notcall(){
 	});
 }
 
+function todaysearch(){
+	var tabledata = "";
+	$.ajax({
+		type : "POST",
+		url : "/admin/onallRollCallMember",
+		success : function(data) {
+			console.log("ondata : "+data);
+			 $.each(data, function(index) {
+	                tabledata +=
+	                	'<tr class="tar">'+
+			    			'<td class="tac bgc">'+data[index].rollCallDate+'</td>'+
+			    			'<td style="text-align: center;">'+data[index].memberId+'</td>'+
+			    			'<td style="text-align: center;">'+data[index].domitoryName+'</td>'+
+			    		'</tr>'
+	                    })
+			$('#table').empty();
+			$('#table').append(tabledata);
+			$('#whichdate').empty();
+			$('#whichdate').append("검색 날짜 [" + data[0].rollCallDate + "]");
+			$('#start').empty();
+			$('#start').attr(value, data[0].rollCallDate)
+		},
+		error : function(data) {
+			alert(data+": 로드 실패");
+		}
+	});
+	notcall();
+}
+
 function execution(){
 	//벌점 부여 ajax
 	console.log(notCallMembers);
@@ -266,10 +293,18 @@ function execution(){
 				</ul>
 			</td>				
 		</tr>	
+		<%
+		// 현재 날짜/시간
+		Date now = new Date();
+		// 포맷팅 정의
+		SimpleDateFormat formatter = new SimpleDateFormat("yyyy-MM-dd");
+		// 포맷팅 적용
+		String date = formatter.format(now);
+		%>	
 		<tr>
 			<th>기간</th>
 			<td colspan="3">
-				<input class="form-select1" type="date" id="start" name="trip-start" value="연도-월-일">
+				<input class="form-select1" type="date" id="start" name="trip-start" value="<%=date%>">
 				<ul class="dpi_li dpi">
 					<li><button id="today" onclick="todaysearch()" class="btn_sumit">오늘 날짜</button></li>
 					<li><button type="button" class="btn_sumit2" onclick="search(); notcall()">검색</button></li>
@@ -282,16 +317,7 @@ function execution(){
 			<li><button type="button" class="btn_sumit2" onclick="search()">검색</button></li>
 		</ul> -->
 	</div>	
-</div>
-
-<%
-		// 현재 날짜/시간
-		Date now = new Date();
-		// 포맷팅 정의
-		SimpleDateFormat formatter = new SimpleDateFormat("yyyy-MM-dd");
-		// 포맷팅 적용
-		String date = formatter.format(now);
-		%>		
+</div>	
 <div class="ofh">
 	<div class="halfcon mr">
 		<h4 class="bgtab bgtab2">외박이력	<p id="whichdate" class="txtin wtTxt fsbb">오늘 <%=date%> </p></h4>
