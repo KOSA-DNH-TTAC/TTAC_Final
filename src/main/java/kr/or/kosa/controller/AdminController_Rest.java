@@ -282,14 +282,7 @@ public class AdminController_Rest {
 			User user = (User) SecurityContextHolder.getContext().getAuthentication().getPrincipal();
 			String universitycode = user.getUniversityCode();
 			String domitoryName = user.getDomitoryName();
-			System.out.println("wjaghzjsxmfhffj 2");
-			
-			// 현재 날짜/시간
-			Date now = new Date();
-			// 포맷팅 정의
-			SimpleDateFormat formatter = new SimpleDateFormat("yyyy-MM-dd");
-			// 포맷팅 적용
-			String date = formatter.format(now);
+			System.out.println("날짜 : " + date);
 			
 			List<RollCall> list = adminService.getAllRollCallMember(universitycode,domitoryName,date);
 			try {

@@ -144,108 +144,42 @@ $(document).ready(function(){
 	});
 });
 
-//날짜별로 정렬하기
+//날짜별로 검색
 function search(){
 	/* 선택한 날짜 값 가져오기 */
 	var start = $('#start').val();
-	var end = $('#end').val();
-	var data = [start,end];
-	var tabledata = "";
-	console.log(start+"/"+end);
+	console.log(start);
 	$.ajax({
-		type : "POST",
-		url : "/adminAnalyze/searchDate",
-		//contentType: "application/x-www-form-urlencoded; charset=UTF-8",
-		data : {
-			"data" : data,
-		}, 
-		success : function(data) {
-			 $.each(data, function(index) {
-	                tabledata +=
-	                	'<tr class="tar">'+
-		    			'<td class="tac bgc">'+data[index].facilityDate+'</td>'+
-		    			'<td style="text-align: center;">'+data[index].domitoryName+'</td>'+
-		    			'<td style="text-align: center;">'+data[index].domitoryFloor+'</td>'+
-		    			'<td style="text-align: center;">'+data[index].facilityName+'</td>'+
-		    			'<td style="text-align: center;">'+data[index].name+'</td>'+
-		    			'<td style="text-align: center;">'+data[index].facilityReport+' </td>'+
-		    		'</tr>'
-	                    })
+		type : "GET",
+		url : "/admin/allRollCallMember?date=" + start,
+		success : function(result) {
+			console.log("성공");
+			console.log(result);
+
+			$('#whichdate').empty();
+			$('#whichdate').append("검색 날짜 [" + start + "]");
+
 			$('#table').empty();
-			$('#table').append(tabledata);
+			let contents = ``
+			//table에 추가
+			$.each(result, function(index, rollcall){
+				console.log(rollcall);
+				contents += `<tr>
+								<td  style="text-align: center">` + rollcall.rollCallDate  + `</td>
+								<td style="text-align: center">` + rollcall.memberId + `</td>
+								<td style="text-align: center">` + rollcall.domitoryName + `</td>
+							</tr>`
+			})
+			
+			$('#table').append(contents);
 		},
 		error : function(data) {
-			alert("시설물 신고 데이터 불러오기 실패");
+			console.log("실패")
 		}
 	});
 }
 
-//오늘날짜 목록 가져오기
-function todaysearch(){
-	/* 선택한 날짜 값 가져오기 */
-	var data = ["today","today"];
-	var tabledata = "";
-	console.log(today);
-	$.ajax({
-		type : "POST",
-		url : "/adminAnalyze/searchDate",
-		//contentType: "application/x-www-form-urlencoded; charset=UTF-8",
-		data : {
-			"data" : data,
-		}, 
-		success : function(data) {
-			 $.each(data, function(index) {
-	                tabledata +=
-	                	'<tr class="tar">'+
-		    			'<td style="text-align: center;">'+data[index].facilityDate+'</td>'+ 
-		    			'<td style="text-align: center;">'+data[index].domitoryName+'</td>'+
-		    			'<td style="text-align: center;">'+data[index].domitoryFloor+'</td>'+
-		    			'<td style="text-align: center;">'+data[index].facilityName+'</td>'+
-		    			'<td style="text-align: center;">'+data[index].name+'</td>'+
-		    			'<td style="text-align: center;">'+data[index].facilityReport+'</td>'+
-		    		'</tr>'
-	                    })
-			$('#table').empty();
-			$('#table').append(tabledata);
-		},
-		error : function(data) {
-			alert("시설물 신고 데이터 불러오기 실패");
-		}
-	});
-}
-//이름으로 정렬하기
-function likesearch(){
-	/* 선택한 날짜 값 가져오기 */
-	var data = $('#likesearch').val();
-	var tabledata = "";
-	console.log(today);
-	$.ajax({
-		type : "POST",
-		url : "/adminAnalyze/likesearch",
-		//contentType: "application/x-www-form-urlencoded; charset=UTF-8",
-		data : {
-			"data" : data,
-		}, 
-		success : function(data) {
-			 $.each(data, function(index) {	 
-	                tabledata +=
-	                	'<tr class="tar">'+
-		    			'<td style="text-align: center;">'+data[index].facilityDate+'</td>'+ 
-		    			'<td style="text-align: center;">'+data[index].domitoryName+'</td>'+
-		    			'<td style="text-align: center;">'+data[index].domitoryFloor+'</td>'+
-		    			'<td style="text-align: center;">'+data[index].facilityName+'</td>'+
-		    			'<td style="text-align: center;">'+data[index].name+'</td>'+
-		    			'<td style="text-align: center;">'+data[index].facilityReport+'</td>'+
-		    		'</tr>'
-	                    })
-			$('#table').empty();
-			$('#table').append(tabledata);
-		},
-		error : function(data) {
-			alert("시설물 신고 데이터 불러오기 실패");
-		}
-	});
-}
+
 </script>
 
 
