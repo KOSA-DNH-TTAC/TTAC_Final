@@ -255,6 +255,7 @@ public class AdminService {
 		List<RollCall> list = new ArrayList<RollCall>();
 		AdminDao dao = sqlsession.getMapper(AdminDao.class);
 		list = dao.getAllRollCallMember(universitycode,domitoryName,rollCallDate);
+		System.out.println(list);
 		return list;
 	}
 
