@@ -46,7 +46,7 @@ $(function(){
 	
 	var longsleepoverCount= []; //관리자 통계 장기 외박
 	var sleepoverCount= []; 	//관리자 통계 그냥 외박
-	var year = "2023";
+	var year = $('#selectyear').val();
 		
 		$.ajax({
 			type: "GET",
@@ -210,6 +210,10 @@ $(document).ready(function(){
    <div class="tit">
       <h3>월별 외박 신청 현황</h3>
       <p>외박, 장기외박현황을 월별로 살펴볼 수 있으며, 차트를 통해 수치를 살펴볼 수 있습니다.</p>
+      연도 선택 : <select id="selectyear" style="text-align:center; width:100px;">
+      	<option value="2023" selected>2023</option>
+      	<option value="2022">2022</option>
+      </select>
    </div>
    <div class="contents">
       <div id="chart"></div>
@@ -344,19 +348,4 @@ $(document).ready(function(){
 
 
 </body>
-<!-- litebox 
-		<script type="text/javascript" src="resources/assets/js/hs_draggable.js"></script>
-		<script type="text/javascript" src="resources/assets/js/jquery-ui.min.js"></script>
-		<link rel="stylesheet" media="all" href="/resources/assets/css/litebox.css" />
-		<script type="text/javascript" src="resources/assets/js/litebox.js"></script>
-		<script type="text/javascript" src="resources/assets/js/backbone.js"></script>
-		<script type="text/javascript" src="resources/assets/js/images-loaded.min.js"></script>
-		<script type="text/javascript">
-			$('.litebox').liteBox();
-		</script>
- litebox -->
-   
-   
-
-
 </html>
