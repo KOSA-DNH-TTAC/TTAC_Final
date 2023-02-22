@@ -56,7 +56,7 @@ public class BoardController {
 
 	// 기본 제공 게시판
 	@GetMapping("/board/{allBoard}")
-	public String allBoardView(Model model, @PathVariable String allBoard,@RequestParam(value="cpage", required=false, defaultValue= "0") String cpage) {
+	public String allBoardView(Model model, @PathVariable String allBoard, @RequestParam(value="cpage", required=false, defaultValue= "0") String cpage) {
 
 		//널일 경우엔 그냥 default값으로 생성
 		//널 아니면 그 값으로 set 해서 사용
@@ -68,7 +68,6 @@ public class BoardController {
 		//cp가 널이 아니면 cri에서 해당 페이지를 셋 함(page에)
 
 		if(!cpage.equals("0")) {
-			System.out.println("ㅋㅋ~~");
 			cri.setPage(Integer.parseInt(cpage));
 		}
 		System.out.println("cpage : " + cpage);
@@ -93,7 +92,7 @@ public class BoardController {
 		System.out.println(totalCount);
 		pager.setTotalCount(totalCount);
 		
-		System.out.println(pager);
+//		System.out.println(pager);
 		
 		List<Post> allBoardList = boardService.allBoardList(param, cri);
 		model.addAttribute("allBoardList", allBoardList);
@@ -102,23 +101,37 @@ public class BoardController {
 
 		return viewPage;
 	}
-	
-	//페이징 된 게시판 ...
 
-	@GetMapping("/listPage")
-	public void listPage(Criteria cri, Model model){
+
+//	 커스텀 생성 게시판
+	@GetMapping("/board/custom/{boardName}")
+	public String boardList(Model model, @PathVariable String boardName, @RequestParam(value="cpage", required=false, defaultValue= "0") String cpage) {
 		
-	}
+		Criteria cri = new Criteria();
+		//cp가 널이 아니면 cri에서 해당 페이지를 셋 함(page에)
 
-	// 커스텀 생성 게시판
-//	@GetMapping("/board/custom/{boardName}")
-//	public String boardList(Model model, @PathVariable String boardName) {
-//		List<Post> boardList = boardService.allBoardList(boardName);
-//		model.addAttribute("boardList", boardList);
-//		model.addAttribute("boardName", boardName);
-//
-//		return "member/board/customBoardList";
-//	}
+		if(!cpage.equals("0")) {
+			cri.setPage(Integer.parseInt(cpage));
+		}
+		System.out.println("cpage : " + cpage);
+		System.out.println(cri);
+		
+		Pager pager = new Pager(cri);
+		int totalCount = boardService.totalCount(boardName);
+		System.out.println(totalCount);
+		pager.setTotalCount(totalCount);
+		
+		System.out.println(pager);
+		
+		
+		List<Post> boardList = boardService.allBoardList(boardName, cri);
+		model.addAttribute("boardList", boardList);
+		model.addAttribute("boardName", boardName);
+		model.addAttribute("pager", pager);
+		model.addAttribute("boardname", boardName); //페이징을 위한 이름
+
+		return "member/board/customBoardList";
+	}
 	
 	// 게시판 글쓰기
 	@GetMapping("/board/custom/{boardName}/write")
