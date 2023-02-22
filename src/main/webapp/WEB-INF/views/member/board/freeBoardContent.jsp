@@ -99,8 +99,7 @@
 															<div id="idx" style="display:none">${boardContent.idx}</div>
 															<ul>
 																<li class="d-flex align-items-center"><i
-																		class="bi bi-person"></i><a
-																		value="${boardContent.memberId}">익명</a></li>
+																		class="bi bi-person"></i>익명</li>
 																<li class="d-flex align-items-center"><i
 																		class="bi bi-clock"></i>${boardContent.writeDate}
 																</li>

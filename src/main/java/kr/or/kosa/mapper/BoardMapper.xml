@@ -172,7 +172,7 @@ PUBLIC "-//mybatis.org//DTD Mapper 3.0//EN"
 	<update id="boardEdit" parameterType="kr.or.kosa.dto.Post">
 		UPDATE POST
 		SET TITLE =
-		#{title}, CONTENT= #{content}, STATUS=#{status}
+		#{title}, CONTENT= #{content}, STATUS=#{status}, LIKENUM=#{likeNum}
 		WHERE
 		IDX = #{idx};
 	</update>

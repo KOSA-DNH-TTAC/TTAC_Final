@@ -99,6 +99,17 @@
 						</article>
 					</c:if>
 					
+					<c:if test="${boardName eq 'productBoardList'}">
+						<div class="mb-3">
+							<label for="sold" class="form-label">판매 상태</label>
+							<select id="sold" name="sold" class="form-select">
+			                    <option value=0 selected>판매중</option>
+			                    <option value=1>거래완료</option>
+			                    <option value=2>예약중</option>
+				            </select>
+						</div>
+					</c:if>
+					
 					<div class="mb-3">
 					  <label for="content" class="form-label">내용</label>
 					  <textarea id="content" name="content" placeholder="작성해주세요">
@@ -182,7 +193,7 @@
     						console.log(result);
     						Swal.fire(
     						'삭제완료!',
-    						'댓글이 지워졌습니다.',
+    						'파일이 삭제되었습니다.',
     						'success'
     						)
     					}

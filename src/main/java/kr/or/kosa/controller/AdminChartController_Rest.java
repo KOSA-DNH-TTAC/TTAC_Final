@@ -57,6 +57,18 @@ public class AdminChartController_Rest {
 	
 	
 
+	//관리자 통계 커뮤니티
+	@RequestMapping("/adminchart/community")
+	public ResponseEntity<List<AdminChart>> communityChart(@RequestParam HashMap<String,Object> year){
+		System.out.println("year : "+year);
+		Map<String, Object> map = new HashMap<String, Object>();
+		String years = (String)year.get("year");
+		System.out.println("years : "+years);
+
+		List<AdminChart> list = adminchartservice.getMonthlyCommunity(years);
+		
+		return new ResponseEntity<List<AdminChart>>(list, HttpStatus.OK);
+	}
 }
 
 

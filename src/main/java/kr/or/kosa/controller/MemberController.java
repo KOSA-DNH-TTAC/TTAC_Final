@@ -157,9 +157,8 @@ public class MemberController {
 		}else {
 			User user = (User) SecurityContextHolder.getContext().getAuthentication().getPrincipal();
 			int point = member.getMemberPoint() - price;
-			member.setMemberPoint(point);
 			
-			result = memberservice.updatePoint(member);
+			result = memberservice.usePoint(member,price);
 			user.setMemberPoint(point);
 			if(result < 0) {
 				icon = "error";

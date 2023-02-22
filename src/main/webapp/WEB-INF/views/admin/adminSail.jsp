@@ -58,7 +58,7 @@ $(function(){
 	            },
 			contentType: "application/json; charset=UTF-8",
 			success: function (data) {
-				console.log(data);
+				// console.log(data);
 				
 				$.each(data, function(index, adminchart){
 
@@ -178,6 +178,93 @@ $(function(){
 				console.log("code:" + request.status + "\n" + "message:" + request.responseText + "\n" + "error:" + error);
 			}
 		}) */
+
+      //커뮤니티
+
+      let month = [];
+      let postCount = [];
+      let replyCount = [];
+
+      $.ajax({
+			type: "GET",
+			url: "/adminchart/community",
+			data: {
+	               "year": year,
+	            },
+			contentType: "application/json; charset=UTF-8",
+			success: function (result) {
+				console.log(result);
+				
+            $.each(result, function(index, adminchart){
+               month.push(adminchart.month);
+               postCount.push(adminchart.postCount);
+               replyCount.push(adminchart.replyCount);
+            })
+				
+            var options = {	
+                     series: [{
+                        name: "글",
+                        data: postCount,
+                        type: 'bar',
+                     },{
+                        name: "댓글",
+                        data: replyCount,
+                        type: 'line',
+                     }],
+                     xaxis: {
+                        categories: month
+                     },
+                     chart: {
+                        height: 350
+                     },
+                     stroke: {
+                        curve: 'smooth',
+                        width: [0, 4]
+                     },
+                     dataLabels: {
+                        enabled: false
+                     },
+                     title: {
+                        text: '월별 커뮤니티 현황',
+                        align: 'left'
+                     },
+                     markers: {
+                        hover: {
+                              sizeOffset: 4
+                        }
+                     },
+                     plotOptions: {
+                        bar: {
+                              columnWidth: '50%',
+                              endingShape: 'flat',
+                              colors: {
+                              ranges: [{
+                                 from: 0,
+                                 to: 0,
+                                 color: '#008FFB'
+                              }]
+                              },
+                              dataLabels: {
+                                 position: 'top',
+                              },
+                              border: {
+                                 width: 0,
+                                 radius: 4
+                              },
+                        }
+                     }
+                  };
+
+
+				 var chart = new ApexCharts(document.querySelector("#chartHj"), options);
+				 chart.render();
+                
+			},
+			error: function (request, status, error) {
+				console.log("에러")
+				console.log("code:" + request.status + "\n" + "message:" + request.responseText + "\n" + "error:" + error);
+			}
+		})
 });
 
 function sleepoverchart(){
@@ -381,6 +468,16 @@ $(document).ready(function(){
    </div>
    <div class="contents">
       <img src="/resources/assets/img/graph03.jpg" width="100%"/>
+   </div>
+</div>
+
+<div class="nmbox mb">
+   <div class="tit">
+      <h3>월별 커뮤니티</h3>
+      <p>우리학교 게시판에 올라온 글 수와 댓글 수를 월 별로 살펴볼 수 있습니다.</p>
+   </div>
+   <div class="contents">
+      <div id="chartHj"></div>
    </div>
 </div>
 

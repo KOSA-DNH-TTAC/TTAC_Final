@@ -75,7 +75,11 @@
 										<article class="entry">
 
 											<div class="entry-title">
-											<span id="sold">판매중</span>
+												<c:choose>
+													<c:when test="${productList.likeNum eq 0}"><span id="sell">판매중</span></c:when>
+													<c:when test="${productList.likeNum eq 1}"><span id="sold">거래완료</span></c:when>
+													<c:when test="${productList.likeNum eq 2}"><span id="reserve">예약중</span></c:when>
+												</c:choose> 
 											<h2 class="entry-title">              
                      						&nbsp;<a href="/board/productBoardList/${productList.idx}">${productList.title}</a></h2>
 											</div>
@@ -84,7 +88,6 @@
 												<ul>
 													<li class="d-flex align-items-center"><i class="bi bi-person"></i>${productList.memberId}</a></li>
 													<li class="d-flex align-items-center"><i class="bi bi-clock"></i>${productList.writeDate}</a></li>
-													<li class="d-flex align-items-center"><i class="bi-hand-thumbs-up"></i>${productList.likeNum}</li>
 													<li class="d-flex align-items-center"><i class="bi-chat-dots"></i>${productList.replyCount}</li>
 													<li class="d-flex align-items-center"><i class="bi bi-cart2"></i>${productList.replyCount}원</li>
 													

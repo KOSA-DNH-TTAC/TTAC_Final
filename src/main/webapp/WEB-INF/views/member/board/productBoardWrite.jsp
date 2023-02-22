@@ -91,9 +91,9 @@
 					<div class="mb-3">
 						<label for="sold" class="form-label">판매 상태</label>
 						<select id="sold" name="sold" class="form-select">
-		                    <option value="판매중" selected>판매중</option>
-		                    <option value="거래완료">거래완료</option>
-		                    <option value="예약중">예약중</option>
+		                    <option value=0 selected>판매중</option>
+		                    <option value=1>거래완료</option>
+		                    <option value=2>예약중</option>
 			            </select>
 					</div>
 					

@@ -80,7 +80,7 @@
 
 											<div class="entry-meta">
 												<ul>
-													<li class="d-flex align-items-center"><i class="bi bi-person"></i>${opinion.memberId}</a></li>
+													<li class="d-flex align-items-center"><i class="bi bi-person"></i>익명</li>
 													<li class="d-flex align-items-center"><i class="bi bi-clock"></i>${opinion.writeDate}</a></li>
 													<li class="d-flex align-items-center"><i class="bi-chat-dots"></i>${opinion.replyCount}</li>
 												</ul>
