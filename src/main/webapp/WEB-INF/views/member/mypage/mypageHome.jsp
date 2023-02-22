@@ -461,6 +461,7 @@
                             <tr>
                               <th scope="col">결제일자</th>
                               <th scope="col">결제금액</th>
+                              <th scope="col">종류</th>
                             </tr>
                           </thead>
                           <tbody>`;
@@ -470,6 +471,7 @@
                   contents += `<tr>
                                   <td>`+ localetime + `</td>
                                   <td>` + payment.payAmount + `</td>
+                                  <td>` + payment.payKinds + `</td>
                                 </tr>`
                 })
                 //포이치 끝나면 tbody 닫아줌...
