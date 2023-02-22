@@ -75,4 +75,16 @@ public class AdminChartService {
 			
 			return list;
 		}
+		
+		   //월별 커뮤니티
+		   public List<AdminChart> getMonthlyCommunity(String year){
+		      User user = (User) SecurityContextHolder.getContext().getAuthentication().getPrincipal();
+		      
+		      AdminChartDao dao = sqlsession.getMapper(AdminChartDao.class);
+		      List<AdminChart> list = new ArrayList<AdminChart>();
+		      list = dao.monthlyCommunity(user.getUniversityCode(), year);
+		      
+		      return list;
+		   }
+
 }
