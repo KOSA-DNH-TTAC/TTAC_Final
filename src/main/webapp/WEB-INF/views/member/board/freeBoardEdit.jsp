@@ -81,7 +81,25 @@
 					  <input type="text" class="form-control" name="title" id="title" placeholder="제목을 작성해주세요." value="${boardContent.title}" required>
 					</div>
 					
-					<c:if test="${not empty fileContent}">
+					<c:if test="${boardName eq 'noticeList'}">
+						<div class="mb-3">
+							<label for="file" class="form-label">파일</label>
+							<input type="file" class="form-control" id="file" name="file" multiple>
+						</div>
+					
+						<label class="form-label">파일 목록</label>
+						<article class="entry" style="padding-top: 10px">
+							<c:forEach items="${fileContent }" var="fileContent">
+							<div class="mb-3 d-flex align-items-center filelist">
+								
+									<i class="bi bi-archive">&nbsp ${fileContent.fileRealName} &nbsp<i class="bi bi-x" style="cursor:pointer;"></i></i>
+				                
+							</div>
+							</c:forEach>
+						</article>
+					</c:if>
+					
+					<c:if test="${boardName eq 'productBoardList'}">
 						<div class="mb-3">
 							<label for="file" class="form-label">파일</label>
 							<input type="file" class="form-control" id="file" name="file" multiple>
