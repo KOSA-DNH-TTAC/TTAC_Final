@@ -277,12 +277,13 @@ public class AdminController_Rest {
 	
 	// 관리자 점호 회원  조회
 		@RequestMapping("/admin/allRollCallMember")
-		public ResponseEntity<List<RollCall>> getAllRollCallMember(@RequestParam String date) {
+		public ResponseEntity<List<RollCall>> getAllRollCallMember() {
 			System.out.println("점호 컨트롤러");
 			User user = (User) SecurityContextHolder.getContext().getAuthentication().getPrincipal();
 			String universitycode = user.getUniversityCode();
 			String domitoryName = user.getDomitoryName();
 			System.out.println("날짜 : " + date);
+			
 			List<RollCall> list = adminService.getAllRollCallMember(universitycode,domitoryName,date);
 			try {
 				return new ResponseEntity<List<RollCall>>(list, HttpStatus.OK);
