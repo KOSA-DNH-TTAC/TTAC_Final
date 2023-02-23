@@ -6,6 +6,7 @@
 <html>
 <head>
   <meta charset="utf-8">
+  <meta http-equiv="Content-Security-Policy" content="upgrade-insecure-requests"> 
   <meta content="width=device-width, initial-scale=1.0" name="viewport">
 
   <title>DOTO:기숙사통합관리시스템</title>
@@ -93,7 +94,7 @@
 				<!-- content start -->
 				<div id="content">
 								<h2 style="margin :15px 0 20px 0">내 정보 수정</h2>
-								<form action="/mypage/modify" method="post">
+								<form action="/mypage/modify" method="post" enctype="multipart/form-data" accept-charset="UTF-8">
 									<table class="table">
 										<tbody>
                       <tr>
@@ -127,6 +128,10 @@
                       <tr>
                         <th scope="row">벌점</th>
                         <td class="infoTd" id="demerit"></td>
+                      </tr>
+                      <tr>
+                        <th scope="row">사진변경</th>
+                        <td class="infoTd" id="demerit"><input type="file" name="file" id="file" accept=".jpg"></td>
                       </tr>
                     </tbody>
 									</table>

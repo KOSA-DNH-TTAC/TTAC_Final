@@ -14,7 +14,6 @@
 <meta http-equiv="X-UA-Compatible" content="IE=edge"/>
 <meta http-equiv="Expires" content="-1" /> 
 
-<link rel="shortcut icon" href="../img/favicon.png" type="image/x-icon" />
 <link href="/resources/assets/css/font.css" rel="stylesheet">
 <link href="/resources/assets/css/font-awesome.css" rel="stylesheet">
 <link href="/resources/assets/css/style2.css" rel="stylesheet">
@@ -116,25 +115,39 @@ $(document).ready(function () {
 	});
 });
 
+function dateFormatter(date) {
+			var wantDate = new Date(date);
+			// 년도 getFullYear()
+			var year = wantDate.getFullYear();
+			// 월 getMonth() (0~11로 1월이 0으로 표현되기 때문에 + 1을 해주어야 원하는 월을 구할 수 있다.)
+			var month = wantDate.getMonth() + 1
+			// 일 getDate()
+			var date = wantDate.getDate(); // 일
+			if (month < 10) {
+				month = "0" + month;
+			}
+			if (date < 10) {
+				date = "0" + date;
+			}
+			var wantDateFormat = year + "-" + month + "-" + date;
+			return wantDateFormat;
+		}
 
-//화면 로딩시 신고 리스트 출력
+
+//화면 로딩시 점호 리스트 출력
 $(document).ready(function(){
 	var tabledata = "";
 	$.ajax({
 		type : "POST",
-		url : "/facility/print",
-		contentType: "application/json; charset=UTF-8",
+		url : "/admin/onallRollCallMember",
 		success : function(data) {
-			console.log("data : "+data);
+			console.log("ondata : "+data);
 			 $.each(data, function(index) {
 	                tabledata +=
 	                	'<tr class="tar">'+
-			    			'<td class="tac bgc">'+data[index].facilityDate+'</td>'+
+			    			'<td class="tac bgc">'+data[index].rollCallDate+'</td>'+
+			    			'<td style="text-align: center;">'+data[index].memberId+'</td>'+
 			    			'<td style="text-align: center;">'+data[index].domitoryName+'</td>'+
-			    			'<td style="text-align: center;">'+data[index].domitoryFloor+'</td>'+
-			    			'<td style="text-align: center;">'+data[index].facilityName+'</td>'+
-			    			'<td style="text-align: center;">'+data[index].name+'</td>'+
-			    			'<td style="text-align: center;">'+data[index].facilityReport+' </td>'+
 			    		'</tr>'
 	                    })
 			$('#table').empty();
@@ -144,119 +157,147 @@ $(document).ready(function(){
 			alert(data+": 로드 실패");
 		}
 	});
+	notcall();
 });
 
-//날짜별로 정렬하기
+//날짜별로 검색
 function search(){
 	/* 선택한 날짜 값 가져오기 */
 	var start = $('#start').val();
-	var end = $('#end').val();
-	var data = [start,end];
-	var tabledata = "";
-	console.log(start+"/"+end);
+	console.log(start);
 	$.ajax({
-		type : "POST",
-		url : "/adminAnalyze/searchDate",
-		//contentType: "application/x-www-form-urlencoded; charset=UTF-8",
-		data : {
-			"data" : data,
-		}, 
-		success : function(data) {
-			 $.each(data, function(index) {
-	                tabledata +=
-	                	'<tr class="tar">'+
-		    			'<td class="tac bgc">'+data[index].facilityDate+'</td>'+
-		    			'<td style="text-align: center;">'+data[index].domitoryName+'</td>'+
-		    			'<td style="text-align: center;">'+data[index].domitoryFloor+'</td>'+
-		    			'<td style="text-align: center;">'+data[index].facilityName+'</td>'+
-		    			'<td style="text-align: center;">'+data[index].name+'</td>'+
-		    			'<td style="text-align: center;">'+data[index].facilityReport+' </td>'+
-		    		'</tr>'
-	                    })
+		type : "GET",
+		url : "/admin/allRollCallMember?date=" + start,
+		success : function(result) {
+			console.log("성공");
+			// console.log(result);
+
+			$('#whichdate').empty();
+			$('#whichdate').append("검색 날짜 [" + start + "]");
+
 			$('#table').empty();
-			$('#table').append(tabledata);
+			let contents = ``
+			//table에 추가
+			$.each(result, function(index, rollcall){
+				console.log(rollcall);
+				contents += `<tr>
+								<td  style="text-align: center">` + rollcall.rollCallDate  + `</td>
+								<td style="text-align: center">` + rollcall.memberId + `</td>
+								<td style="text-align: center">` + rollcall.domitoryName + `</td>
+							</tr>`
+			})
+			
+			$('#table').append(contents);
 		},
 		error : function(data) {
-			alert("시설물 신고 데이터 불러오기 실패");
+			console.log("실패")
 		}
 	});
 }
 
-//오늘날짜 목록 가져오기
+let notCallMembers;
+
+//점호 안한 놈
+function notcall(){
+	var start = $('#start').val();
+	$.ajax({
+		type : "GET",
+		url : "/admin/notRollCall?date=" + start,
+		success : function(result) {
+			console.log("성공");
+			// console.log(result);
+			notCallMembers = result;
+			$('#nottable').empty();
+			let contents = '';
+
+			$.each(result, function(index, m){
+				// console.log(m);
+				contents += `<tr>
+								<td  style="text-align: center">` + m.memberId  + `</td>
+								<td style="text-align: center">` + m.name + `</td>
+								<td style="text-align: center">` + m.domitoryName + " " + m.room + "호" + `</td>
+							</tr>`
+			})
+			$('#nottable').append(contents);
+		},
+		error : function(data) {
+			console.log("실패")
+		}
+	});
+}
+
 function todaysearch(){
-	/* 선택한 날짜 값 가져오기 */
-	var data = ["today","today"];
+
+	let today = new Date();
+	let todayf = dateFormatter(today);
+	console.log(todayf)
+	$('#start').val(todayf)
+
 	var tabledata = "";
-	console.log(today);
 	$.ajax({
 		type : "POST",
-		url : "/adminAnalyze/searchDate",
-		//contentType: "application/x-www-form-urlencoded; charset=UTF-8",
-		data : {
-			"data" : data,
-		}, 
+		url : "/admin/onallRollCallMember",
 		success : function(data) {
+			console.log("ondata : "+data);
 			 $.each(data, function(index) {
 	                tabledata +=
 	                	'<tr class="tar">'+
-		    			'<td style="text-align: center;">'+data[index].facilityDate+'</td>'+ 
-		    			'<td style="text-align: center;">'+data[index].domitoryName+'</td>'+
-		    			'<td style="text-align: center;">'+data[index].domitoryFloor+'</td>'+
-		    			'<td style="text-align: center;">'+data[index].facilityName+'</td>'+
-		    			'<td style="text-align: center;">'+data[index].name+'</td>'+
-		    			'<td style="text-align: center;">'+data[index].facilityReport+'</td>'+
-		    		'</tr>'
+			    			'<td class="tac bgc">'+data[index].rollCallDate+'</td>'+
+			    			'<td style="text-align: center;">'+data[index].memberId+'</td>'+
+			    			'<td style="text-align: center;">'+data[index].domitoryName+'</td>'+
+			    		'</tr>'
 	                    })
 			$('#table').empty();
 			$('#table').append(tabledata);
+			$('#whichdate').empty();
+			$('#whichdate').append("검색 날짜 [" + data[0].rollCallDate + "]");
+			// $('#start').empty();
+			// $('#start').attr('value', 'data[0].rollCallDate')
+			notcall();
 		},
 		error : function(data) {
-			alert("시설물 신고 데이터 불러오기 실패");
+			alert(data+": 로드 실패");
 		}
 	});
+	// notcall();
 }
-//이름으로 정렬하기
-function likesearch(){
-	/* 선택한 날짜 값 가져오기 */
-	var data = $('#likesearch').val();
-	var tabledata = "";
-	console.log(today);
+
+function execution(){
+	//벌점 부여 ajax
+	console.log(notCallMembers);
+	let data = []
+	$.each(notCallMembers, function(index, m){
+		data.push(m.memberId);
+	})
+	console.log(data);
 	$.ajax({
-		type : "POST",
-		url : "/adminAnalyze/likesearch",
-		//contentType: "application/x-www-form-urlencoded; charset=UTF-8",
-		data : {
-			"data" : data,
-		}, 
-		success : function(data) {
-			 $.each(data, function(index) {	 
-	                tabledata +=
-	                	'<tr class="tar">'+
-		    			'<td style="text-align: center;">'+data[index].facilityDate+'</td>'+ 
-		    			'<td style="text-align: center;">'+data[index].domitoryName+'</td>'+
-		    			'<td style="text-align: center;">'+data[index].domitoryFloor+'</td>'+
-		    			'<td style="text-align: center;">'+data[index].facilityName+'</td>'+
-		    			'<td style="text-align: center;">'+data[index].name+'</td>'+
-		    			'<td style="text-align: center;">'+data[index].facilityReport+'</td>'+
-		    		'</tr>'
-	                    })
-			$('#table').empty();
-			$('#table').append(tabledata);
-		},
-		error : function(data) {
-			alert("시설물 신고 데이터 불러오기 실패");
-		}
-	});
+		type: "POST",
+            url: "/admin/execution",
+            data: {data:data},
+			success:function(result){
+				console.log(result)
+				$('#execution').remove();
+				$('#hjmsg').append("벌점 부여 완료")
+
+
+			},
+			error:function(e){
+				console.log("에러")
+			}
+
+	})
 }
+
+
 </script>
 
 
 </div>	<div class="con">
-		<h3 class="sub_h3">시설관리 <span>시설물 신고내역</span></h3>	
+		<h3 class="sub_h3">점호관리 <span>점호 회원</span></h3>	
 
 <div class="bmb">
 	<div class="bgtab">
-		<h3 class="txtin">시설물 신고 내역 조회</h3>	
+		<h3 class="txtin">점호 회원 조회</h3>	
 	</div>
 	<table class="srch_table mb20">	
 		<colgroup>
@@ -269,9 +310,7 @@ function likesearch(){
 			<th>검색어</th>
 			<td colspan="3">
 				<select name="search_type" class="fSelect">
-					<option value="name">시설물 명</option>
-					<!-- <option value="phone">브랜드코드</option>
-					<option value="mobile">제품코드</option> -->
+					<option value="name">회원 명</option>
 				</select>
 				<input type="text" id="likesearch" class="w60" style="width:233px;"/>
 				<ul class="dpi_li dpi">
@@ -279,14 +318,21 @@ function likesearch(){
 				</ul>
 			</td>				
 		</tr>	
+		<%
+		// 현재 날짜/시간
+		Date now = new Date();
+		// 포맷팅 정의
+		SimpleDateFormat formatter = new SimpleDateFormat("yyyy-MM-dd");
+		// 포맷팅 적용
+		String date = formatter.format(now);
+		%>	
 		<tr>
 			<th>기간</th>
 			<td colspan="3">
-				<input class="form-select1" type="date" id="start" name="trip-start" value="연도-월-일">
-				 - <input class="form-select1" type="date" id="end" name="trip-start" value="연도-월-일">&nbsp;&nbsp;
+				<input class="form-select1" type="date" id="start" name="trip-start" value="<%=date%>">
 				<ul class="dpi_li dpi">
-					<li><button id="today" onclick="todaysearch()" class="btn_sumit">오늘 날짜</button></li>
-					<li><button type="button" class="btn_sumit2" onclick="search()">검색</button></li>
+					<li><button id="today" onclick="todaysearch();notcall();" class="btn_sumit">오늘 날짜</button></li>
+					<li><button type="button" class="btn_sumit2" onclick="search(); notcall()">검색</button></li>
 				</ul>
 			</td>				
 		</tr>
@@ -296,56 +342,38 @@ function likesearch(){
 			<li><button type="button" class="btn_sumit2" onclick="search()">검색</button></li>
 		</ul> -->
 	</div>	
-</div>
-
-
-<div><!--날짜지정검색시-->
-	<div class="bgtab bgtab2 ofh">
-		<div class="w50 fl">
-		<%
-		// 현재 날짜/시간
-		Date now = new Date();
-		// 포맷팅 정의
-		SimpleDateFormat formatter = new SimpleDateFormat("yyyy-MM-dd");
-		// 포맷팅 적용
-		String date = formatter.format(now);
-		%>			
-			<p id="whichdate" class="txtin wtTxt fsbb">오늘 날짜 [<%=date%>]</p>
-		</div>
-		
+</div>	
+<div class="ofh">
+	<div class="halfcon mr">
+		<h4 class="bgtab bgtab2">외박이력	<p id="whichdate" class="txtin wtTxt fsbb">오늘 <%=date%> </p></h4>
+			<table class="comm_table mb">
+				<thead>
+					<tr>
+						<th>점호 일자</th>
+						<th>회원 ID</th>
+						<th>기숙사</th>					
+					</tr>
+				</thead>
+				<tbody id="table">
+				</tbody>
+			</table>
 	</div>
-</div><!--날짜지정검색시 e-->
+	<div class="halfcon">
+		<h4 class="bgtab bgtab2">무단 외박 <button id="execution" onclick="execution()">일괄벌점부여</button><small id="hjmsg" sytle="color:blue;"></small></h4>
+		<table id="nightoverY" class="comm_table tac bmb">
+			<thead>
+				<tr>
+					<th>회원 ID</th>
+					<th>이름</th>
+					<th>기숙사</th>
+				</tr>
+			</thead>
+			<tbody id="nottable">
 
-
-<table class="comm_table mb">
-<!-- 	<colgroup>
-		<col width="16.66%">
-		<col width="10%">
-		<col width="10%">
-		<col width="10%">
-		<col width="10%">
-		<col width="10%">
-		<col width="33.32%">
-
-	</colgroup> -->
-	<thead>
-		<tr>
-			<th rowspan="2">일자</th>
-			<th colspan="4">상세내역</th>
-			<th rowspan="3">상세 사유</th>					
-		</tr>
-		<tr>
-			<th>기숙사 동</th>
-			<th>기숙사 층</th>
-			<th>시설물</th>
-			<th>신고자 (학번)</th>
-			
-			
-		</tr>
-	</thead>
-	<tbody id="table">
-	</tbody>
-</table>
+			</tbody>
+		</table>
+	</div>
+</div>
 
 
 

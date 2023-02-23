@@ -33,8 +33,13 @@
   <link href="resources/assets/css/style.css" rel="stylesheet">
   <script src="http://code.jquery.com/jquery-1.9.1.js"></script>
   <script type="text/javascript" src="http://dapi.kakao.com/v2/maps/sdk.js?appkey=172587aec5c5b7b4462a7f174770edd8"></script>
-  <script src="resources/assets/js/eveningCallMap.js"></script>
 
+  <!--준한-->
+  <!-- <script src="resources/assets/js/eveningCallMap.js"></script> -->
+
+  <!-- Sweet Alert -->
+  <link rel="stylesheet" href="https://cdn.jsdelivr.net/npm/sweetalert2@11.4.10/dist/sweetalert2.min.css">
+  <script src="https://cdn.jsdelivr.net/npm/sweetalert2@11.4.10/dist/sweetalert2.min.js"></script>
 </head>
 
 <body>
@@ -70,8 +75,11 @@
               <h3>나의 현재위치</h3>
               <p id="location"></p>
               	<div style="display:flex; justify-content:center; align-items:center; margin: auto; width:280px; height:5px; border-radius: 50px; border: none; background-color:#E96B56; color:white; margin-top:10px;">
-              		<!-- <button id="report" onclick="mySpaceReport()"; style="width:130px; height:20; border-radius: 50px; padding:5px; border: none; background-color:#E96B56; color:white; margin-top:10px; font-size: large;">점호하기</button> -->
+              		
               	</div>
+              <div id="hjmsgdiv">
+                <button id="report"  style="width:130px; height:20; border-radius: 50px; padding:5px; border: none; background-color:#E96B56; color:white; margin-top:10px; font-size: large;">점호하기</button>
+              </div>
             </div>
           </div>
         </div>
@@ -108,7 +116,213 @@
 
   <!-- Template Main JS File -->
   <script src="resources/assets/js/main.js"></script>
+  <script>
+ 
+window.onload = function (){
 
+  let report;
+
+
+  var now = new Date();
+  var start = new Date();
+  start.setHours(20, 0, 0); // 오후 8시
+  var end = new Date();
+  end.setHours(22, 0, 0); // 오후 10시
+  
+    if (!(now >= start && now <= end)) { // 오후 8시부터 10시 사이가 아니면
+      // 버튼을 클릭할 수 없게
+      console.log("머노?")
+      Swal.fire(
+        "NOPE",
+        "점호 가능 시간이 아닙니다.",
+        "error"
+      )
+      var button = document.getElementById('report');
+      button.style.backgroundColor = '#cfcfcf';
+      $('#report').prop('disabled', true);
+    }
+
+  $('#report').click(function(){
+    mySpaceReport();
+    // $('#report').html("뒤졋다 ㅋㅋ")
+  })
+  
+
+  function mySpaceReport(){
+      console.log("눌림ㅋㅋ")
+      console.log("콜!!!")
+      console.log(report)
+      // call();
+      $.ajax({
+        type : "POST",
+        url : "/eveningCall",
+        contentType: "application/x-www-form-urlencoded; charset=UTF-8",
+        data : {
+          "report" : report,
+        }, 
+        success : function(data) {
+          console.log(data);
+          $('#report').html("점호완료");
+          $('#report').prop('disabled', true);
+          
+          if(data == 'ALREADY'){
+            //이미 점호
+            Swal.fire(
+                  data,
+                  '이미 점호를 했습니다',
+                  'warning'
+                  )
+          }else if(data == 'SUCCESS'){
+            Swal.fire(
+                  data,
+                  '점호가 완료되었습니다',
+                  'success'
+                  )
+          }
+
+         
+          // $('#location').empty();
+          // $('#location').append("<b>위도 : </b>"+lat+"  <b>경도 : </b>"+lon);
+        },
+        error : function(data) {
+          Swal.fire(
+                  data,
+                  'ㅠ_ㅠ',
+                  'error'
+                  )
+          // alert(data+": 에러, 또는 점호 가능한 지역이 아닙니다.");
+        }
+      });
+    }
+    
+
+function call(){
+  console.log("콜!!!")
+  console.log(report);
+  $.ajax({
+    type : "POST",
+    url : "/eveningCall",
+    contentType: "application/x-www-form-urlencoded; charset=UTF-8",
+    data : {
+      "report" : report,
+    }, 
+    success : function(data) {
+      Swal.fire(
+							data,
+							'점호가 완료되었습니다.',
+							'success'
+							)
+      // $('#location').empty();
+      // $('#location').append("<b>위도 : </b>"+lat+"  <b>경도 : </b>"+lon);
+    },
+    error : function(data) {
+      alert(data+": 에러, 또는 점호 가능한 지역이 아닙니다.");
+    }
+  });
+}
+
+
+if (navigator.geolocation) {
+  navigator.geolocation.getCurrentPosition(function (position) {
+    var lat = position.coords.latitude,
+      lon = position.coords.longitude;
+
+
+    //  center: new kakao.maps.LatLng(33.450701, 126.570667), // 지도의 중심좌표
+    var mapContainer = document.getElementById('map'), // 지도를 표시할 div 
+      mapOption = {
+        center: new kakao.maps.LatLng(lat, lon), // 지도의 중심좌표
+        level: 3
+        // 지도의 확대 레벨 
+      };
+
+    var imageSrc = 'resources/assets/img/homemarker.png', // 마커이미지의 주소입니다    
+    imageSize = new kakao.maps.Size(64, 69), // 마커이미지의 크기입니다
+    imageOption = {offset: new kakao.maps.Point(27, 69)}; // 마커이미지의 옵션입니다. 마커의 좌표와 일치시킬 이미지 안에서의 좌표를 설정합니다
+    // 마커의 이미지정보를 가지고 있는 마커이미지를 생성합니다
+    var markerImage = new kakao.maps.MarkerImage(imageSrc, imageSize, imageOption);
+
+    var map = new kakao.maps.Map(mapContainer, mapOption); // 지도를 생성합니다
+
+    // 마커를 표시할 위치와 내용을 가지고 있는 객체 배열입니다 
+    var positions = [
+      {
+        content: '<div>나의 현재 위치</div>',
+        latlng: new kakao.maps.LatLng(lat, lon),
+        Image: ''
+      }
+       ,
+      {
+        content: '<div>KOSA대학교 기숙사</div>',
+        latlng: new kakao.maps.LatLng(37.58333911134363, 126.99960091512034),
+        Image: markerImage
+      }
+      /*,
+      {
+        content: '<div>3조의 보금자리</div>',
+        latlng: new kakao.maps.LatLng(37.6834512, 127.999820)
+      }
+      ,
+      {
+        content: '<div>피자맛집</div>',
+        latlng: new kakao.maps.LatLng(37.5845323, 126.997216)
+      },
+      {
+        content: '<div>낙산공원</div>',
+        latlng: new kakao.maps.LatLng(37.5818113, 127.006307)
+      } */
+    ];
+
+    for (var i = 0; i < positions.length; i++) {
+      // 마커를 생성합니다
+      var marker = new kakao.maps.Marker({
+        map: map, // 마커를 표시할 지도
+        position: positions[i].latlng, // 마커의 위치
+        image: positions[i].Image // 마커이미지 설정 
+      });
+      // 마커를 생성합니다
+      // var marker = new kakao.maps.Marker({
+      // 	position: markerPosition, 
+      // 	image: markerImage // 마커이미지 설정 
+      // });
+
+      // 마커에 표시할 인포윈도우를 생성합니다 
+      var infowindow = new kakao.maps.InfoWindow({
+        content: positions[i].content // 인포윈도우에 표시할 내용
+      });
+
+      // 마커에 mouseover 이벤트와 mouseout 이벤트를 등록합니다
+      // 이벤트 리스너로는 클로저를 만들어 등록합니다 
+      // for문에서 클로저를 만들어 주지 않으면 마지막 마커에만 이벤트가 등록됩니다
+      kakao.maps.event.addListener(marker, 'mouseover', makeOverListener(map, marker, infowindow));
+      kakao.maps.event.addListener(marker, 'mouseout', makeOutListener(infowindow));
+    }
+
+    // 인포윈도우를 표시하는 클로저를 만드는 함수입니다 
+    function makeOverListener(map, marker, infowindow) {
+      return function () {
+        infowindow.open(map, marker);
+      };
+    }
+
+    // 인포윈도우를 닫는 클로저를 만드는 함수입니다 
+    function makeOutListener(infowindow) {
+      return function () {
+        infowindow.close();
+      };
+    }
+    report=[lat, lon];
+    $('#location').empty();
+    $('#location').append("<b>위도 : </b>"+lat+"  <b>경도 : </b>"+lon);
+    console.log("<b>위도 : </b>"+lat+"  <b>경도 : </b>"+lon)
+    console.log(report)
+    
+   
+  });
+}
+
+}
+  </script>
 </body>
 
 </html>

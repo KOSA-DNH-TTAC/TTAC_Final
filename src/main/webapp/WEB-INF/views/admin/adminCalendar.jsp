@@ -51,7 +51,7 @@
 	<div class="leftcon">
 <nav id="sidemenu">
 		<ul class="submenu">
-			<li class="smenu" style="background-color:#4D6794; color:white;"><a href="/admin/coupon" ><h1>기숙사 통합관리 솔루션</h1></a></li>
+			<li class="smenu" style="background-color:#4D6794; color:white;"><a href='javascript:void(0);' ><h1>기숙사 통합관리 솔루션</h1></a></li>
 			<li class="smenu"><a href="/admin/adminMember">회원관리</a>
 				<ul class="sub ">
 					<li ><a href="/admin/adminMember">회원현황</a></li>
@@ -77,7 +77,9 @@
 	
 			<li class="smenu"><a href="/admin/calendar" class="msub on">일정관리</a></li>
 			<li class="smenu"><a href="/admin/file" >회원파일등록</a></li>
+			<li class="smenu"><a href="/admin/RollCall" >점호관리</a></li>
 			<li class="smenu"><a href="/admin/sail" >통계관리</a></li>
+			<li class="smenu"><a href="/admin/qr">식권QR</a></li>
 		</ul>
 
     </nav>
@@ -196,14 +198,7 @@ function load(){
 <div class="coupon">
 	
 	<div class="bgtab bgtab2">
-		<div class="ofh mb10">	
-		<select name="" class="dpi">
-			<option value="">10개씩보기</option>
-			<option value="">20개씩보기</option>
-			<option value="">30개씩 보기</option>
-			<option value="">50개씩 보기</option>
-		</select>
-	</div>
+	<p>일정 목록</p>
 	</div>
 	<table class="comm_table tac bmb">	
 		<tr>
@@ -275,7 +270,7 @@ function load(){
 
 
 		<div id="footer">
-		<p>Copyright(c)뷰티몰 쇼핑몰관리시스템. All rights reserved. supported by <a href="http://www.cmaru.com" target="_blank">크리에이티브마루.</a></p>
+		<p>Copyright(c) 기숙사 통합 관리 시스템. All rights reserved. supported by DOTO.</a></p>
 	</div>
 
 	<div id="pageup">

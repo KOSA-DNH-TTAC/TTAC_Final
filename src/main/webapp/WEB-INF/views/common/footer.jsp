@@ -67,14 +67,35 @@
             <h3>About TTAC</h3>
             <p>TTAC, 그들은 대한민국의 한국소프트웨어 산업협회에 속한 개발자들이다.</p>
             <div class="social-links mt-3">
-              <a href="#" class="twitter"><i class="bx bxl-twitter"></i></a>
-              <a href="#" class="facebook"><i class="bx bxl-facebook"></i></a>
-              <a href="#" class="instagram"><i class="bx bxl-instagram"></i></a>
-              <a href="#" class="google-plus"><i class="bx bxl-skype"></i></a>
-              <a href="#" class="linkedin"><i class="bx bxl-linkedin"></i></a>
+              <a onclick="window.open('https://github.com/JunHans');" class="jh"><i class="bx bi-github"></i></a>
+              <a onclick="window.open('https://github.com/Domaya');" class="hj"><i class="bx bi-github"></i></a>
+              <a onclick="window.open('https://github.com/Bamjong');" class="bj"><i class="bx bi-github"></i></a>
+              <a onclick="window.open('https://github.com/Yebin1');" class="yb"><i class="bx bi-github"></i></a>
             </div>
+			<br>
+        		<div class="tomorrow"
+		           data-location-id="065456"
+		           data-language="EN"
+		           data-unit-system="METRIC"
+		           data-skin="dark"
+		           data-widget-type="aqiMini"
+		           style="padding-bottom:22px;position:relative;"
+		        >
+		          <a
+		            href="https://www.tomorrow.io/weather-api/"
+		            rel="nofollow noopener noreferrer"
+		            target="_blank"
+		            style="position: absolute; bottom: 0; transform: translateX(-50%); left: 50%;"
+		          >
+		            <img
+		              alt="Powered by the Tomorrow.io Weather API"
+		              src="https://weather-website-client.tomorrow.io/img/powered-by.svg"
+		              width="250"
+		              height="18"
+		            />
+		          </a>
+		        </div>
           </div>
-
         </div>
       </div>
     </div>
@@ -92,6 +113,21 @@
       </div>
     </div>
   </footer><!-- End Footer -->
+            <script>
+        (function(d, s, id) {
+            if (d.getElementById(id)) {
+                if (window.__TOMORROW__) {
+                    window.__TOMORROW__.renderWidget();
+                }
+                return;
+            }
+            const fjs = d.getElementsByTagName(s)[0];
+            const js = d.createElement(s);
+            js.id = id;
+            js.src = "https://www.tomorrow.io/v1/widget/sdk/sdk.bundle.min.js";
 
+            fjs.parentNode.insertBefore(js, fjs);
+        })(document, 'script', 'tomorrow-sdk');
+        </script>
 </body>
 </html>

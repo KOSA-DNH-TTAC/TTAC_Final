@@ -7,6 +7,7 @@
 
 <head>
   <meta charset="utf-8">
+  <meta http-equiv="Content-Security-Policy" content="upgrade-insecure-requests"> 
   <meta content="width=device-width, initial-scale=1.0" name="viewport">
 
   <title>DOTO:mealticket</title>
@@ -330,6 +331,8 @@ form:after {
         <input class="form-check-input" type="checkbox" name='remember-me'/>
         <span style="margin-left:10px;">로그인 상태 유지</span>
       </div>
+      <!-- 로그인 실패 시 출력할 메세지 -->
+		<p>${sessionScope["SPRING_SECURITY_LAST_EXCEPTION"].message}</p>
       <div>
         <input type="submit" value="Log in" />
         <a href="/forgot">비밀번호를 잊으셨나요?</a>

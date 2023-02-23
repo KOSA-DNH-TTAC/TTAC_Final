@@ -1,6 +1,5 @@
 package kr.or.kosa.controller;
 
-import java.security.Principal;
 import java.util.ArrayList;
 import java.util.HashMap;
 import java.util.List;
@@ -11,20 +10,16 @@ import org.springframework.http.HttpStatus;
 import org.springframework.http.ResponseEntity;
 import org.springframework.security.core.context.SecurityContextHolder;
 import org.springframework.web.bind.annotation.GetMapping;
-import org.springframework.web.bind.annotation.PathVariable;
-import org.springframework.web.bind.annotation.PostMapping;
 import org.springframework.web.bind.annotation.RequestMapping;
 import org.springframework.web.bind.annotation.RequestParam;
 import org.springframework.web.bind.annotation.RestController;
 
 import kr.or.kosa.dto.DemeritHistory;
-import kr.or.kosa.dto.Member;
 import kr.or.kosa.dto.PaymentHistory;
 import kr.or.kosa.dto.Post;
 import kr.or.kosa.dto.SleepOverHistory;
 import kr.or.kosa.security.User;
 import kr.or.kosa.service.AdminService;
-import kr.or.kosa.service.BoardService;
 import kr.or.kosa.service.MemberService;
 import kr.or.kosa.service.PaymentService;
 import kr.or.kosa.service.SleepOverService;

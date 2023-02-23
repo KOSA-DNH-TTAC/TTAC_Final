@@ -33,6 +33,11 @@ public class AdminController {
 		
 		return "admin/adminAnalyze";
 	}
+	@GetMapping("/RollCall")
+	public String adminRollCall() {
+		
+		return "admin/adminRollCall";
+	}
 	
 	@GetMapping("/sail")
 	public String adminSail() {
@@ -80,6 +85,11 @@ public class AdminController {
 	@GetMapping("/file")
 	public String adminFile() {
 		return "admin/adminFile";
+	}
+	
+	@GetMapping("/qr")
+	public String adminQr() {
+		return "admin/adminQr";
 	}
 	
 }

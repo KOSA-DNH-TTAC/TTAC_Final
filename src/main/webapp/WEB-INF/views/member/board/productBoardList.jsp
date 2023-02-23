@@ -75,7 +75,11 @@
 										<article class="entry">
 
 											<div class="entry-title">
-											<span id="sold">판매중</span>
+												<c:choose>
+													<c:when test="${productList.likeNum eq 0}"><span id="sell">판매중</span></c:when>
+													<c:when test="${productList.likeNum eq 1}"><span id="sold">거래완료</span></c:when>
+													<c:when test="${productList.likeNum eq 2}"><span id="reserve">예약중</span></c:when>
+												</c:choose> 
 											<h2 class="entry-title">              
                      						&nbsp;<a href="/board/productBoardList/${productList.idx}">${productList.title}</a></h2>
 											</div>
@@ -84,7 +88,6 @@
 												<ul>
 													<li class="d-flex align-items-center"><i class="bi bi-person"></i>${productList.memberId}</a></li>
 													<li class="d-flex align-items-center"><i class="bi bi-clock"></i>${productList.writeDate}</a></li>
-													<li class="d-flex align-items-center"><i class="bi-hand-thumbs-up"></i>${productList.likeNum}</li>
 													<li class="d-flex align-items-center"><i class="bi-chat-dots"></i>${productList.replyCount}</li>
 													<li class="d-flex align-items-center"><i class="bi bi-cart2"></i>${productList.replyCount}원</li>
 													
@@ -100,37 +103,45 @@
 
 									</c:forEach>
 
-									<div class="blog-pagination">
+									<!-- <div class="blog-pagination">
 										<ul class="justify-content-center">
 											<li><a href="#">1</a></li>
 											<li class="active"><a href="#">2</a></li>
 											<li><a href="#">3</a></li>
 											<li><a href="#">4</a></li>
 										</ul>
-									</div>
+									</div> -->
 									
-									<div>
-										<c:if test="${cpage > 1}">
-											<a
-												href="boardList.user?boardname=${boardname}&cp=${cpage-1}&ps=${pagesize}&boardname=${boardname}">이전</a>
-										</c:if>
-										<!-- page 목록 나열하기 -->
-										<c:forEach var="i" begin="1" end="${pagecount}" step="1">
-											<c:choose>
-												<c:when test="${cpage==i}">
-													<font color="red">[${i}]</font>
-												</c:when>
-												<c:otherwise>
-													<a
-														href="boardList.user?boardname=${boardname}&cp=${i}&ps=${pagesize}&boardname=${boardname}">[${i}]</a>
-												</c:otherwise>
-											</c:choose>
-										</c:forEach>
-										<!--다음 링크 -->
-										<c:if test="${cpage < pagecount}">
-											<a
-												href="boardList.user?boardname=${boardname}&cp=${cpage+1}&ps=${pagesize}&boardname=${boardname}">다음</a>
-										</c:if>
+									<!--페이징-->
+									<div class="blog-pagination">
+										<ul class="justify-content-center">
+											<c:if test="${pager.prev}">
+												<li>
+													<a href="/board/${boardname}?cpage=${pager.cri.page -1}">
+														<i class="bi bi-caret-left-fill"></i>
+													</a>
+												</li>
+											</c:if>
+											<!-- page 목록 나열하기 -->
+											<c:forEach var="i" begin="${pager.startPage}" end="${pager.endPage}" step="1">
+												<c:choose>
+													<c:when test="${pager.cri.page==i}">
+														<li class="active"><a href="#">${i}</a></li>
+													</c:when>
+													<c:otherwise>
+														<li><a href="/board/${boardname}?cpage=${i}">${i}</a></li>
+													</c:otherwise>
+												</c:choose>
+											</c:forEach>
+											<!--다음 링크 -->
+											<c:if test="${pager.next}">
+												<li>
+													<a href="/board/${boardname}?cpage=${pager.cri.page +1}">
+														<i class="bi bi-caret-right-fill"></i>
+													</a>
+												</li>
+											</c:if>
+										</ul>
 									</div>
 
 								</div>

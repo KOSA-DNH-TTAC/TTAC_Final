@@ -1,5 +1,24 @@
 
-		window.onload = function (){
+window.onload = function (){
+
+		function call(){
+			$.ajax({
+				type : "POST",
+				url : "/eveningCall",
+				contentType: "application/x-www-form-urlencoded; charset=UTF-8",
+				data : {
+					"report" : report,
+				}, 
+				success : function(data) {
+					alert(data);
+					$('#location').empty();
+					$('#location').append("<b>위도 : </b>"+lat+"  <b>경도 : </b>"+lon);
+				},
+				error : function(data) {
+					alert(data+": 에러, 또는 점호 가능한 지역이 아닙니다.");
+				}
+			});
+		}
 		
 		
 		if (navigator.geolocation) {
@@ -92,22 +111,14 @@
 					};
 				}
 				var report=[lat, lon];
-				$.ajax({
-					type : "POST",
-					url : "/eveningCall",
-					contentType: "application/x-www-form-urlencoded; charset=UTF-8",
-					data : {
-						"report" : report,
-					}, 
-					success : function(data) {
-						alert(data);
-						$('#location').empty();
-						$('#location').append("<b>위도 : </b>"+lat+"  <b>경도 : </b>"+lon);
-					},
-					error : function(data) {
-						alert(data+": 에러, 또는 점호 가능한 지역이 아닙니다.");
-					}
-				});
+				$('#location').empty();
+				$('#location').append("<b>위도 : </b>"+lat+"  <b>경도 : </b>"+lon);
+				console.log("<b>위도 : </b>"+lat+"  <b>경도 : </b>"+lon)
+				
+				function mySpaceReport(){
+					console.log("눌림?")
+					console.log("<b>위도 : </b>"+lat+"  <b>경도 : </b>"+lon)
+				}
 			});
 		}
 		

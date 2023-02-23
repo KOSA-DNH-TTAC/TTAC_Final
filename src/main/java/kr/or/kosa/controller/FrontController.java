@@ -152,10 +152,4 @@ public class FrontController {
 	}
 
 	
-	@GetMapping("/GPT")
-	public String GPT() {
-		
-		return "member/GPT";
-	}
-	
 }

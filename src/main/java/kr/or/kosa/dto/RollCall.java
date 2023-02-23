@@ -10,4 +10,5 @@ public class RollCall {
 	private String memberId;
 	private String rollCallDate;
 	private int counting;
+	private String domitoryName;
 }

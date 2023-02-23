@@ -1,5 +1,6 @@
 package kr.or.kosa.controller;
 
+import java.io.IOException;
 import java.security.Principal;
 import java.text.ParseException;
 import java.util.ArrayList;
@@ -20,12 +21,15 @@ import org.springframework.web.bind.annotation.RequestMapping;
 import org.springframework.web.bind.annotation.RequestParam;
 import org.springframework.web.multipart.MultipartFile;
 
+import kr.or.kosa.dao.CafeteriaDao;
+import kr.or.kosa.dto.Cafeteria;
 import kr.or.kosa.dto.Member;
 import kr.or.kosa.dto.PaymentHistory;
 import kr.or.kosa.dto.SleepOver;
 import kr.or.kosa.security.CustomUser;
 import kr.or.kosa.security.CustomUserDetailService;
 import kr.or.kosa.security.User;
+import kr.or.kosa.service.CafeteriaService;
 import kr.or.kosa.service.MemberService;
 import kr.or.kosa.service.PaymentService;
 import kr.or.kosa.service.SleepOverService;
@@ -42,6 +46,9 @@ public class MemberController {
 	@Autowired
 	SleepOverService sleepoverService;
 	
+	@Autowired
+	CafeteriaService service;
+	
 	private static final Logger logger = LoggerFactory.getLogger(FrontController.class);
 	
 	
@@ -53,10 +60,10 @@ public class MemberController {
 	}
 	
 	@PostMapping("/nightOver")
-	public String nightOver(SleepOver over, MultipartFile file, Model model) {
+	public String nightOver(SleepOver over, Model model) {
 		int result = 0;
 		try {
-			result = sleepoverService.insertSleepOver(over, file);
+			result = sleepoverService.insertSleepOver(over);
 		} catch (ParseException e) {
 			e.printStackTrace();
 		}
@@ -81,11 +88,16 @@ public class MemberController {
 	}
 	
 	@GetMapping("/mealticket")
-	public String mealticket() {
-		
+	public String mealticket(Model model) {
+		User user = (User) SecurityContextHolder.getContext().getAuthentication().getPrincipal();
+		String unicode = user.getUniversityCode();
+		String domitoryname = user.getDomitoryName();
+		List<Cafeteria> mealList = service.selectCafeteria(unicode, domitoryname);
+		System.out.println("mealList : "+mealList);
+		model.addAttribute("mealList", mealList);
 		return "member/mealticket";
 	}
-	
+	// 충전할때
 	@RequestMapping("/payments")
 	public String mealticketPayment(@RequestParam("memberid") String memberid, @RequestParam("amount")String amount, Model model) {
 		System.out.println("파라미터로 들어온 ... : " + memberid + " " + amount);
@@ -110,6 +122,56 @@ public class MemberController {
 			msg = "문제가 발생했어요";
 			url = "/";
 		}
+		model.addAttribute("msg", msg);
+		model.addAttribute("url", url);
+		model.addAttribute("icon", icon);
+		return "/common/redirect";
+	}
+	
+	//qr로 결제할때
+	@RequestMapping("/payment/{price}")
+	public String mealticketPayment(Principal principal,@PathVariable("price") int price, Model model) throws IOException {
+		Member member = null;
+		String memberid = principal.getName();
+		member = memberservice.getMemberById(memberid);
+		
+		String msg = "";
+		String url = "";
+		String icon = "";
+		int result = 0;
+		
+		//회원 포인트가 0보다 작으면
+		if(member.getMemberPoint() < 0) {
+			
+			icon = "error";
+			msg = "포인트 오류입니다.";
+			url = "/";
+			
+		//결제값이 회원포인트보다 크면
+		}else if(member.getMemberPoint() < price) {
+			
+			icon = "error";
+			msg = "포인트를 충전해주세요.";
+			url = "/";
+			
+		}else {
+			User user = (User) SecurityContextHolder.getContext().getAuthentication().getPrincipal();
+			int point = member.getMemberPoint() - price;
+			
+			result = memberservice.usePoint(member,price);
+			user.setMemberPoint(point);
+			if(result < 0) {
+				icon = "error";
+				msg = "결제실패..";
+				url = "/";
+			} else {
+				icon = "success";
+				msg = "사용완료! " + point + "원 남았습니다.";
+				url = "/";
+			}
+		}
+		
+	
 		model.addAttribute("msg", msg);
 		model.addAttribute("url", url);
 		model.addAttribute("icon", icon);

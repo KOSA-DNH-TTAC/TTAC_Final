@@ -42,6 +42,87 @@
   * Author: BootstrapMade.com
   * License: https://bootstrapmade.com/license/
   ======================================================== -->
+  <style>
+
+table {
+  border: 1px #a39485 solid;
+  font-size: .9em;
+  box-shadow: 0 2px 5px rgba(0,0,0,.25);
+  width: 100%;
+  border-collapse: collapse;
+  border-radius: 5px;
+  overflow: hidden;
+}
+
+th {
+  text-align: center;
+}
+  
+thead {
+  font-weight: bold;
+  color: #fff;
+  background: #E96B56;
+}
+  
+ td, th {
+  padding: 1em .5em;
+  vertical-align: middle;
+}
+  
+ td {
+  border-bottom: 1px solid rgba(0,0,0,.1);
+  background: #fff;
+}
+
+a {
+  color: #73685d;
+}
+  
+ @media all and (max-width: 768px) {
+    
+  table, thead, tbody, th, td, tr {
+    display: block;
+  }
+  
+  th {
+    text-align: right;
+  }
+  
+  table {
+    position: relative; 
+    padding-bottom: 0;
+    border: none;
+    box-shadow: 0 0 10px rgba(0,0,0,.2);
+  }
+  
+  thead {
+    float: left;
+    white-space: nowrap;
+  }
+  
+  tbody {
+    overflow-x: auto;
+    overflow-y: hidden;
+    position: relative;
+    white-space: nowrap;
+  }
+  
+  tr {
+    display: inline-block;
+    vertical-align: top;
+  }
+  
+  th {
+    border-bottom: 1px solid #a39485;
+  }
+  
+  td {
+    border-bottom: 1px solid #e5e5e5;
+  }
+  
+  
+  }
+  </style>
 </head>
 
 <body>
@@ -67,29 +148,44 @@
     <!-- ======= Pricing Section ======= -->
     <section id="pricing" class="pricing">
       <div class="container">
-
-        <div class="row no-gutters" style="margin-top:10px;">
+		<div style="display:flex; justify-content:center;">
+		<table class="col-lg-4 box" style="width:700px; text-align:center;">
+    <thead>
+    <tr>
+        <th>메뉴 명</th>
+        <th>가격</th>
+    </tr>
+    </thead>
+    <tbody>
+    <c:forEach items="${mealList}" var="mealList">
+		<tr>
+			<td>${mealList.menu}</td><td>₩ ${mealList.menuPrice}</td>
+		</tr>
+		</c:forEach>
+    </tbody>
+</table>
+		</div>
+        <div class="row no-gutters" style="padding-top:15px;">
 
           <div class="col-lg-4 box">
-            <h3>1회</h3>
-            <h4 class="price">₩ 6000<span>기숙사 내 식사 1회 분</span></h4>
-            <a href="#" class="buy-btn" id="6000">구매하기</a>
+            <h3>충전금액</h3>
+            <h4 class="price">₩ 10000<span></span></h4>
+            <a href="#" class="buy-btn" id="10000">구매하기</a>
+          </div>
+          <div class="col-lg-4 box">
+            <h3>충전금액</h3>
+            <h4 class="price">₩ 50000<span></span></h4>
+            <a href="#" class="buy-btn" id="50000">구매하기</a>
           </div>
 
           <div class="col-lg-4 box">
-            <h3>10회</h3>
-            <h4 class="price">₩ 60000<span>기숙사 내 식사 10회 분</span></h4>
-            <a href="#" class="buy-btn" id="60000">구매하기</a>
-          </div>
-
-          <div class="col-lg-4 box">
-            <h3>30회</h3>
-            <h4 class="price">₩ 180000<span>기숙사 내 식사 30회 분</span></h4>
-            <a href="#" class="buy-btn" id="180000">구매하기</a>
+            <h3>충전금액</h3>
+            <h4 class="price">₩ 100000<span></span></h4>
+            <a href="#" class="buy-btn" id="100000">구매하기</a>
           </div>
 
         </div>
-
+<small style="color:gray; display:flex; justify-content:center;">※잔여금액 환불의 경우, 학교 측에 문의하여 주시길 바랍니다.</small>
       </div>
     </section><!-- End Pricing Section -->
 
@@ -127,7 +223,7 @@
   function test(meal, username){
 	  console.log("test 함수")
 	  let memberid = "${principal.memberId}";
-      let successurl =  "http://localhost:8090/payments?memberid="+memberid;
+      let successurl =  "https://bamjong.shop/payments?memberid="+memberid;
       let failurl ="";
       let price = meal; // 왜 css가 이상해졋을까... 도와줘..찾아줘해결해줘~~~ 못생긴카테고리를쓰고싶지않아!~!~!!!~~~~!~!!~~!
           var clientKey = 'test_ck_D5GePWvyJnrK0W0k6q8gLzN97Eoq'

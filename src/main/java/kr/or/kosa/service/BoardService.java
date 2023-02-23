@@ -25,6 +25,7 @@ import kr.or.kosa.dto.Product;
 import kr.or.kosa.dto.Reply;
 import kr.or.kosa.dto.RollCall;
 import kr.or.kosa.security.User;
+import kr.or.kosa.utils.Criteria;
 
 @Service
 public class BoardService {
@@ -35,6 +36,16 @@ public class BoardService {
 	public void setSqlSession(SqlSession sqlSession) {
 		this.sqlSession = sqlSession;
 	}
+	
+	//게시판 글 전체 개수(페이징을 위한)
+	public int totalCount(String boardname){
+		BoardDao boarddao = sqlSession.getMapper(BoardDao.class);
+		User user = (User) SecurityContextHolder.getContext().getAuthentication().getPrincipal();
+		System.out.println("totalCount boardname : " + boardname);
+		System.out.println(user.getUniversityCode());
+		return boarddao.totalPostCount(boardname, user.getUniversityCode());
+	}
+	
 
 	// 게시판 리스트
 	public List<Board> categoryList() {
@@ -48,13 +59,16 @@ public class BoardService {
 	}
 
 	// 기본 제공 게시판 글 목록
-	public List<Post> allBoardList(String allBoard) {
+	public List<Post> allBoardList(String allBoard, Criteria cri) {
 		BoardDao boardDao = sqlSession.getMapper(BoardDao.class);
 		
 		User user = (User) SecurityContextHolder.getContext().getAuthentication().getPrincipal();
 		String universityCode = user.getUniversityCode();
 		
-		List<Post> allBoardList = boardDao.allBoardList(allBoard, universityCode);
+//		System.out.println("cri.getpage : " + cri.getPage()); //현재페이지
+//		System.out.println("pagepernum : " + cri.getPerPageNum()); //페이지크기
+//		System.out.println("cri.getstartpage : " + cri.getPageStart()); //페이징을 시작할 글 번호(순서)
+		List<Post> allBoardList = boardDao.allBoardList(allBoard, universityCode, cri.getPageStart(), cri.getPerPageNum());
 		Date nowDate = new Date();
 
 		SimpleDateFormat simpleDateFormat = new SimpleDateFormat("YYYY-MM-dd");
@@ -302,25 +316,60 @@ public class BoardService {
 		System.out.println("셀렉트받아온 domitory: " + domitory);
 		double domitoryLat = domitory.getDomitoryLatitude();
 		double domitoryLon = domitory.getDomitoryLogitude();
-
+		
+		
+		double dist = getDistance(domitoryLat, domitoryLon, lat, lon);
+		System.out.println("dist : "+ dist);
+		
 		String alert = "SUCCESS";
-		if (!((domitoryLat - lat) < 0.005)) {
+		if (!(dist < 0.0021) || (dist > -0.0021)) {
 			alert = "FAIL";
 			System.out.println("결과 : "+alert+"lat 계산 : "+(domitoryLat - lat));
 		}
-		if (!((domitoryLon - lon) < 0.005)) {
+		if (!((domitoryLon - lon) < 0.003) || ((domitoryLon - lon) > -0.003)) {
 			alert = "FAIL";
 			System.out.println("결과 : "+alert+"lon 계산 : "+(domitoryLon - lon));
 		}
+//		String alert = "SUCCESS";
+//		if (!((domitoryLat - lat) < 0.0000000000000005)) {
+//			alert = "FAIL";
+//			System.out.println("결과 : "+alert+"lat 계산 : "+(domitoryLat - lat));
+//		}
+//		if (!((domitoryLon - lon) < 0.0000000000000005)) {
+//			alert = "FAIL";
+//			System.out.println("결과 : "+alert+"lon 계산 : "+(domitoryLon - lon));
+//		}
 
 		return alert;
 	}
+	
+
+	// km 기준
+	private Double getDistance(Double lat, Double lnt, Double lat2, Double lnt2) {
+	    double theta = lnt - lnt2;
+	    double dist = Math.sin(deg2rad(lat))* Math.sin(deg2rad(lat2)) + Math.cos(deg2rad(lat))*Math.cos(deg2rad(lat2))*Math.cos(deg2rad(theta));
+	    dist = Math.acos(dist);
+	    dist = rad2deg(dist);
+	    dist = dist * 60*1.1515*1609.344;
+	    System.out.println("dist : "+ dist/1000);
+	    return dist / 1000;
+	}
+
+	//10진수를 radian(라디안)으로 변환
+	private static double deg2rad(double deg){
+	    return (deg * Math.PI/180.0);
+	}
+	//radian(라디안)을 10진수로 변환
+	private static double rad2deg(double rad){
+	    return (rad * 180 / Math.PI);
+	}
+	
 
 	// 점호완료시 DB에 회원 점호데이터 인서트
-			public String eveningCallInsert(String memberid, String universitycode) {
+			public String eveningCallInsert(String memberid, String universitycode,String domitoryName) {
 				BoardDao boardDao = sqlSession.getMapper(BoardDao.class);
 				System.out.println("memberid 서비스 옴?");
-				int  rollcall = boardDao.eveningCallInsert(memberid, universitycode);
+				int  rollcall = boardDao.eveningCallInsert(memberid, universitycode,domitoryName);
 
 				if( rollcall >=1) {
 					System.out.println("성공");
@@ -396,8 +445,8 @@ public class BoardService {
 				File fileOne = new File();
 				
 				String fileName = post.getUniversityCode()+"/"+ "board" + "/" + idx + "/" + uuid.toString()+"_"+multipartfile.getOriginalFilename();
-				
-				fileUrl = awsS3.searchIcon(fileName);
+				fileUrl = "https://d37qu1avlirbuh.cloudfront.net/" + fileName;
+				System.out.println("파일유아ㅑㄹ엘"+fileUrl);
 				fileOne.setIdx(idx);
 				fileOne.setFileUrl(fileUrl);
 				fileOne.setFileName(fileName);
@@ -439,7 +488,7 @@ public class BoardService {
 				
 				String fileName = post.getUniversityCode()+"/"+ "board" + "/" + idx + "/" + uuid.toString()+"_"+multipartfile.getOriginalFilename();
 				
-				fileUrl = awsS3.searchIcon(fileName);
+				fileUrl = "https://d37qu1avlirbuh.cloudfront.net/" + fileName;
 				fileOne.setFileUrl(fileUrl);
 				fileOne.setFileName(fileName);
 				fileOne.setFileRealName(multipartfile.getOriginalFilename());
@@ -481,7 +530,7 @@ public class BoardService {
 			
 			for (File file : fileDTO) {
 				url = postDTO.getUniversityCode()+"/"+ "board" + "/" + idx + "/" + file.getFileRealName();
-				fileUrl = awsS3.searchIcon(url);
+				fileUrl = "https://d37qu1avlirbuh.cloudfront.net/" + url;
 				file.setFileUrl(fileUrl);
 				this.fileWrite(file);
 			}
