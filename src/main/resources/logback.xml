@@ -31,7 +31,7 @@
 
          <appender name="fileAppender" class="ch.qos.logback.core.rolling.RollingFileAppender">
 
-                  <file>c:\ttaclog\loginTry.log</file>
+                  <file>c:\ttaclog\loginTryLog.log</file>
 
                   <encoder class="ch.qos.logback.classic.encoder.PatternLayoutEncoder">
 
