@@ -170,18 +170,18 @@ a {
           <div class="col-lg-4 box">
             <h3>충전금액</h3>
             <h4 class="price">₩ 10000<span></span></h4>
-            <a href="#" class="buy-btn" id="6000">구매하기</a>
+            <a href="#" class="buy-btn" id="10000">구매하기</a>
           </div>
           <div class="col-lg-4 box">
             <h3>충전금액</h3>
             <h4 class="price">₩ 50000<span></span></h4>
-            <a href="#" class="buy-btn" id="60000">구매하기</a>
+            <a href="#" class="buy-btn" id="50000">구매하기</a>
           </div>
 
           <div class="col-lg-4 box">
             <h3>충전금액</h3>
             <h4 class="price">₩ 100000<span></span></h4>
-            <a href="#" class="buy-btn" id="180000">구매하기</a>
+            <a href="#" class="buy-btn" id="100000">구매하기</a>
           </div>
 
         </div>
