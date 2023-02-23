@@ -75,8 +75,11 @@
               <h3>나의 현재위치</h3>
               <p id="location"></p>
               	<div style="display:flex; justify-content:center; align-items:center; margin: auto; width:280px; height:5px; border-radius: 50px; border: none; background-color:#E96B56; color:white; margin-top:10px;">
-              		<button id="report"  style="width:130px; height:20; border-radius: 50px; padding:5px; border: none; background-color:#E96B56; color:white; margin-top:10px; font-size: large;">점호하기</button>
+              		
               	</div>
+              <div id="hjmsgdiv">
+                <button id="report"  style="width:130px; height:20; border-radius: 50px; padding:5px; border: none; background-color:#E96B56; color:white; margin-top:10px; font-size: large;">점호하기</button>
+              </div>
             </div>
           </div>
         </div>
@@ -119,10 +122,31 @@ window.onload = function (){
 
   let report;
 
+
+  var now = new Date();
+  var start = new Date();
+  start.setHours(20, 0, 0); // 오후 8시
+  var end = new Date();
+  end.setHours(22, 0, 0); // 오후 10시
+  
+    if (!(now >= start && now <= end)) { // 오후 8시부터 10시 사이가 아니면
+      // 버튼을 클릭할 수 없게
+      console.log("머노?")
+      Swal.fire(
+        "NOPE",
+        "점호 가능 시간이 아닙니다.",
+        "error"
+      )
+      var button = document.getElementById('report');
+      button.style.backgroundColor = '#cfcfcf';
+      $('#report').prop('disabled', true);
+    }
+
   $('#report').click(function(){
     mySpaceReport();
     // $('#report').html("뒤졋다 ㅋㅋ")
   })
+  
 
   function mySpaceReport(){
       console.log("눌림ㅋㅋ")
