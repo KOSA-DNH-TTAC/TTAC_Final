@@ -60,10 +60,10 @@ public class MemberController {
 	}
 	
 	@PostMapping("/nightOver")
-	public String nightOver(SleepOver over, MultipartFile file, Model model) {
+	public String nightOver(SleepOver over, Model model) {
 		int result = 0;
 		try {
-			result = sleepoverService.insertSleepOver(over, file);
+			result = sleepoverService.insertSleepOver(over);
 		} catch (ParseException e) {
 			e.printStackTrace();
 		}
