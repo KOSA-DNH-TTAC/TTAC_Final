@@ -2,6 +2,7 @@ package kr.or.kosa.aspect;
 
 import org.aspectj.lang.JoinPoint;
 import org.aspectj.lang.ProceedingJoinPoint;
+import org.aspectj.lang.annotation.After;
 import org.aspectj.lang.annotation.AfterReturning;
 import org.aspectj.lang.annotation.Around;
 import org.aspectj.lang.annotation.Aspect;
@@ -25,18 +26,11 @@ public class LoginAspect {
 	@Pointcut("execution(* kr.or.kosa.utils.VisitorInfo.*(..))")
 	public void logMe() {}
     
-	@Around("logMe()")
-    public Object aroundLoadUserByUsername(ProceedingJoinPoint joinPoint) throws Throwable {
+	@AfterReturning(value = "logMe()", returning = "returnValue")
+    public void aroundLoadUserByUsername(JoinPoint joinPoint, Object returnValue) throws Throwable {
 
-    	System.out.println(" aop !!!");
-        log.info("Called method : " +  joinPoint.getSignature().getName());
-//      log.info("With arguments : " +  joinPoint.getArgs());
-
-        Object result = joinPoint.proceed();
-
-        log.info("Returned value : " +  result);
-
-        return result;
+    	log.info("=============AOP : 홈화면 방문자================");
+		log.info(returnValue);
     }
 
 	/*

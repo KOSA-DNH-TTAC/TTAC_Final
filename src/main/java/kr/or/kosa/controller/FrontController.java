@@ -62,14 +62,9 @@ public class FrontController {
 			    // 사용자가 로그인한 상태이면 실행될 코드
 			    // ...
 			User user = (User) SecurityContextHolder.getContext().getAuthentication().getPrincipal();
-			System.out.println("회원");
+			//visitor 정보 넘김
 			visitorinfo.information(user);
 
-			} else {
-			    
-			    // 사용자가 로그인하지 않은 상태이면 실행될 코드
-			    // ...
-				System.out.println("익명");
 			}		
 		
 		return "index";
