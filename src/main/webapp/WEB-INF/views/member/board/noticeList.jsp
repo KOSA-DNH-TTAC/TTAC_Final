@@ -1,37 +1,38 @@
 <%@ page language="java" contentType="text/html; charset=UTF-8" pageEncoding="UTF-8" %>
-	<%@ taglib prefix="c" uri="http://java.sun.com/jsp/jstl/core" %>
-		<%@ taglib prefix="fn" uri="http://java.sun.com/jsp/jstl/functions" %>
-			<!DOCTYPE html>
-			<html lang="en">
+<%@ taglib prefix="c" uri="http://java.sun.com/jsp/jstl/core" %>
+<%@ taglib prefix="fn" uri="http://java.sun.com/jsp/jstl/functions" %>
+<%@ taglib uri="http://www.springframework.org/security/tags" prefix="sec"%>
+<!DOCTYPE html>
+<html lang="en">
 
-			<head>
-				<meta charset="utf-8">
-				<meta http-equiv="Content-Security-Policy" content="upgrade-insecure-requests"> 
-				<meta content="width=device-width, initial-scale=1.0" name="viewport">
+<head>
+	<meta charset="utf-8">
+	<meta http-equiv="Content-Security-Policy" content="upgrade-insecure-requests"> 
+	<meta content="width=device-width, initial-scale=1.0" name="viewport">
 
-				<title>DOTO: 공지사항</title>
-				<meta content="" name="description">
-				<meta content="" name="keywords">
+	<title>DOTO: 공지사항</title>
+	<meta content="" name="description">
+	<meta content="" name="keywords">
 
-				<!-- Favicons -->
-				<link href="resources/assets/img/favicon.png" rel="icon">
-				<link href="resources/assets/img/apple-touch-icon.png" rel="apple-touch-icon">
+	<!-- Favicons -->
+	<link href="resources/assets/img/favicon.png" rel="icon">
+	<link href="resources/assets/img/apple-touch-icon.png" rel="apple-touch-icon">
 
-				<!-- Google Fonts -->
-				<link
-					href="https://fonts.googleapis.com/css?family=Open+Sans:300,300i,400,400i,600,600i,700,700i|Raleway:300,300i,400,400i,500,500i,600,600i,700,700i|Poppins:300,300i,400,400i,500,500i,600,600i,700,700i"
-					rel="stylesheet">
+	<!-- Google Fonts -->
+	<link
+		href="https://fonts.googleapis.com/css?family=Open+Sans:300,300i,400,400i,600,600i,700,700i|Raleway:300,300i,400,400i,500,500i,600,600i,700,700i|Poppins:300,300i,400,400i,500,500i,600,600i,700,700i"
+		rel="stylesheet">
 
-				<!-- Vendor CSS Files -->
-				<link href="/resources/assets/vendor/animate.css/animate.min.css" rel="stylesheet">
-				<link href="/resources/assets/vendor/bootstrap/css/bootstrap.min.css" rel="stylesheet">
-				<link href="/resources/assets/vendor/bootstrap-icons/bootstrap-icons.css" rel="stylesheet">
-				<link href="/resources/assets/vendor/boxicons/css/boxicons.min.css" rel="stylesheet">
-				<link href="/resources/assets/vendor/glightbox/css/glightbox.min.css" rel="stylesheet">
-				<link href="/resources/assets/vendor/swiper/swiper-bundle.min.css" rel="stylesheet">
+	<!-- Vendor CSS Files -->
+	<link href="/resources/assets/vendor/animate.css/animate.min.css" rel="stylesheet">
+	<link href="/resources/assets/vendor/bootstrap/css/bootstrap.min.css" rel="stylesheet">
+	<link href="/resources/assets/vendor/bootstrap-icons/bootstrap-icons.css" rel="stylesheet">
+	<link href="/resources/assets/vendor/boxicons/css/boxicons.min.css" rel="stylesheet">
+	<link href="/resources/assets/vendor/glightbox/css/glightbox.min.css" rel="stylesheet">
+	<link href="/resources/assets/vendor/swiper/swiper-bundle.min.css" rel="stylesheet">
 
-				<!-- Template Main CSS File -->
-				<link href="/resources/assets/css/style.css" rel="stylesheet">
+	<!-- Template Main CSS File -->
+	<link href="/resources/assets/css/style.css" rel="stylesheet">
 
  <!-- =======================================================
   * Template Name: Eterna - v4.10.0
@@ -133,9 +134,11 @@
 									<div class="sidebar">
 										<div class="sidebar-item search-form">
 											<div class="d-flex justify-content-center align-self-center">
-												<button type="submit"
-												onclick="location.href='/board/noticeWrite'"
-												style="width: 100%; height: 20; border-radius: 50px; padding: 5px; border: none; background-color: #E96B56; color: white; margin-top: 10px; font-size: large;">글쓰기</button>
+												<sec:authorize access='hasRole("ROLE_ADMIN")'>
+													<button type="submit"
+													onclick="location.href='/board/noticeWrite'"
+													style="width: 100%; height: 20; border-radius: 50px; padding: 5px; border: none; background-color: #E96B56; color: white; margin-top: 10px; font-size: large;">글쓰기</button>
+												</sec:authorize>
 											</div>
 										</div>
 

@@ -115,6 +115,24 @@ $(document).ready(function () {
 	});
 });
 
+function dateFormatter(date) {
+			var wantDate = new Date(date);
+			// 년도 getFullYear()
+			var year = wantDate.getFullYear();
+			// 월 getMonth() (0~11로 1월이 0으로 표현되기 때문에 + 1을 해주어야 원하는 월을 구할 수 있다.)
+			var month = wantDate.getMonth() + 1
+			// 일 getDate()
+			var date = wantDate.getDate(); // 일
+			if (month < 10) {
+				month = "0" + month;
+			}
+			if (date < 10) {
+				date = "0" + date;
+			}
+			var wantDateFormat = year + "-" + month + "-" + date;
+			return wantDateFormat;
+		}
+
 
 //화면 로딩시 점호 리스트 출력
 $(document).ready(function(){
@@ -209,6 +227,12 @@ function notcall(){
 }
 
 function todaysearch(){
+
+	let today = new Date();
+	let todayf = dateFormatter(today);
+	console.log(todayf)
+	$('#start').val(todayf)
+
 	var tabledata = "";
 	$.ajax({
 		type : "POST",
@@ -227,14 +251,15 @@ function todaysearch(){
 			$('#table').append(tabledata);
 			$('#whichdate').empty();
 			$('#whichdate').append("검색 날짜 [" + data[0].rollCallDate + "]");
-			$('#start').empty();
-			$('#start').attr('value', 'data[0].rollCallDate')
+			// $('#start').empty();
+			// $('#start').attr('value', 'data[0].rollCallDate')
+			notcall();
 		},
 		error : function(data) {
 			alert(data+": 로드 실패");
 		}
 	});
-	notcall();
+	// notcall();
 }
 
 function execution(){

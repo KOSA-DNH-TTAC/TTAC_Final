@@ -188,10 +188,12 @@ public class BoardController_Rest {
 		// 점호한 인원 정보 데이터 인서트
 		String result2 = boardService.eveningCallCompare(memberId, unicode, date);
 		System.out.println("중복 체크 결과 : " + result2);
-		String result3 = result2 + " : 이미 점호 완료한 회원입니다.";
+//		String result3 = result2 + " : 이미 점호 완료한 회원입니다.";
+		String result3 = "ALREADY";
 		if (result2.equals("SUCCESS")) {
 			boardService.eveningCallInsert(memberId, unicode,domitoryName);
-			result3 = result2 + " : 점호가 완료되었습니다.";
+//			result3 = result2 + " : 점호가 완료되었습니다.";
+			result3 = "SUCCESS";
 			System.out.println("result3 : " + result3);
 		}
 		System.out.println("result3 : " + result3);

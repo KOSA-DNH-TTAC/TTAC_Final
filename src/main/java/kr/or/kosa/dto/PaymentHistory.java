@@ -12,4 +12,6 @@ public class PaymentHistory {
 	private Date payDate;
 	private int payAmount;
 	private String payKinds;
+	private String universitycode;
+	private String domitoryname;
 }
