@@ -41,6 +41,7 @@
   ======================================================== -->
 			</head>
 
+
 			<body>
 
 				<!-- ======= Header ======= -->
@@ -81,7 +82,8 @@
 													<c:when test="${productList.likeNum eq 2}"><span id="reserve">예약중</span></c:when>
 												</c:choose> 
 											<h2 class="entry-title">              
-                     						&nbsp;<a href="/board/productBoardList/${productList.idx}">${productList.title}</a></h2>
+                     						&nbsp;
+                     						<a href="/board/productBoardList/${productList.idx}">${productList.title}</a></h2>
 											</div>
 
 											<div class="entry-meta">

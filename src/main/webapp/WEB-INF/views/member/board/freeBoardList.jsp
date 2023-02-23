@@ -78,8 +78,8 @@
 								<div class="entry-title">									
 									<a href="/board/freeBoardList/${freeBoard.idx}">
 										<c:choose>
-											<c:when	test="${freeBoard.title != null && fn:length(freeBoard.title) > 80}">
-															${fn:substring(freeBoard.title,0,80)}...
+											<c:when	test="${freeBoard.title != null && fn:length(freeBoard.title) > 30}">
+												${fn:substring(freeBoard.title,0,30)}...
 											</c:when>
 											<c:otherwise>
 												${freeBoard.title}
@@ -98,7 +98,9 @@
 								</div>
 
 								<div class="entry-content">
-									<p>${freeBoard.content}</p>
+								
+									<!-- 내용 넣는곳  -->
+								
 								</div>
 							</article>
 							<!-- End blog entry -->

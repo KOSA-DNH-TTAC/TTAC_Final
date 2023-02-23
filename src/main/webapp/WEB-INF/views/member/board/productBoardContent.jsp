@@ -64,8 +64,19 @@
 			<div class="container">
 
 				<ol>
-					<li><a href="index.html">Home</a></li>
-					<li>거래게시판</li>
+					<li><a href="/">Home</a></li>
+					<li><a href="/board/productBoardList">거래게시판</a></li>
+								
+					<c:forEach items="${boardContent}" var="boardContent">
+						<c:choose>
+							<c:when	test="${boardContent.title != null && fn:length(boardContent.title) > 10}">
+											<li>${fn:substring(boardContent.title,0,10)}...</li>
+							</c:when>
+							<c:otherwise>
+								<li>${boardContent.title}</li>
+							</c:otherwise>
+						</c:choose>
+					</c:forEach>
 				</ol>
 				<h2>거래게시판</h2>
 
@@ -139,7 +150,7 @@
 			                    <button onclick="location.href='/board/${boardName}/${idx}/edit'" type="submit" style="width:130px; height:20; border-radius: 50px; padding:5px; border: none; background-color:#E96B56; color:white; margin-top:10px; font-size: large;">수정</button>
 	                    	</c:if>
 		                    
-							<button onclick="history.go(-1)" style="width:130px; height:20; border-radius: 50px; padding:5px; border: none; background-color:#000000; color:white; margin-top:10px; font-size: large;">목록</button>					
+							<button onclick="location.href='/board/${boardName}/'" style="width:130px; height:20; border-radius: 50px; padding:5px; border: none; background-color:#000000; color:white; margin-top:10px; font-size: large;">목록</button>					
 	                    </div>
                     </div>
                     <i class="bi bi-chat-dots"></i>&nbsp;

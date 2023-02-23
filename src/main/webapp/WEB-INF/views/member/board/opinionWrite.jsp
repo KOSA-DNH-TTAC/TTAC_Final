@@ -57,9 +57,9 @@
 
         <ol>
           <li><a href="/">Home</a></li>
-          <li>Community</li>
+          <li>글쓰기</li>
         </ol>
-        <h2>커뮤니티</h2>
+        <h2>글쓰기</h2>
       </div>
     </section><!-- End Breadcrumbs -->
 
@@ -72,10 +72,17 @@
           <div class="col-lg-12 entries">
 
             <article class="entry">
-				<form action="#" method="POST" enctype="form-data">
+				<form action="/board/opinionWrite" method="POST" enctype="form-data">
 					<div class="mb-3">
 					  <label for="title" class="form-label">게시글 제목</label>
-					  <input type="text" class="form-control" id="title" placeholder="제목을 작성해주세요." autofocus required>
+					  <input type="text" class="form-control" name="title" id="title" placeholder="제목을 작성해주세요." autofocus required>
+					</div>
+					<div class="mb-3">
+						<label for="sold" class="form-label">판매 상태</label>
+						<select id="sold" name="sold" class="form-select">
+		                    <option value=3 selected>해결중</option>
+		                    <option value=4>해결완료</option>
+			            </select>
 					</div>
 					<div class="mb-3">
 					  <label for="content" class="form-label">내용</label>
@@ -83,17 +90,17 @@
 					</div>
 					
 					<div class="d-grid gap-2 d-md-flex justify-content-md-end">
-					<button onclick="history.go(-1)" style="width:130px; height:20; border-radius: 50px; padding:5px; border: none; background-color:#000000; color:white; margin-top:10px; font-size: large;">취소</button>
+					<button type="button" onclick="history.go(-1)" style="width:130px; height:20; border-radius: 50px; padding:5px; border: none; background-color:#000000; color:white; margin-top:10px; font-size: large;">취소</button>
 					<button type="submit" style="width:130px; height:20; border-radius: 50px; padding:5px; border: none; background-color:#E96B56; color:white; margin-top:10px; font-size: large;">확인</button>
                     </div>
                     
                     
-                    	
+                    <%-- 	
                   		<!-- 숨길 데이터들 -->
 	                    <input name="refer" value="${refer}" type="hidden" />
 	              		<input name="b_code" value="${b_code}" type="hidden" />
 	              		<input name="depth" value="${depth}" type="hidden" />
-	              		<input name="step" value="${step}" type="hidden" />
+	              		<input name="step" value="${step}" type="hidden" /> --%>
 				</form>
             </article><!-- End blog entry -->
 
@@ -103,6 +110,7 @@
 
         </div>
       </div>
+      
     </section><!-- End Blog Section -->
 
   </main><!-- End #main -->

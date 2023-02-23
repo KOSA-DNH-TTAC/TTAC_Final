@@ -281,7 +281,7 @@ public class BoardController {
 	// 게시글 보기
 	@GetMapping("/board/{boardName}/{idx}")
 	public String boardContent(Model model, @PathVariable("idx") String idx,
-			@PathVariable("boardName") String boardName) {
+											@PathVariable("boardName") String boardName) {
 		
 		User user = (User) SecurityContextHolder.getContext().getAuthentication().getPrincipal();
 //		String param = "";
@@ -400,7 +400,7 @@ public class BoardController {
 										   @RequestParam("title") String title,
 										   @RequestParam("content") String content,
 										   @RequestParam(name = "sold", required = false) String sold,
-										   @RequestParam("file") List<MultipartFile> files) throws ClassNotFoundException, SQLException, IOException {
+										   @RequestParam(name = "file", required = false) List<MultipartFile> files) throws ClassNotFoundException, SQLException, IOException {
 		
 		User user = (User) SecurityContextHolder.getContext().getAuthentication().getPrincipal();
 		Post boardContent = boardService.boardContentDTO(idx);
@@ -409,6 +409,8 @@ public class BoardController {
 		String icon= "";
 		String msg = "";
 		String url = "";
+		
+		System.out.println("파일즈"+files);
 
 		
 		//글 제목, 내용 수정
@@ -416,12 +418,12 @@ public class BoardController {
 		boardContent.setContent(content);
 		
 		if(boardName.equals("productBoardList")) {
-			
 			boardContent.setLikeNum(Integer.parseInt(sold));
-			System.out.println("솔드 값: " + sold);
-			System.out.println("보드컨텐츠: " +  boardContent);
-			System.out.println("보드네임: " +  boardName);
 		}
+		if(boardName.equals("opinionList")) {
+			boardContent.setLikeNum(Integer.parseInt(sold));
+		}
+		
 		
 		result = boardService.boardContentEdit(boardContent, files);
 		
@@ -509,16 +511,50 @@ public class BoardController {
 		return "/common/redirect";
 	}
 
-	// 건의사항 글쓰기
-	@GetMapping("/opinionList/opinionWrite")
-	public String opinionWrite() {
-		return "member/board/opinionWrite";
-	}
 
 	// 건의사항 글쓰기
-	@PostMapping("/opinionList/opinionWrite")
-	public String opinionWriteOk() {
-		return "member/board/opinionWrite";
+	@PostMapping("/board/opinionWrite")
+	public String opinionWriteOk(Model model, @RequestParam("title") String title,
+											  @RequestParam("content") String content,
+											  @RequestParam("sold") String sold) throws ClassNotFoundException, SQLException {
+		
+		User user = (User) SecurityContextHolder.getContext().getAuthentication().getPrincipal();
+		int boardIDX = 2;
+		String msg = "";
+		String url = "";
+		String icon = "";
+		int result = 0;
+
+		Post post = new Post();
+		
+
+		post.setBoardIdx(boardIDX);
+		post.setBoardName("건의사항");
+		post.setUniversityCode(user.getUniversityCode());
+		post.setMemberId(user.getMemberId());
+		post.setTitle(title);
+		post.setContent(content);
+		post.setLikeNum(Integer.parseInt(sold));
+		
+
+		result = boardService.opinionWrite(post);
+
+		if (result < 1) {
+			icon = "error";
+			msg = "글 작성이 실패했습니다.";
+			url = "/board/opinionWrite";
+		} else {
+			icon = "success";
+			msg = "글 작성이 완료되었습니다!";
+			url = "/board/opinionList";
+		}
+		
+
+		model.addAttribute("msg", msg);
+		model.addAttribute("url", url);
+		model.addAttribute("icon", icon);
+		
+		return "/common/redirect";
 	}
 	
 	// 거래게시판 글쓰기
