@@ -31,7 +31,7 @@
 
          <appender name="fileAppender" class="ch.qos.logback.core.rolling.RollingFileAppender">
 
-                  <file>c:\ttaclog\loginTryLog.log</file>
+                  <file>/home/tomcat/loginLog/loginTryLog.log</file>
 
                   <encoder class="ch.qos.logback.classic.encoder.PatternLayoutEncoder">
 
@@ -61,7 +61,7 @@
 
                   <rollingPolicy class="ch.qos.logback.core.rolling.FixedWindowRollingPolicy">
 
-                           <FileNamePattern>C:\LogExample\logexample2.%i.log.zip</FileNamePattern>
+                           <FileNamePattern>/home/tomcat/LogExample/logexample2.%i.log.zip</FileNamePattern>
 
                            <!--
 
