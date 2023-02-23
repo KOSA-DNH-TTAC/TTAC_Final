@@ -43,7 +43,8 @@
 		<!-- 로그인
 		<security:form-login login-page="/userlogin" login-processing-url="/userlogin" default-target-url="/"/>
 		 -->
-		 <security:form-login login-page="/userlogin" />
+		 <security:form-login login-page="/userlogin" username-parameter="username" password-parameter="password"
+		default-target-url="/" authentication-failure-url="/userlogin?fail=true"/>
 		<!-- 자동로그인 -->
 		<security:remember-me data-source-ref="driverManagerDataSource" token-validity-seconds="604800"/>
 		<!-- 로그아웃 -->
