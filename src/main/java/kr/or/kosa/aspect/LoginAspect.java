@@ -1,5 +1,7 @@
 package kr.or.kosa.aspect;
 
+import org.apache.commons.logging.Log;
+import org.apache.commons.logging.LogFactory;
 import org.aspectj.lang.JoinPoint;
 import org.aspectj.lang.ProceedingJoinPoint;
 import org.aspectj.lang.annotation.After;
@@ -17,6 +19,8 @@ import lombok.extern.log4j.Log4j;
 @Log4j
 public class LoginAspect {
 	
+	private static final Log LOG = LogFactory.getLog( LoginAspect.class );
+	
 //    @Around("execution(* kr.or.kosa.security.CustomUserDetailService.loadUserByUsername(..))")
 //    @Around("execution(* kr.or.kosa.security..*.*(..))")
 //	@Pointcut("execution(* kr.or.kosa.security..*.*(..))")
@@ -28,7 +32,15 @@ public class LoginAspect {
     
 	@AfterReturning(value = "logMe()", returning = "returnValue")
     public void aroundLoadUserByUsername(JoinPoint joinPoint, Object returnValue) throws Throwable {
-
+//		LOG.debug( "#ex1 - debug log" );
+//		LOG.info( "#ex1 - info log" );
+//		LOG.warn( "#ex1 - warn log" );
+//		LOG.error( "#ex1 - error log" );
+		
+		LOG.info("====== AOP : 로그인 ======");
+		LOG.info(returnValue);
+		
+		//콘솔출력용
     	log.info("==================================== AOP : 로그인 ======================================");
 		log.info(returnValue);
 		log.info("=========================================================================================");
