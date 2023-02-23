@@ -27,7 +27,7 @@
   <link href="resources/assets/vendor/bootstrap-icons/bootstrap-icons.css" rel="stylesheet">
   <link href="resources/assets/vendor/boxicons/css/boxicons.min.css" rel="stylesheet">
   <link href="resources/assets/vendor/glightbox/css/glightbox.min.css" rel="stylesheet">
-  <link href="resources/assets/vendor/swiper/swiper-bundle.min.css" rel="stylesheet">
+<!--   <link href="resources/assets/vendor/swiper/swiper-bundle.min.css" rel="stylesheet"> -->
 
   <!-- Template Main CSS File -->
   <link href="resources/assets/css/style.css" rel="stylesheet">
@@ -179,7 +179,7 @@ form:after {
   top: 0;
   z-index: -2;
 }
-#content form { margin: 0 20px; position: relative }
+#content form { margin: 0 0px; position: relative }  /* margin 값 때문에 CSS 꺠짐 */
 #content form input[type="text"],
 #content form input[type="password"] {
   -webkit-border-radius: 3px;
@@ -332,9 +332,18 @@ form:after {
         <span style="margin-left:10px;">로그인 상태 유지</span>
       </div>
       <!-- 로그인 실패 시 출력할 메세지 -->
-		<p>${sessionScope["SPRING_SECURITY_LAST_EXCEPTION"].message}</p>
+		<%-- <p>${sessionScope["SPRING_SECURITY_LAST_EXCEPTION"].message}</p> --%>
+		<c:if test="${not empty param.fail}">
+    		<div>
+				<font color="red">
+				<!-- <p>Your login attempt was not successful, try again.</p> -->
+				<p>· ID 또는 패스워드가 맞지 않습니다.</p>
+				</font>
+				<c:remove scope="session" var="SPRING_SECURITY_LAST_EXCEPTION"/>
+    		</div>
+    	</c:if>
       <div>
-        <input type="submit" value="Log in" />
+        <input type="submit" value="Log in" id="loginbtn"/>
         <a href="/forgot">비밀번호를 잊으셨나요?</a>
       </div>
     </form><!-- form -->
@@ -370,6 +379,18 @@ form:after {
 <script>
   $(document).ready(function(){
     setDate();
+	
+   	$("#loginbtn").click(function(){
+   		if($("#logemail").val() == ""){
+   			alert("로그인 아이디를 입력해주세요");
+   			$("#logemail").focus();
+   		}else if($("#logpass").val() == ""){
+   			alert("로그인 비밀번호를 입력해주세요");
+   			$("#logpass").focus();
+   		}
+   	});
+    		
+
   })
   
   function setDate(){
