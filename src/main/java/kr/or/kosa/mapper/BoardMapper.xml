@@ -110,6 +110,13 @@ PUBLIC "-//mybatis.org//DTD Mapper 3.0//EN"
 		(BOARDIDX,BOARDNAME,MEMBERID,UNIVERSITYCODE,TITLE,CONTENT,WRITEDATE)
 		VALUES(#{boardIdx},#{boardName},#{memberId},#{universityCode},#{title},#{content},NOW())
 	</insert>
+	
+	<!-- 건의사항 글 작성 (파일첨부 x) -->
+	<insert id="opinionInsert" parameterType="kr.or.kosa.dto.Post">
+		INSERT INTO POST
+		(BOARDIDX,BOARDNAME,MEMBERID,UNIVERSITYCODE,TITLE,CONTENT,LIKENUM,WRITEDATE)
+		VALUES(#{boardIdx},#{boardName},#{memberId},#{universityCode},#{title},#{content},#{likeNum} ,NOW())
+	</insert>
 
 	<!-- 파일 업로드 (최신idx) -->
 	<insert id="fileInsert" parameterType="kr.or.kosa.dto.File">
