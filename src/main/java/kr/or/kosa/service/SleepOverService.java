@@ -34,7 +34,7 @@ public class SleepOverService {
 	}
 	
 	//외박 신청(insert)
-	public int insertSleepOver(SleepOver over, MultipartFile file) throws ParseException {
+	public int insertSleepOver(SleepOver over) throws ParseException {
 		int result = 0;
 		User user = (User) SecurityContextHolder.getContext().getAuthentication().getPrincipal();
 		SleepOverDao overdao = sqlsession.getMapper(SleepOverDao.class);
@@ -77,20 +77,20 @@ public class SleepOverService {
 		over.setMemberId(user.getMemberId());
 
 		//파일 업로드
-		if (file.getSize() != 0) {
-			over.setSleepOverFileName(file.getOriginalFilename());
-			over.setSleepOverFileSize((int)file.getSize());
-			
-			try {
-				AwsS3 awsS3 = AwsS3.getInstance();
-				String route = user.getUniversityCode()+"/sleepOver/" + user.getMemberId() + "/" +file.getOriginalFilename();
-				System.out.println(route);
-				awsS3.upload(file, route);
-				
-			} catch (IOException e) {
-				e.printStackTrace();
-			}
-		}
+//		if (file.getSize() != 0) {
+//			over.setSleepOverFileName(file.getOriginalFilename());
+//			over.setSleepOverFileSize((int)file.getSize());
+//			
+//			try {
+//				AwsS3 awsS3 = AwsS3.getInstance();
+//				String route = user.getUniversityCode()+"/sleepOver/" + user.getMemberId() + "/" +file.getOriginalFilename();
+//				System.out.println(route);
+//				awsS3.upload(file, route);
+//				
+//			} catch (IOException e) {
+//				e.printStackTrace();
+//			}
+//		}
 		result = overdao.insertSleepOver(over);
 		
 		return result;
