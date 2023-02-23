@@ -8,8 +8,8 @@ PUBLIC "-//mybatis.org//DTD Mapper 3.0//EN"
 
 	<!-- insertPayment(결제 생성) -->
 	<insert id="insertPayment" parameterType="kr.or.kosa.dto.PaymentHistory">
-		INSERT INTO PAYMENTHISTORY(MEMBERID, PAYDATE, PAYAMOUNT, PAYKINDS)
-		VALUES(#{memberId},now(),#{payAmount},#{payKinds})
+		INSERT INTO PAYMENTHISTORY(MEMBERID, PAYDATE, PAYAMOUNT, PAYKINDS, DOMITORYNAME, UNIVERSITYCODE)
+		VALUES(#{memberId},now(),#{payAmount},#{payKinds}, #{domitoryname}, #{universitycode})
 		
 	</insert>
 	<!-- getAllPaymentHistory(전체 조회) -->
