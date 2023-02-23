@@ -108,7 +108,9 @@ public class MemberService {
 		User user = (User) SecurityContextHolder.getContext().getAuthentication().getPrincipal();
 		PaymentHistory payment = new PaymentHistory();
 		payment.setMemberId(user.getMemberId());
+		payment.setUniversitycode(user.getUniversityCode());
 		payment.setPayAmount(price);
+		payment.setDomitoryname(user.getDomitoryName());
 		payment.setPayKinds("사용");
 		
 		PaymentHistoryDao dao = sqlsession.getMapper(PaymentHistoryDao.class);
