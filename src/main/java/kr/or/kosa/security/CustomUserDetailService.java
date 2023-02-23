@@ -16,12 +16,18 @@ import kr.or.kosa.dao.MemberDao;
 import kr.or.kosa.dto.Member;
 import kr.or.kosa.dto.MemberAuth;
 import kr.or.kosa.service.MemberService;
+import kr.or.kosa.utils.VisitorInfo;
+import lombok.RequiredArgsConstructor;
 
 @Service
+@RequiredArgsConstructor
 public class CustomUserDetailService implements UserDetailsService {
 	
 	@Autowired
 	MemberDao dao;
+	
+	@Autowired
+	VisitorInfo info;
 	
 	@Override
 	public UserDetails loadUserByUsername(String memberid) throws UsernameNotFoundException {
@@ -32,15 +38,12 @@ public class CustomUserDetailService implements UserDetailsService {
 			throw new UsernameNotFoundException("Invalid User");
 		}
 		
-//		System.out.println("queried by memberdao : " + dto);
-		System.out.println("아이디 : " + dto);
-		 Set<GrantedAuthority> grantedAuthorities = new HashSet<>();
+		Set<GrantedAuthority> grantedAuthorities = new HashSet<>();
 		for(MemberAuth a : dto.getAuthList()) {
 			grantedAuthorities.add(new SimpleGrantedAuthority(a.getAuth()));
 		}
 		User user = new User(dto, grantedAuthorities);
-		System.out.println(user.toString());
-//		return dto == null ? null : new CustomUser(dto);
+
 		return user;
 	}
 

@@ -23,7 +23,7 @@ PUBLIC "-//mybatis.org//DTD Mapper 3.0//EN"
 	<!-- getPaymentHistoryById(특정 회원) -->
 	<select id="getPaymentHistoryById" parameterType="String" resultType="kr.or.kosa.dto.PaymentHistory">
 		SELECT payIdx, memberId, payDate, payAmount, payKinds from PAYMENTHISTORY WHERE memberId=#{memberId}
-		ORDER BY payidx DESC;
+		ORDER BY payidx DESC
 	</select>
 
 	

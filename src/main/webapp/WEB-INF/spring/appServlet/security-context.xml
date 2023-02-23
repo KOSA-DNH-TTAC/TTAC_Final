@@ -17,8 +17,9 @@
   					 http://www.springframework.org/schema/tx/spring-tx.xsd
   					 ">
   	
-  	<!-- Bean -->
-	<bean id="customUserDetailsService" class="kr.or.kosa.security.CustomUserDetailService"></bean>
+  	<!-- Bean
+	<bean id="customUserDetailsService" class="kr.or.kosa.security.CustomUserDetailService"></bean> -->
+	<bean id="cAuthenticationProvider" class="kr.or.kosa.security.CAuthenticationProvider"></bean>
   	<!-- 암호화 -->				 
   	<bean id="bcryptPasswordEncoder" class="org.springframework.security.crypto.bcrypt.BCryptPasswordEncoder"></bean>
   	
@@ -66,13 +67,15 @@
 
 	<security:authentication-manager id="myAuthenticationManager">
 
-		<security:authentication-provider
-			user-service-ref="customUserDetailsService">
+		<security:authentication-provider ref="cAuthenticationProvider" />
+		 
 
-			<security:password-encoder
+			
+
+		<security:authentication-provider user-service-ref="customUserDetailService" >
+		<security:password-encoder
 				ref="bcryptPasswordEncoder" />
-
-		</security:authentication-provider>
+				</security:authentication-provider>
 
 	</security:authentication-manager>
 	
