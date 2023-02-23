@@ -29,7 +29,7 @@ public class LoginAspect {
 	@AfterReturning(value = "logMe()", returning = "returnValue")
     public void aroundLoadUserByUsername(JoinPoint joinPoint, Object returnValue) throws Throwable {
 
-    	log.info("================================AOP : 홈화면 방문자======================================");
+    	log.info("==================================== AOP : 로그인 ======================================");
 		log.info(returnValue);
 		log.info("=========================================================================================");
     }

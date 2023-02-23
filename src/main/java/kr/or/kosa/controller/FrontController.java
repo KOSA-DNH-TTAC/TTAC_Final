@@ -55,17 +55,17 @@ public class FrontController {
 //		
 
 //		auth의 롤이 anonymous가 아니면 어쩌고...
-		if (SecurityContextHolder.getContext().getAuthentication() != null 
-			    && SecurityContextHolder.getContext().getAuthentication().isAuthenticated()
-			    && !(SecurityContextHolder.getContext().getAuthentication() instanceof AnonymousAuthenticationToken)) {
-			    
-			    // 사용자가 로그인한 상태이면 실행될 코드
-			    // ...
-			User user = (User) SecurityContextHolder.getContext().getAuthentication().getPrincipal();
-			//visitor 정보 넘김
-			visitorinfo.information(user);
-
-			}		
+//		if (SecurityContextHolder.getContext().getAuthentication() != null 
+//			    && SecurityContextHolder.getContext().getAuthentication().isAuthenticated()
+//			    && !(SecurityContextHolder.getContext().getAuthentication() instanceof AnonymousAuthenticationToken)) {
+//			    
+//			    // 사용자가 로그인한 상태이면 실행될 코드
+//			    // ...
+//			User user = (User) SecurityContextHolder.getContext().getAuthentication().getPrincipal();
+//			//visitor 정보 넘김
+//			visitorinfo.information(user);
+//
+//			}		
 		
 		return "index";
 	}
