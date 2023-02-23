@@ -139,7 +139,7 @@ public class MypageController_Rest {
 		User user = (User) SecurityContextHolder.getContext().getAuthentication().getPrincipal();
 
 		String memberid = user.getMemberId();
-		List<PaymentHistory> list = paymentservice.getPaymentHistoryById("2017109210");
+		List<PaymentHistory> list = paymentservice.getPaymentHistoryById(user.getMemberId());
 
 		return new ResponseEntity<List<PaymentHistory>>(list, HttpStatus.OK);
 	}
