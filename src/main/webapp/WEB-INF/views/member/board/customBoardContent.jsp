@@ -63,8 +63,9 @@
 			<div class="container">
 
 				<ol>
-					<li><a href="index.html">Home</a></li>
-					<li>${boardName}</li>
+					<li><a href="/">Home</a></li>
+					<li><a href="/board/custom/${boardName}">${boardName}</a></li>
+					
 				</ol>
 				<h2>${boardName}</h2>
 
@@ -114,7 +115,7 @@
 									style="width:130px; height:20; border-radius: 50px; padding:5px; border: none; background-color:#E96B56; color:white; margin-top:10px; font-size: large;">수정</button>
 							</c:if>
 
-							<button onclick="history.go(-1)"
+							<button onclick="location.href='/board/custom/${boardName}'"
 								style="width:130px; height:20; border-radius: 50px; padding:5px; border: none; background-color:#000000; color:white; margin-top:10px; font-size: large;">목록</button>
 						</div>
                     

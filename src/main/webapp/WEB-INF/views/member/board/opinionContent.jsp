@@ -62,8 +62,19 @@
 			<div class="container">
 
 				<ol>
-					<li><a href="index.html">Home</a></li>
-					<li>건의사항</li>
+					<li><a href="/">Home</a></li>
+					<li><a href="/board/opinionList">건의사항</a></li>
+								
+					<c:forEach items="${boardContent}" var="boardContent">
+						<c:choose>
+							<c:when	test="${boardContent.title != null && fn:length(boardContent.title) > 10}">
+											<li>${fn:substring(boardContent.title,0,10)}...</li>
+							</c:when>
+							<c:otherwise>
+								<li>${boardContent.title}</li>
+							</c:otherwise>
+						</c:choose>
+					</c:forEach>
 				</ol>
 				<h2>건의사항</h2>
 

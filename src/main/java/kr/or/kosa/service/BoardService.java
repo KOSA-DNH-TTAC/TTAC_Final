@@ -427,37 +427,40 @@ public class BoardService {
 		
 		int idx = 0;
 		String fileUrl = "";
-		MultipartFile multiFile = files.get(0);
+		
 		
 		//글부터 수정
 		int result = boardDao.boardEdit(post);
 		
 		//파일 있는지 없는지
-		if(multiFile.getSize() != 0) {
-			AwsS3 awsS3 = AwsS3.getInstance();
-			
-			idx = post.getIdx();
-			
-			
-			for (MultipartFile multipartfile : files) {
+		if(files != null) {
+			MultipartFile multiFile = files.get(0);
+			if(multiFile.getSize() != 0) {
+				AwsS3 awsS3 = AwsS3.getInstance();
 				
-				UUID uuid = UUID.randomUUID();
-				File fileOne = new File();
+				idx = post.getIdx();
 				
-				String fileName = post.getUniversityCode()+"/"+ "board" + "/" + idx + "/" + uuid.toString()+"_"+multipartfile.getOriginalFilename();
-				fileUrl = "https://d37qu1avlirbuh.cloudfront.net/" + fileName;
-				System.out.println("파일유아ㅑㄹ엘"+fileUrl);
-				fileOne.setIdx(idx);
-				fileOne.setFileUrl(fileUrl);
-				fileOne.setFileName(fileName);
-				fileOne.setFileRealName(multipartfile.getOriginalFilename());
-				fileOne.setFileSize(multipartfile.getSize());
 				
-				this.fileWrite(fileOne, idx);
+				for (MultipartFile multipartfile : files) {
+					
+					UUID uuid = UUID.randomUUID();
+					File fileOne = new File();
+					
+					String fileName = post.getUniversityCode()+"/"+ "board" + "/" + idx + "/" + uuid.toString()+"_"+multipartfile.getOriginalFilename();
+					fileUrl = "https://d37qu1avlirbuh.cloudfront.net/" + fileName;
+					System.out.println("파일유아ㅑㄹ엘"+fileUrl);
+					fileOne.setIdx(idx);
+					fileOne.setFileUrl(fileUrl);
+					fileOne.setFileName(fileName);
+					fileOne.setFileRealName(multipartfile.getOriginalFilename());
+					fileOne.setFileSize(multipartfile.getSize());
+					
+					this.fileWrite(fileOne, idx);
+					
+					awsS3.upload(multipartfile, fileName);
+				}
 				
-				awsS3.upload(multipartfile, fileName);
 			}
-			
 		}
 		
 		return result;

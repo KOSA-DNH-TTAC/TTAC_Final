@@ -281,7 +281,7 @@ public class BoardController {
 	// 게시글 보기
 	@GetMapping("/board/{boardName}/{idx}")
 	public String boardContent(Model model, @PathVariable("idx") String idx,
-			@PathVariable("boardName") String boardName) {
+											@PathVariable("boardName") String boardName) {
 		
 		User user = (User) SecurityContextHolder.getContext().getAuthentication().getPrincipal();
 //		String param = "";
@@ -400,7 +400,7 @@ public class BoardController {
 										   @RequestParam("title") String title,
 										   @RequestParam("content") String content,
 										   @RequestParam(name = "sold", required = false) String sold,
-										   @RequestParam("file") List<MultipartFile> files) throws ClassNotFoundException, SQLException, IOException {
+										   @RequestParam(name = "file", required = false) List<MultipartFile> files) throws ClassNotFoundException, SQLException, IOException {
 		
 		User user = (User) SecurityContextHolder.getContext().getAuthentication().getPrincipal();
 		Post boardContent = boardService.boardContentDTO(idx);
@@ -409,6 +409,8 @@ public class BoardController {
 		String icon= "";
 		String msg = "";
 		String url = "";
+		
+		System.out.println("파일즈"+files);
 
 		
 		//글 제목, 내용 수정
