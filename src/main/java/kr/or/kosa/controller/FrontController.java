@@ -1,5 +1,6 @@
 package kr.or.kosa.controller;
 
+import java.security.Principal;
 import java.util.Locale;
 
 import javax.servlet.http.HttpServletRequest;
@@ -9,6 +10,7 @@ import org.slf4j.Logger;
 import org.slf4j.LoggerFactory;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.security.access.prepost.PreAuthorize;
+import org.springframework.security.authentication.AnonymousAuthenticationToken;
 import org.springframework.security.core.Authentication;
 import org.springframework.security.core.context.SecurityContextHolder;
 import org.springframework.security.web.authentication.logout.SecurityContextLogoutHandler;
@@ -24,6 +26,7 @@ import kr.or.kosa.dto.Message;
 import kr.or.kosa.security.User;
 import kr.or.kosa.service.MemberService;
 import kr.or.kosa.service.MessageService;
+import kr.or.kosa.utils.VisitorInfo;
 
 @Controller
 public class FrontController {
@@ -36,6 +39,9 @@ public class FrontController {
 	@Autowired
 	MessageService msgservice;
 	
+	@Autowired
+	VisitorInfo visitorinfo;
+	
 	@GetMapping("")
 	public String home(Locale locale, Model model) {
 //		logger.info("Welcome home! The client locale is {}.", locale);
@@ -47,6 +53,20 @@ public class FrontController {
 //		
 //		model.addAttribute("serverTime", formattedDate );
 //		
+
+//		auth의 롤이 anonymous가 아니면 어쩌고...
+//		if (SecurityContextHolder.getContext().getAuthentication() != null 
+//			    && SecurityContextHolder.getContext().getAuthentication().isAuthenticated()
+//			    && !(SecurityContextHolder.getContext().getAuthentication() instanceof AnonymousAuthenticationToken)) {
+//			    
+//			    // 사용자가 로그인한 상태이면 실행될 코드
+//			    // ...
+//			User user = (User) SecurityContextHolder.getContext().getAuthentication().getPrincipal();
+//			//visitor 정보 넘김
+//			visitorinfo.information(user);
+//
+//			}		
+		
 		return "index";
 	}
 	

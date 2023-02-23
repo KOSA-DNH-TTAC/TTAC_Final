@@ -87,7 +87,7 @@
 					  <input type="text" class="form-control" name="title" id="title" placeholder="제목을 작성해주세요." autofocus required>
 					</div>
 					<div class="mb-3">
-						<label for="sold" class="form-label">판매 상태</label>
+						<label for="sold" class="form-label">해결 상태</label>
 						<select id="sold" name="sold" class="form-select">
 		                    <option value=3 selected>해결중</option>
 		                    <option value=4>해결완료</option>
