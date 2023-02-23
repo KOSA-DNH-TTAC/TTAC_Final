@@ -228,7 +228,7 @@ function todaysearch(){
 			$('#whichdate').empty();
 			$('#whichdate').append("검색 날짜 [" + data[0].rollCallDate + "]");
 			$('#start').empty();
-			$('#start').attr(value, data[0].rollCallDate)
+			$('#start').attr('value', 'data[0].rollCallDate')
 		},
 		error : function(data) {
 			alert(data+": 로드 실패");
@@ -306,7 +306,7 @@ function execution(){
 			<td colspan="3">
 				<input class="form-select1" type="date" id="start" name="trip-start" value="<%=date%>">
 				<ul class="dpi_li dpi">
-					<li><button id="today" onclick="todaysearch()" class="btn_sumit">오늘 날짜</button></li>
+					<li><button id="today" onclick="todaysearch();notcall();" class="btn_sumit">오늘 날짜</button></li>
 					<li><button type="button" class="btn_sumit2" onclick="search(); notcall()">검색</button></li>
 				</ul>
 			</td>				
