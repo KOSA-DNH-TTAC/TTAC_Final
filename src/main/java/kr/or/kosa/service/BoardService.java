@@ -235,6 +235,24 @@ public class BoardService {
 
 		return result;
 	}
+	
+	// 건의사항 글쓰기
+	public int opinionWrite(Post post) {
+
+		int result = 0;
+
+		try {
+			BoardDao boardDao = sqlSession.getMapper(BoardDao.class);
+			result = boardDao.opinionInsert(post);
+
+		} catch (ClassNotFoundException e) {
+			e.printStackTrace();
+		} catch (SQLException e) {
+			e.printStackTrace();
+		}
+
+		return result;
+	}
 
 	// 파일첨부 글쓰기 (가장 최근글 idx 가져온걸로 글쓰는거)
 	public int fileWrite(File file, int idx) {

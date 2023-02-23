@@ -52,6 +52,9 @@ public interface BoardDao {
 
 	// 글 작성(파일첨부 x)
 	public int boardInsert(Post post) throws ClassNotFoundException, SQLException;
+	
+	// 건의사항 글 작성(파일첨부 x)
+	public int opinionInsert(Post post) throws ClassNotFoundException, SQLException;
 
 	// 파일 글 작성(최신 idx)
 	public int fileInsert(File file) throws ClassNotFoundException, SQLException;

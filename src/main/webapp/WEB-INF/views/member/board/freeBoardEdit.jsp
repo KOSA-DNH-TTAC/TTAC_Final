@@ -128,6 +128,16 @@
 						</div>
 					</c:if>
 					
+					<c:if test="${boardName eq 'opinionList'}">
+						<div class="mb-3">
+							<label for="sold" class="form-label">해결 상태</label>
+							<select id="sold" name="sold" class="form-select">
+			                    <option value=3 selected>해결중</option>
+			                    <option value=4>해결완료</option>
+				            </select>
+						</div>
+					</c:if>
+					
 					<div class="mb-3">
 					  <label for="content" class="form-label">내용</label>
 					  <textarea id="content" name="content" placeholder="작성해주세요">

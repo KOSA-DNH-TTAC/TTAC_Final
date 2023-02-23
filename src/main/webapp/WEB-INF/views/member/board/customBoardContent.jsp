@@ -48,7 +48,8 @@
 <script src="https://cdn.jsdelivr.net/npm/sweetalert2@11"></script>
 <link href="/resources/assets/css/hj.css" content-Type="text/css" rel="stylesheet">
 </head>
-
+<!-- 로그인한 사용자 정보 -->
+<sec:authentication property="principal" var="prc"/>
 <body>
 
 	<!-- ======= Header ======= -->
@@ -108,8 +109,7 @@
                     </div>
                     </div> 
                     	<div class="d-grid gap-2 d-md-flex justify-content-md-end">
-
-							<c:if test="${userId == boardContent.memberId}">
+							<c:if test="${prc.memberId eq custom.memberId}">
 								<button onclick="location.href='/board/custom/${boardName}/${idx}/edit'"
 									type="submit"
 									style="width:130px; height:20; border-radius: 50px; padding:5px; border: none; background-color:#E96B56; color:white; margin-top:10px; font-size: large;">수정</button>
