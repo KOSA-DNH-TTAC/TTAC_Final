@@ -9,8 +9,8 @@
 
 	<style>
 		body{
-			background-image: url("resources/assets/img/error.png");
-			background-size: 100%;
+			background: url("/resources/assets/img/error.png");
+			background-size: cover;
 		}
 		
 		#wrap{
@@ -35,7 +35,7 @@
 	<body id="error">
 	<div id="wrap">
 		<div id="image">
-			<a href="/"><img src="resources/assets/img/logo.png"></a>
+			<a href="/"><img src="/resources/assets/img/logo.png"></a>
 		</div>
 		<h1>요청하신 주소에 대한 권한이 없습니다.</h1>
 	</div>

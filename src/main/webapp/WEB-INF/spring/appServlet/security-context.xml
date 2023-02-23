@@ -25,14 +25,15 @@
 	<security:http auto-config="true" use-expressions="true">
 		<!-- 링크 별 요구 권한 -->
 		<!-- <security:intercept-url pattern="/nightOver" access="permitAll" />
-		<security:intercept-url pattern="/mealticket" access="hasRole('ROLE_MEMBER')" />-->
+		<security:intercept-url pattern="/mealticket" access="hasRole('ROLE_MEMBER')" />
+		<security:intercept-url pattern="/admin/*" access="isAuthenticated()" /> -->
+		<security:intercept-url pattern="/admin/*" access="hasRole('ROLE_ADMIN')" />
 		<security:intercept-url pattern="/mypage" access="isAuthenticated()" /> 
 		<security:intercept-url pattern="/eveningCall" access="isAuthenticated()" /> 
 		<security:intercept-url pattern="/community" access="isAuthenticated()" /> 
 		<security:intercept-url pattern="/facility" access="isAuthenticated()" /> 
 	    <security:intercept-url pattern="/board/*" access="isAuthenticated()" /> 
 	    <security:intercept-url pattern="/memberCalendar" access="isAuthenticated()" /> 
-	    <security:intercept-url pattern="/admin/*" access="isAuthenticated()" /> 
 	    <security:intercept-url pattern="/payment/*" access="isAuthenticated()" /> 
 	    <security:intercept-url pattern="/mealticket" access="isAuthenticated()" /> 
 	    <security:intercept-url pattern="/userlogin" access="permitAll()" />
@@ -49,7 +50,7 @@
 		<security:logout logout-url="/logout" logout-success-url="/userlogin"  invalidate-session="true" delete-cookies="remember-me, JSESSION_ID, JSESSIONID"/>
 		
 		<!-- access-denied-handler -->
-		<security:access-denied-handler error-page="/error"/>
+		<security:access-denied-handler error-page="/accessError"/>
 		
 		<security:csrf disabled="true"/>
 		
