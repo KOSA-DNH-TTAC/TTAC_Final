@@ -1,16 +1,13 @@
 package kr.or.kosa.controller;
 
-import javax.servlet.http.HttpServletRequest;
-import javax.servlet.http.HttpServletResponse;
-
-import org.springframework.http.HttpStatus;
-import org.springframework.http.ResponseEntity;
 import org.springframework.security.access.prepost.PreAuthorize;
+import org.springframework.security.core.context.SecurityContextHolder;
 import org.springframework.stereotype.Controller;
+import org.springframework.ui.Model;
 import org.springframework.web.bind.annotation.GetMapping;
 import org.springframework.web.bind.annotation.RequestMapping;
-import org.springframework.web.bind.annotation.RequestMethod;
-import org.springframework.web.multipart.MultipartFile;
+
+import kr.or.kosa.security.User;
 
 @RequestMapping("/admin")
 @Controller
@@ -18,77 +15,106 @@ public class AdminController {
 
 	
 	@GetMapping("/popular")
-	public String admin() {
-		
+	public String admin(Model model) {
+		User user = (User) SecurityContextHolder.getContext().getAuthentication().getPrincipal();
+		String domitoryName = user.getDomitoryName();
+		model.addAttribute("domitoryName", domitoryName);
 		return "admin/adminPopular";
 	}
 	@GetMapping("/sleepOverHistory")
-	public String adminSleepOverHistory() {
-		
+	public String adminSleepOverHistory(Model model) {
+		User user = (User) SecurityContextHolder.getContext().getAuthentication().getPrincipal();
+		String domitoryName = user.getDomitoryName();
+		model.addAttribute("domitoryName", domitoryName);
 		return "admin/adminSleepOverHistory";
 	}
 	
 	@GetMapping("/analyze")
-	public String adminAnalyze() {
-		
+	public String adminAnalyze(Model model) {
+		User user = (User) SecurityContextHolder.getContext().getAuthentication().getPrincipal();
+		String domitoryName = user.getDomitoryName();
+		model.addAttribute("domitoryName", domitoryName);
 		return "admin/adminAnalyze";
 	}
 	@GetMapping("/RollCall")
-	public String adminRollCall() {
-		
+	public String adminRollCall(Model model) {
+		User user = (User) SecurityContextHolder.getContext().getAuthentication().getPrincipal();
+		String domitoryName = user.getDomitoryName();
+		model.addAttribute("domitoryName", domitoryName);
 		return "admin/adminRollCall";
 	}
 	
 	@GetMapping("/sail")
-	public String adminSail() {
-		
+	public String adminSail(Model model) {
+		User user = (User) SecurityContextHolder.getContext().getAuthentication().getPrincipal();
+		String domitoryName = user.getDomitoryName();
+		model.addAttribute("domitoryName", domitoryName);
 		return "admin/adminSail";
 	}
 	
 	@GetMapping("/coupon")
-	public String adminCoupon() {
-		
+	public String adminCoupon(Model model) {
+		User user = (User) SecurityContextHolder.getContext().getAuthentication().getPrincipal();
+		String domitoryName = user.getDomitoryName();
+		model.addAttribute("domitoryName", domitoryName);
 		return "admin/adminMealCoupon";
 	}
 	
 	@PreAuthorize("isAuthenticated()")
 	@GetMapping("/adminMember")
-	public String adminMember() {
-		
+	public String adminMember(Model model) {
+		User user = (User) SecurityContextHolder.getContext().getAuthentication().getPrincipal();
+		String domitoryName = user.getDomitoryName();
+		model.addAttribute("domitoryName", domitoryName);
 		return "admin/adminMemberList";
 	}
 	
 	@GetMapping("/calendar")
-	public String adminCalendar() {
-		
+	public String adminCalendar(Model model) {
+		User user = (User) SecurityContextHolder.getContext().getAuthentication().getPrincipal();
+		String domitoryName = user.getDomitoryName();
+		model.addAttribute("domitoryName", domitoryName);
 		return "admin/adminCalendar";
 	}
 	
 	@GetMapping("/enroll")
-	public String adminEnroll() {
-		
+	public String adminEnroll(Model model) {
+		User user = (User) SecurityContextHolder.getContext().getAuthentication().getPrincipal();
+		String domitoryName = user.getDomitoryName();
+		model.addAttribute("domitoryName", domitoryName);
 		return "admin/adminEnroll";
 	}
 	
 	@PreAuthorize("isAuthenticated()")
 	@GetMapping("/domitory")
-	public String adminDomitory() {
-		
+	public String adminDomitory(Model model) {
+		User user = (User) SecurityContextHolder.getContext().getAuthentication().getPrincipal();
+		String domitoryName = user.getDomitoryName();
+		model.addAttribute("domitoryName", domitoryName);
 		return "admin/adminDomitory";
 	}
 	
 	@GetMapping("/board")
-	public String adminBoard() {
+	public String adminBoard(Model model) {
+		User user = (User) SecurityContextHolder.getContext().getAuthentication().getPrincipal();
+		String domitoryName = user.getDomitoryName();
+		model.addAttribute("domitoryName", domitoryName);
 		return "admin/adminBoard";
 	}
 	
 	@GetMapping("/file")
-	public String adminFile() {
+	public String adminFile(Model model) {
+		User user = (User) SecurityContextHolder.getContext().getAuthentication().getPrincipal();
+		String domitoryName = user.getDomitoryName();
+		model.addAttribute("domitoryName", domitoryName);
 		return "admin/adminFile";
 	}
 	
 	@GetMapping("/qr")
-	public String adminQr() {
+	public String adminQr(Model model) {
+		User user = (User) SecurityContextHolder.getContext().getAuthentication().getPrincipal();
+		String domitoryName = user.getDomitoryName();
+		model.addAttribute("domitoryName", domitoryName);
 		return "admin/adminQr";
 	}
 	

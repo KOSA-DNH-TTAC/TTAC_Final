@@ -65,7 +65,7 @@
 
       </div>
     </section>
-  
+    <p style="color: #E96B56; display:flex; justify-content:center;">※ 외박 신청 가능시간은 07:00 ~ 22:00 입니다.</p>
   	<div id="box">
       <form action="" method="POST" enctype="multipart/form-data">
         <div id="date">

@@ -78,7 +78,7 @@
 	<nav id="sidemenu" style="text-align:left">
 						<ul class="submenu">
 							<li class="smenu" style="background-color:#4D6794; color:white;"><a href='javascript:void(0);'>
-									<h1>기숙사 통합관리 솔루션</h1>
+									<h1>기숙사관리시스템 : ${domitoryName}</h1>
 								</a></li>
 							<li class="smenu"><a href="/admin/adminMember" class="msub on">회원관리</a>
 								
@@ -107,22 +107,22 @@
 					</nav>
 <script>
 //서브 left_menu
-$(document).ready(function(){		
-	$(".msub").click(function(){		
-		var tg = $(this).siblings(".sub");		
-		var dis = tg.css("display");		
-		if(dis == "block"){
-			$(this).removeClass("on");
-			tg.slideUp(300);
-		}		
-		if(dis == "none"){
-			$(".msub").removeClass("on");
-			$(this).addClass("on");
-			$(".sub").slideUp(300);
-			tg.slideDown(300);
-		}
-		return false;
-	});
+$(document).ready(function(){      
+   $(".msub").click(function(){      
+      var tg = $(this).siblings(".sub");      
+      var dis = tg.css("display");      
+      if(dis == "block"){
+         $(this).removeClass("on");
+         tg.slideUp(300);
+      }      
+      if(dis == "none"){
+         $(".msub").removeClass("on");
+         $(this).addClass("on");
+         $(".sub").slideUp(300);
+         tg.slideDown(300);
+      }
+      return false;
+   });
 });
 </script>
 
