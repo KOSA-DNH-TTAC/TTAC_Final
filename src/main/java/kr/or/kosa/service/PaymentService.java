@@ -21,8 +21,11 @@ public class PaymentService {
 	   this.sqlsession = sqlsession;
 	}
 	
-	//결제 생성
+	//결제 생성 (충전)
 	public int insertPayment(String memberid, String amount, String kind) {
+		User user = (User) SecurityContextHolder.getContext().getAuthentication().getPrincipal();
+		String universitycode = user.getUniversityCode();
+		
 		//금액 받고...
 		//아이디 받고...
 		//종류 받고...
@@ -31,6 +34,8 @@ public class PaymentService {
 		payment.setMemberId(memberid);
 		payment.setPayAmount(Integer.parseInt(amount));
 		payment.setPayKinds(kind);
+		payment.setUniversitycode(universitycode);
+		payment.setDomitoryname(user.getDomitoryName());
 		
 		int result = 0;
 		PaymentHistoryDao dao = sqlsession.getMapper(PaymentHistoryDao.class);
