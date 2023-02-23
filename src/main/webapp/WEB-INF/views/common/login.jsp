@@ -317,7 +317,7 @@ form:after {
   
   	<div class="container" style="width:100%; height: 400px;">
   <section id="content">
-    <form action="/login" method="POST">
+    <form id="myform" action="/login" method="POST">
       <h1>로그인</h1>
       <div>
         <!-- <input type="text" placeholder="Username" required="" id="username" /> -->
@@ -380,14 +380,46 @@ form:after {
   $(document).ready(function(){
     setDate();
 	
-   	$("#loginbtn").click(function(){
+   	$("#loginbtn").click(function(event){
    		if($("#logemail").val() == ""){
    			alert("로그인 아이디를 입력해주세요");
    			$("#logemail").focus();
    		}else if($("#logpass").val() == ""){
    			alert("로그인 비밀번호를 입력해주세요");
    			$("#logpass").focus();
-   		}
+   		}else{
+        event.preventDefault();
+        console.log("캭")
+        let email = $('#logemail').val();
+        let pwd = $('#logpass').val();
+        
+        
+        $.ajax({
+          url: '/getinfo',
+          type: 'post',
+          data: JSON.stringify({id : email,
+                pwd : pwd}),
+                dataType: "JSON", //응답받을 데이터 타입 (XML,JSON,TEXT,HTML,JSONP)    			
+    			contentType: "application/json; charset=utf-8", //헤더의 Content-Type을 설정
+        }).always(function(response){
+          console.log("성공")
+          $('#myform').submit();
+        })
+
+        /*
+          success: function(response) {
+            // 성공적으로 응답을 받았을 때 수행할 코드
+            console.log(response);
+            $('#myform').submit();
+          },
+          error: function(xhr) {
+            // 에러가 발생했을 때 수행할 코드
+            console.log(xhr.responseText);
+          }
+        });
+        */
+       
+      }
    	});
     		
 
