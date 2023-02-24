@@ -12,9 +12,6 @@ public interface FacilityDao {
 	//시설물 DB 넣기
 	public int insertItem(String universitycode, String facilityname);
 	
-	//시설물 DB 넣기
-	public int insertDomitory(String universitycode, String domitoryname, String domitoryfloor);
-	
 	//리스트 받아오기
 	public List<Facility> selectItem();
 	

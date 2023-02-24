@@ -27,6 +27,39 @@ public class FacilitiesController_Rest {
 		this.facilityService = facilityService;
 	}
 
+	
+	// 시설물 DB 인서트
+	@RequestMapping("/insertItem")
+	public ResponseEntity<List<Facility>> insertItem(@RequestParam String item) {
+		List<Facility> faclist = new ArrayList<Facility>();
+		User user = (User) SecurityContextHolder.getContext().getAuthentication().getPrincipal();
+		String unicode = user.getUniversityCode();
+		System.out.println("unicode : " + unicode);
+
+		// 들어갔는지 row 수 반환
+		Integer result = facilityService.insertItem(unicode, item);
+		System.out.println("인서트 결과 추가된 ROW : " + result);
+		try {
+			faclist = facilityService.selectItem();
+			return new ResponseEntity<List<Facility>>(faclist, HttpStatus.OK);
+		} catch (Exception e) {
+			return new ResponseEntity<List<Facility>>(faclist, HttpStatus.BAD_REQUEST);
+		}
+	}
+
+	// 시설물 DB 테이블만 출력
+	@RequestMapping("/itemPrint")
+	public ResponseEntity<List<Facility>> itemPrint() {
+		List<Facility> faclist = new ArrayList<Facility>();
+		try {
+			faclist = facilityService.selectItem();
+			return new ResponseEntity<List<Facility>>(faclist, HttpStatus.OK);
+		} catch (Exception e) {
+			return new ResponseEntity<List<Facility>>(faclist, HttpStatus.BAD_REQUEST);
+		}
+	}
+	
+	
 		 
 			//기숙사 건물  DB 인서트
 			@RequestMapping(value = "/report")
