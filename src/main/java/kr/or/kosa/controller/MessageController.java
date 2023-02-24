@@ -19,57 +19,43 @@ import kr.or.kosa.service.MessageService;
 @RestController
 @RequestMapping("/message")
 public class MessageController {
-	
+
 	private MessageService service;
-	
+
 	@Autowired
 	public void setMsgService(MessageService service) {
 		this.service = service;
 	}
-	
-	//받은 쪽지 전체 조회
+
+	// 받은 쪽지 전체 조회
 	@GetMapping("/notebox")
-	public ResponseEntity<List<Message>> getReceivedMsg(){
+	public ResponseEntity<List<Message>> getReceivedMsg() {
 		User user = (User) SecurityContextHolder.getContext().getAuthentication().getPrincipal();
 		List<Message> list = service.getReceivedMsg(user.getMemberId());
-//		System.out.println(list);
 		return new ResponseEntity<List<Message>>(list, HttpStatus.OK);
-	     
+
 	}
-	
-	//보낸 쪽지 전체 조회
+
+	// 보낸 쪽지 전체 조회
 	@GetMapping("/getSend")
-	public ResponseEntity<List<Message>> getSendMsg(){
+	public ResponseEntity<List<Message>> getSendMsg() {
 		User user = (User) SecurityContextHolder.getContext().getAuthentication().getPrincipal();
 		List<Message> list = service.getSendMsg(user.getMemberId());
-//		System.out.println(list);
 		return new ResponseEntity<List<Message>>(list, HttpStatus.OK);
-	     
+
 	}
-	
-	
-	//쪽지 하나 조회
-	
-//	public ResponseEntity<Message> readMsg(@PathVariable("idx")String idx){
-//		int index = Integer.parseInt(idx);
-//		Message msg = service.getMsg(index);
-//		
-//		return new ResponseEntity<Message>(msg, HttpStatus.OK);
-//	     
-//	}
+
 	@GetMapping("/read/{idx}")
-	public ModelAndView readMsg(@PathVariable("idx")String idx) {
+	public ModelAndView readMsg(@PathVariable("idx") String idx) {
 		ModelAndView mv = new ModelAndView();
-		
+
 		int index = Integer.parseInt(idx);
 		Message msg = service.getMsg(index);
-		
+
 		mv.setViewName("member/message/note");
 		mv.addObject("msg", msg);
 		return mv;
-		
+
 	}
-	
-	//쪽지 작성
-//	@PostMapping("/writing")
+
 }

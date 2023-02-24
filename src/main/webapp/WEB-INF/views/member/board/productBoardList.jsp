@@ -5,6 +5,15 @@
 			<html lang="en">
 
 			<head>
+			<!-- Google tag (gtag.js) -->
+<script async src="https://www.googletagmanager.com/gtag/js?id=G-4DV6JYFYRH"></script>
+<script>
+  window.dataLayer = window.dataLayer || [];
+  function gtag(){dataLayer.push(arguments);}
+  gtag('js', new Date());
+
+  gtag('config', 'G-4DV6JYFYRH');
+</script>
 				<meta charset="utf-8">
 				<meta http-equiv="Content-Security-Policy" content="upgrade-insecure-requests"> 
 				<meta content="width=device-width, initial-scale=1.0" name="viewport">
@@ -40,6 +49,7 @@
   * License: https://bootstrapmade.com/license/
   ======================================================== -->
 			</head>
+
 
 			<body>
 
@@ -81,7 +91,8 @@
 													<c:when test="${productList.likeNum eq 2}"><span id="reserve">예약중</span></c:when>
 												</c:choose> 
 											<h2 class="entry-title">              
-                     						&nbsp;<a href="/board/productBoardList/${productList.idx}">${productList.title}</a></h2>
+                     						&nbsp;
+                     						<a href="/board/productBoardList/${productList.idx}">${productList.title}</a></h2>
 											</div>
 
 											<div class="entry-meta">

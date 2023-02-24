@@ -64,6 +64,9 @@
 	</bean>
 	
 
+	<context:component-scan base-package="kr.or.kosa.aspect" />
+	<context:component-scan base-package="kr.or.kosa.security" />
+	<context:component-scan base-package="kr.or.kosa.utils" />
 	
 	<mybatis-spring:scan base-package="kr.or.kosa.dao" />
 	

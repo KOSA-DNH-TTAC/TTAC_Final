@@ -50,7 +50,7 @@ public class BoardController_Rest {
 	public void setFacilityService(FacilityService facilityService) {
 		this.facilityService = facilityService;
 	}
-	
+
 	@Autowired
 	public void setReplyservice(ReplyService replyservice) {
 		this.replyservice = replyservice;
@@ -71,7 +71,7 @@ public class BoardController_Rest {
 	// 댓글, 대댓글 Map Return
 	@GetMapping("/board/{allBoard}/{idx}/reply")
 	public ResponseEntity<Map<String, Object>> allReply(@PathVariable("idx") String idx) {
-		
+
 		Map<String, Object> map = new HashMap<>();
 		try {
 			map.put("replyContent", boardService.replyContent(idx));
@@ -83,16 +83,16 @@ public class BoardController_Rest {
 			return new ResponseEntity<>(map, HttpStatus.BAD_REQUEST);
 		}
 	}
-	
+
 	// 게시글 추천 (트랜잭션)
 	@RequestMapping("/board/{allBoard}/{idx}/postlike")
 	public int postLike(@PathVariable("idx") String idx) {
 		int postLike = 0;
 		postLike = boardService.likeCheck(idx);
-		
+
 		return postLike;
 	}
-	
+
 	// 게시글 추천 (아이콘)
 	@RequestMapping("/board/{allBoard}/{idx}/postlike/icon")
 	public int myPostLikeCheck(@PathVariable("idx") String idx) {
@@ -100,146 +100,61 @@ public class BoardController_Rest {
 		myPostLikeCheck = boardService.myPostLikeCheck(idx);
 		return myPostLikeCheck;
 	}
-	
-	
+
 	// 새댓글 작성
 	@RequestMapping("/board/newreply")
-	public ResponseEntity<Map<String, Object>> newReply(@RequestBody HashMap<String,Object> data){
+	public ResponseEntity<Map<String, Object>> newReply(@RequestBody HashMap<String, Object> data) {
 
-		Map<String, Object> map = new HashMap<String, Object>();		
-        String postidx = (String)data.get("postidx");
-        String reply = (String)data.get("reply");
+		Map<String, Object> map = new HashMap<String, Object>();
+		String postidx = (String) data.get("postidx");
+		String reply = (String) data.get("reply");
 
-        int result = replyservice.newReply(postidx, reply);
-        if(result > 0) {
-        	map.put("성공", result);
-        }else {
-        	map.put("실패", result);
-        }
-		
+		int result = replyservice.newReply(postidx, reply);
+		if (result > 0) {
+			map.put("성공", result);
+		} else {
+			map.put("실패", result);
+		}
+
 		return new ResponseEntity<Map<String, Object>>(map, HttpStatus.OK);
-		
+
 	}
-	
-	//답댓글 작성
+
+	// 답댓글 작성
 	@RequestMapping("/board/newrereply")
-	public ResponseEntity<Map<String, Object>> newRereply(@RequestBody HashMap<String,Object> data){
+	public ResponseEntity<Map<String, Object>> newRereply(@RequestBody HashMap<String, Object> data) {
 
-		Map<String, Object> map = new HashMap<String, Object>();		
-        String postidx = (String)data.get("postidx");
-        String parentidx = (String)data.get("parentidx");
-        String reply = (String)data.get("reply");
-        
-        //String postidx, String parentidx, String reply
-        int result = replyservice.newRereply(postidx, parentidx, reply);
-        if(result > 0) {
-        	map.put("성공", result);
-        }else {
-        	map.put("실패", result);
-        }
-		
+		Map<String, Object> map = new HashMap<String, Object>();
+		String postidx = (String) data.get("postidx");
+		String parentidx = (String) data.get("parentidx");
+		String reply = (String) data.get("reply");
+
+		int result = replyservice.newRereply(postidx, parentidx, reply);
+		if (result > 0) {
+			map.put("성공", result);
+		} else {
+			map.put("실패", result);
+		}
+
 		return new ResponseEntity<Map<String, Object>>(map, HttpStatus.OK);
-		
+
 	}
-	
-	//댓글 삭제
+
+	// 댓글 삭제
 	@DeleteMapping("/board/reply/{replyidx}")
-	public  Map<String, Integer> delreply(@PathVariable("replyidx") String replyidx) {
-		
+	public Map<String, Integer> delreply(@PathVariable("replyidx") String replyidx) {
+
 		Map<String, Integer> map = new HashMap<String, Integer>();
 		map = replyservice.deleteReply(replyidx);
-		
+
 		return map;
 	}
-	
-	//파일 삭제
+
+	// 파일 삭제
 	@DeleteMapping("/board/delete/{idx}/{filename}")
-	public int delFile(@PathVariable("idx") String idx,
-					   @PathVariable("filename") String fileName) {
+	public int delFile(@PathVariable("idx") String idx, @PathVariable("filename") String fileName) {
 
 		return boardService.fileDelete(idx, fileName);
 	}
-
-	// 저녁점호 위치비교 + 중복체크 + 데이터 인서트
-	@RequestMapping(value = "/eveningCall", method = RequestMethod.POST, produces = "application/text; charset=utf8")
-	public String eveningCall(@RequestParam(value = "report[]") double[] report) {
-		System.out.println("lat : " + report[0]);
-		User user = (User) SecurityContextHolder.getContext().getAuthentication().getPrincipal();
-		String memberId = user.getMemberId();
-		String unicode = user.getUniversityCode();
-		String domitoryName = user.getDomitoryName();
-
-		System.out.println("memberid : " + memberId);
-		double lat = report[0];
-		System.out.println("lat : " + lat);
-		double lon = report[1];
-		System.out.println("lon : " + lon);
-		String result = boardService.eveningCall(lat, lon);
-		// boardService.eveningCall(lat, lon);
-
-		// 현재 날짜/시간
-		Date now = new Date();
-		// 포맷팅 정의
-		SimpleDateFormat formatter = new SimpleDateFormat("yyyy-MM-dd");
-		// 포맷팅 적용
-		String date = formatter.format(now);
-		System.out.println("포멧팅 현재시간 : " + date);
-
-		// 점호한 인원 정보 데이터 인서트
-		String result2 = boardService.eveningCallCompare(memberId, unicode, date);
-		System.out.println("중복 체크 결과 : " + result2);
-//		String result3 = result2 + " : 이미 점호 완료한 회원입니다.";
-		String result3 = "ALREADY";
-		if (result2.equals("SUCCESS")) {
-			boardService.eveningCallInsert(memberId, unicode,domitoryName);
-//			result3 = result2 + " : 점호가 완료되었습니다.";
-			result3 = "SUCCESS";
-			System.out.println("result3 : " + result3);
-		}
-		System.out.println("result3 : " + result3);
-		return result3;
-	}
-
-	// 시설물 DB 인서트
-	@RequestMapping("/insertItem")
-	public ResponseEntity<List<Facility>> insertItem(@RequestParam String item) {
-		List<Facility> faclist = new ArrayList<Facility>();
-		User user = (User) SecurityContextHolder.getContext().getAuthentication().getPrincipal();
-		String unicode = user.getUniversityCode();
-		System.out.println("unicode : " + unicode);
-
-		// 들어갔는지 row 수 반환
-		Integer result = facilityService.insertItem(unicode, item);
-		System.out.println("인서트 결과 추가된 ROW : " + result);
-		try {
-			faclist = facilityService.selectItem();
-			return new ResponseEntity<List<Facility>>(faclist, HttpStatus.OK);
-		} catch (Exception e) {
-			return new ResponseEntity<List<Facility>>(faclist, HttpStatus.BAD_REQUEST);
-		}
-	}
-
-	// 시설물 DB 테이블만 출력
-	@RequestMapping("/itemPrint")
-	public ResponseEntity<List<Facility>> itemPrint() {
-		List<Facility> faclist = new ArrayList<Facility>();
-		try {
-			faclist = facilityService.selectItem();
-			return new ResponseEntity<List<Facility>>(faclist, HttpStatus.OK);
-		} catch (Exception e) {
-			return new ResponseEntity<List<Facility>>(faclist, HttpStatus.BAD_REQUEST);
-		}
-	}
-	
-	/*
-	 * // 첨부파일 삭제
-	 * 
-	 * @delete("/delete/{idx}/{file}") public ResponseEntity<List<File> fileList(){
-	 * AwsS3 awsS3 = AwsS3.getInstance();
-	 * 
-	 * awsS3.delete(key);
-	 * 
-	 * }
-	 */
 
 }

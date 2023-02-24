@@ -14,60 +14,60 @@ import kr.or.kosa.security.User;
 
 @Service
 public class MessageService {
-	
+
 	private SqlSession sqlsession;
-	 
+
 	@Autowired
 	public void setSqlsession(SqlSession sqlsession) {
-	   this.sqlsession = sqlsession;
+		this.sqlsession = sqlsession;
 	}
 
-	//받은 쪽지 조회
-	public List<Message> getReceivedMsg(String memberid){
+	// 받은 쪽지 조회
+	public List<Message> getReceivedMsg(String memberid) {
 		MessageDao dao = sqlsession.getMapper(MessageDao.class);
-		
+
 		List<Message> list = new ArrayList<>();
 		list = dao.getReceivedMessage(memberid);
 		return list;
 	}
-	
-	//보낸 쪽지 조회
-	public List<Message> getSendMsg(String memberid){
+
+	// 보낸 쪽지 조회
+	public List<Message> getSendMsg(String memberid) {
 		MessageDao dao = sqlsession.getMapper(MessageDao.class);
-		
+
 		List<Message> list = new ArrayList<>();
 		list = dao.getSendMessage(memberid);
 		return list;
 	}
-	
-	//쪽지 상세 조회
+
+	// 쪽지 상세 조회
 	public Message getMsg(int idx) {
 		MessageDao dao = sqlsession.getMapper(MessageDao.class);
 		User user = (User) SecurityContextHolder.getContext().getAuthentication().getPrincipal();
 		Message msg;
 		msg = dao.getMessage(idx);
-		System.out.println(msg);
-		//받는 사람 = 로그인한 사람일 경우
-		//status = 'N'이면 'Y'로바꿔줌
-		if(msg.getStatus().equals("N")) {
-			if(msg.getRmemberId().equals(user.getMemberId())) {
+
+		// 받는 사람 = 로그인한 사람일 경우
+		// status = 'N'이면 'Y'로바꿔줌
+		if (msg.getStatus().equals("N")) {
+			if (msg.getRmemberId().equals(user.getMemberId())) {
 				dao.setMsgRead(idx);
 			}
 		}
-		
+
 		return msg;
 	}
-	
-	//쪽지 쓰기
+
+	// 쪽지 쓰기
 	public int sendMsg(Message msg) {
 		User user = (User) SecurityContextHolder.getContext().getAuthentication().getPrincipal();
 		msg.setSmemberId(user.getMemberId());
-		System.out.println(msg);
+
 		MessageDao dao = sqlsession.getMapper(MessageDao.class);
 		int result = 0;
 		result = dao.sendMessage(msg);
-		
+
 		return result;
 	}
-	
+
 }

@@ -17,8 +17,9 @@
   					 http://www.springframework.org/schema/tx/spring-tx.xsd
   					 ">
   	
-  	<!-- Bean -->
-	<bean id="customUserDetailsService" class="kr.or.kosa.security.CustomUserDetailService"></bean>
+  	<!-- Bean
+	<bean id="customUserDetailsService" class="kr.or.kosa.security.CustomUserDetailService"></bean> -->
+	<bean id="cAuthenticationProvider" class="kr.or.kosa.security.CAuthenticationProvider"></bean>
   	<!-- 암호화 -->				 
   	<bean id="bcryptPasswordEncoder" class="org.springframework.security.crypto.bcrypt.BCryptPasswordEncoder"></bean>
   	
@@ -43,7 +44,8 @@
 		<!-- 로그인
 		<security:form-login login-page="/userlogin" login-processing-url="/userlogin" default-target-url="/"/>
 		 -->
-		 <security:form-login login-page="/userlogin" />
+		 <security:form-login login-page="/userlogin" username-parameter="username" password-parameter="password"
+		default-target-url="/" authentication-failure-url="/userlogin?fail=true"/>
 		<!-- 자동로그인 -->
 		<security:remember-me data-source-ref="driverManagerDataSource" token-validity-seconds="604800"/>
 		<!-- 로그아웃 -->
@@ -65,13 +67,15 @@
 
 	<security:authentication-manager id="myAuthenticationManager">
 
-		<security:authentication-provider
-			user-service-ref="customUserDetailsService">
+		<security:authentication-provider ref="cAuthenticationProvider" />
+		 
 
-			<security:password-encoder
+			
+
+		<security:authentication-provider user-service-ref="customUserDetailService" >
+		<security:password-encoder
 				ref="bcryptPasswordEncoder" />
-
-		</security:authentication-provider>
+				</security:authentication-provider>
 
 	</security:authentication-manager>
 	

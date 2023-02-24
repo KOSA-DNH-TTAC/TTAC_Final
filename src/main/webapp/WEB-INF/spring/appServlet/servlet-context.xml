@@ -27,7 +27,7 @@
 	-->
 		<!-- aop -->
 	<aop:aspectj-autoproxy></aop:aspectj-autoproxy>
-	<context:component-scan base-package="kr.or.kosa.aspect" />
+	
 	<context:component-scan base-package="kr.or.kosa.controller" />
 	<context:component-scan base-package="kr.or.kosa.dao" />
 	<context:component-scan base-package="kr.or.kosa.service" />

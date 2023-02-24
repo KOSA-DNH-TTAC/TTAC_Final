@@ -6,6 +6,15 @@
 <html lang="en">
 
 <head>
+<!-- Google tag (gtag.js) -->
+<script async src="https://www.googletagmanager.com/gtag/js?id=G-4DV6JYFYRH"></script>
+<script>
+  window.dataLayer = window.dataLayer || [];
+  function gtag(){dataLayer.push(arguments);}
+  gtag('js', new Date());
+
+  gtag('config', 'G-4DV6JYFYRH');
+</script>
   <meta charset="utf-8">
   <meta http-equiv="Content-Security-Policy" content="upgrade-insecure-requests"> 
   <meta content="width=device-width, initial-scale=1.0" name="viewport">
@@ -124,6 +133,16 @@
 			                    <option value=0 selected>판매중</option>
 			                    <option value=1>거래완료</option>
 			                    <option value=2>예약중</option>
+				            </select>
+						</div>
+					</c:if>
+					
+					<c:if test="${boardName eq 'opinionList'}">
+						<div class="mb-3">
+							<label for="sold" class="form-label">해결 상태</label>
+							<select id="sold" name="sold" class="form-select">
+			                    <option value=3 selected>해결중</option>
+			                    <option value=4>해결완료</option>
 				            </select>
 						</div>
 					</c:if>

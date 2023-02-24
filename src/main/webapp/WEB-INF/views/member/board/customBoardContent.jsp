@@ -7,6 +7,15 @@
 <html lang="en">
 
 <head>
+<!-- Google tag (gtag.js) -->
+<script async src="https://www.googletagmanager.com/gtag/js?id=G-4DV6JYFYRH"></script>
+<script>
+  window.dataLayer = window.dataLayer || [];
+  function gtag(){dataLayer.push(arguments);}
+  gtag('js', new Date());
+
+  gtag('config', 'G-4DV6JYFYRH');
+</script>
 <meta charset="utf-8">
 <meta http-equiv="Content-Security-Policy" content="upgrade-insecure-requests"> 
 <meta content="width=device-width, initial-scale=1.0" name="viewport">
@@ -48,7 +57,8 @@
 <script src="https://cdn.jsdelivr.net/npm/sweetalert2@11"></script>
 <link href="/resources/assets/css/hj.css" content-Type="text/css" rel="stylesheet">
 </head>
-
+<!-- 로그인한 사용자 정보 -->
+<sec:authentication property="principal" var="prc"/>
 <body>
 
 	<!-- ======= Header ======= -->
@@ -63,8 +73,9 @@
 			<div class="container">
 
 				<ol>
-					<li><a href="index.html">Home</a></li>
-					<li>${boardName}</li>
+					<li><a href="/">Home</a></li>
+					<li><a href="/board/custom/${boardName}">${boardName}</a></li>
+					
 				</ol>
 				<h2>${boardName}</h2>
 
@@ -107,14 +118,13 @@
                     </div>
                     </div> 
                     	<div class="d-grid gap-2 d-md-flex justify-content-md-end">
-
-							<c:if test="${userId == boardContent.memberId}">
+							<c:if test="${prc.memberId eq custom.memberId}">
 								<button onclick="location.href='/board/custom/${boardName}/${idx}/edit'"
 									type="submit"
 									style="width:130px; height:20; border-radius: 50px; padding:5px; border: none; background-color:#E96B56; color:white; margin-top:10px; font-size: large;">수정</button>
 							</c:if>
 
-							<button onclick="history.go(-1)"
+							<button onclick="location.href='/board/custom/${boardName}'"
 								style="width:130px; height:20; border-radius: 50px; padding:5px; border: none; background-color:#000000; color:white; margin-top:10px; font-size: large;">목록</button>
 						</div>
                     

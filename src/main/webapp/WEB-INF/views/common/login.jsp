@@ -27,7 +27,7 @@
   <link href="resources/assets/vendor/bootstrap-icons/bootstrap-icons.css" rel="stylesheet">
   <link href="resources/assets/vendor/boxicons/css/boxicons.min.css" rel="stylesheet">
   <link href="resources/assets/vendor/glightbox/css/glightbox.min.css" rel="stylesheet">
-  <link href="resources/assets/vendor/swiper/swiper-bundle.min.css" rel="stylesheet">
+<!--   <link href="resources/assets/vendor/swiper/swiper-bundle.min.css" rel="stylesheet"> -->
 
   <!-- Template Main CSS File -->
   <link href="resources/assets/css/style.css" rel="stylesheet">
@@ -179,7 +179,7 @@ form:after {
   top: 0;
   z-index: -2;
 }
-#content form { margin: 0 20px; position: relative }
+#content form { margin: 0 0px; position: relative }  /* margin 값 때문에 CSS 꺠짐 */
 #content form input[type="text"],
 #content form input[type="password"] {
   -webkit-border-radius: 3px;
@@ -317,7 +317,7 @@ form:after {
   
   	<div class="container" style="width:100%; height: 400px;">
   <section id="content">
-    <form action="/login" method="POST">
+    <form id="myform" action="/login" method="POST">
       <h1>로그인</h1>
       <div>
         <!-- <input type="text" placeholder="Username" required="" id="username" /> -->
@@ -332,9 +332,18 @@ form:after {
         <span style="margin-left:10px;">로그인 상태 유지</span>
       </div>
       <!-- 로그인 실패 시 출력할 메세지 -->
-		<p>${sessionScope["SPRING_SECURITY_LAST_EXCEPTION"].message}</p>
+		<%-- <p>${sessionScope["SPRING_SECURITY_LAST_EXCEPTION"].message}</p> --%>
+		<c:if test="${not empty param.fail}">
+    		<div>
+				<font color="red">
+				<!-- <p>Your login attempt was not successful, try again.</p> -->
+				<p>· ID 또는 패스워드가 맞지 않습니다.</p>
+				</font>
+				<c:remove scope="session" var="SPRING_SECURITY_LAST_EXCEPTION"/>
+    		</div>
+    	</c:if>
       <div>
-        <input type="submit" value="Log in" />
+        <input type="submit" value="Log in" id="loginbtn"/>
         <a href="/forgot">비밀번호를 잊으셨나요?</a>
       </div>
     </form><!-- form -->
@@ -370,6 +379,50 @@ form:after {
 <script>
   $(document).ready(function(){
     setDate();
+	
+   	$("#loginbtn").click(function(event){
+   		if($("#logemail").val() == ""){
+   			alert("로그인 아이디를 입력해주세요");
+   			$("#logemail").focus();
+   		}else if($("#logpass").val() == ""){
+   			alert("로그인 비밀번호를 입력해주세요");
+   			$("#logpass").focus();
+   		}else{
+        event.preventDefault();
+        console.log("캭")
+        let email = $('#logemail').val();
+        let pwd = $('#logpass').val();
+        
+        
+        $.ajax({
+          url: '/getinfo',
+          type: 'post',
+          data: JSON.stringify({id : email,
+                pwd : pwd}),
+                dataType: "JSON", //응답받을 데이터 타입 (XML,JSON,TEXT,HTML,JSONP)    			
+    			contentType: "application/json; charset=utf-8", //헤더의 Content-Type을 설정
+        }).always(function(response){
+          console.log("성공")
+          $('#myform').submit();
+        })
+
+        /*
+          success: function(response) {
+            // 성공적으로 응답을 받았을 때 수행할 코드
+            console.log(response);
+            $('#myform').submit();
+          },
+          error: function(xhr) {
+            // 에러가 발생했을 때 수행할 코드
+            console.log(xhr.responseText);
+          }
+        });
+        */
+       
+      }
+   	});
+    		
+
   })
   
   function setDate(){

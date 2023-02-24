@@ -34,7 +34,7 @@ public class CafeteriaService {
 	public void insertMenu(String menu, String price) {
 		CafeteriaDao cafeteriaDao = sqlSession.getMapper(CafeteriaDao.class);
 		User user = (User) SecurityContextHolder.getContext().getAuthentication().getPrincipal();
-		
+
 		int menuPrice = Integer.parseInt(price);
 		Map<String, Object> params = new HashMap<>();
 		params.put("param1", user.getUniversityCode());
@@ -47,6 +47,7 @@ public class CafeteriaService {
 	// 메뉴 수정
 	public void updateMenu(Cafeteria cafeteria) {
 		CafeteriaDao cafeteriaDao = sqlSession.getMapper(CafeteriaDao.class);
+		System.out.println("메뉴 수정 서비스");
 		cafeteriaDao.updateMenu(cafeteria);
 	}
 

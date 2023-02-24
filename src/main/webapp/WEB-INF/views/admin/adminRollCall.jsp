@@ -6,6 +6,15 @@
 <!DOCTYPE html>
 <html lang="ko">
 <head>
+<!-- Google tag (gtag.js) -->
+<script async src="https://www.googletagmanager.com/gtag/js?id=G-4DV6JYFYRH"></script>
+<script>
+  window.dataLayer = window.dataLayer || [];
+  function gtag(){dataLayer.push(arguments);}
+  gtag('js', new Date());
+
+  gtag('config', 'G-4DV6JYFYRH');
+</script>
 <title>관리자페이지</title>
 <meta charset="utf-8">
 <meta http-equiv="Content-Security-Policy" content="upgrade-insecure-requests"> 
@@ -69,7 +78,7 @@
 	<div class="leftcon">
 	<nav id="sidemenu">
 		<ul class="submenu">
-			<li class="smenu" style="background-color:#4D6794; color:white;"><a href='javascript:void(0);' ><h1>기숙사 통합관리 솔루션</h1></a></li>
+			<li class="smenu" style="background-color:#4D6794; color:white;"><a href='javascript:void(0);' ><h1>기숙사관리시스템 : ${domitoryName}</h1></a></li>
 			<li class="smenu"><a href="/admin/adminMember">회원관리</a>
 				<ul class="sub ">
 					<li ><a href="/admin/adminMember">회원현황</a></li>
@@ -79,9 +88,9 @@
 			<li class="smenu"><a href="/admin/board">커뮤니티관리</a></li>
 			<li class="smenu"><a href="/admin/coupon" >식권관리</a></li>
 			<li class="smenu"><a href="/admin/popular" >외박관리</a></li>
-			<li class="smenu"><a href="#" class="msub on">시설관리</a>
+			<li class="smenu"><a href="#" >시설관리</a>
 				<ul class="sub ">
-				   <li ><a href="/admin/analyze" class="msub on">시설물 신고내역</a></li>
+				   <li ><a href="/admin/analyze">시설물 신고내역</a></li>
 				   <li ><a href="/admin/enroll">시설등록</a></li>
 				   <li ><a href="/admin/domitory">기숙사(동) 등록</a></li>
 				</ul>   
@@ -89,7 +98,7 @@
 	
 			<li class="smenu"><a href="/admin/calendar" >일정관리</a></li>
 			<li class="smenu"><a href="/admin/sail" >회원파일등록</a></li>
-			<li class="smenu"><a href="/admin/RollCall" >점호관리</a></li>
+			<li class="smenu"><a href="/admin/RollCall" class="msub on" >점호관리</a></li>
 			<li class="smenu"><a href="/admin/sail" >통계관리</a></li>
 			<li class="smenu"><a href="/admin/qr">식권QR</a></li>
 		</ul>
@@ -345,7 +354,7 @@ function execution(){
 </div>	
 <div class="ofh">
 	<div class="halfcon mr">
-		<h4 class="bgtab bgtab2">외박이력	<p id="whichdate" class="txtin wtTxt fsbb">오늘 <%=date%> </p></h4>
+		<h4 class="bgtab bgtab2">점호완료	<p id="whichdate" class="txtin wtTxt fsbb">오늘 <%=date%> </p></h4>
 			<table class="comm_table mb">
 				<thead>
 					<tr>

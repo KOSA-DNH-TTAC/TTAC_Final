@@ -9,7 +9,7 @@ PUBLIC "-//mybatis.org//DTD Mapper 3.0//EN"
 	<!-- insertPayment(결제 생성) -->
 	<insert id="insertPayment" parameterType="kr.or.kosa.dto.PaymentHistory">
 		INSERT INTO PAYMENTHISTORY(MEMBERID, PAYDATE, PAYAMOUNT, PAYKINDS, DOMITORYNAME, UNIVERSITYCODE)
-		VALUES(#{memberId},now(),#{payAmount},#{payKinds}, #{domitoryname}, #{universitycode})
+		VALUES(#{memberId},now(),#{payAmount},#{payKinds},#{domitoryname},#{universitycode})
 		
 	</insert>
 	<!-- getAllPaymentHistory(전체 조회) -->
@@ -23,7 +23,7 @@ PUBLIC "-//mybatis.org//DTD Mapper 3.0//EN"
 	<!-- getPaymentHistoryById(특정 회원) -->
 	<select id="getPaymentHistoryById" parameterType="String" resultType="kr.or.kosa.dto.PaymentHistory">
 		SELECT payIdx, memberId, payDate, payAmount, payKinds from PAYMENTHISTORY WHERE memberId=#{memberId}
-		ORDER BY payidx DESC;
+		ORDER BY payidx DESC
 	</select>
 
 	

@@ -4,6 +4,15 @@
 	<html lang="ko">
 
 	<head>
+	<!-- Google tag (gtag.js) -->
+<script async src="https://www.googletagmanager.com/gtag/js?id=G-4DV6JYFYRH"></script>
+<script>
+  window.dataLayer = window.dataLayer || [];
+  function gtag(){dataLayer.push(arguments);}
+  gtag('js', new Date());
+
+  gtag('config', 'G-4DV6JYFYRH');
+</script>
 		<title>관리자페이지</title>
 		<meta charset="utf-8">
 		<meta http-equiv="Content-Security-Policy" content="upgrade-insecure-requests"> 
@@ -76,7 +85,7 @@
 					<nav id="sidemenu">
 						<ul class="submenu">
 							<li class="smenu" style="background-color:#4D6794; color:white;"><a href='javascript:void(0);'>
-									<h1>기숙사 통합관리 솔루션</h1>
+									<h1>기숙사관리시스템 : ${domitoryName}</h1>
 								</a></li>
 							<li class="smenu"><a href="/admin/adminMember">회원관리</a>
 								<ul class="sub ">

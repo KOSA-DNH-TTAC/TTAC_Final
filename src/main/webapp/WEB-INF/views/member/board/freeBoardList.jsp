@@ -6,6 +6,15 @@
 <html lang="en">
 
 <head>
+<!-- Google tag (gtag.js) -->
+<script async src="https://www.googletagmanager.com/gtag/js?id=G-4DV6JYFYRH"></script>
+<script>
+  window.dataLayer = window.dataLayer || [];
+  function gtag(){dataLayer.push(arguments);}
+  gtag('js', new Date());
+
+  gtag('config', 'G-4DV6JYFYRH');
+</script>
 <meta charset="utf-8">
 <meta http-equiv="Content-Security-Policy" content="upgrade-insecure-requests"> 
 <meta content="width=device-width, initial-scale=1.0" name="viewport">
@@ -78,8 +87,8 @@
 								<div class="entry-title">									
 									<a href="/board/freeBoardList/${freeBoard.idx}">
 										<c:choose>
-											<c:when	test="${freeBoard.title != null && fn:length(freeBoard.title) > 80}">
-															${fn:substring(freeBoard.title,0,80)}...
+											<c:when	test="${freeBoard.title != null && fn:length(freeBoard.title) > 30}">
+												${fn:substring(freeBoard.title,0,30)}...
 											</c:when>
 											<c:otherwise>
 												${freeBoard.title}
@@ -98,7 +107,9 @@
 								</div>
 
 								<div class="entry-content">
-									<p>${freeBoard.content}</p>
+								
+									<!-- 내용 넣는곳  -->
+								
 								</div>
 							</article>
 							<!-- End blog entry -->

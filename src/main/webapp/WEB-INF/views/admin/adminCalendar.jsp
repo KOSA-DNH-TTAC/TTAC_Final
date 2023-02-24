@@ -4,6 +4,15 @@
 <!DOCTYPE html>
 <html lang="ko">
 <head>
+<!-- Google tag (gtag.js) -->
+<script async src="https://www.googletagmanager.com/gtag/js?id=G-4DV6JYFYRH"></script>
+<script>
+  window.dataLayer = window.dataLayer || [];
+  function gtag(){dataLayer.push(arguments);}
+  gtag('js', new Date());
+
+  gtag('config', 'G-4DV6JYFYRH');
+</script>
 <title>관리자페이지</title>
 <meta charset="utf-8">
 <meta http-equiv="Content-Security-Policy" content="upgrade-insecure-requests"> 
@@ -51,7 +60,7 @@
 	<div class="leftcon">
 <nav id="sidemenu">
 		<ul class="submenu">
-			<li class="smenu" style="background-color:#4D6794; color:white;"><a href='javascript:void(0);' ><h1>기숙사 통합관리 솔루션</h1></a></li>
+			<li class="smenu" style="background-color:#4D6794; color:white;"><a href='javascript:void(0);' ><h1>기숙사관리시스템 : ${domitoryName}</h1></a></li>
 			<li class="smenu"><a href="/admin/adminMember">회원관리</a>
 				<ul class="sub ">
 					<li ><a href="/admin/adminMember">회원현황</a></li>
@@ -218,7 +227,7 @@ function load(){
 
 <!--쿠폰등록-->
 <div class="coupon_write bmb">
-	<h4 class="tit_nm">쿠폰등록</h4>
+	<h4 class="tit_nm">일정 등록</h4>
 	<table class="comm_table mb">
 		<colgroup>
 			<col width="180px"/>

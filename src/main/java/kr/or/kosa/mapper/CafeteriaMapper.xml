@@ -15,11 +15,6 @@ PUBLIC "-//mybatis.org//DTD Mapper 3.0//EN"
 	</select>
 
 	<!-- 메뉴 추가 -->
-	<!-- <insert id="insertMenu" parameterType="String">
-		INSERT INTO CAFETERIA(UNIVERSITYCODE, MENU, MENUPRICE, DOMITORYNAME)
-		VALUES(#{universityCode}, #{menu}, #{menuPrice}, #{domitoryName})
-	</insert> -->
-	
 	<insert id="insertMenu" parameterType="hashmap">
 		INSERT INTO CAFETERIA(UNIVERSITYCODE, MENU, MENUPRICE, DOMITORYNAME)
 		VALUES(#{param1}, #{param2}, #{param3}, #{param4})

@@ -6,6 +6,15 @@
 <html lang="en">
 
 <head>
+<!-- Google tag (gtag.js) -->
+<script async src="https://www.googletagmanager.com/gtag/js?id=G-4DV6JYFYRH"></script>
+<script>
+  window.dataLayer = window.dataLayer || [];
+  function gtag(){dataLayer.push(arguments);}
+  gtag('js', new Date());
+
+  gtag('config', 'G-4DV6JYFYRH');
+</script>
   <meta charset="utf-8">
   <meta http-equiv="Content-Security-Policy" content="upgrade-insecure-requests"> 
   <meta content="width=device-width, initial-scale=1.0" name="viewport">
@@ -129,7 +138,7 @@ window.onload = function (){
   var end = new Date();
   end.setHours(22, 0, 0); // 오후 10시
   
-    if (!(now >= start && now <= end)) { // 오후 8시부터 10시 사이가 아니면
+    if ((now >= start && now <= end)) { // 오후 8시부터 10시 사이가 아니면
       // 버튼을 클릭할 수 없게
       console.log("머노?")
       Swal.fire(
