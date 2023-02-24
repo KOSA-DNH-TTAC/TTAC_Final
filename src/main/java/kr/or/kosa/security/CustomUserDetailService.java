@@ -22,24 +22,24 @@ import lombok.RequiredArgsConstructor;
 @Service
 @RequiredArgsConstructor
 public class CustomUserDetailService implements UserDetailsService {
-	
+
 	@Autowired
 	MemberDao dao;
-	
+
 	@Autowired
 	VisitorInfo info;
-	
+
 	@Override
 	public UserDetails loadUserByUsername(String memberid) throws UsernameNotFoundException {
-		
+
 		Member dto = dao.getMember(memberid);
-		
-		if(dto == null) {
+
+		if (dto == null) {
 			throw new UsernameNotFoundException("Invalid User");
 		}
-		
+
 		Set<GrantedAuthority> grantedAuthorities = new HashSet<>();
-		for(MemberAuth a : dto.getAuthList()) {
+		for (MemberAuth a : dto.getAuthList()) {
 			grantedAuthorities.add(new SimpleGrantedAuthority(a.getAuth()));
 		}
 		User user = new User(dto, grantedAuthorities);
