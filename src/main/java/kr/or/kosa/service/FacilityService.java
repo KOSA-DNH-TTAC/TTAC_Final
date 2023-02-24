@@ -23,42 +23,30 @@ public class FacilityService {
 		this.sqlSession = sqlSession;
 	}
 
-		
 	// 시설물 인서트
 	public Integer insertItem(String universitycode, String facilityname) {
 		FacilityDao facilityDao = sqlSession.getMapper(FacilityDao.class);
-		int  row = facilityDao.insertItem(universitycode, facilityname);
-//		if( row >=1) {
-//			System.out.println("성공");
-//		}
-//		System.out.println("row : " + row);
-		
+		int row = facilityDao.insertItem(universitycode, facilityname);
+
 		return row;
 	}
-	
+
 	// 시설물 조회
 	public List<Facility> selectItem() {
 		FacilityDao facilityDao = sqlSession.getMapper(FacilityDao.class);
-		List<Facility>  facList = facilityDao.selectItem();
-		
-		System.out.println("facList : " + facList);
-		
+		List<Facility> facList = facilityDao.selectItem();
+
 		return facList;
 	}
-	
+
 	// 기숙사 건물 인서트
 	public Integer insertDomitory(String universitycode, String domitoryname, String domitoryfloor) {
 		DomitoryDao domitorydao = sqlSession.getMapper(DomitoryDao.class);
-		int  row = domitorydao.insertDomitory(universitycode, domitoryname, domitoryfloor);
-		
-		if( row >=1) {
-			System.out.println("성공");
-		}
-		System.out.println("row : " + row);
-		
+		int row = domitorydao.insertDomitory(universitycode, domitoryname, domitoryfloor);
+
 		return row;
 	}
-	
+
 	// 건물(동) 조회
 	public List<Domitory> selectDomitory(String universityCode, String domitoryname) {
 		DomitoryDao domitorydao = sqlSession.getMapper(DomitoryDao.class);
@@ -66,59 +54,57 @@ public class FacilityService {
 
 		return domitoryList;
 	}
-	
-	//건물(동),층수,시설뭏 조회
+
+	// 건물(동),층수,시설뭏 조회
 	public List<Domitory> selectAllDomitory() {
 		DomitoryDao domitorydao = sqlSession.getMapper(DomitoryDao.class);
 		List<Domitory> domitoryList = domitorydao.selectAllDomitory();
-			
+
 		return domitoryList;
 	}
-		
-	// 시설물 신고시 회원의 신고 데이터 인서트 
-	public Integer insertReport(int facilityidx,String domitoryname, String domitoryfloor, String facilityname, String facilityReport,String memberid) {
+
+	// 시설물 신고시 회원의 신고 데이터 인서트
+	public Integer insertReport(int facilityidx, String domitoryname, String domitoryfloor, String facilityname,
+			String facilityReport, String memberid) {
 		FacilityDao facilityDao = sqlSession.getMapper(FacilityDao.class);
-		int  row = facilityDao.insertReport(facilityidx, domitoryname, domitoryfloor,facilityname,memberid,facilityReport);
-		if( row >=1) {
-			System.out.println("성공");
-		}
-		System.out.println("row : " + row);
-		
+		int row = facilityDao.insertReport(facilityidx, domitoryname, domitoryfloor, facilityname, memberid,
+				facilityReport);
+
 		return row;
 	}
-	
+
 	// where문 특정 시설물 조회
 	public Facility selectReportItem(String universityCode, String facilityname) {
 		FacilityDao facilityDao = sqlSession.getMapper(FacilityDao.class);
 		Facility facList = facilityDao.selectReportItem(universityCode, facilityname);
-		
+
 		return facList;
 	}
-	
+
 	// 신고 리스트 불러오기
 	public List<Report> selectReport(String domitoryname) {
-		FacilityDao facilityDao = sqlSession.getMapper(FacilityDao.class);		
+		FacilityDao facilityDao = sqlSession.getMapper(FacilityDao.class);
 		List<Report> reportList = facilityDao.selectReport(domitoryname);
 		return reportList;
 	}
-	
+
 	// 층별 신고 리스트 불러오기
-	public List<Report> search(String domitoryname,String domitoryfloor) {
-		FacilityDao facilityDao = sqlSession.getMapper(FacilityDao.class);		
+	public List<Report> search(String domitoryname, String domitoryfloor) {
+		FacilityDao facilityDao = sqlSession.getMapper(FacilityDao.class);
 		List<Report> reportList = facilityDao.search(domitoryname, domitoryfloor);
 		return reportList;
 	}
-	
+
 	// 날짜별 신고 리스트 불러오기
-	public List<Report> searchDate(String domitoryname,String startdate, String enddate) {
-		FacilityDao facilityDao = sqlSession.getMapper(FacilityDao.class);		
+	public List<Report> searchDate(String domitoryname, String startdate, String enddate) {
+		FacilityDao facilityDao = sqlSession.getMapper(FacilityDao.class);
 		List<Report> reportList = facilityDao.searchDate(domitoryname, startdate, enddate);
 		return reportList;
 	}
 
 	// 이름별 신고 리스트 불러오기
-	public List<Report> likeSearch(String domitoryname,String facilityname) {
-		FacilityDao facilityDao = sqlSession.getMapper(FacilityDao.class);		
+	public List<Report> likeSearch(String domitoryname, String facilityname) {
+		FacilityDao facilityDao = sqlSession.getMapper(FacilityDao.class);
 		List<Report> reportList = facilityDao.likeSearch(domitoryname, facilityname);
 		return reportList;
 	}
