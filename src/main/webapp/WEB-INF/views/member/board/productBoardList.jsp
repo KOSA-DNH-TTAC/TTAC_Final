@@ -107,7 +107,6 @@
 													<li class="d-flex align-items-center"><i class="bi bi-person"></i>${productList.memberId}</a></li>
 													<li class="d-flex align-items-center"><i class="bi bi-clock"></i>${productList.writeDate}</a></li>
 													<li class="d-flex align-items-center"><i class="bi-chat-dots"></i>${productList.replyCount}</li>
-													<li class="d-flex align-items-center"><i class="bi bi-cart2"></i>${productList.replyCount}원</li>
 													
 												</ul>
 											</div>

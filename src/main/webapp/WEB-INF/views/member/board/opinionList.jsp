@@ -84,6 +84,10 @@
 				<div class="row">
 
 					<div id="contentsDiv" class="col-lg-8 entries">
+						<article class="entry d-flex justify-content-center">
+							<h4>이 곳은 본인과 사감만 볼 수 있는 게시판입니다.</h4>
+						</article>
+						
 						<c:forEach items="${allBoardList}" var="freeBoard">
 							<c:if test="${freeBoard.memberId eq prc.memberId || prc.authorities eq '[ROLE_ADMIN]'}">
 							<article class="entry">
