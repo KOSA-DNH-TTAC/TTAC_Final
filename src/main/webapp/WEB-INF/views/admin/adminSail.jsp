@@ -787,7 +787,6 @@ $(document).ready(function(){
          <option value="">50개</option>
          <option value="">100개</option>
       </select>
-      <a href="#" class="btn_sumit2">엑셀다운로드</a></li>
    </div>
 </div>
 
