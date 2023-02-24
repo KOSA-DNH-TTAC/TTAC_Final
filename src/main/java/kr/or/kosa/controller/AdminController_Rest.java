@@ -12,11 +12,11 @@ import org.springframework.http.HttpStatus;
 import org.springframework.http.ResponseEntity;
 import org.springframework.security.core.context.SecurityContextHolder;
 import org.springframework.web.bind.annotation.GetMapping;
+import org.springframework.web.bind.annotation.PathVariable;
 import org.springframework.web.bind.annotation.RequestMapping;
 import org.springframework.web.bind.annotation.RequestParam;
 import org.springframework.web.bind.annotation.RestController;
 
-import kr.or.kosa.dto.Board;
 import kr.or.kosa.dto.Cafeteria;
 import kr.or.kosa.dto.Domitory;
 import kr.or.kosa.dto.Member;
@@ -38,7 +38,7 @@ public class AdminController_Rest {
 	calendarService calendarService;
 	CafeteriaService cafeteriaService;
 	AdminService adminService;
-	
+
 	@Autowired
 	public void setBoardService(BoardService boardService) {
 		this.boardService = boardService;
@@ -58,6 +58,7 @@ public class AdminController_Rest {
 	public void setcafeteriaService(CafeteriaService cafeteriaService) {
 		this.cafeteriaService = cafeteriaService;
 	}
+
 	@Autowired
 	public void setAdminService(AdminService adminService) {
 		this.adminService = adminService;
@@ -210,16 +211,13 @@ public class AdminController_Rest {
 				|| data.equals("2023-08") || data.equals("2023-10") || data.equals("2023-12")) {
 			Start = data + "-01";
 			End = data + "-31";
-			System.out.println("Strat : " + Start + "/" + "End : " + End);
 		} else if (data.equals("2023-01") || data.equals("2023-04") || data.equals("2023-06") || data.equals("2023-09")
 				|| data.equals("2023-11")) {
 			Start = data + "-01";
 			End = data + "-30";
-			System.out.println("Strat : " + Start + "/" + "End : " + End);
 		} else if (data.equals("2023-02")) {
 			Start = data + "-01";
 			End = data + "-28";
-			System.out.println("Strat : " + Start + "/" + "End : " + End);
 		}
 
 		try {
@@ -250,21 +248,23 @@ public class AdminController_Rest {
 	// 메뉴 추가
 	@RequestMapping("/coupon/insert")
 	public void insertmenu(@RequestParam("name") String menu, @RequestParam("price") String price) {
-	    cafeteriaService.insertMenu(menu, price);
+		cafeteriaService.insertMenu(menu, price);
 	}
 
 	// 메뉴 수정
-	@RequestMapping("/coupon/update")
-	public void updateMenu(@RequestParam("idx") String idx, @RequestParam("domitory") String domitory,
+	@RequestMapping("/coupon/update/{idx}")
+	public void updateMenu(@PathVariable("idx") String idx,
 			@RequestParam("name") String name, @RequestParam("price") String price) {
+
+		User user = (User) SecurityContextHolder.getContext().getAuthentication().getPrincipal();
+		
 		int menuidx = Integer.parseInt(idx);
 		int menuPrice = Integer.parseInt(price);
 		Cafeteria cafeteria = new Cafeteria();
 		cafeteria.setMenuidx(menuidx);
-		cafeteria.setDomitoryName(domitory);
+		cafeteria.setDomitoryName(user.getDomitoryName());
 		cafeteria.setMenu(name);
 		cafeteria.setMenuPrice(menuPrice);
-
 		cafeteriaService.updateMenu(cafeteria);
 	}
 
@@ -274,63 +274,52 @@ public class AdminController_Rest {
 		int menuidx = Integer.parseInt(idx);
 		cafeteriaService.deleteMenu(menuidx);
 	}
-	
-	
-	
-	// 관리자 점호 회원  조회
+
+	// 관리자 점호 회원 조회
 	@RequestMapping("/admin/onallRollCallMember")
 	public ResponseEntity<List<RollCall>> getOnAllRollCallMember() {
-		System.out.println("점호 컨트롤러");
 		User user = (User) SecurityContextHolder.getContext().getAuthentication().getPrincipal();
 		String universitycode = user.getUniversityCode();
 		String domitoryName = user.getDomitoryName();
-		System.out.println("sㄴㅇㄹㄴㅇㄹ 2");
-		System.out.println("기숙사 : "+domitoryName);
-		
+
 		// 현재 날짜/시간
 		Date now = new Date();
 		// 포맷팅 정의
 		SimpleDateFormat formatter = new SimpleDateFormat("yyyy-MM-dd");
 		// 포맷팅 적용
 		String date = formatter.format(now);
-		System.out.println("date : "+date);
-		
-		List<RollCall> list = adminService.getAllRollCallMember(universitycode,domitoryName,date);
-		System.out.println("list : "+list);
+
+		List<RollCall> list = adminService.getAllRollCallMember(universitycode, domitoryName, date);
+	
 		try {
 			return new ResponseEntity<List<RollCall>>(list, HttpStatus.OK);
 		} catch (Exception e) {
 			return new ResponseEntity<List<RollCall>>(list, HttpStatus.BAD_REQUEST);
 		}
 	}
-	
-	
-	// 관리자 점호 회원  조회
-		@RequestMapping("/admin/allRollCallMember")
-		public ResponseEntity<List<RollCall>> getAllRollCallMember(@RequestParam String date) {
-			System.out.println("점호 컨트롤러");
-			User user = (User) SecurityContextHolder.getContext().getAuthentication().getPrincipal();
-			String universitycode = user.getUniversityCode();
-			String domitoryName = user.getDomitoryName();
-			System.out.println("날짜 : " + date);
-			
-			List<RollCall> list = adminService.getAllRollCallMember(universitycode,domitoryName,date);
-			try {
-				return new ResponseEntity<List<RollCall>>(list, HttpStatus.OK);
-			} catch (Exception e) {
-				return new ResponseEntity<List<RollCall>>(list, HttpStatus.BAD_REQUEST);
-			}
-		}
-		
-	//점호 안한 놈 조회
-	@RequestMapping("/admin/notRollCall")
-	public ResponseEntity<List<Member>> getNotRollCall(@RequestParam String date) {
-		System.out.println("점호안한놈");
+
+	// 관리자 점호 회원 조회
+	@RequestMapping("/admin/allRollCallMember")
+	public ResponseEntity<List<RollCall>> getAllRollCallMember(@RequestParam String date) {
 		User user = (User) SecurityContextHolder.getContext().getAuthentication().getPrincipal();
 		String universitycode = user.getUniversityCode();
 		String domitoryName = user.getDomitoryName();
-		System.out.println("날짜 : " + date);
-		
+
+		List<RollCall> list = adminService.getAllRollCallMember(universitycode, domitoryName, date);
+		try {
+			return new ResponseEntity<List<RollCall>>(list, HttpStatus.OK);
+		} catch (Exception e) {
+			return new ResponseEntity<List<RollCall>>(list, HttpStatus.BAD_REQUEST);
+		}
+	}
+
+	// 점호 안한 회원 조회
+	@RequestMapping("/admin/notRollCall")
+	public ResponseEntity<List<Member>> getNotRollCall(@RequestParam String date) {
+		User user = (User) SecurityContextHolder.getContext().getAuthentication().getPrincipal();
+		String universitycode = user.getUniversityCode();
+		String domitoryName = user.getDomitoryName();
+
 		List<Member> list = adminService.getNotRollCall(universitycode, domitoryName, date);
 		try {
 			return new ResponseEntity<List<Member>>(list, HttpStatus.OK);
@@ -338,20 +327,18 @@ public class AdminController_Rest {
 			return new ResponseEntity<List<Member>>(list, HttpStatus.BAD_REQUEST);
 		}
 	}
-	
-	//일괄 벌점 부여(무단외박)
-	@RequestMapping(value="/admin/execution", produces = "application/text; charset=UTF-8")
-	public ResponseEntity<String> execution(@RequestParam(value="data[]") List<String> data){
-		System.out.println("처형!!");
-		System.out.println(data);
+
+	// 일괄 벌점 부여(무단외박)
+	@RequestMapping(value = "/admin/execution", produces = "application/text; charset=UTF-8")
+	public ResponseEntity<String> execution(@RequestParam(value = "data[]") List<String> data) {
 		try {
-			for(String s : data) {
+			for (String s : data) {
 				adminService.memberDemerit(s, "5", "무단외박");
 			}
 			return new ResponseEntity<String>("벌점부여 성공", HttpStatus.OK);
 		} catch (Exception e) {
 			return new ResponseEntity<String>("벌점부여 실패", HttpStatus.BAD_REQUEST);
 		}
-		
+
 	}
 }

@@ -10,11 +10,9 @@ import kr.or.kosa.dto.Member;
 import kr.or.kosa.dto.MemberAuth;
 
 public class User implements UserDetails {
-	
 
 	private static final long serialVersionUID = 1L;
-	
-	
+
 	private String username;
 	private String universityCode;
 	private String memberId;
@@ -37,8 +35,8 @@ public class User implements UserDetails {
 	private boolean isAccountNonLocked;
 	private boolean isCredentialsNonExpired;
 	private List<MemberAuth> authList;
-	
-	private Collection<?extends GrantedAuthority>authorities;
+
+	private Collection<? extends GrantedAuthority> authorities;
 
 	@Override
 	public String getUsername() {
@@ -64,7 +62,7 @@ public class User implements UserDetails {
 	public void setMemberId(String memberId) {
 		this.memberId = memberId;
 	}
-	
+
 	@Override
 	public String getPassword() {
 		return password;
@@ -169,6 +167,7 @@ public class User implements UserDetails {
 	public void setEnabled(boolean isEnabled) {
 		this.isEnabled = isEnabled;
 	}
+
 	@Override
 	public boolean isAccountNonExpired() {
 		return isAccountNonExpired;
@@ -177,6 +176,7 @@ public class User implements UserDetails {
 	public void setAccountNonExpired(boolean isAccountNonExpired) {
 		this.isAccountNonExpired = isAccountNonExpired;
 	}
+
 	@Override
 	public boolean isAccountNonLocked() {
 		return isAccountNonLocked;
@@ -185,6 +185,7 @@ public class User implements UserDetails {
 	public void setAccountNonLocked(boolean isAccountNonLocked) {
 		this.isAccountNonLocked = isAccountNonLocked;
 	}
+
 	@Override
 	public boolean isCredentialsNonExpired() {
 		return isCredentialsNonExpired;
@@ -201,6 +202,7 @@ public class User implements UserDetails {
 	public void setAuthList(List<MemberAuth> authList) {
 		this.authList = authList;
 	}
+
 	@Override
 	public Collection<? extends GrantedAuthority> getAuthorities() {
 		return authorities;
@@ -217,9 +219,7 @@ public class User implements UserDetails {
 	public void setAuthorities(Collection<? extends GrantedAuthority> authorities) {
 		this.authorities = authorities;
 	}
-	
-	
-	
+
 	public String getNewjoin() {
 		return newjoin;
 	}
@@ -229,7 +229,7 @@ public class User implements UserDetails {
 	}
 
 	public User(Member vo, Collection<GrantedAuthority> auth) {
-		
+
 		username = vo.getMemberId();
 		universityCode = vo.getUniversityCode();
 		memberId = vo.getMemberId();
@@ -251,21 +251,19 @@ public class User implements UserDetails {
 		isAccountNonLocked = true;
 		isCredentialsNonExpired = true;
 		authList = vo.getAuthList();
-		
+
 		authorities = auth;
 	}
 
 	@Override
 	public String toString() {
-		return "시큐리티유저[username=" + username + ", universityCode=" + universityCode + ", memberId="
-				+ memberId + ", password=" + password + ", name=" + name + ", major=" + major + ", email=" + email
-				+ ", gender=" + gender + ", phone=" + phone + ", parentsPhone=" + parentsPhone + ", domitoryName=" + domitoryName + ", room=" + room
-				+ ", memberPoint=" + memberPoint + ", demerit=" + demerit + ", status=" + status + ", enabled="
-				+ enabled + ", isEnabled=" + isEnabled + ", isAccountNonExpired=" + isAccountNonExpired
+		return "시큐리티유저[username=" + username + ", universityCode=" + universityCode + ", memberId=" + memberId
+				+ ", password=" + password + ", name=" + name + ", major=" + major + ", email=" + email + ", gender="
+				+ gender + ", phone=" + phone + ", parentsPhone=" + parentsPhone + ", domitoryName=" + domitoryName
+				+ ", room=" + room + ", memberPoint=" + memberPoint + ", demerit=" + demerit + ", status=" + status
+				+ ", enabled=" + enabled + ", isEnabled=" + isEnabled + ", isAccountNonExpired=" + isAccountNonExpired
 				+ ", isAccountNonLocked=" + isAccountNonLocked + ", isCredentialsNonExpired=" + isCredentialsNonExpired
 				+ ", authList=" + authList + ", authorities=" + authorities + "]";
 	}
 
-	
-    
 }

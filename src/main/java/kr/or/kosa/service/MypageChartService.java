@@ -1,6 +1,5 @@
 package kr.or.kosa.service;
 
-
 import java.sql.SQLException;
 import java.util.ArrayList;
 import java.util.HashMap;
@@ -22,14 +21,14 @@ import kr.or.kosa.security.User;
 @Service
 public class MypageChartService {
 	private SqlSession sqlsession;
-	 
+
 	@Autowired
 	public void setSqlsession(SqlSession sqlsession) {
-	   this.sqlsession = sqlsession;
+		this.sqlsession = sqlsession;
 	}
-	
-	//월별 외박 통계
-	public List<Chart> getMontlySleepover(){
+
+	// 월별 외박 통계
+	public List<Chart> getMontlySleepover() {
 		User user = (User) SecurityContextHolder.getContext().getAuthentication().getPrincipal();
 		ChartDao dao = sqlsession.getMapper(ChartDao.class);
 		List<Chart> list = new ArrayList<Chart>();
@@ -40,40 +39,40 @@ public class MypageChartService {
 		} catch (SQLException e) {
 			e.printStackTrace();
 		}
-		
+
 		return list;
 	}
-	
-	//월별 결제
-	public List<Chart> getMonthlyPayments(){
+
+	// 월별 결제
+	public List<Chart> getMonthlyPayments() {
 		User user = (User) SecurityContextHolder.getContext().getAuthentication().getPrincipal();
-		
+
 		ChartDao dao = sqlsession.getMapper(ChartDao.class);
 		List<Chart> list = new ArrayList<Chart>();
 		list = dao.monthlyPayment(user.getMemberId());
-		
+
 		return list;
 	}
-	
-	//월별 커뮤니티
-	public List<Chart> getMonthlyCommunity(){
+
+	// 월별 커뮤니티
+	public List<Chart> getMonthlyCommunity() {
 		User user = (User) SecurityContextHolder.getContext().getAuthentication().getPrincipal();
-		
+
 		ChartDao dao = sqlsession.getMapper(ChartDao.class);
 		List<Chart> list = new ArrayList<Chart>();
 		list = dao.monthlyCommunity(user.getMemberId());
-		
+
 		return list;
 	}
-	
-	//월별 벌점
-	public List<Chart> getMonthlyDemerit(){
+
+	// 월별 벌점
+	public List<Chart> getMonthlyDemerit() {
 		User user = (User) SecurityContextHolder.getContext().getAuthentication().getPrincipal();
-		
+
 		ChartDao dao = sqlsession.getMapper(ChartDao.class);
 		List<Chart> list = new ArrayList<Chart>();
 		list = dao.monthlyDemerit(user.getMemberId());
-		
+
 		return list;
 	}
 }

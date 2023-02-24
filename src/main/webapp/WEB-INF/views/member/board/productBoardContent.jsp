@@ -529,13 +529,19 @@
 		// Optional parameters
 		direction: 'horizontal',
 		loop: true,
+		slidesPerView: 1, // 한번에 보여줄 슬라이드 개수
+		spaceBetween: 1000, // 슬라이드 사이 여백
+		
+		// autoplay
+		autoplay: {
+			   delay: 3000,
+		},
 
 		// If we need pagination
 		pagination: {
 			el: '.swiper-pagination',
-			
 		},
-
+		
 		// Navigation arrows
 		navigation: {
 			nextEl: '.swiper-button-next',
@@ -547,10 +553,9 @@
 			el: '.swiper-scrollbar',
 		},
 		
-		autoplay: {
-			   delay: 3000,
-			 },
+		
 		});
+	
 			
 	</script>
 
