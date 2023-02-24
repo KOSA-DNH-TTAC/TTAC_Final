@@ -294,17 +294,16 @@ $(document).on("click", ".menuComplete", function() {
 	row.find(".menuname").text(name);
 	row.find(".menuprice").text(price);
 	$(this).html("수정").removeClass("menuComplete").addClass("menuUpdate");
+
 	
 	$.ajax({
 		type: "post",
-		url: "/coupon/update",
+		url: "/coupon/update/" + idx,
 		data : {
-			"idx" : idx,
 			"name": name,
 			"price": price,
 		}, 
 		success: function(data) {
-			
 		}
 	})
 }); 

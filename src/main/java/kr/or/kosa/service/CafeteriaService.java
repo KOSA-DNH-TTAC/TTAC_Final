@@ -47,6 +47,7 @@ public class CafeteriaService {
 	// 메뉴 수정
 	public void updateMenu(Cafeteria cafeteria) {
 		CafeteriaDao cafeteriaDao = sqlSession.getMapper(CafeteriaDao.class);
+		System.out.println("메뉴 수정 서비스");
 		cafeteriaDao.updateMenu(cafeteria);
 	}
 
