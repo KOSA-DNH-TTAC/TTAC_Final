@@ -227,7 +227,7 @@ function load(){
 
 <!--쿠폰등록-->
 <div class="coupon_write bmb">
-	<h4 class="tit_nm">쿠폰등록</h4>
+	<h4 class="tit_nm">일정 등록</h4>
 	<table class="comm_table mb">
 		<colgroup>
 			<col width="180px"/>

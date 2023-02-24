@@ -88,9 +88,9 @@
 			<li class="smenu"><a href="/admin/board">커뮤니티관리</a></li>
 			<li class="smenu"><a href="/admin/coupon" >식권관리</a></li>
 			<li class="smenu"><a href="/admin/popular" >외박관리</a></li>
-			<li class="smenu"><a href="#" class="msub on">시설관리</a>
+			<li class="smenu"><a href="#" >시설관리</a>
 				<ul class="sub ">
-				   <li ><a href="/admin/analyze" class="msub on">시설물 신고내역</a></li>
+				   <li ><a href="/admin/analyze">시설물 신고내역</a></li>
 				   <li ><a href="/admin/enroll">시설등록</a></li>
 				   <li ><a href="/admin/domitory">기숙사(동) 등록</a></li>
 				</ul>   
@@ -98,7 +98,7 @@
 	
 			<li class="smenu"><a href="/admin/calendar" >일정관리</a></li>
 			<li class="smenu"><a href="/admin/sail" >회원파일등록</a></li>
-			<li class="smenu"><a href="/admin/RollCall" >점호관리</a></li>
+			<li class="smenu"><a href="/admin/RollCall" class="msub on" >점호관리</a></li>
 			<li class="smenu"><a href="/admin/sail" >통계관리</a></li>
 			<li class="smenu"><a href="/admin/qr">식권QR</a></li>
 		</ul>
