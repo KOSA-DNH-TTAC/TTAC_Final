@@ -354,7 +354,7 @@ function execution(){
 </div>	
 <div class="ofh">
 	<div class="halfcon mr">
-		<h4 class="bgtab bgtab2">외박이력	<p id="whichdate" class="txtin wtTxt fsbb">오늘 <%=date%> </p></h4>
+		<h4 class="bgtab bgtab2">점호완료	<p id="whichdate" class="txtin wtTxt fsbb">오늘 <%=date%> </p></h4>
 			<table class="comm_table mb">
 				<thead>
 					<tr>

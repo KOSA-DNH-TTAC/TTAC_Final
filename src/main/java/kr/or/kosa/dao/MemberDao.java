@@ -4,8 +4,10 @@ import java.util.List;
 
 import org.apache.ibatis.annotations.Param;
 
+import kr.or.kosa.dto.Domitory;
 import kr.or.kosa.dto.Member;
 import kr.or.kosa.dto.Post;
+import kr.or.kosa.dto.RollCall;
 import kr.or.kosa.security.User;
 
 public interface MemberDao {
@@ -34,5 +36,6 @@ public interface MemberDao {
 	//회원 비밀번호 초기화
 	public int insertPassword(Member member);
 	
-	//
+
+		
 }

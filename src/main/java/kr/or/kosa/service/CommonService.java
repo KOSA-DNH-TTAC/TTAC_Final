@@ -6,12 +6,18 @@ import java.util.Map;
 
 import org.apache.ibatis.session.SqlSession;
 import org.springframework.beans.factory.annotation.Autowired;
+import org.springframework.security.core.context.SecurityContextHolder;
 import org.springframework.security.crypto.bcrypt.BCryptPasswordEncoder;
 import org.springframework.stereotype.Service;
 import org.springframework.web.multipart.MultipartFile;
 
+import kr.or.kosa.dao.BoardDao;
+import kr.or.kosa.dao.DomitoryDao;
 import kr.or.kosa.dao.MemberDao;
+import kr.or.kosa.dto.Domitory;
 import kr.or.kosa.dto.Member;
+import kr.or.kosa.dto.RollCall;
+import kr.or.kosa.security.User;
 import kr.or.kosa.utils.ExcelUtils;
 
 @Service
@@ -84,7 +90,106 @@ public class CommonService {
 		
 		return result;
 	}
+	
+	
+	//점호
+	// 점호 위치값 비교하기
+		public String eveningCall(double lat, double lon) {
+			DomitoryDao domitorydao = sqlSession.getMapper(DomitoryDao.class);
+			User user = (User) SecurityContextHolder.getContext().getAuthentication().getPrincipal();
+			String domitoryname = user.getDomitoryName();
+			Domitory domitory = domitorydao.eveningCall(domitoryname);
+			double domitoryLat = domitory.getDomitoryLatitude();
+			double domitoryLon = domitory.getDomitoryLogitude();
+			
+			
+			double dist = getDistance(domitoryLat, domitoryLon, lat, lon);
+			System.out.println("dist : "+ dist);
+			
+			String alert = "SUCCESS";
+			if (!(dist < 0.0021) || (dist > -0.0021)) {
+				alert = "FAIL";
+				System.out.println("결과 : "+alert+"lat 계산 : "+(domitoryLat - lat));
+			}
+			if (!((domitoryLon - lon) < 0.003) || ((domitoryLon - lon) > -0.003)) {
+				alert = "FAIL";
+				System.out.println("결과 : "+alert+"lon 계산 : "+(domitoryLon - lon));
+			}
+//			String alert = "SUCCESS";
+//			if (!((domitoryLat - lat) < 0.0000000000000005)) {
+//				alert = "FAIL";
+//				System.out.println("결과 : "+alert+"lat 계산 : "+(domitoryLat - lat));
+//			}
+//			if (!((domitoryLon - lon) < 0.0000000000000005)) {
+//				alert = "FAIL";
+//				System.out.println("결과 : "+alert+"lon 계산 : "+(domitoryLon - lon));
+//			}
+
+			return alert;
+		}
 		
+
+		// km 기준
+		private Double getDistance(Double lat, Double lnt, Double lat2, Double lnt2) {
+		    double theta = lnt - lnt2;
+		    double dist = Math.sin(deg2rad(lat))* Math.sin(deg2rad(lat2)) + Math.cos(deg2rad(lat))*Math.cos(deg2rad(lat2))*Math.cos(deg2rad(theta));
+		    dist = Math.acos(dist);
+		    dist = rad2deg(dist);
+		    dist = dist * 60*1.1515*1609.344;
+		    System.out.println("dist : "+ dist/1000);
+		    return dist / 1000;
+		}
+
+		//10진수를 radian(라디안)으로 변환
+		private static double deg2rad(double deg){
+		    return (deg * Math.PI/180.0);
+		}
+		//radian(라디안)을 10진수로 변환
+		private static double rad2deg(double rad){
+		    return (rad * 180 / Math.PI);
+		}
+		
+
+		// 점호완료시 DB에 회원 점호데이터 인서트
+		public String eveningCallInsert(String memberid, String universitycode,String domitoryName) {
+			DomitoryDao domitorydao = sqlSession.getMapper(DomitoryDao.class);
+			System.out.println("memberid 서비스 옴?");
+			int  rollcall = domitorydao.eveningCallInsert(memberid, universitycode,domitoryName);
+
+			if( rollcall >=1) {
+				System.out.println("성공");
+			}
+			System.out.println("rollcall : " + rollcall);
+
+			return null;
+		}
+			
+			// 점호완료시 DB에 회원 점호데이터 인서트
+		public String eveningCallCompare(String memberid, String universitycode, String rollcalldate) {
+			DomitoryDao domitorydao = sqlSession.getMapper(DomitoryDao.class);
+			RollCall  rollcall = domitorydao.eveningCallCompare(memberid, universitycode, rollcalldate);
+			String unicode = rollcall.getUniversityCode();
+			String date = rollcall.getRollCallDate();
+			String dbmemberid = rollcall.getMemberId();				
+			int count = rollcall.getCounting();
+				
+			System.out.println("date : "+date);
+			System.out.println("unicode : "+unicode);
+			System.out.println("dbmemberid : "+ dbmemberid);
+			System.out.println("count : "+ count);
+				
+			String result = "SUCCESS"; 
+			System.out.println("점호한 회원데이터 : "+memberid+"/"+universitycode+"/"+rollcalldate +"===="+ "DB에서 가져온 비교데이터 : "+ dbmemberid+"/"+unicode+"/"+date);
+			//조회된데이터 없으면
+			if(count >= 1) {
+				System.out.println("이미 DB에 "+memberid+" 회원의 데이터 있음");
+				result = "FAIL";
+			}
+			System.out.println("DB에서 받아온 점호 데이터 : " + rollcall);
+				
+			return result;
+		}
+			
 	
 
 }
