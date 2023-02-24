@@ -27,6 +27,9 @@ public class Member {
 	// resultMap을 이용...(memberauth테이블의 값 가져와서 넣어야함)
 	private List<MemberAuth> authList;
 	
+	
+	private String newjoin; //신규회원 여부 판단을 위한...
+	
 	public Member(User user) {
 		universityCode = user.getUniversityCode();
 		memberId = user.getMemberId();
@@ -44,6 +47,7 @@ public class Member {
 		status = user.getStatus();
 		enabled = user.getEnabled();
 		authList = user.getAuthList();
+		newjoin = user.getNewjoin();
 	}
 	
 	public Member() {

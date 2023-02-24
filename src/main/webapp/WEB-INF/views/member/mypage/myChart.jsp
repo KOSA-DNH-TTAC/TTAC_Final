@@ -6,6 +6,7 @@
 
       <head>
         <meta charset="utf-8">
+        <meta http-equiv="Content-Security-Policy" content="upgrade-insecure-requests"> 
         <meta content="width=device-width, initial-scale=1.0" name="viewport">
 
         <title>DOTO:기숙사통합관리시스템</title>
@@ -70,6 +71,7 @@
           #contentBox {
             padding: 15px 15px 15px 15px;
             text-align: center;
+            min-height: 60vh;
           }
 
           table {
@@ -147,6 +149,7 @@
 
                     <!-- content start -->
                     <div id="content">
+                        <h4>왼쪽에서 보고 싶은 통계를 선택하세요!</h4>
                         <div id="chart"></div>
                         <div id="chart2"></div>
                     </div>
@@ -191,27 +194,47 @@
       <script src="${pageContext.request.contextPath}/resources/assets/js/main.js"></script>
 
       <script>
-        $(document).ready(function(){
-        	
-            var options = {
-            chart: {
-                type: 'line'
-            },
-            series: [{
-                name: 'sales',
-                data: [30,40,35,50,49,60,70,91,125]
-            }],
-            xaxis: {
-                categories: [1991,1992,1993,1994,1995,1996,1997, 1998,1999]
-            }
-            }
-
-            var chart = new ApexCharts(document.querySelector("#chart"), options);
-
-            chart.render();
-        })
         
-        $('#chart').empty();
+        function sleepoverChart(){
+            let month = []; //categories
+            let count = [];
+        	  $.ajax({
+      			type: "get",
+      			url: "/mychart/sleepover",
+      			//async: true, //비동기 여부
+      			contentType: "application/json",
+      			success: function (result) {
+      				console.log(result);
+                    $.each(result.list, function(index, chart){
+                        month.push(chart.month);
+                        count.push(chart.sleepoverCount)
+                    })
+                    
+
+                    //월별 외박 건수
+                    var options = {
+                    chart: {
+                        type: 'bar'
+                    },
+                    series: [{
+                        name: '외박횟수',
+                        data: count
+                    }],
+                    xaxis: {
+                        categories: month
+                    },
+                    fill: {
+                        colors: ['#f48236']
+                        }
+                }
+
+                var chart = new ApexCharts($('#chart')[0], options);
+
+                chart.render();
+                    
+                    }
+                })
+        }
 
          $('.list-group-item').click(function (e) {
           e.preventDefault();
@@ -224,8 +247,11 @@
           var el = $(e.target).closest('a');
           el.siblings('a').removeClass("active");
 
-          $('#chart').empty();
-          $('#chart2').empty();
+        //   $('#chart').empty();
+        //   $('#chart2').empty();
+
+        $('#content').empty();
+        $('#content').append("<div id='chart'></div><div id='chart2'></div>")  
         
           let menutitle = "나의 " + menu + " 통계"
           $('#mptitle').text(menutitle) //content title 선택 메뉴로 바꿔줌
@@ -235,59 +261,196 @@
           
           //해당 내용에 맞는 뷰로 바꿔주기....
           if (menu == '외박') {
-        	  let memberId = $('#memberId').text();
-        	  
-        	  $.ajax({
-      			type: "post",
-      			url: "/mypage/sleepover",
-      			data: JSON.stringify({
-      				"memberId": memberId
-      			}),
-      			dataType: 'json',
-      			async: true, //비동기 여부
-      			contentType: "application/json",
-      			success: function (data) {
-      				console.log(data);
-      				replyContent();
-      			}
-      		})
-        	  
-        	$('#chart').empty();
-            $('#chart2').empty();
-        	  
-
-            //월별 외박 건수
-            var options = {
-            chart: {
-                type: 'bar'
-            },
-            series: [{
-                name: 'sleepover',
-                data: [30,40,35,50,49,60,70,91,125]
-            }],
-            xaxis: {
-                categories: ['1월','2월','3월','4월','5월','6월','7월', '8월','9월']
-            }
-            }
-
-            var chart = new ApexCharts(document.querySelector("#chart"), options);
-
-            chart.render();
+        	
+            sleepoverChart();
+        
 
           }else if(menu == '결제'){
 
+            let month = [];
             //월별 결제 건수
-
+            let paymentCount = [];
             //월별 결제 금액
+            let paymentTotal = [];
+            
+            $.ajax({
+      			type: "get",
+      			url: "/mychart/payment",
+      			//async: true, //비동기 여부
+      			contentType: "application/json",
+      			success: function (result) {
+      				console.log(result);
+                    $.each(result.list, function(index, chart){
+                        month.push(chart.month);
+                        paymentCount.push(chart.paymentCount);
+                        paymentTotal.push(chart.paymentTotal);
+                    })
+                    var maxTotal = Math.max.apply(Math, paymentTotal);
+                    var maxCount = Math.max.apply(Math, paymentCount);
+                    
+                    var options = {
+                    chart: {
+                        type: 'bar'
+                    },
+                    series: [{
+                            name: '결제횟수',
+                            data: paymentCount
+                        }, {
+                            name: '결제총액',
+                            data: paymentTotal
+                        }],
+                    xaxis: {
+                        categories: month
+                    },
+                    yaxis: [
+                        {
+                            title: {
+                                text: '결제횟수',
+                            },
+                            min:0, max: maxCount + 5
+                        },
+                        {
+                            opposite: true,
+                            title: {
+                                text: '결제총액',
+                            },
+                            min: 0,
+                            max: maxTotal + maxTotal/4, // 최댓값을 기준으로 범위 조정
+                            axisTicks: {
+                                show: true
+                            },
+                            axisBorder: {
+                                show: true,
+                            },
+                            labels: {
+                                formatter: function (val) {
+                                    return val.toString().replace(/\B(?=(\d{3})+(?!\d))/g, ","); // 천 단위로 콤마 추가
+                                }
+                            }
+                        }
+                    ]
+                };
+
+                var chart = new ApexCharts($('#chart')[0], options);
+
+                chart.render();
+                    
+                    }
+                })
+            
 
           }else if(menu == '커뮤니티'){
             
-            //월별 작성 글 + 댓글 수
+            
+            let month = [];
+            //월별 작성 글 수
+            let postCount = [];
+            //+ 댓글 수
+            let replyCount = [];
 
+            let totalPostCount=0;
+            let totalReplyCount=0;
+            
+            $.ajax({
+      			type: "get",
+      			url: "/mychart/community",
+      			//async: true, //비동기 여부
+      			contentType: "application/json",
+      			success: function (result) {
+      				console.log(result);
+                    $.each(result.list, function(index, chart){
+                        month.push(chart.month);
+                        postCount.push(chart.postCount);
+                        replyCount.push(chart.replyCount);
+                        totalPostCount += chart.postCount;
+                        totalReplyCount += chart.replyCount;
+                    })
+                    var options = {
+                    chart: {
+                        type: 'bar'
+                    },
+                    colors: ['#ff7600', '#20c997'],
+                    series: [{
+                            name: '글',
+                            data: postCount
+                        }, {
+                            name: '댓글',
+                            data: replyCount
+                        }],
+                    xaxis: {
+                        categories: month
+                    }
+                };
+                var options2 = {
+                    series: [totalPostCount, totalReplyCount],
+                    chart: {
+                    type: 'pie',
+                    width: '600px',
+                    },
+                    labels: ['글', '댓글'],
+                    colors: ['#FFA500', '#f45c36'],
+                    responsive: [{
+                    breakpoint: 480,
+                    options: {
+                        chart: {
+                            width:'300px'
+                        },
+                        legend: {
+                        position: 'bottom'
+                        }
+                    }
+                    }]
+                    };
+
+                var chart = new ApexCharts($('#chart')[0], options);           
+                var chart2 = new ApexCharts($('#chart2')[0], options2);
+                chart.render();           
+                chart2.render();
+                $('#chart2').prepend("<hr><h2>내 글/댓글 비율</h2>")
+                }
+                })
+            
           }else if(menu == '벌점'){
             
             //월별 벌점
+            let month = []; //categories
+            let demerit = [];
+        	  $.ajax({
+      			type: "get",
+      			url: "/mychart/demerit",
+      			//async: true, //비동기 여부
+      			contentType: "application/json",
+      			success: function (result) {
+      				console.log(result);
+                    $.each(result.list, function(index, chart){
+                        month.push(chart.month);
+                        demerit.push(chart.demeritTotal)
+                    })
+                    
 
+                    //월별 벌점
+                    var options = {
+                    chart: {
+                        type: 'bar'
+                    },
+                    series: [{
+                        name: '벌점',
+                        data: demerit
+                    }],
+                    xaxis: {
+                        categories: month
+                    },
+                    fill: {
+                        colors: ['#ff7600']
+                        }
+                }
+
+                var chart = new ApexCharts($('#chart')[0], options);
+
+                chart.render();
+                    
+                    }
+                })
           }
          })
       </script>

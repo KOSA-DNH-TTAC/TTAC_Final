@@ -3,7 +3,12 @@
 PUBLIC "-//mybatis.org//DTD Mapper 3.0//EN"
 "http://mybatis.org/dtd/mybatis-3-mapper.dtd">
 
-<mapper namespace="kr.or.kosa.dao.BoardDao">
+<mapper namespace="kr.or.kosa.dao.DomitoryDao">
+
+<insert id="insertDomitory" parameterType="kr.or.kosa.dto.Domitory">
+INSERT INTO DOMITORY (UNIVERSITYCODE,DOMITORYNAME,DOMITORYFLOOR)
+ VALUES(#{param1},#{param2},#{param3})
+</insert>
 
 <!-- 기숙사 위치값 가져오기 -->
 <select id="eveningCall" resultType="kr.or.kosa.dto.Domitory">
@@ -27,9 +32,10 @@ SELECT UNIVERSITYCODE,DOMITORYIDX,DOMITORYNAME,DOMITORYFLOOR,DOMITORYLATITUDE,DO
  FROM DOMITORY;
 </select>
 
+<!-- 점호데이터 인서트 -->
 <insert id="eveningCallInsert" parameterType="kr.or.kosa.dto.RollCall">
-INSERT INTO ROLLCALL (MEMBERID,UNIVERSITYCODE,ROLLCALLDATE)
- VALUES(#{param1},#{param2},NOW());
+INSERT INTO ROLLCALL (MEMBERID,UNIVERSITYCODE,ROLLCALLDATE,DOMITORYNAME)
+ VALUES(#{param1},#{param2},NOW(),#{param3});
 </insert>
 
 <!-- 회원 점호 이력 읽어오기 -->

@@ -7,6 +7,15 @@
 <html lang="en">
 
 <head>
+<!-- Google tag (gtag.js) -->
+<script async src="https://www.googletagmanager.com/gtag/js?id=G-4DV6JYFYRH"></script>
+<script>
+  window.dataLayer = window.dataLayer || [];
+  function gtag(){dataLayer.push(arguments);}
+  gtag('js', new Date());
+
+  gtag('config', 'G-4DV6JYFYRH');
+</script>
   <meta charset="utf-8">
   <meta http-equiv="Content-Security-Policy" content="upgrade-insecure-requests"> 
   <meta content="width=device-width, initial-scale=1.0" name="viewport">
@@ -57,7 +66,7 @@
       <p> ${prc.name}님 어서오세요</p>
       </sec:authorize>
       <sec:authorize access="isAnonymous()">
-      	<h2 style="margin-top:100px;">로그인해주세요</h2>
+      	<a href="/userlogin"><h2 style="margin-top:100px;">로그인해주세요</h2></a>
       </sec:authorize>
       <!-- <p>Quisquam quos quisquam cupiditate. Et nemo qui impedit suscipit alias ea. Quia fugiat sit in iste officiis commodi quidem hic quas.</p> -->
     </div>
@@ -84,7 +93,7 @@
             </div>
           </div>
 
-          <div class="col-lg-4 col-md-6 d-flex justify-content-center mt-4 mt-md-0" OnClick="location.href = '/error'" style="cursor:pointer;">
+          <div class="col-lg-4 col-md-6 d-flex justify-content-center mt-4 mt-md-0" OnClick="location.href = '/board/noticeList'" style="cursor:pointer;">
             <div class="icon-box">
               <div class="icon"><i class="bx bx-tachometer"></i></div>
               <h4>커뮤니티</a></h4>

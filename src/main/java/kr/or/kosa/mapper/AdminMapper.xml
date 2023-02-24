@@ -53,6 +53,21 @@ PUBLIC "-//mybatis.org//DTD Mapper 3.0//EN"
 	<update id="memberGetOut">
 	UPDATE MEMBER SET STATUS='88' WHERE memberid=#{param}
 	</update>
+	
+	<!-- 점호 회원 리스트  보기 -->
+	<select id="getAllRollCallMember" parameterType="kr.or.kosa.dto.RollCall" resultType="kr.or.kosa.dto.RollCall">
+		SELECT * 
+		FROM ROLLCALL
+		WHERE UNIVERSITYCODE=#{universityCode} AND DOMITORYNAME = #{domitoryName} AND ROLLCALLDATE= #{rollCallDate} 
+	</select>
+	
+	<!-- 점호 안한 회원 -->
+	<select id="getNotRollCall" resultType="kr.or.kosa.dto.Member">
+		SELECT m.memberid, m.name, m.universitycode, m.domitoryname, m.room
+		FROM MEMBER m
+		LEFT JOIN ROLLCALL r ON m.memberid = r.memberid AND m.universitycode = r.universitycode AND r.rollcalldate = #{date}
+		WHERE r.memberid IS NULL AND m.domitoryname=#{domitoryname} AND m.universitycode=#{universitycode}
+	</select>
 
 </mapper>
 

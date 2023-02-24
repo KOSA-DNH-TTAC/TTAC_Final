@@ -4,6 +4,15 @@
 <!DOCTYPE html>
 <html lang="ko">
 <head>
+<!-- Google tag (gtag.js) -->
+<script async src="https://www.googletagmanager.com/gtag/js?id=G-4DV6JYFYRH"></script>
+<script>
+  window.dataLayer = window.dataLayer || [];
+  function gtag(){dataLayer.push(arguments);}
+  gtag('js', new Date());
+
+  gtag('config', 'G-4DV6JYFYRH');
+</script>
 <title>관리자페이지</title>
 <meta charset="utf-8">
 <meta http-equiv="Content-Security-Policy" content="upgrade-insecure-requests"> 
@@ -21,6 +30,8 @@
 <link href="/resources/assets/css/menu.css" rel="stylesheet">
 <link href="/resources/assets/css/category.css" rel="stylesheet">
 <link href="/resources/assets/css/graph.css" rel="stylesheet">
+ <!-- Apex Chart -->
+        <script src="https://cdn.jsdelivr.net/npm/apexcharts"></script>
 
 		<!-- <script type="text/javascript" src="resources/assets/js/pg_script.js"></script> -->
 		<!-- <script type="text/javascript" src="resources/assets/js/jquery-2.1.4.js"></script> -->
@@ -39,7 +50,588 @@
 		<!-- Jquery -->
 		<script src="http://code.jquery.com/jquery-latest.min.js"></script>
 
+<script>
+$(function(){
+	
+	var longsleepoverCount= []; //관리자 통계 장기 외박
+	var sleepoverCount= []; 	//관리자 통계 그냥 외박
+	var sleepoverMonth= []; 	//관리자 통계 외박 달
+	var year = $('#selectyear').val();
+		
+		$.ajax({
+			type: "GET",
+			url: "/adminachart/sleepover",
+			data: {
+	               "year": year,
+	            },
+			contentType: "application/json; charset=UTF-8",
+			success: function (data) {
+				// console.log(data);
+				$('#chart').empty();
+				$.each(data, function(index, adminchart){
 
+						longsleepoverCount.push(adminchart.longsleepoverCount);
+
+						sleepoverCount.push(adminchart.sleepoverCount);	
+
+					sleepoverMonth.push(adminchart.month);
+					console.log("장기외박 :"+longsleepoverCount);
+					console.log("외박 : "+sleepoverCount);
+					console.log("sleepoverMonth : "+sleepoverMonth);
+                })
+                
+                var options = {	
+			        series: [{
+			        	name: "외박",
+			            data: sleepoverCount,
+			        },
+			        {
+			        	name: "장기외박",
+			            data: longsleepoverCount,
+			        }],
+			        xaxis: {
+			            categories: sleepoverMonth,
+			          },
+			        chart: {
+			            type: 'line',
+			            height: 350
+			        },
+			        stroke: {
+			            curve: 'smooth',
+			        },
+			        dataLabels: {
+			            enabled: false
+			        },
+			        title: {
+			            text: data[0].year+' 월별 외박 신청 현황',
+			            align: 'left'
+			        },
+			        markers: {
+			            hover: {
+			                sizeOffset: 4
+			            }
+			        }
+			    };
+				
+				 var chart = new ApexCharts(document.querySelector("#chart"), options);
+				    chart.render();
+                
+			},
+			error: function (request, status, error) {
+				console.log("에러")
+				console.log("code:" + request.status + "\n" + "message:" + request.responseText + "\n" + "error:" + error);
+			}
+		})
+		/* 월별 외박 통계 END */
+		
+		/* 포인트 결제 차트 */
+		var pointyear = $('#selectyear1').val();
+		var payCount =[];
+		var chargeCount = [];
+		var chargeMember = [];
+		var payMonth= []; 
+		 $.ajax({
+			type: "GET",
+			url: "/adminachart/point",
+			data: {
+	               "pointyear": pointyear,
+	            },
+			contentType: "application/json; charset=UTF-8",
+			success: function (data) {
+				console.log(data);
+				$('#pointchart').empty();
+				$.each(data, function(index, adminchart){
+
+					chargeCount.push(adminchart.chargeMount);
+					chargeMember.push(adminchart.chargeCount);
+					payCount.push(adminchart.payMount);	
+					payMonth.push(adminchart.month);
+					console.log("충전금액 :"+chargeCount);
+					console.log("사용금액 : "+payCount);
+                })
+                
+                var options = {	
+			        series: [{
+			        	name: "충전금액",
+			            data: chargeCount,
+			        },{
+			        	name: "사용금액",
+			            data: payCount,
+			        },{
+			        	name: "포인트충전 횟수",
+			            data: chargeMember,
+			        }],
+			        xaxis: {
+			            categories: payMonth,
+			          },
+			        chart: {
+			            type: 'line',
+			            height: 350
+			        },
+			        stroke: {
+			            curve: 'smooth',
+			        },
+			        dataLabels: {
+			            enabled: false
+			        },
+			        title: {
+			            text: data[0].year+' 월별 포인트 결제자 수 및 월별 결제금액',
+			            align: 'left'
+			        },
+			        markers: {
+			            hover: {
+			                sizeOffset: 4
+			            }
+			        }
+			    };
+				
+				 var pointchart = new ApexCharts(document.querySelector("#pointchart"), options);
+				 pointchart.render();
+                
+			},
+			error: function (request, status, error) {
+				console.log("에러")
+				console.log("code:" + request.status + "\n" + "message:" + request.responseText + "\n" + "error:" + error);
+			}
+		}) 
+		/* 포인트결제 차트 END */
+	
+		/* 포인트 충전자 수 */
+		var memberpointyear = $('#selectyear2').val();
+		var chargeMember2= [];
+		var paymemberMonth= []; 
+		 $.ajax({
+			type: "GET",
+			url: "/adminachart/pointmember",
+			data: {
+	               "memberpointyear": memberpointyear,
+	            },
+			contentType: "application/json; charset=UTF-8",
+			success: function (data) {
+				console.log(data);
+				$('#memberpointchart').empty();
+				$.each(data, function(index, adminchart){
+
+					chargeMember2.push(adminchart.chargeCount);
+					paymemberMonth.push(adminchart.month);
+                })
+                
+                var options = {	
+			        series: [{
+			        	name: "결제자 수",
+			            data: chargeMember2,
+			        }],
+			        xaxis: {
+			            categories: paymemberMonth,
+			          },
+			        chart: {
+			            type: 'line',
+			            height: 350
+			        },
+			        stroke: {
+			            curve: 'smooth',
+			        },
+			        dataLabels: {
+			            enabled: false
+			        },
+			        title: {
+			            text: data[0].year+' 월별 포인트 결제자 수',
+			            align: 'left'
+			        },
+			        markers: {
+			            hover: {
+			                sizeOffset: 4
+			            }
+			        }
+			    };
+				
+				 var memberpointchart = new ApexCharts(document.querySelector("#memberpointchart"), options);
+				 memberpointchart.render();
+                
+			},
+			error: function (request, status, error) {
+				console.log("에러")
+				console.log("code:" + request.status + "\n" + "message:" + request.responseText + "\n" + "error:" + error);
+			}
+		}) 
+		
+      //커뮤니티
+
+      let month = [];
+      let postCount = [];
+      let replyCount = [];
+
+      $.ajax({
+			type: "GET",
+			url: "/adminchart/community",
+			data: {
+	               "year": year,
+	            },
+			contentType: "application/json; charset=UTF-8",
+			success: function (result) {
+				console.log(result);
+				$('#chartHj').empty();
+            $.each(result, function(index, adminchart){
+               month.push(adminchart.month);
+               postCount.push(adminchart.postCount);
+               replyCount.push(adminchart.replyCount);
+            })
+				
+            var options = {	
+                     series: [{
+                        name: "글",
+                        data: postCount,
+                        type: 'bar',
+                     },{
+                        name: "댓글",
+                        data: replyCount,
+                        type: 'line',
+                     }],
+                     xaxis: {
+                        categories: month
+                     },
+                     chart: {
+                        height: 350
+                     },
+                     stroke: {
+                        curve: 'smooth',
+                        width: [0, 4]
+                     },
+                     dataLabels: {
+                        enabled: false
+                     },
+                     title: {
+                        text: '월별 커뮤니티 현황',
+                        align: 'left'
+                     },
+                     markers: {
+                        hover: {
+                              sizeOffset: 4
+                        }
+                     },
+                     plotOptions: {
+                        bar: {
+                              columnWidth: '50%',
+                              endingShape: 'flat',
+                              colors: {
+                              ranges: [{
+                                 from: 0,
+                                 to: 0,
+                                 color: '#008FFB'
+                              }]
+                              },
+                              dataLabels: {
+                                 position: 'top',
+                              },
+                              border: {
+                                 width: 0,
+                                 radius: 4
+                              },
+                        }
+                     }
+                  };
+
+
+				 var chart = new ApexCharts(document.querySelector("#chartHj"), options);
+				 chart.render();
+                
+			},
+			error: function (request, status, error) {
+				console.log("에러")
+				console.log("code:" + request.status + "\n" + "message:" + request.responseText + "\n" + "error:" + error);
+			}
+		})
+});
+
+function sleepoverchart(){
+	var longsleepoverCount= []; //관리자 통계 장기 외박
+	var sleepoverCount= []; 	//관리자 통계 그냥 외박
+	var sleepoverMonth= []; 	//관리자 통계 외박 달
+	var year = $('#selectyear').val();
+	$.ajax({
+		type: "GET",
+		url: "/adminachart/sleepover",
+		data: {
+               "year": year,
+            },
+		contentType: "application/json; charset=UTF-8",
+		success: function (data) {
+			console.log(data);
+			$('#chart').empty();
+			
+			$.each(data, function(index, adminchart){
+
+					longsleepoverCount.push(adminchart.longsleepoverCount);
+
+					sleepoverCount.push(adminchart.sleepoverCount);	
+
+				console.log("장기외박 :"+longsleepoverCount);
+				console.log("외박 : "+sleepoverCount);
+            })
+            
+            var options = {	
+		        series: [{
+		        	name: "외박",
+		            data: sleepoverCount,
+		        },{
+		        	name: "장기외박",
+		            data: longsleepoverCount,
+		        }],
+		        xaxis: {
+		            categories: sleepoverMonth
+		          },
+		        chart: {
+		            type: 'line',
+		            height: 350
+		        },
+		        stroke: {
+		            curve: 'smooth',
+		        },
+		        dataLabels: {
+		            enabled: false
+		        },
+		        title: {
+		            text: data[0].year+' 월별 외박 신청 현황',
+		            align: 'left'
+		        },
+		        markers: {
+		            hover: {
+		                sizeOffset: 4
+		            }
+		        }
+		    };
+			
+			 var chart = new ApexCharts(document.querySelector("#chart"), options);
+			    chart.render();
+            
+		},
+		error: function (request, status, error) {
+			console.log("에러")
+			console.log("code:" + request.status + "\n" + "message:" + request.responseText + "\n" + "error:" + error);
+		}
+	})
+}
+
+function pointChart(){
+	var pointyear = $('#selectyear1').val();
+	var payCount =[];
+	var chargeCount = [];
+	var chargeMember = [];
+	var payMonth= []; 
+	 $.ajax({
+		type: "GET",
+		url: "/adminachart/point",
+		data: {
+               "pointyear": pointyear,
+            },
+		contentType: "application/json; charset=UTF-8",
+		success: function (data) {
+			console.log(data);
+			$('#pointchart').empty();
+			$.each(data, function(index, adminchart){
+
+				chargeCount.push(adminchart.chargeMount);
+				chargeMember.push(adminchart.chargeCount);
+				payCount.push(adminchart.payMount);	
+				payMonth.push(adminchart.month);
+				console.log("충전금액 :"+chargeCount);
+				console.log("사용금액 : "+payCount);
+            })
+            
+            var options = {	
+		        series: [{
+		        	name: "충전금액",
+		            data: chargeCount,
+		        },{
+		        	name: "사용금액",
+		            data: payCount,
+		        }],
+		        xaxis: {
+		            categories: payMonth,
+		          },
+		        chart: {
+		            type: 'line',
+		            height: 350
+		        },
+		        stroke: {
+		            curve: 'smooth',
+		        },
+		        dataLabels: {
+		            enabled: false
+		        },
+		        title: {
+		            text: data[0].year+' 월별 포인트 결제자 수 및 월별 결제금액',
+		            align: 'left'
+		        },
+		        markers: {
+		            hover: {
+		                sizeOffset: 4
+		            }
+		        }
+		    };
+			
+			 var pointchart = new ApexCharts(document.querySelector("#pointchart"), options);
+			 pointchart.render();
+            
+		},
+		error: function (request, status, error) {
+			console.log("에러")
+			console.log("code:" + request.status + "\n" + "message:" + request.responseText + "\n" + "error:" + error);
+		}
+	})
+}
+
+//포인트 충전자 수
+function memberpointchart(){
+	var memberpointyear = $('#selectyear2').val();
+	var chargeMember = [];
+	var payMonth= []; 
+	 $.ajax({
+		type: "GET",
+		url: "/adminachart/pointmember",
+		data: {
+               "memberpointyear": memberpointyear,
+            },
+		contentType: "application/json; charset=UTF-8",
+		success: function (data) {
+			console.log(data);
+			$('#memberpointchart').empty();
+			$.each(data, function(index, adminchart){
+
+				chargeMember.push(adminchart.chargeCount);
+				payMonth.push(adminchart.month);
+            })
+            
+            var options = {	
+		        series: [{
+		        	name: "결제자 수",
+		            data: chargeMember,
+		        }],
+		        xaxis: {
+		            categories: payMonth,
+		          },
+		        chart: {
+		            type: 'line',
+		            height: 350
+		        },
+		        stroke: {
+		            curve: 'smooth',
+		        },
+		        dataLabels: {
+		            enabled: false
+		        },
+		        title: {
+		            text: data[0].year+' 월별 포인트 결제자 수',
+		            align: 'left'
+		        },
+		        markers: {
+		            hover: {
+		                sizeOffset: 4
+		            }
+		        }
+		    };
+			
+			 var memberpointchart = new ApexCharts(document.querySelector("#memberpointchart"), options);
+			 memberpointchart.render();
+            
+		},
+		error: function (request, status, error) {
+			console.log("에러")
+			console.log("code:" + request.status + "\n" + "message:" + request.responseText + "\n" + "error:" + error);
+		}
+	}) 
+}
+
+//커뮤니티 통계
+function community(){
+	let month = [];
+    let postCount = [];
+    let replyCount = [];
+    var communityyear = $('#selectyear3').val();
+
+    $.ajax({
+			type: "GET",
+			url: "/adminchart/community",
+			data: {
+	               "year": communityyear,
+	            },
+			contentType: "application/json; charset=UTF-8",
+			success: function (result) {
+				console.log(result);
+				$('#chartHj').empty();
+          $.each(result, function(index, adminchart){
+             month.push(adminchart.month);
+             postCount.push(adminchart.postCount);
+             replyCount.push(adminchart.replyCount);
+          })
+				
+          var options = {	
+                   series: [{
+                      name: "글",
+                      data: postCount,
+                      type: 'bar',
+                   },{
+                      name: "댓글",
+                      data: replyCount,
+                      type: 'line',
+                   }],
+                   xaxis: {
+                      categories: month
+                   },
+                   chart: {
+                      height: 350
+                   },
+                   stroke: {
+                      curve: 'smooth',
+                      width: [0, 4]
+                   },
+                   dataLabels: {
+                      enabled: false
+                   },
+                   title: {
+                      text: '월별 커뮤니티 현황',
+                      align: 'left'
+                   },
+                   markers: {
+                      hover: {
+                            sizeOffset: 4
+                      }
+                   },
+                   plotOptions: {
+                      bar: {
+                            columnWidth: '50%',
+                            endingShape: 'flat',
+                            colors: {
+                            ranges: [{
+                               from: 0,
+                               to: 0,
+                               color: '#008FFB'
+                            }]
+                            },
+                            dataLabels: {
+                               position: 'top',
+                            },
+                            border: {
+                               width: 0,
+                               radius: 4
+                            },
+                      }
+                   }
+                };
+
+
+				 var chart = new ApexCharts(document.querySelector("#chartHj"), options);
+				 chart.render();
+              
+			},
+			error: function (request, status, error) {
+				console.log("에러")
+				console.log("code:" + request.status + "\n" + "message:" + request.responseText + "\n" + "error:" + error);
+			}
+		})
+}
+
+</script>
 <body class="">
 <div class="wrap">
          
@@ -67,8 +659,8 @@
    <div class="leftcon">
   <nav id="sidemenu">
 						<ul class="submenu">
-							<li class="smenu" style="background-color:#4D6794; color:white;"><a href="/admin/coupon">
-									<h1>기숙사 통합관리 솔루션</h1>
+							<li class="smenu" style="background-color:#4D6794; color:white;"><a href='javascript:void(0);'>
+									<h1>기숙사관리시스템 : ${domitoryName}</h1>
 								</a></li>
 							<li class="smenu"><a href="/admin/adminMember">회원관리</a>
 								<ul class="sub ">
@@ -91,7 +683,10 @@
 								</ul>
 							</li>
 							<li class="smenu"><a href="/admin/calendar">일정관리</a></li>
+							<li class="smenu"><a href="/admin/file" >회원파일등록</a></li>
+										<li class="smenu"><a href="/admin/RollCall" >점호관리</a></li>
 							<li class="smenu"><a href="/admin/sail" class="msub on">통계관리</a></li>
+							<li class="smenu"><a href="/admin/qr">식권QR</a></li>
 						</ul>
 
 					</nav>
@@ -119,28 +714,20 @@ $(document).ready(function(){
 </div>   <div class="con">
       <h3 class="sub_h3">통계관리 <span>통계자료</span></h3>
 
-<div class="bgtab bgtab2">
-   <div class="w50 fl">
-            <input class="form-select1" type="date" id="start" name="trip-start" value="2000-10-04">
-             - <input class="form-select1" type="date" id="end" name="trip-start" value="2000-10-04">&nbsp;&nbsp;
-            <ul class="dpi_li dpi">
-               <li><a href="#" class="btn_sumit">전체</a></li>
-            </ul>
-   </div>
-   <div class="w50 fl tar">
-      <ul class="dpi_li tar">         
-         <li><a href="#" class="btn_sumit2">엑셀다운로드</a></li>
-      </ul>
-   </div>
-</div>
+
 
 <div class="nmbox mb">
    <div class="tit">
       <h3>월별 외박 신청 현황</h3>
-      <p>외박현황을 월별로 살펴볼 수 있으며, 차트를 통해 수치를 살펴볼 수 있습니다.</p>
+      <p>외박, 장기외박현황을 월별로 살펴볼 수 있으며, 차트를 통해 수치를 살펴볼 수 있습니다.</p>
+      연도 선택 : <select id="selectyear" style="text-align:center; width:100px;">
+      	<option value="2023" selected>2023</option>
+      	<option value="2022">2022</option>
+      </select>
+      <button id="yearsubmit" class="btn_sumit" onclick="sleepoverchart()">선택</button>
    </div>
    <div class="contents">
-      <img src="/resources/assets/img/graph01.jpg" width="100%"/>
+      <div id="chart"></div>
    </div>
 </div>
 
@@ -148,19 +735,44 @@ $(document).ready(function(){
    <div class="tit">
       <h3>월별 포인트 결제자 수 및 결제 금액</h3>
       <p>결제자 수와 결제 금액을 월 별로 살펴볼 수 있습니다.</p>
+       연도 선택 : <select id="selectyear1" style="text-align:center; width:100px;">
+      	<option value="2023" selected>2023</option>
+      	<option value="2022">2022</option>
+      </select>
+      <button id="yearsubmit" class="btn_sumit" onclick="pointChart()">선택</button>
    </div>
    <div class="contents">
-      <img src="/resources/assets/img/graph02.jpg" width="100%"/>
+      <div id="pointchart"></div>
    </div>
 </div>
 
 <div class="nmbox mb">
    <div class="tit">
-      <h3>일별 사용율</h3>
-      <p>포인트 및 사용율을 일별로 살펴볼 수 있습니다.</p>
+      <h3>월별 포인트 결제 사용자 수</h3>
+      <p>포인트 충전자 수를 월별로 살펴볼 수 있습니다.</p>
+       연도 선택 : <select id="selectyear2" style="text-align:center; width:100px;">
+      	<option value="2023" selected>2023</option>
+      	<option value="2022">2022</option>
+      </select>
+      <button id="yearsubmit" class="btn_sumit" onclick="memberpointchart()">선택</button>
    </div>
    <div class="contents">
-      <img src="/resources/assets/img/graph03.jpg" width="100%"/>
+      <div id="memberpointchart"></div>
+   </div>
+</div>
+
+<div class="nmbox mb">
+   <div class="tit">
+      <h3>월별 커뮤니티</h3>
+      <p>우리학교 게시판에 올라온 글 수와 댓글 수를 월 별로 살펴볼 수 있습니다.</p>
+       연도 선택 : <select id="selectyear3" style="text-align:center; width:100px;">
+      	<option value="2023" selected>2023</option>
+      	<option value="2022">2022</option>
+      </select>
+      <button id="yearsubmit" class="btn_sumit" onclick="community()">선택</button>
+   </div>
+   <div class="contents">
+      <div id="chartHj"></div>
    </div>
 </div>
 
@@ -178,6 +790,7 @@ $(document).ready(function(){
       <a href="#" class="btn_sumit2">엑셀다운로드</a></li>
    </div>
 </div>
+
 <table class="comm_table mb">
    <colgroup>
       <col width="*"/>
@@ -260,7 +873,7 @@ $(document).ready(function(){
 
 
       <div id="footer">
-      <p>Copyright(c)뷰티몰 쇼핑몰관리시스템. All rights reserved. supported by <a href="http://www.cmaru.com" target="_blank">크리에이티브마루.</a></p>
+		<p>Copyright(c) 기숙사 통합 관리 시스템. All rights reserved. supported by DOTO.</a></p>
    </div>
 
    <div id="pageup">
@@ -271,19 +884,4 @@ $(document).ready(function(){
 
 
 </body>
-<!-- litebox 
-		<script type="text/javascript" src="resources/assets/js/hs_draggable.js"></script>
-		<script type="text/javascript" src="resources/assets/js/jquery-ui.min.js"></script>
-		<link rel="stylesheet" media="all" href="/resources/assets/css/litebox.css" />
-		<script type="text/javascript" src="resources/assets/js/litebox.js"></script>
-		<script type="text/javascript" src="resources/assets/js/backbone.js"></script>
-		<script type="text/javascript" src="resources/assets/js/images-loaded.min.js"></script>
-		<script type="text/javascript">
-			$('.litebox').liteBox();
-		</script>
- litebox -->
-   
-   
-
-
 </html>

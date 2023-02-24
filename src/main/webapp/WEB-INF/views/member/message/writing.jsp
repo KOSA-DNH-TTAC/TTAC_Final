@@ -5,6 +5,15 @@
       <html>
 
       <head>
+      <!-- Google tag (gtag.js) -->
+<script async src="https://www.googletagmanager.com/gtag/js?id=G-4DV6JYFYRH"></script>
+<script>
+  window.dataLayer = window.dataLayer || [];
+  function gtag(){dataLayer.push(arguments);}
+  gtag('js', new Date());
+
+  gtag('config', 'G-4DV6JYFYRH');
+</script>
         <meta charset="utf-8">
         <meta http-equiv="Content-Security-Policy" content="upgrade-insecure-requests"> 
         <meta content="width=device-width, initial-scale=1.0" name="viewport">
@@ -128,7 +137,7 @@
                       </tr>
                       <tr>
                         <td colspan="2">
-                        	<textarea class="form-control" name="messageContent" placeholder="내용을 입력하세요" id="exampleFormControlTextarea1" rows="3"></textarea>
+                        	<textarea class="form-control" name="messageContent" placeholder="내용을 입력하세요" id="exampleFormControlTextarea1" rows="6"></textarea>
                         </td>
                       </tr>
                     </tbody>

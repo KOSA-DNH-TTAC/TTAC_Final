@@ -6,6 +6,15 @@
 <html lang="en">
 
 <head>
+<!-- Google tag (gtag.js) -->
+<script async src="https://www.googletagmanager.com/gtag/js?id=G-4DV6JYFYRH"></script>
+<script>
+  window.dataLayer = window.dataLayer || [];
+  function gtag(){dataLayer.push(arguments);}
+  gtag('js', new Date());
+
+  gtag('config', 'G-4DV6JYFYRH');
+</script>
   <meta charset="utf-8">
   <meta http-equiv="Content-Security-Policy" content="upgrade-insecure-requests"> 
   <meta content="width=device-width, initial-scale=1.0" name="viewport">
@@ -81,7 +90,7 @@
 					  <input type="text" class="form-control" name="title" id="title" placeholder="제목을 작성해주세요." value="${boardContent.title}" required>
 					</div>
 					
-					<c:if test="${not empty fileContent}">
+					<c:if test="${boardName eq 'noticeList'}">
 						<div class="mb-3">
 							<label for="file" class="form-label">파일</label>
 							<input type="file" class="form-control" id="file" name="file" multiple>
@@ -97,6 +106,45 @@
 							</div>
 							</c:forEach>
 						</article>
+					</c:if>
+					
+					<c:if test="${boardName eq 'productBoardList'}">
+						<div class="mb-3">
+							<label for="file" class="form-label">파일</label>
+							<input type="file" class="form-control" id="file" name="file" multiple>
+						</div>
+					
+						<label class="form-label">파일 목록</label>
+						<article class="entry" style="padding-top: 10px">
+							<c:forEach items="${fileContent }" var="fileContent">
+							<div class="mb-3 d-flex align-items-center filelist">
+								
+									<i class="bi bi-archive">&nbsp ${fileContent.fileRealName} &nbsp<i class="bi bi-x" style="cursor:pointer;"></i></i>
+				                
+							</div>
+							</c:forEach>
+						</article>
+					</c:if>
+					
+					<c:if test="${boardName eq 'productBoardList'}">
+						<div class="mb-3">
+							<label for="sold" class="form-label">판매 상태</label>
+							<select id="sold" name="sold" class="form-select">
+			                    <option value=0 selected>판매중</option>
+			                    <option value=1>거래완료</option>
+			                    <option value=2>예약중</option>
+				            </select>
+						</div>
+					</c:if>
+					
+					<c:if test="${boardName eq 'opinionList'}">
+						<div class="mb-3">
+							<label for="sold" class="form-label">해결 상태</label>
+							<select id="sold" name="sold" class="form-select">
+			                    <option value=3 selected>해결중</option>
+			                    <option value=4>해결완료</option>
+				            </select>
+						</div>
 					</c:if>
 					
 					<div class="mb-3">
@@ -182,7 +230,7 @@
     						console.log(result);
     						Swal.fire(
     						'삭제완료!',
-    						'댓글이 지워졌습니다.',
+    						'파일이 삭제되었습니다.',
     						'success'
     						)
     					}

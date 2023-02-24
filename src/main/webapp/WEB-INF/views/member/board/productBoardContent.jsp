@@ -7,6 +7,15 @@
 <html lang="en">
 
 <head>
+<!-- Google tag (gtag.js) -->
+<script async src="https://www.googletagmanager.com/gtag/js?id=G-4DV6JYFYRH"></script>
+<script>
+  window.dataLayer = window.dataLayer || [];
+  function gtag(){dataLayer.push(arguments);}
+  gtag('js', new Date());
+
+  gtag('config', 'G-4DV6JYFYRH');
+</script>
 <meta charset="utf-8">
 <meta http-equiv="Content-Security-Policy" content="upgrade-insecure-requests"> 
 <meta content="width=device-width, initial-scale=1.0" name="viewport">
@@ -64,8 +73,19 @@
 			<div class="container">
 
 				<ol>
-					<li><a href="index.html">Home</a></li>
-					<li>거래게시판</li>
+					<li><a href="/">Home</a></li>
+					<li><a href="/board/productBoardList">거래게시판</a></li>
+								
+					<c:forEach items="${boardContent}" var="boardContent">
+						<c:choose>
+							<c:when	test="${boardContent.title != null && fn:length(boardContent.title) > 10}">
+											<li>${fn:substring(boardContent.title,0,10)}...</li>
+							</c:when>
+							<c:otherwise>
+								<li>${boardContent.title}</li>
+							</c:otherwise>
+						</c:choose>
+					</c:forEach>
 				</ol>
 				<h2>거래게시판</h2>
 
@@ -83,16 +103,15 @@
 
 					<div id="contentsDiv" class="col-lg-8 entries">
 						<c:forEach items="${boardContent}" var="boardContent">
-						<!--  -->
 						<div class="container" data-aos="fade-up"><div class="row">
 						<div class="col-lg-12 entries">
 					
 					<article class="entry">
 					<h2 class="entry-title">          
 					<c:choose>
-						<c:when test="${productContent.productSold eq '판매중'}"><span id="sold">판매중</span>&nbsp; ${boardContent.title}</c:when>
-						<c:when test="${productContent.productSold eq '거래완료'}"><span id="sold">거래완료</span>&nbsp; ${boardContent.title}</c:when>
-						<c:when test="${productContent.productSold eq '예약중'}"><span id="sold">예약중</span>&nbsp; ${boardContent.title}</c:when>
+						<c:when test="${boardContent.likeNum eq 0}"><span id="sell">판매중</span>&nbsp; ${boardContent.title}</c:when>
+						<c:when test="${boardContent.likeNum eq 1}"><span id="sold">거래완료</span>&nbsp; ${boardContent.title}</c:when>
+						<c:when test="${boardContent.likeNum eq 2}"><span id="reserve">예약중</span>&nbsp; ${boardContent.title}</c:when>
 					</c:choose> 
                     
                     </h2>
@@ -100,9 +119,8 @@
                     <div id="boardName" style="display:none">${boardContent.boardName}</div>
 					<div id="idx" style="display:none">${boardContent.idx}</div>
                     <ul>
-                    	<li class="d-flex align-items-center"><i class="bi bi-person"></i><a href="blog-single.html" value="${boardContent.memberId}">${boardContent.memberId}</a></li>
+                    	<li class="d-flex align-items-center"><i class="bi bi-person"></i>${boardContent.memberId}</li>
                     	<li class="d-flex align-items-center"><i class="bi bi-clock"></i>${boardContent.writeDate}</li>
-                    	<li class="d-flex align-items-center"><i class="bi-hand-thumbs-up"></i>${boardContent.likeNum}</li>
                     </ul>
                     </div>
                     <article class="entry" style="padding-top: 15px">
@@ -141,7 +159,7 @@
 			                    <button onclick="location.href='/board/${boardName}/${idx}/edit'" type="submit" style="width:130px; height:20; border-radius: 50px; padding:5px; border: none; background-color:#E96B56; color:white; margin-top:10px; font-size: large;">수정</button>
 	                    	</c:if>
 		                    
-							<button onclick="history.go(-1)" style="width:130px; height:20; border-radius: 50px; padding:5px; border: none; background-color:#000000; color:white; margin-top:10px; font-size: large;">목록</button>					
+							<button onclick="location.href='/board/${boardName}/'" style="width:130px; height:20; border-radius: 50px; padding:5px; border: none; background-color:#000000; color:white; margin-top:10px; font-size: large;">목록</button>					
 	                    </div>
                     </div>
                     <i class="bi bi-chat-dots"></i>&nbsp;
@@ -433,7 +451,7 @@
 										+ '" data=replyIdx="'
 										+ data.reReplyContent[index].replyIdx
 										+ '" data=parentReplyIdx"'
-										+ data.reReplyContent[index].parentReplyIdx+'">익명&ensp;</button></li>'
+										+ data.reReplyContent[index].parentReplyIdx+'">' + rere.memberId + '&ensp;</button></li>'
 										if(rere.memberId == currentId){
 											replyContent += `<button class="deleteReply" onclick="deleteClick(this)">삭제</button>`;
 										}

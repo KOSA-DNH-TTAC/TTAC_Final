@@ -27,10 +27,11 @@
 	-->
 		<!-- aop -->
 	<aop:aspectj-autoproxy></aop:aspectj-autoproxy>
-	<context:component-scan base-package="kr.or.kosa.aspect" />
+	
 	<context:component-scan base-package="kr.or.kosa.controller" />
 	<context:component-scan base-package="kr.or.kosa.dao" />
 	<context:component-scan base-package="kr.or.kosa.service" />
+	<context:component-scan base-package="kr.or.kosa.utils" />
 
 	<!-- Handles HTTP GET requests for /resources/** by efficiently serving up static resources in the ${webappRoot}/resources directory -->
 	<resources mapping="/resources/**" location="/resources/" />
@@ -41,11 +42,13 @@
 		<beans:property name="suffix" value=".jsp" />
 	</beans:bean>
 
+
+	<beans:bean id="chattingHandler" class="kr.or.kosa.chat.ChattingHandler"/>
 	<websocket:handlers>
 		<websocket:mapping handler="chattingHandler" path="/chat"/>
 		<websocket:sockjs></websocket:sockjs>
-		</websocket:handlers>
-	<beans:bean id="chattingHandler" class="kr.or.kosa.chat.ChattingHandler"/>
+	</websocket:handlers>
+
 	
 	<!-- @PreAuthorize @PostAutorize @Secured -->
 	<security:global-method-security pre-post-annotations="enabled" secured-annotations="enabled" />

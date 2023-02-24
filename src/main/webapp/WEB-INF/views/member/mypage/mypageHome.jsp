@@ -6,6 +6,7 @@
 
       <head>
         <meta charset="utf-8">
+        <meta http-equiv="Content-Security-Policy" content="upgrade-insecure-requests"> 
         <meta content="width=device-width, initial-scale=1.0" name="viewport">
 
         <title>DOTO:기숙사통합관리시스템</title>
@@ -113,6 +114,8 @@
         <!-- End Header -->
 
         <main id="main">
+        <!-- 로그인 유저 정보 -->
+        <sec:authentication property="principal" var="prc"/>
           <div id="container">
             <section id="breadcrumbs" class="breadcrumbs">
               <div class="container">
@@ -146,9 +149,9 @@
                     <div id="content">
                       <div class="row">
                         <div class="col-lg-4" style="text-align : center">
-                          <img style="text-align:center" width="230px"
-                            src="http://image.newsis.com/2022/04/07/NISI20220407_0000969087_web.jpg" class="img-fluid"
-                            alt="Responsive image">
+                          <img style="text-align:center; width:230px; border-radius:30px; border:2px solid black;"
+                            src="${url}" class="img-fluid"
+                            alt="이미지" onerror="this.src='/resources/assets/img/profile.png'">
                           <br>
                           <br>
                           <button class="btn btn-warning" onclick="location.href='/mypage/modify'">정보수정</button>
@@ -189,7 +192,7 @@
                               </tr>
                               <tr>
                                 <th scope="row">벌점</th>
-                                <td class="infoTd">${member.demerit} 점</td>
+                                <td class="infoTd">${member.demerit}점</td>
                               </tr>
                             </tbody>
                           </table>
@@ -302,6 +305,7 @@
           if (menu == '내 정보 조회') {
 
             var member;
+            
             $.ajax({
               type: "GET",
               url: "/mypage/myinfo",
@@ -328,10 +332,11 @@
 
                 var contents = `<div class="row">
 					<div class="col-lg-4" style="text-align : center">
-							<img style="text-align:center" width="230px" src="http://image.newsis.com/2022/04/07/NISI20220407_0000969087_web.jpg" class="img-fluid" alt="Responsive image">
+							<img style="text-align:center; width:230px; border-radius:30px; border:2px solid black;" src="${url}" class="img-fluid" alt="이미지" onerror="this.src='/resources/assets/img/profile.png'">
 							<br>
 							<br>
 							<button class="btn btn-warning" onclick="location.href='/mypage/modify'">정보수정</button>
+							 
 					</div>
 					<div class="col-lg-8">
 						<table class="table">
@@ -456,6 +461,7 @@
                             <tr>
                               <th scope="col">결제일자</th>
                               <th scope="col">결제금액</th>
+                              <th scope="col">종류</th>
                             </tr>
                           </thead>
                           <tbody>`;
@@ -465,6 +471,7 @@
                   contents += `<tr>
                                   <td>`+ localetime + `</td>
                                   <td>` + payment.payAmount + `</td>
+                                  <td>` + payment.payKinds + `</td>
                                 </tr>`
                 })
                 //포이치 끝나면 tbody 닫아줌...

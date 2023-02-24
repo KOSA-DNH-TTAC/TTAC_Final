@@ -67,8 +67,19 @@ PUBLIC "-//mybatis.org//DTD Mapper 3.0//EN"
 	<!-- 정보 수정 -->
 	<update id="updateMember" parameterType="kr.or.kosa.dto.Member">
 		UPDATE MEMBER
-		SET password=#{password}, phone=#{phone}, parentsPhone=#{parentsPhone}
+		SET 
+		<if test="password != ''">
+		password=#{password},
+		</if>		
+		 phone=#{phone}, parentsPhone=#{parentsPhone}
 		WHERE memberid=#{memberId}
+	</update>
+	
+	<!-- 회원 포인트 수정 -->
+	<update id="updatePoint" parameterType="kr.or.kosa.dto.Member">
+		UPDATE MEMBER
+		SET memberPoint=#{memberPoint}
+		WHERE MEMBERID=#{memberId}
 	</update>
 	
 	<!-- 회원의 이메일 조회 -->
@@ -81,7 +92,7 @@ PUBLIC "-//mybatis.org//DTD Mapper 3.0//EN"
 	<!-- 회원 비밀번호 초기화 -->
 	<update id="insertPassword" parameterType="String">
 		UPDATE MEMBER
-		SET password= "1004"
+		SET password=#{password}, phone=#{phone}, parentsPhone=#{parentsPhone}
 		WHERE email=#{email}
 	</update>
 	

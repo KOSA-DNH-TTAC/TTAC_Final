@@ -6,6 +6,7 @@
 
       <head>
         <meta charset="utf-8">
+        <meta http-equiv="Content-Security-Policy" content="upgrade-insecure-requests"> 
         <meta content="width=device-width, initial-scale=1.0" name="viewport">
 
         <title>DOTO:기숙사통합관리시스템</title>
@@ -56,6 +57,9 @@
           }
 
           #contentBox {
+          	display:flex;
+          	flex-direction:column;
+          	justify-content:center;
             min-height: 50vh;
             padding: 15px 15px 15px 15px;
             text-align: center;
@@ -83,7 +87,7 @@
           }
 
           #sentMsg{
-            color:green;
+            color:#E96B56;
             font-size: small;
           }
           
@@ -122,7 +126,7 @@
 
                     <!-- content start -->
                     <div id="content">
-                    	<p id='sentMsg'>회원정보에 기재된 Email을 입력해 주세요.</p>
+                    	<p id='sentMsg'>※ 회원정보에 기재된 Email을 입력해 주세요.</p>
                         <div>
                             <label for="emailInput">이메일:</label>
                             <input type="text" id="email">
@@ -235,7 +239,7 @@
 					console.log("결과 : "+ data);
 					//swal("Check!", "인증번호 일치", "success");
 					$("#afterMemberInfo").append("<div id='info'>"+
-													"<span style='margin-left:10px;'>회원 ID : "+data.memberId+"</span><span style='margin-right:10px; margin-left:10px;'>비밀번호 초기화 : "+data.password+"</span>"+
+													"<span style='margin-left:10px;'>회원 ID : "+data.memberId+"</span><span style='margin-right:10px; margin-left:10px; color:#E96B56;'>비밀번호 초기화 : 1004 </span>"+
 													"</div>");
 					alert("인증번호 일치 : 아래 정보로 다시 로그인 해 주세요.");
 					

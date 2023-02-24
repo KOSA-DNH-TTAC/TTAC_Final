@@ -1,0 +1,138 @@
+<?xml version="1.0" encoding="UTF-8" ?>
+<!DOCTYPE mapper
+PUBLIC "-//mybatis.org//DTD Mapper 3.0//EN"
+"http://mybatis.org/dtd/mybatis-3-mapper.dtd">
+
+<mapper namespace="kr.or.kosa.dao.AdminChartDao">
+
+	<!-- 월별 외박횟수 -->
+	<select id="adminMonthlySleepover" parameterType="kr.or.kosa.dto.AdminChart" resultType="kr.or.kosa.dto.AdminChart">      
+      SELECT 
+    YEAR, 
+    MONTH, 
+    SUM(sleepoverCount) AS sleepoverCount, 
+    SUM(longsleepoverCount) AS longsleepoverCount 
+FROM 
+    (
+        SELECT 
+            DATE_FORMAT(startdate, '%Y') AS YEAR, 
+            DATE_FORMAT(startdate, '%m') AS MONTH, 
+            COUNT(*) AS sleepoverCount, 
+            0 AS longsleepoverCount
+        FROM 
+            SLEEPOVERHISTORY
+        WHERE 
+            DATE_FORMAT(startdate, '%Y')=#{year} 
+            AND UNIVERSITYCODE=#{universityCode} 
+            AND DOMITORYNAME = #{domitoryName} 
+            AND STATUS = 11 
+        GROUP BY 
+            YEAR, 
+            MONTH 
+        UNION ALL
+        SELECT 
+            DATE_FORMAT(startdate, '%Y') AS YEAR, 
+            DATE_FORMAT(startdate, '%m') AS MONTH, 
+            0 AS sleepoverCount, 
+            COUNT(*) AS longsleepoverCount
+        FROM 
+            SLEEPOVERHISTORY
+        WHERE 
+            DATE_FORMAT(startdate, '%Y')=#{year} 
+            AND UNIVERSITYCODE=#{universityCode} 
+            AND DOMITORYNAME = #{domitoryName} 
+            AND STATUS = 12 
+        GROUP BY 
+            YEAR, 
+            MONTH 
+    ) AS temp
+GROUP BY 
+    YEAR, 
+    MONTH
+ORDER BY MONTH;
+	</select>
+	
+	<!-- 월별 커뮤니티 -->
+	<select id="monthlyCommunity" resultType="kr.or.kosa.dto.AdminChart">
+	SELECT 
+    year, 
+    month, 
+    SUM(postcount) AS postcount, 
+    SUM(replycount) AS replycount 
+	FROM 
+	    (
+	        SELECT 
+	            DATE_FORMAT(writedate, '%Y') AS year, 
+	            DATE_FORMAT(writedate, '%m') AS month,
+	            COUNT(*) AS postcount, 
+	            0 AS replycount
+	        FROM 
+	            POST
+	        WHERE 
+	            STATUS=21
+	            AND universitycode = #{universitycode}
+	            AND YEAR(writedate) = #{year}
+	        GROUP BY 
+	            YEAR, 
+	            MONTH
+	        UNION ALL
+	        SELECT 
+	            DATE_FORMAT(r.replydate, '%Y') AS year, 
+	            DATE_FORMAT(r.replydate, '%m') AS month,
+	            0 AS postcount,
+	            COUNT(*) AS replycount
+	        FROM 
+	            REPLY r
+	            INNER JOIN POST p ON r.idx = p.idx
+	        WHERE 
+	            r.STATUS=21
+	            AND p.universitycode = #{universitycode}
+	            AND YEAR(r.replydate) = #{year}
+	        GROUP BY 
+	            YEAR, 
+	            MONTH
+	    ) AS temp
+	GROUP BY 
+	    year, 
+	    month
+    </select>
+	
+	<!-- 월별 포인트 통계 -->
+	<select id="getMontlyPoint" resultType="kr.or.kosa.dto.AdminChart">
+	SELECT 
+    YEAR, 
+    MONTH, 
+    SUM(chargeCount) AS chargeCount, 
+    SUM(payCount) AS payCount, 
+    SUM(PAYMOUNT) AS PAYMOUNT, 
+	SUM(CHARGEMOUNT) AS CHARGEMOUNT
+FROM 
+    (
+        SELECT DATE_FORMAT(PAYDATE, '%Y') AS YEAR, DATE_FORMAT(PAYDATE, '%m') AS MONTH, 
+	      COUNT(*) AS chargeCount, 0 AS payCount, SUM(PAYAMOUNT) AS CHARGEMOUNT, 0 AS PAYMOUNT
+	      FROM PAYMENTHISTORY
+	      WHERE DATE_FORMAT(PAYDATE, '%Y')=#{year} AND PAYKINDS = "충전"	
+	      AND UNIVERSITYCODE=#{universityCode} 
+            AND DOMITORYNAME = #{domitoryName} 
+	      GROUP BY YEAR, MONTH
+        UNION ALL
+        SELECT DATE_FORMAT(PAYDATE, '%Y') AS YEAR, DATE_FORMAT(PAYDATE, '%m') AS MONTH, 
+	      0 AS chargeCount, COUNT(*) AS payCount, 0 AS CHARGEMOUNT, SUM(PAYAMOUNT) AS PAYMOUNT
+	      FROM PAYMENTHISTORY
+	      WHERE DATE_FORMAT(PAYDATE, '%Y')=#{year} AND PAYKINDS = "사용" 
+	      AND UNIVERSITYCODE=#{universityCode} 
+            AND DOMITORYNAME = #{domitoryName} 
+	      GROUP BY YEAR, MONTH
+    ) AS temp
+GROUP BY 
+    YEAR, 
+    MONTH
+ORDER BY MONTH;
+	
+	</select>
+</mapper>
+
+
+
+
+

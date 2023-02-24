@@ -6,6 +6,15 @@
 <!DOCTYPE html>
 <html lang="ko">
 <head>
+<!-- Google tag (gtag.js) -->
+<script async src="https://www.googletagmanager.com/gtag/js?id=G-4DV6JYFYRH"></script>
+<script>
+  window.dataLayer = window.dataLayer || [];
+  function gtag(){dataLayer.push(arguments);}
+  gtag('js', new Date());
+
+  gtag('config', 'G-4DV6JYFYRH');
+</script>
 <title>관리자페이지</title>
 <meta charset="utf-8">
 <meta http-equiv="Content-Security-Policy" content="upgrade-insecure-requests"> 
@@ -49,7 +58,7 @@
 	<div id="header">				
 		<div class="headerwrap">
 			<div id="headerin">
-				<h1><a href="../" class="logo"><img src="/resources/assets/img/logoBLUE.png" alt="로고" style="height:60px;"/></a></h1>		
+				<h1><a href="../" class="logo"><img src="/resources/assets/img/logoBLUE.png" alt="로고" style="height:60px;"/></a></h1>
 					<nav class="gnb">
 						<ul>
 						
@@ -70,17 +79,16 @@
 	<div class="leftcon">
 	<nav id="sidemenu">
 		<ul class="submenu">
-			<li class="smenu" style="background-color:#4D6794; color:white;"><a href="/admin/coupon" ><h1>기숙사 통합관리 솔루션</h1></a></li>
+			<li class="smenu" style="background-color:#4D6794; color:white;"><a href='javascript:void(0);' ><h1>기숙사관리시스템 : ${domitoryName}</h1></a></li>
 			<li class="smenu"><a href="/admin/adminMember">회원관리</a>
 				<ul class="sub ">
 					<li ><a href="/admin/adminMember">회원현황</a></li>
 					<li ><a href="../sub01/sub01_02.php">벌점관리</a></li>
 				</ul>	
 			</li>	
-			<li class="smenu"><a href="/admin/board">커뮤니티관리</a>
+			<li class="smenu"><a href="/admin/board">커뮤니티관리</a></li>
 			<li class="smenu"><a href="/admin/coupon" >식권관리</a></li>
-			<li class="smenu"><a href="/admin/popular" >외박관리</a>
-			</li>
+			<li class="smenu"><a href="/admin/popular" >외박관리</a></li>
 			<li class="smenu"><a href="#" class="msub on">시설관리</a>
 				<ul class="sub ">
 				   <li ><a href="/admin/analyze" class="msub on">시설물 신고내역</a></li>
@@ -90,7 +98,10 @@
 			 </li>
 	
 			<li class="smenu"><a href="/admin/calendar" >일정관리</a></li>
+			<li class="smenu"><a href="/admin/sail" >회원파일등록</a></li>
+			<li class="smenu"><a href="/admin/RollCall" >점호관리</a></li>
 			<li class="smenu"><a href="/admin/sail" >통계관리</a></li>
+			<li class="smenu"><a href="/admin/qr">식권QR</a></li>
 		</ul>
 
     </nav>
@@ -252,30 +263,6 @@ function likesearch(){
 </div>	<div class="con">
 		<h3 class="sub_h3">시설관리 <span>시설물 신고내역</span></h3>	
 
-<div class="info_detail list06 mb">
-	<dl>
-		<dt>이번 주 신고건수</dt>
-		<dd>80 <span> 건</span></dd>
-		<dd class="txt">지난 주 40건</dd>
-	</dl>	
-	<dl>
-		<dt>이번 딜 신고건수</dt>
-		<dd>90 <span> 건</span></dd>
-		<dd class="txt">지난 달 150건</dd>
-	</dl>
-	<dl>
-		<dt>주 고장 품목</dt>
-		<dd><span> 세탁기</span></dd>
-		<dd class="txt">지난 달 20건</dd>
-	</dl>	
-	<dl>
-		<dt>주 고장 품목</dt>
-		<dd><span> 변기</span></dd>
-		<dd class="txt">지난 달 15건</dd>
-	</dl>	
-
-</div>
-
 <div class="bmb">
 	<div class="bgtab">
 		<h3 class="txtin">시설물 신고 내역 조회</h3>	
@@ -381,7 +368,7 @@ function likesearch(){
 
 
 		<div id="footer">
-		<p>Copyright(c)뷰티몰 쇼핑몰관리시스템. All rights reserved. supported by <a href="http://www.cmaru.com" target="_blank">크리에이티브마루.</a></p>
+		<p>Copyright(c) 기숙사 통합 관리 시스템. All rights reserved. supported by DOTO.</a></p>
 	</div>
 
 	<div id="pageup">
@@ -400,12 +387,6 @@ function likesearch(){
 	<!-- <script type="text/javascript" src="resources/assets/js/backbone.js"></script> -->
 	<!-- <script type="text/javascript" src="resources/assets/js/images-loaded.min.js"></script> -->
 	<!-- litebox -->
-
-
-
-	<script type="text/javascript">
-		$("#pageup").pageup();
-	</script>
 	
 
 

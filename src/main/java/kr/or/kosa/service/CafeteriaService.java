@@ -34,7 +34,7 @@ public class CafeteriaService {
 	public void insertMenu(String menu, String price) {
 		CafeteriaDao cafeteriaDao = sqlSession.getMapper(CafeteriaDao.class);
 		User user = (User) SecurityContextHolder.getContext().getAuthentication().getPrincipal();
-		
+
 		int menuPrice = Integer.parseInt(price);
 		Map<String, Object> params = new HashMap<>();
 		params.put("param1", user.getUniversityCode());

@@ -5,6 +5,15 @@
 			<html lang="en">
 
 			<head>
+			<!-- Google tag (gtag.js) -->
+<script async src="https://www.googletagmanager.com/gtag/js?id=G-4DV6JYFYRH"></script>
+<script>
+  window.dataLayer = window.dataLayer || [];
+  function gtag(){dataLayer.push(arguments);}
+  gtag('js', new Date());
+
+  gtag('config', 'G-4DV6JYFYRH');
+</script>
 				<meta charset="utf-8">
 				<meta http-equiv="Content-Security-Policy" content="upgrade-insecure-requests"> 
 				<meta content="width=device-width, initial-scale=1.0" name="viewport">
@@ -99,37 +108,51 @@
 
 									</c:forEach>
 
-									<div class="blog-pagination">
+									<!-- <div class="blog-pagination">
 										<ul class="justify-content-center">
 											<li><a href="#">1</a></li>
 											<li class="active"><a href="#">2</a></li>
 											<li><a href="#">3</a></li>
 										</ul>
+									</div> -->
+									<!-- 페이징 -->
+									<div class="blog-pagination">
+										<ul class="justify-content-center">
+											<c:if test="${pager.prev}">
+												<li>
+													<a href="/board/${boardname}?cpage=${pager.cri.page -1}">
+													<!-- <i class="bi bi-caret-left-square-fill"></i> -->
+														<!-- <i class="bi bi-caret-left"></i> -->
+														<i class="bi bi-caret-left-fill"></i>
+													</a>
+												</li>
+											</c:if>
+											<!-- page 목록 나열하기 -->
+											<c:forEach var="i" begin="${pager.startPage}" end="${pager.endPage}" step="1">
+												<c:choose>
+													<c:when test="${pager.cri.page==i}">
+														<li class="active"><a href="#">${i}</a></li>
+													</c:when>
+													<c:otherwise>
+														<li><a href="/board/${boardname}?cpage=${i}">${i}</a></li>
+													</c:otherwise>
+												</c:choose>
+											</c:forEach>
+											<!--다음 링크 -->
+											<c:if test="${pager.next}">
+												<li>
+													<a href="/board/${boardname}?cpage=${pager.cri.page +1}">
+														<i class="bi bi-caret-right-fill"></i>
+													<!-- <i class="bi bi-caret-right-square-fill"></i> -->
+													<!-- <svg xmlns="http://www.w3.org/2000/svg" width="16" height="16" fill="currentColor" class="bi bi-caret-right-square-fill" viewBox="0 0 16 16">
+														<path d="M0 2a2 2 0 0 1 2-2h12a2 2 0 0 1 2 2v12a2 2 0 0 1-2 2H2a2 2 0 0 1-2-2V2zm5.5 10a.5.5 0 0 0 .832.374l4.5-4a.5.5 0 0 0 0-.748l-4.5-4A.5.5 0 0 0 5.5 4v8z"/>
+													  </svg> -->
+													</a>
+												</li>
+											</c:if>
+										</ul>
 									</div>
-
-									<div>
-										<c:if test="${cpage > 1}">
-											<a
-												href="boardList.user?boardname=${boardname}&cp=${cpage-1}&ps=${pagesize}&boardname=${boardname}">이전</a>
-										</c:if>
-										<!-- page 목록 나열하기 -->
-										<c:forEach var="i" begin="1" end="${pagecount}" step="1">
-											<c:choose>
-												<c:when test="${cpage==i}">
-													<font color="red">[${i}]</font>
-												</c:when>
-												<c:otherwise>
-													<a
-														href="boardList.user?boardname=${boardname}&cp=${i}&ps=${pagesize}&boardname=${boardname}">[${i}]</a>
-												</c:otherwise>
-											</c:choose>
-										</c:forEach>
-										<!--다음 링크 -->
-										<c:if test="${cpage < pagecount}">
-											<a
-												href="boardList.user?boardname=${boardname}&cp=${cpage+1}&ps=${pagesize}&boardname=${boardname}">다음</a>
-										</c:if>
-									</div>
+			
 
 								</div>
 								<!-- End blog entries list -->
@@ -161,6 +184,7 @@
 
 									</div>
 									<!-- End sidebar -->
+						<jsp:include page="/WEB-INF/views/member/board/boardInclude/Chatting.jsp" />
 
 								</div>
 								<!-- End blog sidebar -->

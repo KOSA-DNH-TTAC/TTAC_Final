@@ -14,18 +14,26 @@ PUBLIC "-//mybatis.org//DTD Mapper 3.0//EN"
 		AND STATUS='21'
 	</select>
 
-	<!-- 기본 제공 게시판 글 목록 -->
+	<!-- 기본 제공 게시판 글 목록 (+페이징) -->
 	<select id="allBoardList" resultType="kr.or.kosa.dto.Post">
 		SELECT COUNT(r.replyidx) AS replyCount, p.idx, p.boardidx, p.universitycode,
 		b.boardname,
 		p.memberid, p.writedate, p.likenum, p.content, p.title
 		FROM POST p
-		JOIN BOARD b ON p.boardidx = b.boardidx
+		JOIN BOARD b ON p.boardidx = b.boardidx AND p.status='21'
 		LEFT JOIN REPLY r ON p.idx = r.idx AND r.status = '21'
-		WHERE b.boardname=#{param1} and
-		p.universitycode=#{param2}
+		WHERE b.boardname=#{boardname} and
+		p.universitycode=#{universitycode}
 		GROUP BY p.idx, p.boardidx, b.boardidx
 		ORDER BY p.writedate DESC
+		LIMIT #{startpage}, #{pagepernum};
+	</select>
+	
+	<!-- 게시판 전체 글 수 -->
+	<select id="totalPostCount" resultType="int">
+		SELECT COUNT(boardidx)
+		from POST
+		WHERE boardname=#{boardname} AND universitycode=#{universitycode} AND status='21'
 	</select>
 	
 	<!-- 게시판 boardidx 가져오기 -->
@@ -102,6 +110,13 @@ PUBLIC "-//mybatis.org//DTD Mapper 3.0//EN"
 		(BOARDIDX,BOARDNAME,MEMBERID,UNIVERSITYCODE,TITLE,CONTENT,WRITEDATE)
 		VALUES(#{boardIdx},#{boardName},#{memberId},#{universityCode},#{title},#{content},NOW())
 	</insert>
+	
+	<!-- 건의사항 글 작성 (파일첨부 x) -->
+	<insert id="opinionInsert" parameterType="kr.or.kosa.dto.Post">
+		INSERT INTO POST
+		(BOARDIDX,BOARDNAME,MEMBERID,UNIVERSITYCODE,TITLE,CONTENT,LIKENUM,WRITEDATE)
+		VALUES(#{boardIdx},#{boardName},#{memberId},#{universityCode},#{title},#{content},#{likeNum} ,NOW())
+	</insert>
 
 	<!-- 파일 업로드 (최신idx) -->
 	<insert id="fileInsert" parameterType="kr.or.kosa.dto.File">
@@ -164,7 +179,7 @@ PUBLIC "-//mybatis.org//DTD Mapper 3.0//EN"
 	<update id="boardEdit" parameterType="kr.or.kosa.dto.Post">
 		UPDATE POST
 		SET TITLE =
-		#{title}, CONTENT= #{content}, STATUS=#{status}
+		#{title}, CONTENT= #{content}, STATUS=#{status}, LIKENUM=#{likeNum}
 		WHERE
 		IDX = #{idx};
 	</update>

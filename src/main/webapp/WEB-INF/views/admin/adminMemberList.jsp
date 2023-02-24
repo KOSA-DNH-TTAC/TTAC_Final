@@ -4,6 +4,15 @@
 <!DOCTYPE html>
 <html lang="ko">
 <head>
+<!-- Google tag (gtag.js) -->
+<script async src="https://www.googletagmanager.com/gtag/js?id=G-4DV6JYFYRH"></script>
+<script>
+  window.dataLayer = window.dataLayer || [];
+  function gtag(){dataLayer.push(arguments);}
+  gtag('js', new Date());
+
+  gtag('config', 'G-4DV6JYFYRH');
+</script>
 <title>관리자페이지</title>
 <meta charset="utf-8">
 <meta http-equiv="Content-Security-Policy" content="upgrade-insecure-requests"> 
@@ -77,8 +86,8 @@
 	<div class="leftcon">
 	<nav id="sidemenu" style="text-align:left">
 						<ul class="submenu">
-							<li class="smenu" style="background-color:#4D6794; color:white;"><a href="/admin/coupon">
-									<h1>기숙사 통합관리 솔루션</h1>
+							<li class="smenu" style="background-color:#4D6794; color:white;"><a href='javascript:void(0);'>
+									<h1>기숙사관리시스템 : ${domitoryName}</h1>
 								</a></li>
 							<li class="smenu"><a href="/admin/adminMember" class="msub on">회원관리</a>
 								
@@ -98,28 +107,31 @@
 								</ul>
 							</li>
 							<li class="smenu"><a href="/admin/calendar">일정관리</a></li>
+							<li class="smenu"><a href="/admin/file" >회원파일등록</a></li>
+							<li class="smenu"><a href="/admin/RollCall" >점호관리</a></li>
 							<li class="smenu"><a href="/admin/sail">통계관리</a></li>
+							<li class="smenu"><a href="/admin/qr">식권QR</a></li>
 						</ul>
 
 					</nav>
 <script>
 //서브 left_menu
-$(document).ready(function(){		
-	$(".msub").click(function(){		
-		var tg = $(this).siblings(".sub");		
-		var dis = tg.css("display");		
-		if(dis == "block"){
-			$(this).removeClass("on");
-			tg.slideUp(300);
-		}		
-		if(dis == "none"){
-			$(".msub").removeClass("on");
-			$(this).addClass("on");
-			$(".sub").slideUp(300);
-			tg.slideDown(300);
-		}
-		return false;
-	});
+$(document).ready(function(){      
+   $(".msub").click(function(){      
+      var tg = $(this).siblings(".sub");      
+      var dis = tg.css("display");      
+      if(dis == "block"){
+         $(this).removeClass("on");
+         tg.slideUp(300);
+      }      
+      if(dis == "none"){
+         $(".msub").removeClass("on");
+         $(this).addClass("on");
+         $(".sub").slideUp(300);
+         tg.slideDown(300);
+      }
+      return false;
+   });
 });
 </script>
 
@@ -193,7 +205,7 @@ $(document).ready(function(){
 
 
 		<div id="footer">
-		<p>Copyright(c) 기숙사 통합 관리 시스템. All rights reserved. supported by ttac.</a></p>
+		<p>Copyright(c) 기숙사 통합 관리 시스템. All rights reserved. supported by DOTO.</a></p>
 	</div>
 
 	<div id="pageup">

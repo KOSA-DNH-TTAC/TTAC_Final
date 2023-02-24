@@ -134,7 +134,29 @@ div.wrap {
 	margin-bottom: 5px;
 }
 
+#reserve {
+	display: inline-block flex;
+	float: left;
+	border-collapse: collapse;
+	border: 1px solid #03c75a;
+	color: #03c75a;
+	font-size: 12px;
+	border-radius: 20px;
+	padding: 4px 6px 4px 6px;
+}
+
 #sold {
+	display: inline-block flex;
+	float: left;
+	border-collapse: collapse;
+	border: 1px solid #c8c8c8;
+	color: #c8c8c8;
+	font-size: 12px;
+	border-radius: 20px;
+	padding: 4px 6px 4px 6px;
+}
+
+#sell {
 	display: inline-block flex;
 	float: left;
 	border-collapse: collapse;

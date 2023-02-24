@@ -15,7 +15,7 @@ public interface CafeteriaDao {
 
 	// 메뉴 추가
 	public void insertMenu(Map<String, Object> params);
-	
+
 	// 메뉴 수정
 	public void updateMenu(Cafeteria cafeteria);
 

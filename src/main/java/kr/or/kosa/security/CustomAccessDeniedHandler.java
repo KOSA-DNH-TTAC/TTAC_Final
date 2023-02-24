@@ -9,7 +9,7 @@ import javax.servlet.http.HttpServletResponse;
 import org.springframework.security.access.AccessDeniedException;
 import org.springframework.security.web.access.AccessDeniedHandler;
 
-public class CustomAccessDeniedHandler implements AccessDeniedHandler{
+public class CustomAccessDeniedHandler implements AccessDeniedHandler {
 
 	@Override
 	public void handle(HttpServletRequest request, HttpServletResponse response,
@@ -18,8 +18,5 @@ public class CustomAccessDeniedHandler implements AccessDeniedHandler{
 		System.out.println("Redirect");
 		response.sendRedirect("/accessError");
 	}
-//	
-//	public void handle(HttpServletRequest request, HttpServletResponse response, AccessDeniedException accessException) throws IOException, ServletException{
 
-//	}
 }
