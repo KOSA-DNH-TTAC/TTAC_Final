@@ -15,20 +15,17 @@ import kr.or.kosa.service.CommonService;
 
 @RestController
 public class MemberController_Rest {
-	
+
 	CommonService commonservice;
-	
+
 	@Autowired
 	public void setCommonservice(CommonService commonservice) {
 		this.commonservice = commonservice;
 	}
 
-
-
 	// 저녁점호 위치비교 + 중복체크 + 데이터 인서트
 	@RequestMapping(value = "/eveningCall", method = RequestMethod.POST, produces = "application/text; charset=utf8")
 	public String eveningCall(@RequestParam(value = "report[]") double[] report) {
-		System.out.println("lat : " + report[0]);
 		User user = (User) SecurityContextHolder.getContext().getAuthentication().getPrincipal();
 		String memberId = user.getMemberId();
 		String unicode = user.getUniversityCode();
@@ -49,7 +46,7 @@ public class MemberController_Rest {
 		String result2 = commonservice.eveningCallCompare(memberId, unicode, date);
 		String result3 = "ALREADY";
 		if (result2.equals("SUCCESS")) {
-			commonservice.eveningCallInsert(memberId, unicode,domitoryName);
+			commonservice.eveningCallInsert(memberId, unicode, domitoryName);
 			result3 = "SUCCESS";
 		}
 		return result3;

@@ -35,9 +35,9 @@ public class AdminMemberController_Rest {
 	public void setMemberService(MemberService memberservice) {
 		this.memberservice = memberservice;
 	}
-	
+
 	private AdminService adminService;
-	
+
 	@Autowired
 	public void setAdminService(AdminService adminService) {
 		this.adminService = adminService;
@@ -60,67 +60,65 @@ public class AdminMemberController_Rest {
 		List<Member> memberInfoById = adminService.memberInfo(memberId);
 		return new ResponseEntity<List<Member>>(memberInfoById, HttpStatus.OK);
 	}
-	
+
 	// 검색 조회
 	@RequestMapping("/admin/memberInfo/search/{param}/{search}")
 	public ResponseEntity<List<Member>> searchMember(@PathVariable("param") String param,
-			@PathVariable("search") String search) {		
+			@PathVariable("search") String search) {
 		List<Member> memberSearchInfo = adminService.searchMember(param, search);
 		return new ResponseEntity<List<Member>>(memberSearchInfo, HttpStatus.OK);
 	}
-	
+
 	// 벌점 이력 조회
 	@RequestMapping("/admin/memberInfo/demerit/{memberId}")
 	public ResponseEntity<List<DemeritHistory>> memberDemeritHistory(@PathVariable("memberId") String memberId) {
 		List<DemeritHistory> list = adminService.memberDemeritHistory(memberId);
 		return new ResponseEntity<List<DemeritHistory>>(list, HttpStatus.OK);
 	}
-	
+
 	// 벌점 insert, update
 	@RequestMapping("/admin/memberInfo/demerit/{memberId}/{demerit}/{demeritReason}")
-	public void memberDemeritInsert(@PathVariable("memberId") String memberId,
-			@PathVariable("demerit") String demerit, @PathVariable("demeritReason") String demeritReason) {
+	public void memberDemeritInsert(@PathVariable("memberId") String memberId, @PathVariable("demerit") String demerit,
+			@PathVariable("demeritReason") String demeritReason) {
 		adminService.memberDemerit(memberId, demerit, demeritReason);
 	}
-	
+
 	// 퇴소 조치
 	@RequestMapping("/admin/memberInfo/getout/{memberId}")
 	public void memberGetOut(@PathVariable("memberId") String memberId) {
 		adminService.memberGetOut(memberId);
 	}
-	
- 	//엑셀
- 	@RequestMapping(value = "/admin/addExcel", method = RequestMethod.POST)
- 	public ResponseEntity<Map<String, Object>> addExcel(HttpServletRequest request,
- 			HttpServletResponse response, MultipartFile file) {
- 		
- 		List<Member> list = adminService.addExcel(file); 
- 		
- 		Map<String, Object> map = new HashMap<String, Object>();
- 		map.put("list", list);
- 		
- 		return new ResponseEntity<Map<String,Object>>(map, HttpStatus.OK);
- 	};
- 	
- 	//엑셀 반영
- 	@RequestMapping(value = "/admin/updateExcel", method = RequestMethod.POST)
- 	public ResponseEntity<Map<String, Object>> updateExcel(@RequestBody List<Member> list) {
- 		
-// 		System.out.println(list);
- 		Map<String, Object> map = new HashMap<String, Object>();
- 		String result = adminService.updateNewSemester(list);
- 		map.put("result", result);
- 		
- 		return new ResponseEntity<Map<String,Object>>(map, HttpStatus.OK);
- 	};
- 	
- 	//엑셀 반영
- 	@RequestMapping(value = "/admin/updateDeactivate", method = RequestMethod.POST, produces="application/text;charset=utf-8")
- 	public ResponseEntity<String> updateDeactivate() {
+
+	// 엑셀
+	@RequestMapping(value = "/admin/addExcel", method = RequestMethod.POST)
+	public ResponseEntity<Map<String, Object>> addExcel(HttpServletRequest request, HttpServletResponse response,
+			MultipartFile file) {
+
+		List<Member> list = adminService.addExcel(file);
+
+		Map<String, Object> map = new HashMap<String, Object>();
+		map.put("list", list);
+
+		return new ResponseEntity<Map<String, Object>>(map, HttpStatus.OK);
+	};
+
+	// 엑셀 반영
+	@RequestMapping(value = "/admin/updateExcel", method = RequestMethod.POST)
+	public ResponseEntity<Map<String, Object>> updateExcel(@RequestBody List<Member> list) {
+		Map<String, Object> map = new HashMap<String, Object>();
+		String result = adminService.updateNewSemester(list);
+		map.put("result", result);
+
+		return new ResponseEntity<Map<String, Object>>(map, HttpStatus.OK);
+	};
+
+	// 엑셀 반영
+	@RequestMapping(value = "/admin/updateDeactivate", method = RequestMethod.POST, produces = "application/text;charset=utf-8")
+	public ResponseEntity<String> updateDeactivate() {
 		User user = (User) SecurityContextHolder.getContext().getAuthentication().getPrincipal();
 		String domitoryname = user.getDomitoryName();
- 		adminService.updateDeactivate(); 		
- 		String success= "SUCCESS";
- 		return new ResponseEntity<String>(domitoryname, HttpStatus.OK);
- 	};
+		adminService.updateDeactivate();
+		String success = "SUCCESS";
+		return new ResponseEntity<String>(domitoryname, HttpStatus.OK);
+	};
 }

@@ -50,7 +50,7 @@ public class BoardController_Rest {
 	public void setFacilityService(FacilityService facilityService) {
 		this.facilityService = facilityService;
 	}
-	
+
 	@Autowired
 	public void setReplyservice(ReplyService replyservice) {
 		this.replyservice = replyservice;
@@ -71,7 +71,7 @@ public class BoardController_Rest {
 	// 댓글, 대댓글 Map Return
 	@GetMapping("/board/{allBoard}/{idx}/reply")
 	public ResponseEntity<Map<String, Object>> allReply(@PathVariable("idx") String idx) {
-		
+
 		Map<String, Object> map = new HashMap<>();
 		try {
 			map.put("replyContent", boardService.replyContent(idx));
@@ -83,16 +83,16 @@ public class BoardController_Rest {
 			return new ResponseEntity<>(map, HttpStatus.BAD_REQUEST);
 		}
 	}
-	
+
 	// 게시글 추천 (트랜잭션)
 	@RequestMapping("/board/{allBoard}/{idx}/postlike")
 	public int postLike(@PathVariable("idx") String idx) {
 		int postLike = 0;
 		postLike = boardService.likeCheck(idx);
-		
+
 		return postLike;
 	}
-	
+
 	// 게시글 추천 (아이콘)
 	@RequestMapping("/board/{allBoard}/{idx}/postlike/icon")
 	public int myPostLikeCheck(@PathVariable("idx") String idx) {
@@ -100,75 +100,61 @@ public class BoardController_Rest {
 		myPostLikeCheck = boardService.myPostLikeCheck(idx);
 		return myPostLikeCheck;
 	}
-	
-	
+
 	// 새댓글 작성
 	@RequestMapping("/board/newreply")
-	public ResponseEntity<Map<String, Object>> newReply(@RequestBody HashMap<String,Object> data){
+	public ResponseEntity<Map<String, Object>> newReply(@RequestBody HashMap<String, Object> data) {
 
-		Map<String, Object> map = new HashMap<String, Object>();		
-        String postidx = (String)data.get("postidx");
-        String reply = (String)data.get("reply");
+		Map<String, Object> map = new HashMap<String, Object>();
+		String postidx = (String) data.get("postidx");
+		String reply = (String) data.get("reply");
 
-        int result = replyservice.newReply(postidx, reply);
-        if(result > 0) {
-        	map.put("성공", result);
-        }else {
-        	map.put("실패", result);
-        }
-		
+		int result = replyservice.newReply(postidx, reply);
+		if (result > 0) {
+			map.put("성공", result);
+		} else {
+			map.put("실패", result);
+		}
+
 		return new ResponseEntity<Map<String, Object>>(map, HttpStatus.OK);
-		
+
 	}
-	
-	//답댓글 작성
+
+	// 답댓글 작성
 	@RequestMapping("/board/newrereply")
-	public ResponseEntity<Map<String, Object>> newRereply(@RequestBody HashMap<String,Object> data){
+	public ResponseEntity<Map<String, Object>> newRereply(@RequestBody HashMap<String, Object> data) {
 
-		Map<String, Object> map = new HashMap<String, Object>();		
-        String postidx = (String)data.get("postidx");
-        String parentidx = (String)data.get("parentidx");
-        String reply = (String)data.get("reply");
-        
-        //String postidx, String parentidx, String reply
-        int result = replyservice.newRereply(postidx, parentidx, reply);
-        if(result > 0) {
-        	map.put("성공", result);
-        }else {
-        	map.put("실패", result);
-        }
-		
+		Map<String, Object> map = new HashMap<String, Object>();
+		String postidx = (String) data.get("postidx");
+		String parentidx = (String) data.get("parentidx");
+		String reply = (String) data.get("reply");
+
+		int result = replyservice.newRereply(postidx, parentidx, reply);
+		if (result > 0) {
+			map.put("성공", result);
+		} else {
+			map.put("실패", result);
+		}
+
 		return new ResponseEntity<Map<String, Object>>(map, HttpStatus.OK);
-		
+
 	}
-	
-	//댓글 삭제
+
+	// 댓글 삭제
 	@DeleteMapping("/board/reply/{replyidx}")
-	public  Map<String, Integer> delreply(@PathVariable("replyidx") String replyidx) {
-		
+	public Map<String, Integer> delreply(@PathVariable("replyidx") String replyidx) {
+
 		Map<String, Integer> map = new HashMap<String, Integer>();
 		map = replyservice.deleteReply(replyidx);
-		
+
 		return map;
 	}
-	
-	//파일 삭제
+
+	// 파일 삭제
 	@DeleteMapping("/board/delete/{idx}/{filename}")
-	public int delFile(@PathVariable("idx") String idx,
-					   @PathVariable("filename") String fileName) {
+	public int delFile(@PathVariable("idx") String idx, @PathVariable("filename") String fileName) {
 
 		return boardService.fileDelete(idx, fileName);
 	}
-
-	/*
-	 * // 첨부파일 삭제
-	 * 
-	 * @delete("/delete/{idx}/{file}") public ResponseEntity<List<File> fileList(){
-	 * AwsS3 awsS3 = AwsS3.getInstance();
-	 * 
-	 * awsS3.delete(key);
-	 * 
-	 * }
-	 */
 
 }
