@@ -12,11 +12,11 @@ import org.springframework.http.HttpStatus;
 import org.springframework.http.ResponseEntity;
 import org.springframework.security.core.context.SecurityContextHolder;
 import org.springframework.web.bind.annotation.GetMapping;
+import org.springframework.web.bind.annotation.PathVariable;
 import org.springframework.web.bind.annotation.RequestMapping;
 import org.springframework.web.bind.annotation.RequestParam;
 import org.springframework.web.bind.annotation.RestController;
 
-import kr.or.kosa.dto.Board;
 import kr.or.kosa.dto.Cafeteria;
 import kr.or.kosa.dto.Domitory;
 import kr.or.kosa.dto.Member;
@@ -252,17 +252,19 @@ public class AdminController_Rest {
 	}
 
 	// 메뉴 수정
-	@RequestMapping("/coupon/update")
-	public void updateMenu(@RequestParam("idx") String idx, @RequestParam("domitory") String domitory,
+	@RequestMapping("/coupon/update/{idx}")
+	public void updateMenu(@PathVariable("idx") String idx,
 			@RequestParam("name") String name, @RequestParam("price") String price) {
+
+		User user = (User) SecurityContextHolder.getContext().getAuthentication().getPrincipal();
+		
 		int menuidx = Integer.parseInt(idx);
 		int menuPrice = Integer.parseInt(price);
 		Cafeteria cafeteria = new Cafeteria();
 		cafeteria.setMenuidx(menuidx);
-		cafeteria.setDomitoryName(domitory);
+		cafeteria.setDomitoryName(user.getDomitoryName());
 		cafeteria.setMenu(name);
 		cafeteria.setMenuPrice(menuPrice);
-
 		cafeteriaService.updateMenu(cafeteria);
 	}
 
