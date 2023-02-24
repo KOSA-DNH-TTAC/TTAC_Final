@@ -81,6 +81,13 @@
 				<div class="row">
 
 					<div id="contentsDiv" class="col-lg-8 entries">
+						<c:if test="${empty allBoardList}">
+							<article class="entry">
+								<div class="entry-title d-flex justify-content-center">
+									아직 글이 없습니다!
+								</div>
+							</article>
+						</c:if>
 						<c:forEach items="${allBoardList}" var="freeBoard">
 							<article class="entry">
 
