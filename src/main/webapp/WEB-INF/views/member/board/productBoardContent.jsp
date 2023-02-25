@@ -212,6 +212,7 @@
 
 						</div>
 						<!-- End sidebar -->
+						<jsp:include page="/WEB-INF/views/member/board/boardInclude/Chatting.jsp" />
 
 					</div>
 				</div>
