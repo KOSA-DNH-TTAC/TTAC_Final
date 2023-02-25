@@ -108,12 +108,12 @@
 													<li class="d-flex align-items-center"><i class="bi bi-clock"></i>${productList.writeDate}</a></li>
 													<li class="d-flex align-items-center"><i class="bi-chat-dots"></i>${productList.replyCount}</li>
 													
+													
+													
 												</ul>
 											</div>
 
-											<div class="entry-content">
-												<p>${productList.content}</p>
-											</div>
+											
 
 										</article>
 										<!-- End blog entry -->

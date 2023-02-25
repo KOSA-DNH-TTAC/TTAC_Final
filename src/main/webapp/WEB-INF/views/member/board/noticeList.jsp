@@ -92,7 +92,16 @@
 										<article class="entry">
 
 											<div class="entry-title">
-												<a href="/board/noticeList/${notice.idx}">${notice.title}</a>
+												<a href="/board/noticeList/${notice.idx}">
+													<c:choose>
+													<c:when	test="${notice.title != null && fn:length(notice.title) > 20}">
+																	<p>${fn:substring(notice.title,0,20)}...</p>
+													</c:when>
+													<c:otherwise>
+														${notice.title}
+													</c:otherwise>
+													</c:choose>
+												</a>
 											</div>
 
 											<div class="entry-meta">
@@ -103,7 +112,14 @@
 											</div>
 
 											<div class="entry-content">
-												<p>${notice.content}</p>
+												<c:choose>
+													<c:when	test="${notice.content != null && fn:length(notice.content) > 200}">
+																	<p>${fn:substring(notice.content,0,200)}...</p>
+													</c:when>
+													<c:otherwise>
+														<p>${notice.content}</p>
+													</c:otherwise>
+												</c:choose>
 											</div>
 
 										</article>

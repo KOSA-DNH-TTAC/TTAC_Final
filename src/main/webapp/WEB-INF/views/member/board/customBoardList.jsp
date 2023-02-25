@@ -95,7 +95,15 @@
 
 											<div class="entry-title">
 											<a href="/board/custom/${boardList.boardName}/${boardList.idx}">
-												${boardList.title}</a>
+												<c:choose>
+													<c:when	test="${boardList.title != null && fn:length(boardList.title) > 20}">
+																	<p>${fn:substring(boardList.title,0,20)}...</p>
+													</c:when>
+													<c:otherwise>
+														<p>${boardList.title}</p>
+													</c:otherwise>
+												</c:choose>
+												</a>
 											</div>
 
 											<div class="entry-meta">
@@ -108,7 +116,14 @@
 											</div>
 
 											<div class="entry-content">
-												<p>${boardList.content}</p>
+												<c:choose>
+													<c:when	test="${boardList.content != null && fn:length(boardList.content) > 200}">
+																	<p>${fn:substring(boardList.content,0,200)}...</p>
+													</c:when>
+													<c:otherwise>
+														<p>${boardList.content}</p>
+													</c:otherwise>
+												</c:choose>
 											</div>
 
 										</article>
