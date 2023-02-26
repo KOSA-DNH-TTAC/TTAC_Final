@@ -10,7 +10,7 @@
   <meta http-equiv="Content-Security-Policy" content="upgrade-insecure-requests"> 
   <meta content="width=device-width, initial-scale=1.0" name="viewport">
 
-  <title>DOTO:mealticket</title>
+  <title>DOTO:로그인</title>
   <meta content="" name="description">
   <meta content="" name="keywords">
 
@@ -389,7 +389,6 @@ form:after {
    			$("#logpass").focus();
    		}else{
         event.preventDefault();
-        console.log("캭")
         let email = $('#logemail').val();
         let pwd = $('#logpass').val();
         
@@ -402,22 +401,10 @@ form:after {
                 dataType: "JSON", //응답받을 데이터 타입 (XML,JSON,TEXT,HTML,JSONP)    			
     			contentType: "application/json; charset=utf-8", //헤더의 Content-Type을 설정
         }).always(function(response){
-          console.log("성공")
+         
           $('#myform').submit();
         })
 
-        /*
-          success: function(response) {
-            // 성공적으로 응답을 받았을 때 수행할 코드
-            console.log(response);
-            $('#myform').submit();
-          },
-          error: function(xhr) {
-            // 에러가 발생했을 때 수행할 코드
-            console.log(xhr.responseText);
-          }
-        });
-        */
        
       }
    	});
@@ -442,7 +429,6 @@ form:after {
     }
 
     let todayFormat = year + "-" + month + "-" + date;
-    console.log(todayFormat);
     $(".datepick").val(todayFormat);
   }
 </script>
