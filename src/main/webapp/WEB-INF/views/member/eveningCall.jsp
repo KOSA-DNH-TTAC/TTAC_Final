@@ -139,8 +139,7 @@ window.onload = function (){
   end.setHours(22, 0, 0); // 오후 10시
   
     if ((now >= start && now <= end)) { // 오후 8시부터 10시 사이가 아니면
-      // 버튼을 클릭할 수 없게
-      console.log("머노?")
+     
       Swal.fire(
         "NOPE",
         "점호 가능 시간이 아닙니다.",
@@ -153,14 +152,10 @@ window.onload = function (){
 
   $('#report').click(function(){
     mySpaceReport();
-    // $('#report').html("뒤졋다 ㅋㅋ")
   })
   
 
   function mySpaceReport(){
-      console.log("눌림ㅋㅋ")
-      console.log("콜!!!")
-      console.log(report)
       // call();
       $.ajax({
         type : "POST",
@@ -170,7 +165,7 @@ window.onload = function (){
           "report" : report,
         }, 
         success : function(data) {
-          console.log(data);
+          
           $('#report').html("점호완료");
           $('#report').prop('disabled', true);
           
@@ -189,14 +184,11 @@ window.onload = function (){
                   )
           }
 
-         
-          // $('#location').empty();
-          // $('#location').append("<b>위도 : </b>"+lat+"  <b>경도 : </b>"+lon);
         },
         error : function(data) {
           Swal.fire(
                   data,
-                  'ㅠ_ㅠ',
+                 
                   'error'
                   )
           // alert(data+": 에러, 또는 점호 가능한 지역이 아닙니다.");
@@ -206,8 +198,7 @@ window.onload = function (){
     
 
 function call(){
-  console.log("콜!!!")
-  console.log(report);
+ 
   $.ajax({
     type : "POST",
     url : "/eveningCall",
@@ -221,8 +212,7 @@ function call(){
 							'점호가 완료되었습니다.',
 							'success'
 							)
-      // $('#location').empty();
-      // $('#location').append("<b>위도 : </b>"+lat+"  <b>경도 : </b>"+lon);
+    
     },
     error : function(data) {
       alert(data+": 에러, 또는 점호 가능한 지역이 아닙니다.");
@@ -323,10 +313,7 @@ if (navigator.geolocation) {
     report=[lat, lon];
     $('#location').empty();
     $('#location').append("<b>위도 : </b>"+lat+"  <b>경도 : </b>"+lon);
-    console.log("<b>위도 : </b>"+lat+"  <b>경도 : </b>"+lon)
-    console.log(report)
-    
-   
+      
   });
 }
 

@@ -24,27 +24,12 @@
         <link rel="shortcut icon" href="../img/favicon.png" type="image/x-icon" />
         <link href="/resources/assets/css/font.css" rel="stylesheet">
         <link href="/resources/assets/css/font-awesome.css" rel="stylesheet">
-        <!-- <link rel="stylesheet" href="https://kit.fontawesome.com/7da3227c91.css" crossorigin="anonymous"> -->
         <link href="/resources/assets/css/style2.css" rel="stylesheet">
         <link href="/resources/assets/css/program.css" rel="stylesheet">
         <link href="/resources/assets/css/layout.css" rel="stylesheet">
         <link href="/resources/assets/css/menu.css" rel="stylesheet">
         <link href="/resources/assets/css/category.css" rel="stylesheet">
         <link href="/resources/assets/css/graph.css" rel="stylesheet">
-
-        <!-- <script type="text/javascript" src="resources/assets/js/pg_script.js"></script> -->
-        <!-- <script type="text/javascript" src="resources/assets/js/jquery-2.1.4.js"></script> -->
-
-        <!-- <script type="text/javascript" src="resources/assets/js/jquery-ui-1.7.2.custom.min.js"></script> -->
-        <!--<script type="text/javascript" src="../js/jquery.menu-aim.js"></script>-->
-        <!-- <script type="text/javascript" src="resources/assets/js/jquery.tablednd.js"></script> -->
-
-        <!-- <script type="text/javascript" src="resources/assets/js/tytabs.jquery.min.js"></script> -->
-        <!-- <script type="text/javascript" src="resources/assets/js/tableDnDblog.js"></script> -->
-
-        <!--<script type="text/javascript" src="resources/assets/js/menu.js"></script>  Resource jQuery -->
-        <!-- <script type="text/javascript" src="resources/assets/js/modernizr.js"></script> Modernizr -->
-        <!--<script type="text/javascript" src="resources/assets/js/jquery.flot.min.js"></script> gap-->
 
         <!-- Jquery -->
         <script src="http://code.jquery.com/jquery-latest.min.js"></script>
@@ -64,9 +49,9 @@
                             <ul>
 
                                 <li class="menu last">
-                                    <button class="btn_sumit ml네일아트"
+                                    <button class="btn_sumit ml"
                                         onclick="document.location.href='/logout';">로그아웃</button><button
-                                        class="btn_sumit blbtn ml네일아트"
+                                        class="btn_sumit blbtn ml"
                                         onclick="document.location.href='/';">홈페이지</button>
                                 </li> <!--.menu.g1-->
 
@@ -193,14 +178,8 @@
 
 
     </body>
-    <!-- litebox -->
-    <!-- <script type="text/javascript" src="resources/assets/js/hs_draggable.js"></script> -->
-    <!-- <script type="text/javascript" src="resources/assets/js/jquery-ui.min.js"></script> -->
     <link rel="stylesheet" media="all" href="/resources/assets/css/litebox.css" />
-    <!-- <script type="text/javascript" src="resources/assets/js/litebox.js"></script> -->
-    <!-- <script type="text/javascript" src="resources/assets/js/backbone.js"></script> -->
-    <!-- <script type="text/javascript" src="resources/assets/js/images-loaded.min.js"></script> -->
-    <!-- litebox -->
+  
 
 
     <script type="text/javascript">
@@ -226,8 +205,7 @@
         function createBoard() {
             let boardname = $('#newboard').val();
             $('#newboard').val("");
-            console.log(boardname);
-
+          
             $.ajax({
                 type: "POST",
                 url: "/admin/board/create",
@@ -236,8 +214,6 @@
                 }),
                 contentType: "application/json; charset=UTF-8",
                 success: function (result) {
-                    console.log(result);
-
                     if (result.rows > 0) {
                         Swal.fire(
                             '생성 완료!',
@@ -260,7 +236,6 @@
         function updateBoardName() {
             let boardname = $('#newname').val();
             let boardidx = $('#currentidx').val();
-            console.log("새 보드 이름 : " + boardname);
 
             //ajax로 보드 이름 수정
             $.ajax({
@@ -272,7 +247,7 @@
                 }),
                 contentType: "application/json; charset=UTF-8",
                 success: function (result) {
-                    console.log(result);
+            
                     $('#newname').val("");
                     if (result.rows > 0) {
                         Swal.fire(
@@ -294,11 +269,9 @@
 
         //게시판 삭제
         function deleteBoard() {
-            console.log("삭제 눌럿삼")
-            let boardidx = $('#currentidx').val();
-            console.log(boardidx);
-            //swal로 정말 삭제하겠냐고 확인 받은 후 삭제
 
+            let boardidx = $('#currentidx').val();
+           
             Swal.fire({
                 title: '정말 삭제하시겠습니까?',
                 text: "되돌릴 수 없어요!",
@@ -317,7 +290,7 @@
                         }),
                         contentType: "application/json; charset=UTF-8",
                         success: function (result) {
-                            console.log(result);
+                          
                             if (result.rows > 0) {
                                 Swal.fire(
                                     '삭제 완료!',
@@ -344,7 +317,7 @@
 
         //커스텀게시판 관리 버튼 클릭
         function customClick(e) {
-            console.log(e);
+          
             $('#nightoverY').empty();
             let contents = `<tbody>
                                 <tr>
@@ -372,8 +345,7 @@
                 type: "GET",
                 url: "/admin/board/list",
                 success: function (result) {
-                    console.log("ajax 성공");
-                    console.log(result);
+                   
                     $('#nightoverN').empty();
                     $('#nightoverY').empty();
                     let contentY = `<thead>
@@ -406,7 +378,7 @@
                     //게시판 리스트 받아와서 테이블에 뿌려주는데
                     //커스텀 게시판일 경우에는 옆에는 수정, 삭제 버튼이 있어야 함
                     $.each(result.list, function (index, board) {
-                        // console.log(board);
+                      
                         contents += `<tr><td>` + board.boardIdx + `</td>
                                     <td id="`+ board.boardIdx + `">` + board.boardName + `</td>
                                     <td>` + board.postCount + `</td>
@@ -429,8 +401,6 @@
         }
 
         $(document).ready(function () {
-            console.log("테스트")
-
             getCategory();
         })
 

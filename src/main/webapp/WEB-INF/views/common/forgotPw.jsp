@@ -76,11 +76,7 @@
           #content {
             margin-top: 5px;
           }
-          /* .table>:not(caption)>*>*{
-          	background-color: #F8F9FA;
-          	border:none;
-          } */
-
+         
           #AfterMailSend{
             color:green;
             font-size: small;

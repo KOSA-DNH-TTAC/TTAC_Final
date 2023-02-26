@@ -185,15 +185,6 @@
 											</div>
 										</div>
 
-										<h3 class="sidebar-title">Search</h3>
-										<div class="sidebar-item search-form">
-											<form action="">
-												<input type="text">
-												<button type="submit">
-													<i class="bi bi-search"></i>
-												</button>
-											</form>
-										</div>
 										<!-- End sidebar search formn-->
 
 										<jsp:include page="/WEB-INF/views/member/board/boardInclude/category.jsp" />
@@ -201,6 +192,7 @@
 
 									</div>
 									<!-- End sidebar -->
+									<jsp:include page="/WEB-INF/views/member/board/boardInclude/Chatting.jsp" />
 								</div>
 							</div>
 						</div>
@@ -251,11 +243,9 @@
 			async: true, //비동기 여부
 			contentType: "application/json",
 			success: function (result) {
-				// console.log(result);
-				//댓글작성 성공했으면
-				//댓글 다시 불러오기
+				
 				replyContent();
-				//그리고 댓글 input 지우기
+				
 				$('#exampleFormControlTextarea1').val("");
 			}
 		})
@@ -267,7 +257,6 @@
 	function deleteClick(e){
 		//댓글
 		let replyidx = $(e).parent().attr("id");
-		console.log(replyidx);
 		
 		Swal.fire({
 			title: '정말 삭제하시겠습니까?',
@@ -283,7 +272,7 @@
 					type: "delete",
 					url: '/board/reply/' + replyidx,
 					success: function(result){
-						console.log(result);
+						
 						replyContent();
 						Swal.fire(
 						'삭제완료!',
@@ -310,7 +299,7 @@
 		toggleReply.forEach(function(replyidx, index){
 			if(replyidx == parentIdx){
 				toggleReply.splice(index, 1);
-				console.log(toggleReply);
+				
 				$(e).parent().children().last().remove();
 				count++;
 				return;
@@ -318,7 +307,6 @@
 		})
 		if(count==0){
 			toggleReply.push(parentIdx);
-			console.log(toggleReply)
 			let content = `
 							<ul id="rerearea">
 							<li><i class="bi bi-arrow-return-right">&ensp;</i>
@@ -351,7 +339,6 @@
 			async: true, //비동기 여부
 			contentType: "application/json",
 			success: function (data) {
-				console.log(data);
 				replyContent();
 			}
 		})
@@ -363,7 +350,6 @@
 		var param = "freeBoardList";
 
 		var currentId = "${prc.memberId}"
-		console.log(currentId);
 		
 		// 추천 아이콘 Ajax
 		$.ajax({
@@ -389,18 +375,17 @@
 			url: '/board/' + param + '/' + idx + '/reply',
 			contentType: "application/json; charset=utf-8",
 			success: function (data) {
-				console.log(data);
-
+				
 				let replyCount = data.replyContent.length;
 				let rereplyCount = data.reReplyContent.length;
-				console.log(replyCount + rereplyCount);
+				
 				let totalcount = replyCount + rereplyCount;
 				var replyContent = "";
 				$('#replyDiv').empty();
 				$('#hjreplycount').empty();
 				$('#hjreplycount').append(totalcount);
 				$.each(data.replyContent, function (index, reply) {
-					// console.log(reply);
+					
 					if (data.replyContent[index].parentReplyIdx == '0') {
 
 						var pIdx = data.replyContent[index].replyIdx;
@@ -415,11 +400,7 @@
 							replyContent += '<span class="replyDate">'+ reply.replyDate +'</span>'
 							+ '<div style="clear:both"></div>'
 							+ `<li class="replyContent">` + reply.replyContent;
-								// if(reply.status=='22'){
-								// 	replyContent += "<p id='hjdelre'>삭제된 댓글입니다.</p>"
-								// }else{
-								// 	replyContent += reply.replyContent
-								// }
+							
 							replyContent += '</li>'
 							+ '<button class="reSubmit" onclick="rereply(this)">답댓글 쓰기</button><br>'
 							+ '</div><hr>'
@@ -461,16 +442,12 @@
 		// 추천 아이콘
 		$('#postLike').click(function () {
 
-			// console.log("param: " + param);
-			// console.log("idx: " + idx);
-
+			
 			$.ajax({
 				type: "post",
 				url: '/board/' + param + '/' + idx + '/postlike',
 				contentType: "application/json; charset=utf-8",
 				success: function (data) {
-
-					console.log("눌럿어!")
 
 					if ($('#postLike i').hasClass('bi-hand-thumbs-up')) {
 						$('#postLike').empty();

@@ -193,15 +193,7 @@
 								</div>
 							</div>
 								
-							<h3 class="sidebar-title">Search</h3>
-							<div class="sidebar-item search-form">
-								<form action="">
-									<input type="text">
-									<button type="submit">
-										<i class="bi bi-search"></i>
-									</button>
-								</form>
-							</div>
+						
 							<!-- End sidebar search formn-->
 
 							<jsp:include
@@ -258,7 +250,7 @@
 			url : 'board/'+ '${allBoard}' + '/' + boardIdx,
 			contentType : "application/json; charset=utf-8",
 			success : function(data) {
-				console.log(data);
+				
 				var boardAndReply = "";
 				$('#contentsDiv').empty();
 				boardAndReply += 

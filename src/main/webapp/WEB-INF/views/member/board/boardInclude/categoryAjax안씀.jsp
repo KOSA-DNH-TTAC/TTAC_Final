@@ -61,26 +61,6 @@
 					});
 
 
-				/* $.ajax(
-					{
-						type: "get",
-						url: "categoryList",
-						success: function (data) {
-							console.log(data)
-
-							$(document).on('click', '#boardName', function (e) {
-								e.preventDefault();
-								
-								$('#boardList').empty;
-								$('#boardList').append("임준한");
-							})
-
-							createTable(data, "@Restcontroller");
-
-						}
-					}
-				)
- */
 
 				//Json 전용 table 생성
 				function createTable(data) {

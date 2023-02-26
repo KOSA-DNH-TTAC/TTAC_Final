@@ -31,19 +31,7 @@
 		<link href="/resources/assets/css/category.css" rel="stylesheet">
 		<link href="/resources/assets/css/graph.css" rel="stylesheet">
 
-		<!-- <script type="text/javascript" src="resources/assets/js/pg_script.js"></script> -->
-		<!-- <script type="text/javascript" src="resources/assets/js/jquery-2.1.4.js"></script> -->
-
-		<!-- <script type="text/javascript" src="resources/assets/js/jquery-ui-1.7.2.custom.min.js"></script> -->
-		<!--<script type="text/javascript" src="../js/jquery.menu-aim.js"></script>-->
-		<!-- <script type="text/javascript" src="resources/assets/js/jquery.tablednd.js"></script> -->
-
-		<!-- <script type="text/javascript" src="resources/assets/js/tytabs.jquery.min.js"></script> -->
-		<!-- <script type="text/javascript" src="resources/assets/js/tableDnDblog.js"></script> -->
-
-		<!--<script type="text/javascript" src="resources/assets/js/menu.js"></script>  Resource jQuery -->
-		<!-- <script type="text/javascript" src="resources/assets/js/modernizr.js"></script> Modernizr -->
-		<!--<script type="text/javascript" src="resources/assets/js/jquery.flot.min.js"></script> gap-->
+		
 
 		<!-- Jquery -->
 		<script src="http://code.jquery.com/jquery-latest.min.js"></script>
@@ -60,9 +48,9 @@
 							<ul>
 
 								<li class="menu last">
-									<button class="btn_sumit ml네일아트"
+									<button class="btn_sumit ml"
 										onclick="document.location.href='/logout';">로그아웃</button><button
-										class="btn_sumit blbtn ml네일아트"
+										class="btn_sumit blbtn ml"
 										onclick="document.location.href='/';">홈페이지</button>
 								</li> <!--.menu.g1-->
 
@@ -146,9 +134,9 @@
 						</div>
 						<table class="srch_table mb20">
 							<colgroup>
-								<col width="네일아트%" />
+								<col width="%" />
 								<col width="20%" />
-								<col width="네일아트%" />
+								<col width="%" />
 								<col width="60%" />
 							</colgroup>
 							<tr>
@@ -225,15 +213,9 @@
 
 
 	</body>
-	<!-- litebox -->
-	<!-- <script type="text/javascript" src="resources/assets/js/hs_draggable.js"></script> -->
-	<!-- <script type="text/javascript" src="resources/assets/js/jquery-ui.min.js"></script> -->
+	
 	<link rel="stylesheet" media="all" href="/resources/assets/css/litebox.css" />
-	<!-- <script type="text/javascript" src="resources/assets/js/litebox.js"></script> -->
-	<!-- <script type="text/javascript" src="resources/assets/js/backbone.js"></script> -->
-	<!-- <script type="text/javascript" src="resources/assets/js/images-loaded.min.js"></script> -->
-	<!-- litebox -->
-
+	
 
 	<script type="text/javascript">
 
@@ -264,9 +246,7 @@
 				type: "GET",
 				url: "/adminPopular/getHistory",
 				success: function (result) {
-					console.log("성공");
-					console.log(result);
-
+					
 					$('#nightoverN').empty();
 					$('#nightoverY').empty();
 					let Ncontents = `<tbody>
@@ -282,10 +262,6 @@
 					//아직 처리되지 않은 외박 신청
 					$.each(result.list, function (index, over) {
 
-						// let startdate = new Date(over.startDate);
-						// let enddate = new Date(over.endDate);
-						// let localeStart = startdate.toLocaleString("ko-KR");
-						// let localeEnd = enddate.toLocaleString("ko-KR");
 						let startdate = dateFormatter(over.startDate);
 						let enddate = dateFormatter(over.endDate);
 						Ncontents += "<tr><td>" + (++index) + "</td>"
@@ -311,7 +287,6 @@
 				type: "GET",
 				url: "/adminPopular/getTodayHistory",
 				success: function (result) {
-					console.log(result);
 					$('#nightoverN').empty();
 					$('#nightoverY').empty();
 					let Ncontents = `<tbody>
@@ -326,10 +301,7 @@
 
 					//아직 처리되지 않은 외박 신청
 					$.each(result.list, function (index, over) {
-						// let startdate = new Date(over.startDate);
-						// let enddate = new Date(over.endDate);
-						// let localeStart = startdate.toLocaleString("ko-KR");
-						// let localeEnd = enddate.toLocaleString("ko-KR");
+						
 						let startdate = dateFormatter(over.startDate);
 						let enddate = dateFormatter(over.endDate);
 						Ncontents += "<tr><td>" + (++index) + "</td>"
@@ -351,17 +323,10 @@
 		}
 
 		function getIntervalHistory() {
-			// <th>기간</th>
-			// <td colspan="3">
-			// 	<input class="form-select1" type="date" id="start" name="trip-start">
-			// 	- <input class="form-select1" type="date" id="end" name="trip-end">&nbsp;&nbsp;
-			// </td>
+			
 			let startString = $('#start').val();
 			let endString = $('#end').val();
 			let memberid = $('#memberid').val();
-
-			//날짜가 null이면 회원 학번으로 검색
-			//회원 학번이 null이면 날짜로 검색
 
 			$.ajax({
 				type: "GET",
@@ -373,8 +338,7 @@
 				},
 				contentType: "application/json; charset=UTF-8",
 				success: function (result) {
-					console.log(result);
-
+					
 					$('#nightoverN').empty();
 					$('#nightoverY').empty();
 					let Ncontents = `<tbody>
@@ -389,10 +353,7 @@
 
 					//아직 처리되지 않은 외박 신청
 					$.each(result.list, function (index, over) {
-						// let startdate = new Date(over.startDate);
-						// let enddate = new Date(over.endDate);
-						// let localeStart = startdate.toLocaleString("ko-KR");
-						// let localeEnd = enddate.toLocaleString("ko-KR");
+						
 						let startdate = dateFormatter(over.startDate);
 						let enddate = dateFormatter(over.endDate);
 						Ncontents += "<tr><td>" + (++index) + "</td>"

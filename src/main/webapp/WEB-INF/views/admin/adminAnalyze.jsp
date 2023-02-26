@@ -34,21 +34,6 @@
 <link href="/resources/assets/css/graph.css" rel="stylesheet">
 
 
-<!-- 
-<script type="text/javascript" src="resources/assets/js/pg_script.js"></script>
-<script type="text/javascript" src="resources/assets/js/jquery-2.1.4.js"></script>
-
-<script type="text/javascript" src="resources/assets/js/jquery-ui-1.7.2.custom.min.js"></script>
-<script type="text/javascript" src="../js/jquery.menu-aim.js"></script>
-<script type="text/javascript" src="resources/assets/js/jquery.tablednd.js"></script>
-
-<script type="text/javascript" src="resources/assets/js/tytabs.jquery.min.js"></script>
-<script type="text/javascript" src="resources/assets/js/tableDnDblog.js"></script>
-
-<script type="text/javascript" src="resources/assets/js/menu.js"></script> Resource jQuery
-<script type="text/javascript" src="resources/assets/js/modernizr.js"></script> Modernizr 
-<script type="text/javascript" src="resources/assets/js/jquery.flot.min.js"></script> gap-->
-
 		<!-- Jquery -->
 		<script src="http://code.jquery.com/jquery-latest.min.js"></script>
 
@@ -134,7 +119,7 @@ $(document).ready(function(){
 		url : "/facility/print",
 		contentType: "application/json; charset=UTF-8",
 		success : function(data) {
-			console.log("data : "+data);
+			
 			 $.each(data, function(index) {
 	                tabledata +=
 	                	'<tr class="tar">'+
@@ -162,11 +147,10 @@ function search(){
 	var end = $('#end').val();
 	var data = [start,end];
 	var tabledata = "";
-	console.log(start+"/"+end);
+	
 	$.ajax({
 		type : "POST",
 		url : "/adminAnalyze/searchDate",
-		//contentType: "application/x-www-form-urlencoded; charset=UTF-8",
 		data : {
 			"data" : data,
 		}, 
@@ -196,7 +180,7 @@ function todaysearch(){
 	/* 선택한 날짜 값 가져오기 */
 	var data = ["today","today"];
 	var tabledata = "";
-	console.log(today);
+	
 	$.ajax({
 		type : "POST",
 		url : "/adminAnalyze/searchDate",
@@ -229,11 +213,10 @@ function likesearch(){
 	/* 선택한 날짜 값 가져오기 */
 	var data = $('#likesearch').val();
 	var tabledata = "";
-	console.log(today);
+	
 	$.ajax({
 		type : "POST",
 		url : "/adminAnalyze/likesearch",
-		//contentType: "application/x-www-form-urlencoded; charset=UTF-8",
 		data : {
 			"data" : data,
 		}, 
@@ -279,8 +262,6 @@ function likesearch(){
 			<td colspan="3">
 				<select name="search_type" class="fSelect">
 					<option value="name">시설물 명</option>
-					<!-- <option value="phone">브랜드코드</option>
-					<option value="mobile">제품코드</option> -->
 				</select>
 				<input type="text" id="likesearch" class="w60" style="width:233px;"/>
 				<ul class="dpi_li dpi">
@@ -301,9 +282,6 @@ function likesearch(){
 		</tr>
 	</table>
 	<div class="ok_btn">
-<!-- 		<ul>
-			<li><button type="button" class="btn_sumit2" onclick="search()">검색</button></li>
-		</ul> -->
 	</div>	
 </div>
 
@@ -327,16 +305,7 @@ function likesearch(){
 
 
 <table class="comm_table mb">
-<!-- 	<colgroup>
-		<col width="16.66%">
-		<col width="10%">
-		<col width="10%">
-		<col width="10%">
-		<col width="10%">
-		<col width="10%">
-		<col width="33.32%">
 
-	</colgroup> -->
 	<thead>
 		<tr>
 			<th rowspan="2">일자</th>
@@ -379,15 +348,7 @@ function likesearch(){
 
 
 </body>
-	<!-- litebox -->
-	<!-- <script type="text/javascript" src="resources/assets/js/hs_draggable.js"></script> -->
-	<!-- <script type="text/javascript" src="resources/assets/js/jquery-ui.min.js"></script> -->
 	<link rel="stylesheet" media="all" href="/resources/assets/css/litebox.css" />
-	<!-- <script type="text/javascript" src="resources/assets/js/litebox.js"></script> -->
-	<!-- <script type="text/javascript" src="resources/assets/js/backbone.js"></script> -->
-	<!-- <script type="text/javascript" src="resources/assets/js/images-loaded.min.js"></script> -->
-	<!-- litebox -->
 	
-
 
 </html>

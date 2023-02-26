@@ -82,25 +82,7 @@
 </div>
 
 <script>
-				// // chat window element
-				// const chatWindow = document.querySelector(".chat-window");
-
-				// // chat body element
-				// const chatBody = chatWindow.querySelector(".msgArea");
-
-				// // function to append chat message
-				// function appendChatMessage(message) {
-				// // create chat message element
-				// const chatMessageElement = document.createElement("div");
-				// chatMessageElement.classList.add("chat-message");
-				// chatMessageElement.innerText = message;
 				
-				// // append chat message to chat body
-				// chatBody.appendChild(chatMessageElement);
-				
-				// // auto-scroll to bottom
-				// chatBody.scrollTop = chatBody.scrollHeight;
-				// }
                 function generateRandomNickname() {
                         const adjectives = ["행복한", "바보같은", "졸린", "까다로운", "실없는", "수다스러운", "미친", "똑똑한", "재밌는", "쾌활한", "신난"];
                         const nouns = ["기린", "코끼리", "원숭이", "판다", "코알라", "펭귄", "캥거루", "사자", "호랑이", "얼룩말", "쿼카", "개"];
@@ -108,9 +90,7 @@
                         const randomNoun = nouns[Math.floor(Math.random() * nouns.length)];
 
                         let nick = randomAdj + "" + randomNoun + Math.floor(Math.random() * 100)
-                        // let randomNickname = `${randomAdj} ${randomNoun}${Math.floor(Math.random() * 100)}`
-                        // console.log(randomNickname)
-                        console.log(nick);
+               
                         return nick;
                 }
                 
@@ -118,39 +98,19 @@
 				$(document).ready(function(){
                  
                     const username = generateRandomNickname();
-                // $(function() {
-                    // 메시지 입력 폼에 포커스가 갔을 때, 스크롤바를 아래로 내려줍니다.
+               
                     $("#msg").on("focus", function() {
                         scrollToBottom();
                     });
 
-                    // 메시지 전송 버튼을 클릭했을 때, 메시지를 추가하고 스크롤바를 아래로 내려줍니다.
-                    // $("#button-send").on("click", function() {
-                    //     var message = $("#msg").val();
-                    //     if (message.trim() === "") return;
-
-                    //     var chatMessage = "<div class='message'>" + message + "</div>";
-                    //     $("#msgArea").append(chatMessage);
-                    //     $("#msg").val("");
-                    //     scrollToBottom();
-                    // });
-
+                  
                     // 메시지를 추가할 때마다 스크롤바를 아래로 내려줍니다.
                     function scrollToBottom() {
-                        console.log("나다!!!")
                         $("#msgArea").animate({ scrollTop: $("#msgArea").prop("scrollHeight") }, 500);
                     }
-                // });
-                
-                /////////////////////
-
-				// const username = "${userid}";
                
 
-                //난수 아이디 지정 ...
-              
-
-				//이건 연결 끊기....
+				// 연결 끊기
 				$("#disconn").on("click", (e) => {
 					disconnect();
 				})
@@ -167,9 +127,7 @@
 						$('#button-send').click();
 					}
 				});
-				//const websocket = new WebSocket("ws://192.168.0.31:8090/chat");
-				//const websocket = new WebSocket("ws://3.35.70.249:8090/chat"); 톰캣 ??
-				// const websocket = new WebSocket("ws://" + location.host + "/chat/websocket");
+				
 				const websocket = new WebSocket("wss://" + location.host + "/chat/websocket");
 
 				websocket.onmessage = onMessage;
@@ -180,7 +138,7 @@
 
 					let msg = document.getElementById("msg");
 
-					console.log(username + ":" + msg.value);
+			
 					websocket.send(username + ":" + msg.value);
 					msg.value = '';
                     scrollToBottom();
@@ -205,20 +163,12 @@
 					var message = null;
 					var arr = data.split(":");
 
-					for(var i=0; i<arr.length; i++){
-						console.log('arr[' + i + ']: ' + arr[i]);
-					}
-
 					var cur_session = username;
 
-					//현재 세션에 로그인 한 사람
-					console.log("cur_session : " + cur_session);
 					// sessionId = arr[0];
                     sessionId = arr[1];
 					message = arr[2];
 
-					console.log("sessionId : " + arr[1]);
-					console.log("cur_session : " + cur_session);
 
 					//로그인 한 클라이언트와 타 클라이언트를 분류하기 위함
 					if(sessionId == cur_session){

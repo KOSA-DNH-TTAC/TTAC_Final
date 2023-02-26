@@ -32,19 +32,6 @@
 		<link href="/resources/assets/css/category.css" rel="stylesheet">
 		<link href="/resources/assets/css/graph.css" rel="stylesheet">
 
-		<!-- <script type="text/javascript" src="resources/assets/js/pg_script.js"></script> -->
-		<!-- <script type="text/javascript" src="resources/assets/js/jquery-2.1.4.js"></script> -->
-
-		<!-- <script type="text/javascript" src="resources/assets/js/jquery-ui-1.7.2.custom.min.js"></script> -->
-		<!--<script type="text/javascript" src="../js/jquery.menu-aim.js"></script>-->
-		<!-- <script type="text/javascript" src="resources/assets/js/jquery.tablednd.js"></script> -->
-
-		<!-- <script type="text/javascript" src="resources/assets/js/tytabs.jquery.min.js"></script> -->
-		<!-- <script type="text/javascript" src="resources/assets/js/tableDnDblog.js"></script> -->
-
-		<!--<script type="text/javascript" src="resources/assets/js/menu.js"></script>  Resource jQuery -->
-		<!-- <script type="text/javascript" src="resources/assets/js/modernizr.js"></script> Modernizr -->
-		<!--<script type="text/javascript" src="resources/assets/js/jquery.flot.min.js"></script> gap-->
 
 		<!-- Jquery -->
 		<script src="http://code.jquery.com/jquery-latest.min.js"></script>
@@ -52,8 +39,6 @@
 		<!-- Sweet Alert -->
 		<script src="https://cdn.jsdelivr.net/npm/sweetalert2@11"></script>
 
-		<!-- Jquery for FORM -->
-		<!-- <script src="http://malsup.github.com/jquery.form.js" contentType="application/javascript"></script> -->
 	</head>
 	<body class="">
 		<div class="wrap">
@@ -67,9 +52,9 @@
 							<ul>
 
 								<li class="menu last">
-									<button class="btn_sumit ml네일아트"
+									<button class="btn_sumit ml"
 										onclick="document.location.href='/logout';">로그아웃</button><button
-										class="btn_sumit blbtn ml네일아트"
+										class="btn_sumit blbtn ml"
 										onclick="document.location.href='/';">홈페이지</button>
 								</li> <!--.menu.g1-->
 
@@ -211,8 +196,7 @@
 		let uploadMember;
 		
 		function myclick(){
-			console.log("반영!!!!!!!!!!!!!")
-			console.log(uploadMember);
+			
 			$('#div_load_image').show()
 			$.ajax({
 				type:"POST",
@@ -220,7 +204,7 @@
 				contentType: "application/json; charset=UTF-8",
 				url: "/admin/updateExcel",
 				success: function(result){
-					console.log(result)
+				
 					$('#div_load_image').hide(); //로딩바 숨김
 					Swal.fire(
 						'반영 완료!',
@@ -232,8 +216,7 @@
 		}
 
 		$('#excelForm').submit(function() { //submit이 발생하면
-			console.log("서브밋")
-
+			
 			let formFile = $('#formFileLg')[0];
 			if(formFile.files.length === 0){
 				alert("파일을 선택해주세요");
@@ -255,7 +238,6 @@
 					//ajax성공시 로딩바 다시 숨김
 					$("#div_load_image").hide();
 
-					console.log(result);
 					uploadMember = result.list;
 					$('#nightoverY').empty();
 					$('#hjcount').empty();
@@ -316,7 +298,6 @@
 				type:"POST",
 				url: "/admin/updateDeactivate",
 				success: function(result){
-					console.log(result)
 					Swal.fire(
 						result,
 						'기숙사생을 일괄 휴면처리하였습니다.',

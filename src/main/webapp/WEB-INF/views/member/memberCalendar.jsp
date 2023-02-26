@@ -446,10 +446,7 @@ function calendarInit() {
     var currentYear = thisMonth.getFullYear(); // 달력에서 표기하는 연
     var currentMonth = thisMonth.getMonth(); // 달력에서 표기하는 월
     var currentDate = thisMonth.getDate(); // 달력에서 표기하는 일
-
-    // kst 기준 현재시간
-    // console.log(thisMonth);
-
+  
     // 캘린더 렌더링
     renderCalender(thisMonth);
 
@@ -469,8 +466,6 @@ function calendarInit() {
         var endDay = new Date(currentYear, currentMonth + 1, 0);
         var nextDate = endDay.getDate();
         var nextDay = endDay.getDay();
-
-        // console.log(prevDate, prevDay, nextDate, nextDay);
 
         // 현재 월 표기
         $('.year-month').text(currentYear + '-0' + (currentMonth + 1));
@@ -518,7 +513,6 @@ function calendarInit() {
 function monthPrint(){
 	var tabledata = "";
 	var data = $('#yearmonth').text();
-	console.log("data : "+data); //2023-02
 	$.ajax({
 		type : "GET",
 		url : "/calendar/monthPrint",
