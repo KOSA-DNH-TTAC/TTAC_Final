@@ -33,21 +33,6 @@
 <link href="/resources/assets/css/graph.css" rel="stylesheet">
 
 
-<!-- 
-<script type="text/javascript" src="resources/assets/js/pg_script.js"></script>
-<script type="text/javascript" src="resources/assets/js/jquery-2.1.4.js"></script>
-
-<script type="text/javascript" src="resources/assets/js/jquery-ui-1.7.2.custom.min.js"></script>
-<script type="text/javascript" src="../js/jquery.menu-aim.js"></script>
-<script type="text/javascript" src="resources/assets/js/jquery.tablednd.js"></script>
-
-<script type="text/javascript" src="resources/assets/js/tytabs.jquery.min.js"></script>
-<script type="text/javascript" src="resources/assets/js/tableDnDblog.js"></script>
-
-<script type="text/javascript" src="resources/assets/js/menu.js"></script> Resource jQuery
-<script type="text/javascript" src="resources/assets/js/modernizr.js"></script> Modernizr 
-<script type="text/javascript" src="resources/assets/js/jquery.flot.min.js"></script> gap-->
-
 		<!-- Jquery -->
 		<script src="http://code.jquery.com/jquery-latest.min.js"></script>
 
@@ -62,7 +47,7 @@
 						<ul>
 						
 							<li class="menu last">
-								<button class="btn_sumit ml네일아트" onclick="document.location.href='/logout';">로그아웃</button><button class="btn_sumit blbtn ml네일아트" onclick="document.location.href='/';">홈페이지</button>
+								<button class="btn_sumit ml" onclick="document.location.href='/logout';">로그아웃</button><button class="btn_sumit blbtn ml" onclick="document.location.href='/';">홈페이지</button>
 							</li> <!--.menu.g1-->
 	
 						</ul>
@@ -150,7 +135,6 @@ $(document).ready(function(){
 		type : "POST",
 		url : "/admin/onallRollCallMember",
 		success : function(data) {
-			console.log("ondata : "+data);
 			 $.each(data, function(index) {
 	                tabledata +=
 	                	'<tr class="tar">'+
@@ -173,14 +157,11 @@ $(document).ready(function(){
 function search(){
 	/* 선택한 날짜 값 가져오기 */
 	var start = $('#start').val();
-	console.log(start);
 	$.ajax({
 		type : "GET",
 		url : "/admin/allRollCallMember?date=" + start,
 		success : function(result) {
-			console.log("성공");
-			// console.log(result);
-
+			
 			$('#whichdate').empty();
 			$('#whichdate').append("검색 날짜 [" + start + "]");
 
@@ -188,7 +169,7 @@ function search(){
 			let contents = ``
 			//table에 추가
 			$.each(result, function(index, rollcall){
-				console.log(rollcall);
+				
 				contents += `<tr>
 								<td  style="text-align: center">` + rollcall.rollCallDate  + `</td>
 								<td style="text-align: center">` + rollcall.memberId + `</td>
@@ -206,21 +187,19 @@ function search(){
 
 let notCallMembers;
 
-//점호 안한 놈
+//점호 안한 사람
 function notcall(){
 	var start = $('#start').val();
 	$.ajax({
 		type : "GET",
 		url : "/admin/notRollCall?date=" + start,
 		success : function(result) {
-			console.log("성공");
-			// console.log(result);
+			
 			notCallMembers = result;
 			$('#nottable').empty();
 			let contents = '';
 
 			$.each(result, function(index, m){
-				// console.log(m);
 				contents += `<tr>
 								<td  style="text-align: center">` + m.memberId  + `</td>
 								<td style="text-align: center">` + m.name + `</td>
@@ -239,7 +218,7 @@ function todaysearch(){
 
 	let today = new Date();
 	let todayf = dateFormatter(today);
-	console.log(todayf)
+
 	$('#start').val(todayf)
 
 	var tabledata = "";
@@ -247,7 +226,7 @@ function todaysearch(){
 		type : "POST",
 		url : "/admin/onallRollCallMember",
 		success : function(data) {
-			console.log("ondata : "+data);
+			
 			 $.each(data, function(index) {
 	                tabledata +=
 	                	'<tr class="tar">'+
@@ -260,31 +239,30 @@ function todaysearch(){
 			$('#table').append(tabledata);
 			$('#whichdate').empty();
 			$('#whichdate').append("검색 날짜 [" + data[0].rollCallDate + "]");
-			// $('#start').empty();
-			// $('#start').attr('value', 'data[0].rollCallDate')
+			
 			notcall();
 		},
 		error : function(data) {
 			alert(data+": 로드 실패");
 		}
 	});
-	// notcall();
+	
 }
 
 function execution(){
 	//벌점 부여 ajax
-	console.log(notCallMembers);
+	
 	let data = []
 	$.each(notCallMembers, function(index, m){
 		data.push(m.memberId);
 	})
-	console.log(data);
+	
 	$.ajax({
 		type: "POST",
             url: "/admin/execution",
             data: {data:data},
 			success:function(result){
-				console.log(result)
+				
 				$('#execution').remove();
 				$('#hjmsg').append("벌점 부여 완료")
 

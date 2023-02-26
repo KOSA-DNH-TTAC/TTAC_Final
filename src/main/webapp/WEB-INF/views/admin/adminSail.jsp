@@ -33,20 +33,7 @@
  <!-- Apex Chart -->
         <script src="https://cdn.jsdelivr.net/npm/apexcharts"></script>
 
-		<!-- <script type="text/javascript" src="resources/assets/js/pg_script.js"></script> -->
-		<!-- <script type="text/javascript" src="resources/assets/js/jquery-2.1.4.js"></script> -->
-
-		<!-- <script type="text/javascript" src="resources/assets/js/jquery-ui-1.7.2.custom.min.js"></script> -->
-		<!--<script type="text/javascript" src="../js/jquery.menu-aim.js"></script>-->
-		<!-- <script type="text/javascript" src="resources/assets/js/jquery.tablednd.js"></script> -->
-
-		<!-- <script type="text/javascript" src="resources/assets/js/tytabs.jquery.min.js"></script> -->
-		<!-- <script type="text/javascript" src="resources/assets/js/tableDnDblog.js"></script> -->
-
-		<!--<script type="text/javascript" src="resources/assets/js/menu.js"></script>  Resource jQuery -->
-		<!-- <script type="text/javascript" src="resources/assets/js/modernizr.js"></script> Modernizr -->
-		<!--<script type="text/javascript" src="resources/assets/js/jquery.flot.min.js"></script> gap-->
-
+	
 		<!-- Jquery -->
 		<script src="http://code.jquery.com/jquery-latest.min.js"></script>
 
@@ -66,7 +53,7 @@ $(function(){
 	            },
 			contentType: "application/json; charset=UTF-8",
 			success: function (data) {
-				// console.log(data);
+				
 				$('#chart').empty();
 				$.each(data, function(index, adminchart){
 
@@ -75,9 +62,7 @@ $(function(){
 						sleepoverCount.push(adminchart.sleepoverCount);	
 
 					sleepoverMonth.push(adminchart.month);
-					console.log("장기외박 :"+longsleepoverCount);
-					console.log("외박 : "+sleepoverCount);
-					console.log("sleepoverMonth : "+sleepoverMonth);
+					
                 })
                 
                 var options = {	
@@ -138,7 +123,7 @@ $(function(){
 	            },
 			contentType: "application/json; charset=UTF-8",
 			success: function (data) {
-				console.log(data);
+				
 				$('#pointchart').empty();
 				$.each(data, function(index, adminchart){
 
@@ -146,8 +131,7 @@ $(function(){
 					chargeMember.push(adminchart.chargeCount);
 					payCount.push(adminchart.payMount);	
 					payMonth.push(adminchart.month);
-					console.log("충전금액 :"+chargeCount);
-					console.log("사용금액 : "+payCount);
+					
                 })
                 
                 var options = {	
@@ -208,7 +192,6 @@ $(function(){
 	            },
 			contentType: "application/json; charset=UTF-8",
 			success: function (data) {
-				console.log(data);
 				$('#memberpointchart').empty();
 				$.each(data, function(index, adminchart){
 
@@ -269,7 +252,7 @@ $(function(){
 	            },
 			contentType: "application/json; charset=UTF-8",
 			success: function (result) {
-				console.log(result);
+				
 				$('#chartHj').empty();
             $.each(result, function(index, adminchart){
                month.push(adminchart.month);
@@ -356,7 +339,6 @@ function sleepoverchart(){
             },
 		contentType: "application/json; charset=UTF-8",
 		success: function (data) {
-			console.log(data);
 			$('#chart').empty();
 			
 			$.each(data, function(index, adminchart){
@@ -364,9 +346,6 @@ function sleepoverchart(){
 					longsleepoverCount.push(adminchart.longsleepoverCount);
 
 					sleepoverCount.push(adminchart.sleepoverCount);	
-
-				console.log("장기외박 :"+longsleepoverCount);
-				console.log("외박 : "+sleepoverCount);
             })
             
             var options = {	
@@ -426,7 +405,6 @@ function pointChart(){
             },
 		contentType: "application/json; charset=UTF-8",
 		success: function (data) {
-			console.log(data);
 			$('#pointchart').empty();
 			$.each(data, function(index, adminchart){
 
@@ -434,8 +412,7 @@ function pointChart(){
 				chargeMember.push(adminchart.chargeCount);
 				payCount.push(adminchart.payMount);	
 				payMonth.push(adminchart.month);
-				console.log("충전금액 :"+chargeCount);
-				console.log("사용금액 : "+payCount);
+				
             })
             
             var options = {	
@@ -494,7 +471,6 @@ function memberpointchart(){
             },
 		contentType: "application/json; charset=UTF-8",
 		success: function (data) {
-			console.log(data);
 			$('#memberpointchart').empty();
 			$.each(data, function(index, adminchart){
 
@@ -557,7 +533,7 @@ function community(){
 	            },
 			contentType: "application/json; charset=UTF-8",
 			success: function (result) {
-				console.log(result);
+				
 				$('#chartHj').empty();
           $.each(result, function(index, adminchart){
              month.push(adminchart.month);
@@ -643,7 +619,7 @@ function community(){
                <ul>
                
                   <li class="menu last">
-                     <button class="btn_sumit ml네일아트" onclick="document.location.href='/logout';">로그아웃</button><button class="btn_sumit blbtn ml네일아트" onclick="document.location.href='/';">홈페이지</button>
+                     <button class="btn_sumit ml" onclick="document.location.href='/logout';">로그아웃</button><button class="btn_sumit blbtn ml" onclick="document.location.href='/';">홈페이지</button>
                   </li> <!--.menu.g1-->
 
                </ul>

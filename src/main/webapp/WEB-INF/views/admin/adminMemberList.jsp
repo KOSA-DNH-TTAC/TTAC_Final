@@ -33,20 +33,6 @@
 <link href="/resources/assets/css/yb.css" rel="stylesheet">
 
 
-		<!-- <script type="text/javascript" src="resources/assets/js/pg_script.js"></script> -->
-		<!-- <script type="text/javascript" src="resources/assets/js/jquery-2.1.4.js"></script> -->
-
-		<!-- <script type="text/javascript" src="resources/assets/js/jquery-ui-1.7.2.custom.min.js"></script> -->
-		<!--<script type="text/javascript" src="../js/jquery.menu-aim.js"></script>-->
-		<!-- <script type="text/javascript" src="resources/assets/js/jquery.tablednd.js"></script> -->
-
-		<!-- <script type="text/javascript" src="resources/assets/js/tytabs.jquery.min.js"></script> -->
-		<!-- <script type="text/javascript" src="resources/assets/js/tableDnDblog.js"></script> -->
-
-		<!--<script type="text/javascript" src="resources/assets/js/menu.js"></script>  Resource jQuery -->
-		<!-- <script type="text/javascript" src="resources/assets/js/modernizr.js"></script> Modernizr -->
-		<!--<script type="text/javascript" src="resources/assets/js/jquery.flot.min.js"></script> gap-->
-
 		<!-- Jquery -->
 		<script src="http://code.jquery.com/jquery-latest.min.js"></script>
 		
@@ -70,7 +56,7 @@
 					<ul>
 					
 						<li class="menu last">
-							<button class="btn_sumit ml네일아트" onclick="document.location.href='/logout';">로그아웃</button><button class="btn_sumit blbtn ml네일아트" onclick="document.location.href='/';">홈페이지</button>
+							<button class="btn_sumit ml" onclick="document.location.href='/logout';">로그아웃</button><button class="btn_sumit blbtn ml" onclick="document.location.href='/';">홈페이지</button>
 						</li> <!--.menu.g1-->
 
 					</ul>
@@ -269,10 +255,7 @@ $(document).ready(function(){
 		
 		var selectedRadioText = $('input[name="search"]:checked').parent().text();
 	    var inputBoxValue = $('.txtin input[type="text"]').val();
-	    
-	    console.log(selectedRadioText);
-	    console.log(inputBoxValue);
-	    
+	  
 	    var searchMemberData = "";
 	    
 	    if (selectedRadioText == '전체') {

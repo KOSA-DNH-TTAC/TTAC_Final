@@ -32,19 +32,7 @@
 		<link href="/resources/assets/css/category.css" rel="stylesheet">
 		<link href="/resources/assets/css/graph.css" rel="stylesheet">
 
-		<!-- <script type="text/javascript" src="resources/assets/js/pg_script.js"></script> -->
-		<!-- <script type="text/javascript" src="resources/assets/js/jquery-2.1.4.js"></script> -->
-
-		<!-- <script type="text/javascript" src="resources/assets/js/jquery-ui-1.7.2.custom.min.js"></script> -->
-		<!--<script type="text/javascript" src="../js/jquery.menu-aim.js"></script>-->
-		<!-- <script type="text/javascript" src="resources/assets/js/jquery.tablednd.js"></script> -->
-
-		<!-- <script type="text/javascript" src="resources/assets/js/tytabs.jquery.min.js"></script> -->
-		<!-- <script type="text/javascript" src="resources/assets/js/tableDnDblog.js"></script> -->
-
-		<!--<script type="text/javascript" src="resources/assets/js/menu.js"></script>  Resource jQuery -->
-		<!-- <script type="text/javascript" src="resources/assets/js/modernizr.js"></script> Modernizr -->
-		<!--<script type="text/javascript" src="resources/assets/js/jquery.flot.min.js"></script> gap-->
+	
 
 		<!-- Jquery -->
 		<script src="http://code.jquery.com/jquery-latest.min.js"></script>
@@ -61,9 +49,9 @@
 							<ul>
 
 								<li class="menu last">
-									<button class="btn_sumit ml네일아트"
+									<button class="btn_sumit ml"
 										onclick="document.location.href='/logout';">로그아웃</button><button
-										class="btn_sumit blbtn ml네일아트"
+										class="btn_sumit blbtn ml"
 										onclick="document.location.href='/';">홈페이지</button>
 								</li> <!--.menu.g1-->
 
@@ -206,17 +194,14 @@
 		}
 
 		$(document).ready(function () {
-			console.log("테스트")
-
+			
 			getTodays();
 		})
 
 		function confirm(over) {
 			var tr = $(over).closest('tr')
-			// var datas = { idx: tr.children().html() };
 			let index = tr.find('input[type=hidden]').val();
 			let datas = { "idx": index };
-			console.log(datas);
 
 			//ajax로 업데이트 함 (confirm N->Y)
 			$.ajax({
@@ -225,8 +210,7 @@
 				dataType: "json",
 				data: datas,
 				success: function (result) {
-					console.log(result);
-					//테이블에 append 해줌 (getTodays)
+				
 					getTodays();
 				},
 				error: function (request, status, error) {
@@ -241,9 +225,7 @@
 				type: "GET",
 				url: "/adminPopular/getTodays",
 				success: function (result) {
-					console.log("성공");
-					console.log(result);
-
+					
 					$('#nightoverN').empty();
 					$('#nightoverY').empty();
 					let Ncontents = `<tbody>
@@ -296,8 +278,7 @@
 					}
 
 					$('#nightoverY').append(Ycontents);
-					// $('#content').append(contents)
-
+					
 				},
 				error: function (request, status, error) {
 					console.log("에러")

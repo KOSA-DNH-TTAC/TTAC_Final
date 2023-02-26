@@ -49,9 +49,9 @@
                             <ul>
 
                                 <li class="menu last">
-                                    <button class="btn_sumit ml네일아트"
+                                    <button class="btn_sumit ml"
                                         onclick="document.location.href='/logout';">로그아웃</button><button
-                                        class="btn_sumit blbtn ml네일아트"
+                                        class="btn_sumit blbtn ml"
                                         onclick="document.location.href='/';">홈페이지</button>
                                 </li> <!--.menu.g1-->
 
@@ -401,8 +401,6 @@
         }
 
         $(document).ready(function () {
-           
-
             getCategory();
         })
 
