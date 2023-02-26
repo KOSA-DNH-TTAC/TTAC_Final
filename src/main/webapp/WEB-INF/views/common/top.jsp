@@ -62,7 +62,9 @@
               <li><a href="/mypage">내 정보</a></li>
               <li><a href="#">포인트 : ${principal.memberPoint}</a></li>
               <li><a href="/message">쪽지함<span id="msgbox"></span></a></li>
+              <sec:authorize access="hasRole('ROLE_MEMBER')">
               <li><a href="/eveningCall"><b style="color:black">점호하기</b></a></li> <!-- #E96B56 -->
+            </sec:authorize>
               <sec:authorize access="hasRole('ROLE_ADMIN')">
                 <li><a href="/admin/adminMember"><b style="color:black">관리자페이지</b></a></li>
               </sec:authorize>
