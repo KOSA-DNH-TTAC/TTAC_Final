@@ -42,7 +42,7 @@
   <link href="/resources/assets/css/style.css" rel="stylesheet">
   
   <!-- tinymce -->
-  <script src="https://cdn.tiny.cloud/1/5ig9du9kh0a5htt18rr9cep98j1plgchozigfsoyk2nfuwn5/tinymce/6/tinymce.min.js" referrerpolicy="origin"></script>
+  <script src="https://cdn.tiny.cloud/1/9uc55sypuxumgeija4nhi5czb0aq1an87g7olxmb7738t8pp/tinymce/6/tinymce.min.js" referrerpolicy="origin"></script>
 
   <!-- =======================================================
   * Template Name: Eterna - v4.10.0
