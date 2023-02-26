@@ -138,7 +138,7 @@ window.onload = function (){
   var end = new Date();
   end.setHours(22, 0, 0); // 오후 10시
   
-    if ((now >= start && now <= end)) { // 오후 8시부터 10시 사이가 아니면
+    if (!(now >= start && now <= end)) { // 오후 8시부터 10시 사이가 아니면
      
       Swal.fire(
         "NOPE",
