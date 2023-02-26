@@ -123,7 +123,6 @@ function insert(){
 	var title = $('#title').val();
 	var content = $('#content').val();
 	var plan = [date, title, content];
-	console.log("plan : "+plan);
 	var tabledata = "";
 	
 	$.ajax({
@@ -148,8 +147,7 @@ function confirm(schedule) {
 	var tr = $(schedule).closest('tr');
 	let index = tr.find('input[type=hidden]').val();
 	let datas = { "idx": index };
-	console.log(datas);
-
+	
 	//ajax로 업데이트 함 (confirm N->Y)
 	$.ajax({
 		type: "get",
@@ -157,8 +155,7 @@ function confirm(schedule) {
 		dataType: "json",
 		data: datas,
 		success: function (result) {
-			console.log(result);
-			//테이블에 append 해줌 (getTodays)
+			
 			load();
 		},
 		error: function (request, status, error) {
@@ -211,7 +208,6 @@ function load(){
 	</div>
 	<table class="comm_table tac bmb">	
 		<tr>
-			<!-- <th><input type="checkbox" value=""/></th> -->
 			<th>날짜</th>
 			<th>일정제목</th>
 			<th>일정내용</th>

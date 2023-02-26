@@ -99,9 +99,7 @@ $(document).ready(function(){
 	$.ajax({
 		type : "POST",
 		url : "/itemPrint",
-		/* contentType: "application/x-www-form-urlencoded; charset=UTF-8", */ 
 		success : function(data) {
-			console.log("data : "+data);
 			$('#item').val('');
 			 $.each(data, function(index) {
 	                tabledata +=
@@ -122,16 +120,13 @@ $(document).ready(function(){
 function mySpaceReport(){
 	var item = $('#item').val();
 	var tabledata = "";
-	console.log(item);
 	$.ajax({
 		type : "POST",
 		url : "/insertItem",
-		/* contentType: "application/x-www-form-urlencoded; charset=UTF-8", */
 		data : {
 			"item" : item,
 		}, 
 		success : function(data) {
-			console.log("data : "+data);
 			alert("시설물 등록성공");
 			$('#item').val('');
 			 $.each(data, function(index) {
@@ -223,18 +218,6 @@ function mySpaceReport(){
 
 
 </body>
-<!-- litebox 
-		<script type="text/javascript" src="resources/assets/js/hs_draggable.js"></script>
-		<script type="text/javascript" src="resources/assets/js/jquery-ui.min.js"></script>
-		<link rel="stylesheet" media="all" href="/resources/assets/css/litebox.css" />
-		<script type="text/javascript" src="resources/assets/js/litebox.js"></script>
-		<script type="text/javascript" src="resources/assets/js/backbone.js"></script>
-		<script type="text/javascript" src="resources/assets/js/images-loaded.min.js"></script>
-		<script type="text/javascript">
-			$('.litebox').liteBox();
-		</script>
- litebox -->
-
 
 
 	<script type="text/javascript">

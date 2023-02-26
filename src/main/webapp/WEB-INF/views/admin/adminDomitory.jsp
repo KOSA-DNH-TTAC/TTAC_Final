@@ -181,9 +181,7 @@
 			$.ajax({
 				type : "GET",
 				url : "/adminAnalyze/domitoryPrint",
-				/* contentType: "application/x-www-form-urlencoded; charset=UTF-8", */ 
 				success : function(data) {
-					console.log("data : "+data);
 					$('#item').val('');
 					 $.each(data, function(index) {
 							tabledata +=
@@ -207,16 +205,13 @@
 			var item = $('#item').val();
 			var item2 = $('#item2').val();
 			var domitory=[item, item2];
-			console.log(item);
 			$.ajax({
 				type : "POST",
 				url : "/adminAnalyze/insertDomitory",
-				/* contentType: "application/x-www-form-urlencoded; charset=UTF-8", */
 				data : {
 					"domitory" : domitory,
 				}, 
 				success : function(data) {
-					console.log("data : "+data);
 					$('#item').val('');
 					$('#item2').val('');
 					 $.each(data, function(index) {
