@@ -125,7 +125,7 @@ public class SleepOverService {
 		SimpleDateFormat format = new SimpleDateFormat("yyyy-MM-dd");
 		String today = format.format(date);
 
-		List<SleepOverHistory> list = overdao.searchHistoryWithDate(today, today, null, user.getUniversityCode());
+		List<SleepOverHistory> list = overdao.searchHistoryWithDate(today, today, "", user.getUniversityCode());
 		for (SleepOverHistory over : list) {
 			Member member = memberdao.getMember(over.getMemberId());
 			String username = member.getName();
