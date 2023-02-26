@@ -227,7 +227,7 @@
     					type: "delete",
     					url: '/board/delete/' + idx + '/' + fileName,
     					success: function(result){
-    						console.log(result);
+    						
     						Swal.fire(
     						'삭제완료!',
     						'파일이 삭제되었습니다.',
@@ -257,7 +257,7 @@
 			async: true, //비동기 여부
 			contentType: "application/json",
 			success: function (data) {
-				console.log(data);
+				
 				replyContent();
 			}
 		})

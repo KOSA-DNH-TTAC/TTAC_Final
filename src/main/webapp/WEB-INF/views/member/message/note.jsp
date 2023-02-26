@@ -200,7 +200,7 @@
 
 	<script>
         var receiver = $('#smember').html().trim();
-        console.log(receiver);
+       
         $('#hjbtn').click(function(){
             location.href = "/message/writing/" + receiver;
         })

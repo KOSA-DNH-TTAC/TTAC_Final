@@ -240,7 +240,7 @@
       <script type="text/javascript">
 
         function intervalSearch() {
-          console.log("기간별 검색")
+
           let startString = $('#start').val();
           let endString = $('#end').val();
 
@@ -253,7 +253,6 @@
             },
             contentType: "application/json; charset=UTF-8",
             success: function (result) {
-              console.log(result);
 
               $('#nightoverTable').empty();
               let Ncontents = `<tbody>
@@ -266,8 +265,7 @@
               $.each(result.list, function (index, over) {
                 let startdate = dateFormatter(over.startDate);
                 let enddate = dateFormatter(over.endDate);
-                // let localeStart = startdate.toLocaleString("ko-KR");
-                // let localeEnd = enddate.toLocaleString("ko-KR");
+                
                 Ncontents += "<tr><td>" + (++index) + "</td>"
                   + "<td>" + startdate + "</td>"
                   + "<td>" + enddate + "</td>"
@@ -288,7 +286,6 @@
         $('.list-group-item').click(function (e) {
           e.preventDefault();
           var menu = $(this).text().trim(); //선택한 카테고리 메뉴 값 가져옴
-          console.log(menu);
           //클릭한 메뉴 활성화
           $that = $(this);
           $that.addClass('active');
@@ -296,11 +293,7 @@
           var el = $(e.target).closest('a');
           el.siblings('a').removeClass("active");
 
-
           $('#mptitle').text(menu) //content title 선택 메뉴로 바꿔줌
-
-          //각 if문에서 ajax로 데이터 가져온 후
-          //해당 내용에 맞는 뷰로 바꿔주기....
 
           if (menu == '내 정보 조회') {
 
@@ -310,8 +303,7 @@
               type: "GET",
               url: "/mypage/myinfo",
               success: function (result) {
-                console.log("성공")
-                console.log(result);
+               
                 member = {
                   "memberid": result.memberId,
                   "name": result.name,
@@ -323,13 +315,8 @@
                   "parentsPhone": result.parentsPhone,
                   "demerit": result.demerit
                 }
-                console.log("test...")
-                console.log(member);
-                console.log(member.name)
-
-
-                //img는 나중에 그냥 사람 모양 그림 넣어두기 (아바타)
-
+              
+             
                 var contents = `<div class="row">
 					<div class="col-lg-4" style="text-align : center">
 							<img style="text-align:center; width:230px; border-radius:30px; border:2px solid black;" src="${url}" class="img-fluid" alt="이미지" onerror="this.src='/resources/assets/img/profile.png'">
@@ -399,9 +386,7 @@
               type: "GET",
               url: "/mypage/sleepover",
               success: function (result) {
-                console.log("성공")
-                console.log(result);
-
+               
                 var contents = `<table id="searchTable" class="table"><tr>
                                 <td>
                                   <label for="trip-start">기간별 조회</label>
@@ -454,8 +439,7 @@
               type: "GET",
               url: "/mypage/payments",
               success: function (result) {
-                console.log("성공")
-                console.log(result);
+              
                 let contents = `<table class="table" id='nightoverTable'>
                             <thead>
                             <tr>
@@ -492,8 +476,6 @@
               type: "GET",
               url: "/mypage/myboard",
               success: function (result) {
-                console.log("성공")
-                console.log(result);
 
                 var contents = `<table class="table">
                     <thead>
@@ -532,7 +514,7 @@
                   }
 
                   let link = "/board/" + bname + "/" + post.idx;
-                  console.log(link)
+                 
                   contents += "<tr><td>" + post.boardName +
                     `</td><td style='text-align:left'><a class="hjtitle" href='` + link + `'>` + post.title 
                     + "&nbsp;<span id='hjreply'> <i class='bi-chat-dots'>" + post.replyCount + "</span></a>" +
@@ -560,8 +542,7 @@
               type: "GET",
               url: "/mypage/demerit",
               success: function (result) {
-                console.log("성공")
-                console.log(result);
+               
                 let contents = `<p align="left"><b>누적 벌점 : `+  result.total +`점</b></p>
                     <table class="table">
                     <thead>
@@ -574,7 +555,7 @@
                     <tbody>`;
                 
                 $.each(result.list, function(index, demerit){
-                  console.log(demerit);
+                 
                   contents+= `<tr><td>` + demerit.demeritDate + `</td>
                               <td>` + demerit.demeritReason + `</td>
                               <td>` + demerit.demerit + `</td>

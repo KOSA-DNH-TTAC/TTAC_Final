@@ -222,15 +222,15 @@ a {
   <script type="text/javascript">
   
   $('.buy-btn').click(function(e){
-	  console.log("클릭!!")
+	 
 	  var username = "${principal.name}"
-	  console.log(username)
+	  
     var meal = e.target.id;
-    console.log(meal)
+ 
 	  test(meal, username)
   })
   function test(meal, username){
-	  console.log("test 함수")
+	 
 	  let memberid = "${principal.memberId}";
       let successurl =  "https://bamjong.shop/payments?memberid="+memberid;
       let failurl ="";

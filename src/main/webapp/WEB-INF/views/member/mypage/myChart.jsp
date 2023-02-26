@@ -201,10 +201,10 @@
         	  $.ajax({
       			type: "get",
       			url: "/mychart/sleepover",
-      			//async: true, //비동기 여부
+      			
       			contentType: "application/json",
       			success: function (result) {
-      				console.log(result);
+      				
                     $.each(result.list, function(index, chart){
                         month.push(chart.month);
                         count.push(chart.sleepoverCount)
@@ -239,7 +239,7 @@
          $('.list-group-item').click(function (e) {
           e.preventDefault();
           var menu = $(this).text().trim(); //선택한 카테고리 메뉴 값 가져옴
-          console.log(menu);
+         
           //클릭한 메뉴 활성화
           $that = $(this);
           $that.addClass('active');
@@ -247,19 +247,14 @@
           var el = $(e.target).closest('a');
           el.siblings('a').removeClass("active");
 
-        //   $('#chart').empty();
-        //   $('#chart2').empty();
-
+     
         $('#content').empty();
         $('#content').append("<div id='chart'></div><div id='chart2'></div>")  
         
           let menutitle = "나의 " + menu + " 통계"
           $('#mptitle').text(menutitle) //content title 선택 메뉴로 바꿔줌
 
-          //각 if문에서 ajax로 데이터 가져온 후
-          
-          
-          //해당 내용에 맞는 뷰로 바꿔주기....
+   
           if (menu == '외박') {
         	
             sleepoverChart();
@@ -279,7 +274,7 @@
       			//async: true, //비동기 여부
       			contentType: "application/json",
       			success: function (result) {
-      				console.log(result);
+      				
                     $.each(result.list, function(index, chart){
                         month.push(chart.month);
                         paymentCount.push(chart.paymentCount);
@@ -357,7 +352,7 @@
       			//async: true, //비동기 여부
       			contentType: "application/json",
       			success: function (result) {
-      				console.log(result);
+      				
                     $.each(result.list, function(index, chart){
                         month.push(chart.month);
                         postCount.push(chart.postCount);
@@ -421,7 +416,7 @@
       			//async: true, //비동기 여부
       			contentType: "application/json",
       			success: function (result) {
-      				console.log(result);
+      				
                     $.each(result.list, function(index, chart){
                         month.push(chart.month);
                         demerit.push(chart.demeritTotal)

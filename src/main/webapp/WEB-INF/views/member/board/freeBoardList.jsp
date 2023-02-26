@@ -243,7 +243,7 @@
 			url : 'board/'+ '${allBoard}' + '/' + boardIdx,
 			contentType : "application/json; charset=utf-8",
 			success : function(data) {
-				console.log(data);
+				
 				var boardAndReply = "";
 				$('#contentsDiv').empty();
 				boardAndReply += 

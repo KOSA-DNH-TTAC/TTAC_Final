@@ -176,8 +176,7 @@
 		  type: "GET",
 		  url: "/mypage/myinfo",
 		  success: function (result) {
-		    console.log("성공")
-		    console.log(result);
+		   
 		    member = {
 		      "memberid": result.memberId,
 		      "name": result.name,
@@ -189,13 +188,10 @@
 		      "parentsPhone": result.parentsPhone,
 		      "demerit": result.demerit
 		    }
-		    console.log("test...")
-		    console.log(member);
-		    console.log(member.name)
+		   
 		    $('#memberid').append(member.memberid);
 		    $('#major').append(member.major);
 		    $('#room').append(member.room);
-		    //$('#password').val(member.password);
 		    $('#email').val(member.email);
 		    $('#phone').val(member.phone);
 		    $('#parentsPhone').val(member.parentsPhone);

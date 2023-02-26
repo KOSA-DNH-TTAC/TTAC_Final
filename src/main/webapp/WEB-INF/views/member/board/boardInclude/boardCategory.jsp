@@ -63,21 +63,6 @@
 		    </div> 
 	</div>
 	
-	
-	<%--<div class="categories">
-
-		 <ul>
-			<li><a class="allBoard" data-boardName="공지사항"
-				href='${pageContext.request.contextPath}/공지사항'>공지사항</a></li>
-			<li><a class="allBoard" data-boardName="건의사항"
-				href='${pageContext.request.contextPath}/건의사항'>건의사항</a></li>
-			<li><a class="allBoard" data-boardName="자유게시판"
-				href='${pageContext.request.contextPath}/자유게시판'>자유게시판</a></li>
-			<li><a class="allBoard" data-boardName="거래게시판"
-				href='${pageContext.request.contextPath}/거래게시판'>ㅠㅠ</a></li>
-		</ul> 
-	</div>--%>
-	
 	</div>
 	
 </section>
@@ -121,6 +106,6 @@
 				location.href = "${pageContext.request.contextPath}/board/"
 						+ boardName;
 
-				console.log("boardName : " + boardName);
+			
 			})
 </script>
