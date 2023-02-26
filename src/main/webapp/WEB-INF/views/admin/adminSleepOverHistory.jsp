@@ -184,7 +184,7 @@
 					</div>
 
 					<div class="ofh">
-						<div class="halfcon mr">
+						<div class="bmb">
 							<h4 class="bgtab bgtab2">외박이력</h4>
 							<table id="nightoverN" class="comm_table tac bmb">
 								<tbody>
@@ -200,20 +200,7 @@
 
 
 						</div>
-						<div class="halfcon">
-							<h4 class="bgtab bgtab2">무단 외박</h4>
-							<table id="nightoverY" class="comm_table tac bmb">
-								<tbody>
-									<tr>
-										<th>순번</th>
-										<th>외박일</th>
-										<th>복귀일</th>
-										<th>이름</th>
-										<th>사유</th>
-									</tr>
-								</tbody>
-							</table>
-						</div>
+						
 					</div>
 
 
