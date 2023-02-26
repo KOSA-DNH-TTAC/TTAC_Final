@@ -223,21 +223,18 @@
               type: "GET",
               url: "/message/notebox",
               success: function (result) {
-                // console.log("성공")
-                // console.log(result);
                 
                 var opr="<thead><tr>"+
                     "<th>보낸 사람</th>"+
                       "<th>제목</th>"+
                       "<th>받은 날짜</th></tr></thead><tbody>";
                 $.each(result,function(index,msg){
-                  console.log(msg);
-
+                 
                   var title;                  
                   let dateformat = dateFormatter(msg.messageDate);
 
                   if((msg.messageTitle).length > 28){
-                    // console.log("제목이길다")
+                   
                     title = msg.messageTitle.substr(0, 28) + "..."
                   }else{
                     title = msg.messageTitle
@@ -269,7 +266,7 @@
 	 $('.list-group-item').click(function (e) {
          e.preventDefault();
          var menu = $(this).text().trim(); //선택한 카테고리 메뉴 값 가져옴
-         console.log(menu);
+        
          //클릭한 메뉴 활성화
          $that = $(this);
          $that.addClass('active');
@@ -289,8 +286,6 @@
               type: "GET",
               url: "/message/getSend",
               success: function (result) {
-                // console.log("성공")
-                // console.log(result);
                 
                 var opr="<thead><tr>"+
                     "<th>받는 사람</th>"+
@@ -298,7 +293,7 @@
                       "<th>보낸 날짜</th>"+
                       "<th>수신여부</th></tr></thead><tbody>";
                 $.each(result,function(index,msg){
-                  console.log(msg);
+                 
                   let dateformat = dateFormatter(msg.messageDate);
                   var title;
 

@@ -81,6 +81,13 @@
 				<div class="row">
 
 					<div id="contentsDiv" class="col-lg-8 entries">
+						<c:if test="${empty allBoardList}">
+							<article class="entry">
+								<div class="entry-title d-flex justify-content-center">
+									아직 글이 없습니다!
+								</div>
+							</article>
+						</c:if>
 						<c:forEach items="${allBoardList}" var="freeBoard">
 							<article class="entry">
 
@@ -179,16 +186,7 @@
 									style="width: 100%; height: 20; border-radius: 50px; padding: 5px; border: none; background-color: #E96B56; color: white; margin-top: 10px; font-size: large;">글쓰기</button>
 								</div>
 							</div>
-								
-							<h3 class="sidebar-title">Search</h3>
-							<div class="sidebar-item search-form">
-								<form action="">
-									<input type="text">
-									<button type="submit">
-										<i class="bi bi-search"></i>
-									</button>
-								</form>
-							</div>
+							
 							<!-- End sidebar search formn-->
 
 							<jsp:include
@@ -245,7 +243,7 @@
 			url : 'board/'+ '${allBoard}' + '/' + boardIdx,
 			contentType : "application/json; charset=utf-8",
 			success : function(data) {
-				console.log(data);
+				
 				var boardAndReply = "";
 				$('#contentsDiv').empty();
 				boardAndReply += 

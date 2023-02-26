@@ -80,12 +80,28 @@
 							<div class="row">
 
 								<div class="col-lg-8 entries">
+									<c:if test="${empty allBoardList}">
+										<article class="entry">
+											<div class="entry-title d-flex justify-content-center">
+												아직 글이 없습니다!
+											</div>
+										</article>
+									</c:if>
 
 									<c:forEach items="${allBoardList}" var="notice">
 										<article class="entry">
 
 											<div class="entry-title">
-												<a href="/board/noticeList/${notice.idx}">${notice.title}</a>
+												<a href="/board/noticeList/${notice.idx}">
+													<c:choose>
+													<c:when	test="${notice.title != null && fn:length(notice.title) > 20}">
+																	<p>${fn:substring(notice.title,0,20)}...</p>
+													</c:when>
+													<c:otherwise>
+														${notice.title}
+													</c:otherwise>
+													</c:choose>
+												</a>
 											</div>
 
 											<div class="entry-meta">
@@ -96,7 +112,14 @@
 											</div>
 
 											<div class="entry-content">
-												<p>${notice.content}</p>
+												<c:choose>
+													<c:when	test="${notice.content != null && fn:length(notice.content) > 200}">
+																	<p>${fn:substring(notice.content,0,200)}...</p>
+													</c:when>
+													<c:otherwise>
+														<p>${notice.content}</p>
+													</c:otherwise>
+												</c:choose>
 											</div>
 
 										</article>
@@ -151,15 +174,6 @@
 											</div>
 										</div>
 
-										<h3 class="sidebar-title">Search</h3>
-										<div class="sidebar-item search-form">
-											<form action="">
-												<input type="text">
-												<button type="submit">
-													<i class="bi bi-search"></i>
-												</button>
-											</form>
-										</div>
 										<!-- End sidebar search formn-->
 
 										<jsp:include page="/WEB-INF/views/member/board/boardInclude/category.jsp" />

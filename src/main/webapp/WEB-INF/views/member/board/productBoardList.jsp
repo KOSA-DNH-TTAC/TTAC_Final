@@ -80,6 +80,13 @@
 							<div class="row">
 
 								<div class="col-lg-8 entries">
+									<c:if test="${empty allBoardList}">
+										<article class="entry">
+											<div class="entry-title d-flex justify-content-center">
+												아직 글이 없습니다!
+											</div>
+										</article>
+									</c:if>
 
 									<c:forEach items="${allBoardList}" var="productList">
 										<article class="entry">
@@ -100,14 +107,13 @@
 													<li class="d-flex align-items-center"><i class="bi bi-person"></i>${productList.memberId}</a></li>
 													<li class="d-flex align-items-center"><i class="bi bi-clock"></i>${productList.writeDate}</a></li>
 													<li class="d-flex align-items-center"><i class="bi-chat-dots"></i>${productList.replyCount}</li>
-													<li class="d-flex align-items-center"><i class="bi bi-cart2"></i>${productList.replyCount}원</li>
+													
+													
 													
 												</ul>
 											</div>
 
-											<div class="entry-content">
-												<p>${productList.content}</p>
-											</div>
+											
 
 										</article>
 										<!-- End blog entry -->
@@ -168,15 +174,7 @@
 												style="width: 100%; height: 20; border-radius: 50px; padding: 5px; border: none; background-color: #E96B56; color: white; margin-top: 10px; font-size: large;">글쓰기</button>
 											</div>
 										</div>
-										<h3 class="sidebar-title">Search</h3>
-										<div class="sidebar-item search-form">
-											<form action="">
-												<input type="text">
-												<button type="submit">
-													<i class="bi bi-search"></i>
-												</button>
-											</form>
-										</div>
+										
 										<!-- End sidebar search formn-->
 
 										<jsp:include page="/WEB-INF/views/member/board/boardInclude/category.jsp" />

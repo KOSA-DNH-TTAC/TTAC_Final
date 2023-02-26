@@ -19,7 +19,7 @@
   <meta http-equiv="Content-Security-Policy" content="upgrade-insecure-requests"> 
   <meta content="width=device-width, initial-scale=1.0" name="viewport">
 
-  <title>DOTO:mealticket</title>
+  <title>DOTO: 외박 신청</title>
   <meta content="" name="description">
   <meta content="" name="keywords">
 
@@ -149,7 +149,6 @@
     }
 
     let todayFormat = year + "-" + month + "-" + date;
-    console.log(todayFormat);
     $(".datepick").val(todayFormat);
   }
 </script>

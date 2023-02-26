@@ -42,7 +42,7 @@
   <link href="/resources/assets/css/style.css" rel="stylesheet">
   
   <!-- tinymce -->
-  <script src="https://cdn.tiny.cloud/1/5ig9du9kh0a5htt18rr9cep98j1plgchozigfsoyk2nfuwn5/tinymce/6/tinymce.min.js" referrerpolicy="origin"></script>
+  <script src="https://cdn.tiny.cloud/1/9uc55sypuxumgeija4nhi5czb0aq1an87g7olxmb7738t8pp/tinymce/6/tinymce.min.js" referrerpolicy="origin"></script>
 
   <!-- =======================================================
   * Template Name: Eterna - v4.10.0
@@ -92,7 +92,7 @@
 						<input type="file" class="form-control" id="file" name="file" accept="image/gif, image/jpeg, image/png" multiple required>
 					</div>
 					
-					<div class="mb-3">
+					<div class="mb-3" style="display:none">
 						<label for="price" class="form-label">물품 가격</label>
 						<input type="number" class="form-control" name="price" id="price" min="0" step="100" value="0" required>
 					</div>
@@ -109,11 +109,15 @@
 					<div class="mb-3">
 						<textarea id="content" name="content" placeholder="글을 작성해주세요."> 
 					  
+					  	<h3>▶ 가격 </h3>
+					  	<p></p>
 					  	<h3>▶ 구매시기 </h3>
 					  	<p></p>
 					  	<h3>▶ 브랜드/모델명 </h3>
 					  	<p></p>
 					  	<h3>▶  제품의 상태 (사용감, 하자 유무 등)</h3>
+					  	<p></p>
+					  	<h3>▶  내용</h3>
 					  	<p></p>
 					  	<h6>※ 서로가 믿고 거래할 수 있도록, 자세한 정보와 다양한 각도의 상품 사진을 올려주세요.</h6>
 					  

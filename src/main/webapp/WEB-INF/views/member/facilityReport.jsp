@@ -19,7 +19,7 @@
   <meta http-equiv="Content-Security-Policy" content="upgrade-insecure-requests"> 
   <meta content="width=device-width, initial-scale=1.0" name="viewport">
 
-  <title>DOTO:mealticket</title>
+  <title>DOTO: 시설물 신고</title>
   <meta content="" name="description">
   <meta content="" name="keywords">
 
@@ -96,9 +96,9 @@ $(document).ready(function(){
 	$.ajax({
 		type : "POST",
 		url : "/facility/print",
-		/* contentType: "application/x-www-form-urlencoded; charset=UTF-8", */ 
+	
 		success : function(data) {
-			console.log("data : "+data);
+			
 			 $.each(data, function(index) {
 	                tabledata +=
 	                	'<tr>'+
@@ -124,9 +124,7 @@ function report(){
 	var select2 = $('#select2').val();
 	var select3 = $('#reportreson').val();
 	var formdata=[select1, select2, select3];
-	console.log("formdata : "+formdata[0]);
-	console.log("formdata : "+formdata[1]);
-	console.log("formdata : "+formdata[2]);
+	
 	var tabledata = "";
 	
 	$.ajax({

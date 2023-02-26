@@ -84,6 +84,10 @@
 				<div class="row">
 
 					<div id="contentsDiv" class="col-lg-8 entries">
+						<article class="entry d-flex justify-content-center">
+							<h4>이 곳은 본인과 사감만 볼 수 있는 게시판입니다.</h4>
+						</article>
+						
 						<c:forEach items="${allBoardList}" var="freeBoard">
 							<c:if test="${freeBoard.memberId eq prc.memberId || prc.authorities eq '[ROLE_ADMIN]'}">
 							<article class="entry">
@@ -189,15 +193,7 @@
 								</div>
 							</div>
 								
-							<h3 class="sidebar-title">Search</h3>
-							<div class="sidebar-item search-form">
-								<form action="">
-									<input type="text">
-									<button type="submit">
-										<i class="bi bi-search"></i>
-									</button>
-								</form>
-							</div>
+						
 							<!-- End sidebar search formn-->
 
 							<jsp:include
@@ -254,7 +250,7 @@
 			url : 'board/'+ '${allBoard}' + '/' + boardIdx,
 			contentType : "application/json; charset=utf-8",
 			success : function(data) {
-				console.log(data);
+				
 				var boardAndReply = "";
 				$('#contentsDiv').empty();
 				boardAndReply += 

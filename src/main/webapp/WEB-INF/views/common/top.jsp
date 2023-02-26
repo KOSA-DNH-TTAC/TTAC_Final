@@ -20,7 +20,7 @@
       url: "/top/notebox",
       success: function (result) {
         if(result == 'Y'){
-          console.log(result)
+         
           $('#msgbox').append('<img src="${pageContext.request.contextPath}/resources/assets/img/circle-square.svg"  style="color: red;"/>')
         }
       },
@@ -48,11 +48,7 @@
       <nav id="navbar" class="navbar">
         <ul>
           <li><a href="/">Home</a></li>
-          <!-- <li><a href="/">About</a></li>
-          <li><a href="/">Services</a></li>
-          <li><a href="portfolio.html">Portfolio</a></li>
-          <li><a href="team.html">Team</a></li>
-          <li><a href="pricing.html">Pricing</a></li> -->
+         
           <li><a href="/board/noticeList">커뮤니티</a></li>
           <li><a href="/facility">시설물 신고</a></li>
           <li><a href="/memberCalendar">연간일정</a></li>
