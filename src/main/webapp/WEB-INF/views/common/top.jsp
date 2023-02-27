@@ -4,6 +4,8 @@
 <!DOCTYPE html>
 <html>
 <head>
+<script async src="https://pagead2.googlesyndication.com/pagead/js/adsbygoogle.js?client=ca-pub-2845897935922983"
+     crossorigin="anonymous"></script>
 <meta charset="UTF-8">
 <!-- Jquery -->
 <script src="http://code.jquery.com/jquery-latest.min.js"></script>
