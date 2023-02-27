@@ -17,8 +17,8 @@
           integrity="sha384-rbsA2VBKQhggwzxH7pPCaAqO46MgnOM80zW1RWuH61DGLwZJEdK2Kadq2F9CUG65" crossorigin="anonymous">
 
         <!-- Favicons -->
-        <link href="resources/assets/img/3projectpavicon.ico" rel="icon">
-        <link href="resources/assets/img/apple-touch-icon.png" rel="apple-touch-icon">
+        <link href="/resources/assets/img/3projectpavicon.ico" rel="icon">
+        <link href="/resources/assets/img/apple-touch-icon.png" rel="apple-touch-icon">
 
         <!-- Google Fonts -->
         <link
