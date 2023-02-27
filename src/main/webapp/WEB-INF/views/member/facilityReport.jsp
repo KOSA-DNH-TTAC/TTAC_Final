@@ -43,6 +43,10 @@
   
   <link href="resources/assets/css/nightOver.css" rel="stylesheet">
 			<script src="http://code.jquery.com/jquery-latest.min.js"></script>
+			
+  <!-- Sweet Alert -->
+  <link rel="stylesheet" href="https://cdn.jsdelivr.net/npm/sweetalert2@11.4.10/dist/sweetalert2.min.css">
+  <script src="https://cdn.jsdelivr.net/npm/sweetalert2@11.4.10/dist/sweetalert2.min.js"></script>
   <!-- =======================================================
   * Template Name: Eterna - v4.10.0
   * Template URL: https://bootstrapmade.com/eterna-free-multipurpose-bootstrap-template/
@@ -134,7 +138,12 @@ function report(){
 			"formdata" : formdata,
 		}, 
 		success : function(data) {
-			alert("시설물 신고 데이터 입력 성공");
+			// alert("시설물 신고 데이터 입력 성공");
+			Swal.fire(
+				"SUCCESS",
+				"시설물 신고가 접수되었습니다.",
+				"success"
+			)
 			$('#reportreson').val('');
 			$('#select1').val('기숙사 층');
 			$('#select2').val('시설물');
