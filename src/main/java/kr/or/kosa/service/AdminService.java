@@ -42,6 +42,16 @@ public class AdminService {
 	@Autowired
 	ExcelUtils excelUtil;
 
+	
+	// 기숙사생 전체 조회
+	public List<Member> getDomitoryMembers(){
+		AdminDao adminDao = sqlsession.getMapper(AdminDao.class);
+		User user = (User) SecurityContextHolder.getContext().getAuthentication().getPrincipal();
+		List<Member> list = new ArrayList<Member>();
+		list = adminDao.getAllMember(user.getUniversityCode(), user.getDomitoryName());
+		return list;
+	}
+	
 	// 아이디 회원 조회
 	public List<Member> memberInfo(String memberId) {
 		List<Member> infoList = new ArrayList<Member>();

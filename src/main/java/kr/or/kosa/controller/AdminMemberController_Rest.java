@@ -49,7 +49,8 @@ public class AdminMemberController_Rest {
 	public ResponseEntity<Map<String, Object>> getAllMember() {
 		Map<String, Object> map = new HashMap<String, Object>();
 		User user = (User) SecurityContextHolder.getContext().getAuthentication().getPrincipal();
-		List<Member> list = memberservice.getAllMember(user.getUniversityCode());
+//		List<Member> list = memberservice.getAllMember(user.getUniversityCode());
+		List<Member> list = adminService.getDomitoryMembers();
 		map.put("list", list);
 		return new ResponseEntity<>(map, HttpStatus.OK);
 	}
