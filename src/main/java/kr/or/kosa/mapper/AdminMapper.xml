@@ -5,6 +5,15 @@ PUBLIC "-//mybatis.org//DTD Mapper 3.0//EN"
 
 <mapper namespace="kr.or.kosa.dao.AdminDao">
 
+	<!-- getAllMember(전체조회) -->
+	<select id="getAllMember" parameterType="string" resultType="kr.or.kosa.dto.Member">             
+	  SELECT m.memberid, m.password, m.universitycode, m.name, m.major,
+	  m.email, m.gender, m.phone, m.parentsphone, m.domitoryname, m.room, m.memberpoint, m.demerit, auth
+	  FROM MEMBER m LEFT join MEMBERAUTH a ON m.MEMBERID = a.MEMBERID
+	  WHERE m.UNIVERSITYCODE = #{universitycode} AND status='1' AND m.domitoryname=#{domitoryname}
+	</select>
+	 
+
 	<!-- 특정 회원 정보 조회 -->
 	<select id="getMemberInfo" parameterType="String"
 		resultType="kr.or.kosa.dto.Member">

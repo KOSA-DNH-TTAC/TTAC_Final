@@ -11,6 +11,9 @@ import kr.or.kosa.dto.Member;
 import kr.or.kosa.dto.RollCall;
 
 public interface AdminDao {
+	
+	// 기숙사생 전체 조회
+	public List<Member> getAllMember(@Param("universitycode")String universitycode, @Param("domitoryname")String domitoryname);
 
 	// 기숙사생 특정 조회
 	public List<Member> getMemberInfo(String memberId, String universitycode);
