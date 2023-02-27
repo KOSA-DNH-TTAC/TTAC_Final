@@ -35,7 +35,6 @@
   <!-- Jquery -->
   <script src="http://code.jquery.com/jquery-latest.min.js"></script>
 
-  <link rel="stylesheet" type="text/css" href="style.css" />
   <link href="resources/assets/css/nightOver.css" rel="stylesheet">
 
 <style>

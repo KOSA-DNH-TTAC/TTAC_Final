@@ -50,6 +50,7 @@
 				<prop key="mail.smtp.starttls.enable">true</prop>
 				<prop key="mail.mime.charset">UTF-8</prop>
 				<prop key="mail.transport.protocol">smtp</prop>
+				<prop key="mail.smtp.ssl.protocols">TLSv1.2</prop>
 			</props>
 		</property>
 	</bean>
