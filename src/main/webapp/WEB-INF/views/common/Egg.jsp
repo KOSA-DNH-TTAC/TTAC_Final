@@ -2,7 +2,11 @@
     pageEncoding="UTF-8"%>
 <!DOCTYPE html>
 <html lang="en">
+<!-- Favicons -->
+				<link href="/resources/assets/img/3projectpavicon.ico" rel="icon">
+				<link href="/resources/assets/img/apple-touch-icon.png" rel="apple-touch-icon">
 <head>
+<title>이스터에그 크레딧</title>
     <meta charset="UTF-8">
     <meta http-equiv="Content-Security-Policy" content="upgrade-insecure-requests"> 
     <meta http-equiv="X-UA-Compatible" content="IE=edge">

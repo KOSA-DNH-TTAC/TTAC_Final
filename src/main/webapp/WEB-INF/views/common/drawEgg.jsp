@@ -3,8 +3,11 @@
 <!DOCTYPE html>
 <html>
 <meta http-equiv="Content-Security-Policy" content="upgrade-insecure-requests"> 
+<!-- Favicons -->
+				<link href="/resources/assets/img/3projectpavicon.ico" rel="icon">
+				<link href="/resources/assets/img/apple-touch-icon.png" rel="apple-touch-icon">
 <head>
-	<title>JavaScript Drawing</title>
+	<title>이스터에그 그림</title>
 </head>
 <body>
 	<canvas id="myCanvas" width="1280" height="700" style="border:1px solid black"></canvas>

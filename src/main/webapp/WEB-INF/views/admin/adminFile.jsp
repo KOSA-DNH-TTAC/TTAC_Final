@@ -21,7 +21,7 @@
 		<meta http-equiv="X-UA-Compatible" content="IE=edge" />
 		<meta http-equiv="Expires" content="-1" />
 
-		<link rel="shortcut icon" href="../img/favicon.png" type="image/x-icon" />
+		<link rel="shortcut icon" href="/resources/assets/img/3projectpavicon.ico" type="image/x-icon" />
 		<link href="/resources/assets/css/font.css" rel="stylesheet">
 		<link href="/resources/assets/css/font-awesome.css" rel="stylesheet">
 		<!-- <link rel="stylesheet" href="https://kit.fontawesome.com/7da3227c91.css" crossorigin="anonymous"> -->
