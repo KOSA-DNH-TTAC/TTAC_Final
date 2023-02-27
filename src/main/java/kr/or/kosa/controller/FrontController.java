@@ -138,4 +138,9 @@ public class FrontController {
 	public String egg() {
 		return "common/Egg";
 	}
+	
+	@GetMapping("/drawEgg")
+	public String ballegg() {
+		return "common/drawEgg";
+	}
 }
