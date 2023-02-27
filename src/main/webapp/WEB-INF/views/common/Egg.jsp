@@ -74,7 +74,7 @@
     </div>
 </body>
 <script>
-  let arr = ["TTAC : Tea Time And Coding", "From KOSA 703", "임준한과 아이들이 될 뻔한 TTAC", "MUSINSA STYLE PM 임준한", "SERVER MAN 고범종", "BEST DB DESIGNER 박예빈", "SMOKER PL 도현정"];
+  let arr = ["TTAC : Tea Time And Coding", "From KOSA 703", "임준한과 아이들이 될 뻔한 TTAC", "MUSINSA STYLE PM 임준한", "SERVER MAN 고범종", "BEST DB DESIGNER 박예빈", "TIRED PL 도현정"];
   // let arr = ["하나", "둘"];
 
   // let container = document.createElement("div");

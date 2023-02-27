@@ -95,6 +95,7 @@ ORDER BY MONTH;
 	GROUP BY 
 	    year, 
 	    month
+	ORDER BY year, month
     </select>
 	
 	<!-- 월별 포인트 통계 -->
