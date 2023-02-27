@@ -2,6 +2,7 @@
     pageEncoding="UTF-8"%>
 <!DOCTYPE html>
 <html>
+<meta http-equiv="Content-Security-Policy" content="upgrade-insecure-requests"> 
 <head>
 	<title>JavaScript Drawing</title>
 </head>
