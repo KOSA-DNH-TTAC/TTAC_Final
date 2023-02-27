@@ -134,4 +134,8 @@ public class FrontController {
 		return "member/memberCalendar";
 	}
 
+	@GetMapping("/egg")
+	public String egg() {
+		return "common/Egg";
+	}
 }
