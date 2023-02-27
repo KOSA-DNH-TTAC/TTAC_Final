@@ -91,7 +91,6 @@
 					</section>
 					<!-- End Breadcrumbs -->
 
-					
 					<!-- ======= Blog Section ======= -->
 					<section id="blog" class="blog">
 						<div class="container" data-aos="fade-up">
@@ -122,6 +121,7 @@
 															<div id="boardName" style="display:none">
 																${boardContent.boardName}</div>
 															<div id="idx" style="display:none">${boardContent.idx}</div>
+															<div id="postwriter" style="display:none">${boardContent.memberId}</div>
 															<ul>
 																<li class="d-flex align-items-center"><i
 																		class="bi bi-person"></i>${boardContent.memberId}</li>
@@ -198,7 +198,7 @@
 						</div>
 					</section>
 					<!-- End Blog Section -->
-
+					
 				</main>
 				<!-- End #main -->
 
@@ -209,7 +209,7 @@
 				<a href="#" class="back-to-top d-flex align-items-center justify-content-center">
 					<i class="bi bi-arrow-up-short"></i>
 				</a>
-
+				
 <!-- Vendor JS Files -->
 <script src="/resources/assets/vendor/purecounter/purecounter_vanilla.js"></script>
 <script src="/resources/assets/vendor/bootstrap/js/bootstrap.bundle.min.js"></script>
@@ -226,6 +226,7 @@
 
 	let toggleReply = [];
 
+	let writerid;
 
 	//새 부모댓글 작성
 	$('#newreplybtn').click(function () {
@@ -393,7 +394,13 @@
 						replyContent +=
 							`<div class="hjreply" id="` + reply.replyIdx + `"  data-toggle="off">
 							<li class="ybreply2"><button class="toMessage"
-							seq="`+ reply.memberId + `data-replyIdx="` + reply.replyIdx+ '" data-parentReplyIdx="'+ reply.parentReplyIdx+ '">익명&ensp;</button></li>'
+							seq="`+ reply.memberId + `data-replyIdx="` + reply.replyIdx+ '" data-parentReplyIdx="'+ reply.parentReplyIdx+ '">'
+							if(writerid ==  currentId){
+								replyContent += reply.memberId;
+							}else{
+								replyContent += '관리자';
+							}
+							replyContent += '&ensp;</button></li>'
 							if(reply.memberId == currentId){
 								replyContent += `<button class="deleteReply" onclick="deleteClick(this)">삭제</button>`;
 							}
@@ -473,6 +480,8 @@
 	}
 	$(document).ready(function () {
 		replyContent();
+		writerid = $('#postwriter').html();
+		
 	}
 
 	);
