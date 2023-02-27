@@ -1,29 +1,19 @@
 package kr.or.kosa.controller;
 
-import java.security.Principal;
 import java.util.Locale;
-
-import javax.servlet.http.HttpServletRequest;
-import javax.servlet.http.HttpServletResponse;
 
 import org.slf4j.Logger;
 import org.slf4j.LoggerFactory;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.security.access.prepost.PreAuthorize;
-import org.springframework.security.authentication.AnonymousAuthenticationToken;
-import org.springframework.security.core.Authentication;
-import org.springframework.security.core.context.SecurityContextHolder;
-import org.springframework.security.web.authentication.logout.SecurityContextLogoutHandler;
 import org.springframework.stereotype.Controller;
 import org.springframework.ui.Model;
 import org.springframework.web.bind.annotation.GetMapping;
 import org.springframework.web.bind.annotation.PathVariable;
 import org.springframework.web.bind.annotation.PostMapping;
-import org.springframework.web.bind.annotation.RequestMapping;
 import org.springframework.web.servlet.ModelAndView;
 
 import kr.or.kosa.dto.Message;
-import kr.or.kosa.security.User;
 import kr.or.kosa.service.MemberService;
 import kr.or.kosa.service.MessageService;
 import kr.or.kosa.utils.VisitorInfo;
@@ -137,5 +127,10 @@ public class FrontController {
 	@GetMapping("/egg")
 	public String egg() {
 		return "common/Egg";
+	}
+	
+	@GetMapping("/drawEgg")
+	public String ballegg() {
+		return "common/drawEgg";
 	}
 }
