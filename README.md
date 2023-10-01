@@ -1,6 +1,8 @@
 # TTAC_Final
 ![image](https://github.com/KOSA-DNH-TTAC/TTAC_Final/assets/51879052/72ef8d1d-0990-4724-9774-b20ed4d85b26)
 한국 소프트웨어 산업 협회 교육 3차 팀 프로젝트 (2023/01 ~ 2023/02)
+<br>
+https://www.youtube.com/watch?v=C2nUX9MFwuU&ab_channel=OE
 
 ### 개발 IDE
 
